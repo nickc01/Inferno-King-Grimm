@@ -1,0 +1,41 @@
+ManifestFileVersion: 0
+CRC: 2897156993
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 108bfd2328fc7c30beed87a72c2c41b0
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a1ad8513a641ef33cd51a3a0b5294b3f
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 61
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: -1922991043, guid: 79e6cbd67721b8a428b82254a38d9d0b, type: 3}
+- Class: 114
+  Script: {fileID: 1940063194, guid: 79e6cbd67721b8a428b82254a38d9d0b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 265cf47c4efdb41469421d5a33f81511, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/EnemyModRegistry.asset
+- Assets/Prefabs/New Enemy.prefab
+Dependencies: []
