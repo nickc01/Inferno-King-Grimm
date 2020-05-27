@@ -24,3 +24,9 @@ MonoBehaviour:
     type: 2}
   DustGroundEffect: {fileID: 1272328414513464, guid: 9c2b55bfd2c27fc4b94bc9902e3f54c2,
     type: 2}
+  spikeControllerPrefab: {fileID: 114873647193639786, guid: f0b06d75ce5928a41accb2f2570b865b,
+    type: 2}
+  FlamePillarPrefab: {fileID: 114094571786797900, guid: a0157e492b120c349a8f0976f216ec11,
+    type: 2}
+  UppercutFireball: {fileID: 50236719136342486, guid: 4d0512f7700410249a10c2abda85064b,
+    type: 2}

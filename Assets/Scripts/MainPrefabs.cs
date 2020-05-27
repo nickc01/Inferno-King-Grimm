@@ -15,5 +15,8 @@ public class MainPrefabs : ScriptableObject
 	public GameObject SlamEffect;
 	public GameObject GroundDashEffect;
 	public GameObject DustGroundEffect;
+	public SpikesController spikeControllerPrefab;
+	public Pillar FlamePillarPrefab;
+	public Rigidbody2D UppercutFireball;
 }
 

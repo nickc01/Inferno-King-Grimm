@@ -14,6 +14,16 @@ public class GrimmSounds : MonoBehaviour
 	public AudioClip AirDash;
 	public AudioClip LandSound;
 	public AudioClip GroundDash;
+	public AudioClip PillarAntic;
+	public AudioClip PillarCastVoice;
+	public AudioClip SlashAntic;
+	public AudioClip EvadeSoundEffect;
+	public AudioClip GrimmEvadeVoice;
+	public AudioClip SlashAnticVoice;
+	public AudioClip GroundSlashAttack;
+	public AudioClip GrimmUppercutAttackVoice;
+	public AudioClip UpperCutSoundEffect;
+	public AudioClip UpperCutExplodeEffect;
 
 
 
