@@ -419,6 +419,8 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		var hit = Physics2D.Raycast(transform.position, raycastDirection, 4, 8, 0, 0);
 
+		//TODO - Make sure this works
+
 		/*if (hit.transform != null)
 		{
 			yield return GroundEvade();
