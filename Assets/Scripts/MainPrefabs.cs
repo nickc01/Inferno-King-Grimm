@@ -18,5 +18,8 @@ public class MainPrefabs : ScriptableObject
 	public SpikesController spikeControllerPrefab;
 	public Pillar FlamePillarPrefab;
 	public Rigidbody2D UppercutFireball;
+	public GrimmBall GrimmBall;
+	public GameObject StunEffect;
+	public GrimmBatController BatControllerPrefab;
 }
 

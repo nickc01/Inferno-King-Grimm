@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: Reignited King Grimm Mod
   modName: Reignited Grimm Mod
-  modAssemblyName: Assembly-CSharp
+  modAssemblyName: ReignitedKingGrimm
   modTypeName: ReignitedGrimmMod
   modListHashCode: 860336640
   features:

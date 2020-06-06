@@ -2,13 +2,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+using UnityEngine.Audio;
 using WeaverCore;
 using WeaverCore.Components;
 using WeaverCore.Features;
 using WeaverCore.GameStatus;
 using WeaverCore.Helpers;
-
+using WeaverCore.WeaverAssets;
 using Random = UnityEngine.Random;
 
 
@@ -41,6 +43,7 @@ public enum GrimmAttackMode
 [RequireComponent(typeof(DamageHero))]
 public class ReignitedKingGrimm : EnemyReplacement
 {
+
 	public static readonly Vector3 CentralPosition = new Vector3(85.77f,13.5f,0.0f);
 	//public static float GroundY = 8.3f;
 
@@ -57,12 +60,25 @@ public class ReignitedKingGrimm : EnemyReplacement
 	GrimmSounds Sounds;
 	FirebatFirePillar firebatPillar;
 	SpikesController spikeController;
+	GrimmHealthManager healthManager;
+	DamageHero damager;
+	ExplosionEffects explosions;
 
 	ParticleSystem DustScuttle;
 	ParticleSystem DustGround;
 	ParticleSystem DustUppercut;
 	ParticleSystem UppercutExplosion;
+	ParticleSystem BalloonParticles;
+	ParticleSystem DeathExplosion;
+
+	ParticleSystem DeathPuff;
+	ParticleSystem SteamParticles;
+
 	GameObject AudioScuttle;
+	GameObject BalloonFireballShoot;
+	GameObject BalloonCollider;
+	GameObject DeathBurst;
+	Animator ReformSprite;
 
 	ParticleSystem teleSmokeBack;
 	ParticleSystem teleSmokeFront;
@@ -71,12 +87,16 @@ public class ReignitedKingGrimm : EnemyReplacement
 	PolygonCollider2D Slash2;
 	PolygonCollider2D Slash3;
 
+	Coroutine BossRoutine;
+
 	GameObject FirebatSpawnpoint;
 	float fireBatSpawnpointX;
 
 	bool invisible = true;
 
 	bool continueToSlash = true;
+
+	public bool Stunned { get; private set; }
 
 	[Space]
 	[Space]
@@ -138,6 +158,14 @@ public class ReignitedKingGrimm : EnemyReplacement
 	[SerializeField]
 	float upperCutTimeLimit = 0.35f;
 
+	[Header("Bat Hit Settings")]
+	[SerializeField]
+	AudioSource BatAudioLoop;
+	GrimmBatController BatController;
+	[Header("Stun Settings")]
+	[SerializeField]
+	WeaverGameManager.TImeFreezePreset freezePreset;
+
 
 	public static MainPrefabs Prefabs { get; private set; }
 
@@ -168,6 +196,10 @@ public class ReignitedKingGrimm : EnemyReplacement
 		renderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
 		collider = GetComponent<BoxCollider2D>();
+		healthManager = GetComponent<GrimmHealthManager>();
+		damager = GetComponent<DamageHero>();
+		BatController = Instantiate(Prefabs.BatControllerPrefab);
+		explosions = GetComponentInChildren<ExplosionEffects>(true);
 		spikeController = Instantiate(Prefabs.spikeControllerPrefab,Prefabs.spikeControllerPrefab.transform.position,Quaternion.identity);
 
 		FirebatSpawnpoint = transform.Find("Firebat SpawnPoint").gameObject;
@@ -175,11 +207,20 @@ public class ReignitedKingGrimm : EnemyReplacement
 		DustGround = transform.Find("Dust Ground").GetComponent<ParticleSystem>();
 		DustUppercut = transform.Find("Dust Uppercut").GetComponent<ParticleSystem>();
 		UppercutExplosion = transform.Find("Uppercut Explosion").GetComponent<ParticleSystem>();
+		BalloonParticles = transform.Find("Balloon Particles").GetComponent<ParticleSystem>();
 		AudioScuttle = transform.Find("Audio Scuttle").gameObject;
+		BalloonFireballShoot = transform.Find("Balloon Fireball Loop Audio").gameObject;
+		BalloonCollider = transform.Find("Balloon Collider").gameObject;
+		DeathBurst = transform.Find("Death Burst").gameObject;
+		ReformSprite = transform.Find("Reform Sprite").GetComponent<Animator>();
 
 		Slash1 = transform.Find("Slash1").GetComponent<PolygonCollider2D>();
 		Slash2 = transform.Find("Slash2").GetComponent<PolygonCollider2D>();
 		Slash3 = transform.Find("Slash3").GetComponent<PolygonCollider2D>();
+
+		DeathPuff = transform.Find("Death Puff").GetComponent<ParticleSystem>();
+		SteamParticles = transform.Find("Steam Pt").GetComponent<ParticleSystem>();
+		DeathExplosion = transform.Find("Death Explode").GetComponent<ParticleSystem>();
 
 		fireBatSpawnpointX = FirebatSpawnpoint.transform.localPosition.x;
 
@@ -238,10 +279,9 @@ public class ReignitedKingGrimm : EnemyReplacement
 		Debugger.Log("THE ENEMY HAS AWOKEN!!!");
 		transform.position = CentralPosition;
 
-		StartCoroutine(MainBossControl());
+		//BossRoutine = StartCoroutine(StopWhenStunned(MainBossControl()));
+		BossRoutine = CoroutineUtilities.RunCoroutineWhile(this, MainBossControl(), () => !Stunned);
 	}
-
-
 
 	IEnumerator MainBossControl()
 	{
@@ -254,6 +294,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 			//yield return AirDashMove();
 			//yield return FirebatsMove();
 			rigidbody.velocity = Vector2.zero;
+			//yield return BalloonMove();
 			switch (GetRandomAttackMode())
 			{
 
@@ -273,14 +314,6 @@ public class ReignitedKingGrimm : EnemyReplacement
 					yield return PillarsMove();
 					break;
 			}
-
-			//yield return TeleportIn();
-
-			//yield return new WaitForSeconds(1.0f);
-
-			//yield return TeleportOut();
-
-			//yield return new WaitForSeconds(1.0f);
 		}
 	}
 
@@ -766,6 +799,13 @@ public class ReignitedKingGrimm : EnemyReplacement
 		DashSpike.enabled = true;
 
 		var dustEffect = Instantiate(Prefabs.DustGroundEffect, transform.position + Prefabs.DustGroundEffect.transform.position, Prefabs.DustGroundEffect.transform.rotation).GetComponent<ParticleSystem>();
+		var mainParticles = dustEffect.main;
+
+		mainParticles.startLifetime = groundDashTime;
+		Destroy(dustEffect.gameObject, groundDashTime + 0.5f);
+
+
+		//dustEffect.main.startLifetime = groundDashTime;
 
 		fireTimer = 0f;
 		float waitTimer = 0f;
@@ -869,7 +909,104 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 	IEnumerator BalloonMove()
 	{
-		yield break;
+		//transform.position = new Vector3(85.77f,13.5f,transform.position.z);
+		transform.position = transform.position.With(x: 85.77f, y: 13.5f);
+
+		while (Vector3.Distance(transform.position,Player.Player1.transform.position) < 6f)
+		{
+			yield return null;
+		}
+
+		FacePlayer();
+
+		yield return TeleportIn();
+
+		//TODO - EnemyKillShake
+
+		yield return PlayAnimationTillDone("Balloon Antic");
+
+		//TODO - BROADCAST THE CROWD GASP EVENT
+
+		//EventReceiver.BroadcastEvent("CROWD GASP");
+
+		//TODO Broadcast HEART HALFWAY EVENT
+
+		BalloonFireballShoot.SetActive(true);
+
+		WeaverAudio.Play(Sounds.GrimmScream, transform.position);
+		WeaverAudio.Play(Sounds.InflateSoundEffect, transform.position);
+
+		//TODO Broadcast CROWD CLAP DELAY EVENT
+
+		var angle = Random.Range(0f, 360f);
+
+		PlayAnimation("Balloon");
+
+		FacePlayer();
+
+		BalloonCollider.SetActive(true);
+
+		BalloonParticles.Play();
+
+		healthManager.Invincible = true;
+
+		int amountOfWaves = 12;
+
+		int ballCounter = 0;
+		int waveCounter = 0;
+
+		var ballSpawn = transform.position.With(z: 0.001f);
+
+		for (int i = 0; i < amountOfWaves; i++)
+		{
+			yield return new WaitForSeconds(0.6f);
+			ballCounter++;
+			waveCounter++;
+			/*if (ballCounter == 4)
+			{
+				ballCounter = 0;
+				GrimmBall.Spawn(ballSpawn, -7.6f, 10f, 4.5f);
+				GrimmBall.Spawn(ballSpawn, -7.6f, -10f, -4.5f);
+
+				GrimmBall.Spawn(ballSpawn, -7.6f, -5.6f, 5f);
+				GrimmBall.Spawn(ballSpawn, -7.6f, -10f, -5f);
+			}
+			else
+			{
+				GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? -7.4f : -5.4f, 10f, 4.5f);
+				GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? -7.4f : -5.4f, -10f, -4.5f);
+
+				GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 0f : -3f, 10f, 4.5f);
+				GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 0f : -3f, -10f, -4.5f);
+			}*/
+
+			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? -7.4f : -5.4f, 10f, 4.5f);
+			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? -7.4f : -5.4f, -10f, -4.5f);
+
+			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 0f : -3f, 10f, 4.5f);
+			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 0f : -3f, -10f, -4.5f);
+
+			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 3f : 5f, 10f, 4.5f);
+			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 3f : 5f, -10f, -4.5f);
+		}
+
+		yield return new WaitForSeconds(0.75f);
+
+		BalloonParticles.Stop();
+
+		healthManager.Invincible = false;
+
+		BalloonCollider.SetActive(false);
+
+		//TODO - Broadcast CROWD IDLE EVENT
+
+		BalloonFireballShoot.SetActive(false);
+
+		WeaverAudio.Play(Sounds.DeflateSoundEffect, transform.position);
+
+		yield return TeleportOut();
+
+		yield return new WaitForSeconds(0.6f);
 	}
 	
 	// Update is called once per frame
@@ -909,11 +1046,19 @@ public class ReignitedKingGrimm : EnemyReplacement
 			renderer.enabled = true;
 			animator.enabled = true;
 
+			WeaverEvents.BroadcastEvent("EnemyKillShake");
 
 			yield return PlayAnimationTillDone("Tele In");
 			collider.enabled = true;
 			invisible = false;
 		}
+	}
+
+	public void MakeVisible(bool visible = true)
+	{
+		invisible = !visible;
+		renderer.enabled = visible;
+		animator.enabled = visible;
 	}
 
 	IEnumerator TeleportOut(bool playSound = true)
@@ -1047,5 +1192,314 @@ public class ReignitedKingGrimm : EnemyReplacement
 			source.y *= deceleration.y;
 		}
 		return source;
+	}
+
+	public void ReachedHealthStage(int stage)
+	{
+		Debugger.Log("AT HEALTH STAGE = " + stage);
+		//StartCoroutine(Stun());
+	}
+
+	IEnumerator Stun()
+	{
+		if (Stunned == true)
+		{
+			yield break;
+		}
+		Stunned = true;
+
+		collider.enabled = false;
+
+		Debugger.Log("Boss Routine = " + BossRoutine);
+		if (BossRoutine != null)
+		{
+			StopCoroutine(BossRoutine);
+			BossRoutine = null;
+		}
+
+		Slash1.enabled = false;
+		Slash2.enabled = false;
+		Slash3.enabled = false;
+		DashSpike.enabled = false;
+		transform.rotation = Quaternion.identity;
+		DustGround.Stop();
+		BalloonParticles.Stop();
+		DustScuttle.Stop();
+		DustUppercut.Stop();
+		damager.enabled = false;
+		healthManager.Invincible = true;
+		rigidbody.constraints = RigidbodyConstraints2D.FreezePosition;
+		rigidbody.velocity = Vector2.zero;
+
+		//TODO - Make Camera Shake
+
+		WeaverEvents.BroadcastEvent("EnemyKillShake");
+
+		WeaverGameManager.FreezeGameTime(freezePreset);
+
+		//TODO - Cause the game to freeze temporarily
+
+		yield return null;
+
+		Instantiate(Prefabs.StunEffect, transform.position, Quaternion.identity);
+
+		rigidbody.velocity = Vector2.zero;
+
+		yield return PlayAnimationTillDone("Explode Antic");
+
+		VoicePlayer.Play(Sounds.GrimmScream);
+
+		//TODO Broadcast Event - CROWD STILL
+		WeaverAudio.Play(Sounds.GrimmBatExplosion, transform.position);
+
+		explosions.Play();
+
+		BatController.SendOut(this);
+
+		//TODO - Broadcast Event - CROWD STILL
+		WeaverEvents.BroadcastEvent("CROWD STILL");
+
+		BatAudioLoop.gameObject.SetActive(true);
+
+		yield return PlayAnimationTillDone("Explode");
+
+		MakeVisible(false);
+
+		yield return new WaitForSeconds(2f);
+
+		BatController.BringIn();
+
+		//TODO - Shake Camera
+
+		BatAudioLoop.gameObject.SetActive(false);
+
+		yield return new WaitForSeconds(0.4f);
+
+		var oldColor = renderer.color;
+
+		renderer.color = Color.black;
+
+		//renderer.enabled = true;
+		//MakeVisible();
+
+		WeaverAudio.Play(Sounds.GrimmTeleportOut, transform.position);
+		WeaverAudio.Play(Sounds.GrimmBatsReform, transform.position);
+
+		ReformSprite.gameObject.SetActive(true);
+
+		yield return ReformSprite.PlayAnimationTillDone("Default");
+		yield return ReformSprite.PlayAnimationTillDone("Default Loop");
+		//yield return PlayAnimationTillDone("Reform");
+
+		ReformSprite.gameObject.SetActive(false);
+
+		PlayTeleportParticles();
+		//WeaverAudio.Play(Sounds.GrimmTeleportOut, transform.position, 1.0f, AudioChannel.Sound);
+
+		//MakeVisible(false);
+
+		renderer.color = oldColor;
+
+		//TODO - Broadcast event CROWD CLAP
+		WeaverEvents.BroadcastEvent("CROWD CLAP");
+
+		//TODO - Make Camera Shake - AverageShake
+
+		yield return new WaitForSeconds(0.6f);
+
+		Stunned = false;
+		rigidbody.constraints = RigidbodyConstraints2D.None;
+		damager.enabled = true;
+		healthManager.Invincible = false;
+
+		//BossRoutine = StartCoroutine(StopWhenStunned(MainBossControl()));
+		BossRoutine = CoroutineUtilities.RunCoroutineWhile(this, MainBossControl(), () => !Stunned);
+
+		yield break;
+	}
+
+	public void OnDeath()
+	{
+		if (Stunned == true)
+		{
+			return;
+		}
+		Stunned = true;
+
+		collider.enabled = false;
+		if (BossRoutine != null)
+		{
+			StopCoroutine(BossRoutine);
+			BossRoutine = null;
+		}
+		Debugger.Log("Boss Dead");
+		BalloonFireballShoot.SetActive(false);
+		healthManager.Invincible = true;
+
+		Slash1.enabled = false;
+		Slash2.enabled = false;
+		Slash3.enabled = false;
+		DashSpike.enabled = false;
+		transform.rotation = Quaternion.identity;
+		DustGround.Stop();
+		BalloonParticles.Stop();
+		DustScuttle.Stop();
+		DustUppercut.Stop();
+		damager.enabled = false;
+		healthManager.Invincible = true;
+		rigidbody.constraints = RigidbodyConstraints2D.FreezePosition;
+		rigidbody.velocity = Vector2.zero;
+		transform.eulerAngles = Vector3.zero;
+
+		StartCoroutine(DeathRoutine());
+	}
+
+	struct SnapshotHolder
+	{
+		public AudioMixerSnapshot snapshot;
+	}
+
+	IEnumerator DeathRoutine()
+	{
+		var scream = WeaverAudio.Play(Sounds.GrimmScream, transform.position, autoPlay: false);
+		scream.AudioSource.PlayDelayed(0.5f);
+
+		WeaverEvents.BroadcastEvent("HEARTBEAT STOP");
+
+		//TODO : Shake Camera AverageShake
+
+		var swordDeath = WeaverAudio.Play(AudioAssets.EnemyDeathBySword, transform.position);
+		swordDeath.AudioSource.pitch = 0.75f;
+
+		var enemyDamage = WeaverAudio.Play(AudioAssets.DamageEnemy, transform.position);
+		enemyDamage.AudioSource.pitch = 0.75f;
+
+		var endingTune = WeaverAudio.Play(Sounds.EndingTune, transform.position, autoPlay: false);
+		endingTune.AudioSource.PlayDelayed(0.3f);
+
+		SpawnRandomObjects(EffectAssets.GhostSlash1Prefab, transform.position, 8, 8, 2f, 35f, 0f, 360f);
+		SpawnRandomObjects(EffectAssets.GhostSlash2Prefab, transform.position, 2, 3, 2f, 35f, 0f, 360f);
+
+		DeathBurst.SetActive(true);
+
+		PlayAnimation("Death Stun");
+
+		FacePlayer(false);
+
+		rigidbody.velocity = Vector2.zero;
+
+		//TODO Set Audio Snapsho
+		var gameMixer = WeaverAudio.MainMixer;
+		if (gameMixer != null && ImplFinder.State == RunningState.Game)
+		{
+			SnapshotHolder snapshot = JsonUtility.FromJson<SnapshotHolder>("{\"snapshot\":{ \"m_FileID\":" + 15948 + ",\"m_PathID\":" + 0 + "}}");
+
+			if (snapshot.snapshot != null)
+			{
+				snapshot.snapshot.TransitionTo(1f);
+			}
+			/*var snapShot = gameMixer.FindSnapshot("Silent");
+			if (snapShot != null)
+			{
+				snapShot.TransitionTo(1f);
+			}
+			else
+			{
+				Debugger.Log("SNAPSHOT IS NULL");
+			}*/
+		}
+
+		yield return new WaitForSeconds(1f);
+
+		//TODO - HIDE HUD
+
+		var jitterRoutine = StartCoroutine(JitterObject(gameObject,new Vector3(0.2f,0.2f,0f)));
+
+		WeaverEvents.BroadcastEvent("HEARTBEAT FAST");
+
+		WeaverAudio.Play(AudioAssets.BossFinalHit, transform.position);
+		WeaverAudio.Play(AudioAssets.BossGushing, transform.position);
+
+		WeaverEvents.BroadcastEvent("BigShake"); //???
+
+		DeathPuff.Play();
+		SteamParticles.Play();
+
+		//TODO - SHake Camera - BigShake
+
+		float emitRate = 50f;
+		float emitSpeed = 5f;
+
+		WeaverEvents.BroadcastEvent("CROWD GASP");
+
+		for (float t = 0; t < 3f; t += Time.deltaTime)
+		{
+			emitRate += 2f;
+			emitSpeed += 0.5f;
+
+			emitSpeed = Mathf.Clamp(emitSpeed, 0f, 110f);
+
+			var particleModule = DeathPuff.emission;
+			var mainModule = DeathPuff.main;
+
+			particleModule.rateOverTime = emitRate;
+			mainModule.startSpeed = emitSpeed;
+
+			yield return null;
+
+		}
+
+		StopCoroutine(jitterRoutine);
+
+		DeathPuff.Stop();
+		SteamParticles.Stop();
+
+		WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);
+
+		WeaverEvents.BroadcastEvent("CROWD STILL");
+
+		WeaverEvents.BroadcastEvent("BigShake");
+
+		MakeVisible(false);
+
+		explosions.Play();
+
+		DeathExplosion.Play();
+
+		WeaverAudio.Play(AudioAssets.BossExplosionUninfected, transform.position);
+
+		WeaverEvents.BroadcastEvent("GRIMM DEFEATED");
+
+		EndBossBattle(2f);
+
+		yield break;
+	}
+
+	IEnumerator JitterObject(GameObject obj, Vector3 amount)
+	{
+		Vector3 startPosition = obj.transform.position;
+
+		while (true)
+		{
+			yield return null;
+			transform.position = new Vector3(startPosition.x + Random.Range(-amount.x,amount.x),startPosition.y + Random.Range(-amount.y,amount.y),startPosition.z + Random.Range(-amount.z,amount.z));
+		}
+	}
+
+	public void SpawnRandomObjects(GameObject obj, Vector3 spawnPoint, int spawnMin, int spawnMax, float minSpeed,float maxSpeed, float angleMin, float angleMax, Vector2 originOffset = default(Vector2))
+	{
+		int spawnNum = Random.Range(spawnMin, spawnMax + 1);
+		float speedNum = Random.Range(minSpeed, maxSpeed);
+		float angleNum = Random.Range(angleMin, angleMax);
+
+		for (int i = 0; i < spawnNum; i++)
+		{
+			var instance = Instantiate(obj, new Vector3(spawnPoint.x + Random.Range(-originOffset.x, originOffset.x), spawnPoint.y + Random.Range(-originOffset.y, originOffset.y), spawnPoint.z),Quaternion.identity);
+			var rigid = instance.GetComponent<Rigidbody2D>();
+			if (rigid != null)
+			{
+				rigid.velocity = new Vector2(Mathf.Cos(angleNum) * Mathf.Deg2Rad,Mathf.Sin(angleNum) * Mathf.Deg2Rad);
+			}
+		}
 	}
 }

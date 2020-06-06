@@ -24,6 +24,12 @@ public class GrimmSounds : MonoBehaviour
 	public AudioClip GrimmUppercutAttackVoice;
 	public AudioClip UpperCutSoundEffect;
 	public AudioClip UpperCutExplodeEffect;
+	public AudioClip GrimmScream;
+	public AudioClip InflateSoundEffect;
+	public AudioClip DeflateSoundEffect;
+	public AudioClip GrimmBatExplosion;
+	public AudioClip GrimmBatsReform;
+	public AudioClip EndingTune;
 
 
 
