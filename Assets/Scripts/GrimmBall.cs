@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Utilities;
 
 public class GrimmBall : MonoBehaviour 
 {
@@ -44,7 +45,8 @@ public class GrimmBall : MonoBehaviour
 		{
 			yield return null;
 			clock += Time.deltaTime;
-			transform.position = transform.position.With(y: Mathf.Lerp(startY,startY + TweenY,Curve.Evaluate(clock / time)));
+			//transform.position = transform.position.With(y: Mathf.Lerp(startY,startY + TweenY,Curve.Evaluate(clock / time)));
+			transform.SetYPosition(Mathf.Lerp(startY, startY + TweenY, Curve.Evaluate(clock / time)));
 
 			rigidbody.AddForce(new Vector2(Force,0f));
 

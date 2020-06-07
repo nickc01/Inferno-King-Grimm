@@ -1,5 +1,4 @@
-﻿using Extensions;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -7,9 +6,9 @@ using UnityEngine;
 using UnityEngine.Audio;
 using WeaverCore;
 using WeaverCore.Components;
+using WeaverCore.Enums;
 using WeaverCore.Features;
-using WeaverCore.GameStatus;
-using WeaverCore.Helpers;
+using WeaverCore.Utilities;
 using WeaverCore.WeaverAssets;
 using Random = UnityEngine.Random;
 
@@ -20,7 +19,7 @@ public enum Altitude
 	Low
 }
 
-public enum Direction
+public enum GrimmDirection
 {
 	Right,
 	Left
@@ -169,7 +168,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 	public static MainPrefabs Prefabs { get; private set; }
 
-	public Direction FaceDirection { get; private set; }
+	public GrimmDirection FaceDirection { get; private set; }
 
 
 	void Awake()
@@ -227,7 +226,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 		teleSmokeBack = transform.Find("tele_smoke_back").GetComponent<ParticleSystem>();
 		teleSmokeFront = transform.Find("tele_smoke_front").GetComponent<ParticleSystem>();
 
-		if (GameStatus.GameState == RunningState.Game)
+		if (Core.LoadState == RunningState.Game)
 		{
 			receiver.ReceiveAllEventsFromName("WAKE");
 			receiver.OnReceiveEvent += Wake;
@@ -237,14 +236,14 @@ public class ReignitedKingGrimm : EnemyReplacement
 			StartCoroutine(Waiter(1,() => Wake("WAKE")));
 		}
 
-		Debugger.Log("Random Attack Mode = " + GetRandomAttackMode());
+		Debugger.Log("Random Attack Mode = " + EnumUtilities.RandomEnumValue(GrimmAttackMode.Balloon,GrimmAttackMode.None));
 
 		animator.enabled = false;
 		renderer.enabled = false;
 		collider.enabled = false;
 	}
 
-	IEnumerator PlayAnimationTillDone(string animationStateName)
+	/*IEnumerator animator.PlayAnimationTillDone(string animationStateName)
 	{
 		animator.Play(animationStateName);
 
@@ -252,20 +251,20 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		//var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-		yield return new WaitForSeconds(GetCurrentAnimationTime());
+		yield return new WaitForSeconds(animator.GetCurrentAnimationTime());
 	}
 
-	float GetCurrentAnimationTime()
+	float animator.GetCurrentAnimationTime()
 	{
 		var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
 		return stateInfo.length / stateInfo.speed;
 	}
 
-	void PlayAnimation(string animationStateName)
+	void animator.PlayAnimation(string animationStateName)
 	{
 		animator.Play(animationStateName);
-	}
+	}*/
 
 	IEnumerator Waiter(float waitTime, Action OnDone)
 	{
@@ -276,11 +275,14 @@ public class ReignitedKingGrimm : EnemyReplacement
 	//Called when the boss starts
 	void Wake(string eventName)
 	{
-		Debugger.Log("THE ENEMY HAS AWOKEN!!!");
-		transform.position = CentralPosition;
+		if (eventName == "WAKE")
+		{
+			Debugger.Log("THE ENEMY HAS AWOKEN!!!");
+			transform.position = CentralPosition;
 
-		//BossRoutine = StartCoroutine(StopWhenStunned(MainBossControl()));
-		BossRoutine = CoroutineUtilities.RunCoroutineWhile(this, MainBossControl(), () => !Stunned);
+			//BossRoutine = StartCoroutine(StopWhenStunned(MainBossControl()));
+			BossRoutine = CoroutineUtilities.RunCoroutineWhile(this, MainBossControl(), () => !Stunned);
+		}
 	}
 
 	IEnumerator MainBossControl()
@@ -293,9 +295,10 @@ public class ReignitedKingGrimm : EnemyReplacement
 			//yield return SpikesMove();
 			//yield return AirDashMove();
 			//yield return FirebatsMove();
+			//yield return GroundSlashMove();
 			rigidbody.velocity = Vector2.zero;
 			//yield return BalloonMove();
-			switch (GetRandomAttackMode())
+			switch (EnumUtilities.RandomEnumValue(GrimmAttackMode.Balloon, GrimmAttackMode.None))
 			{
 
 				case GrimmAttackMode.Firebats:
@@ -336,7 +339,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		yield return TeleportIn();
 
-		PlayAnimation("Bat Cast Charge");
+		animator.PlayAnimation("Bat Cast Charge");
 
 
 		//WeaverAudio.Play(Sounds.GrimmBeginBatCastVoice, transform.position);
@@ -345,7 +348,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		yield return new WaitForSeconds(0.2f);
 
-		PlayAnimation("Cast");
+		animator.PlayAnimation("Cast");
 
 		yield return new WaitForSeconds(0.3f);
 		yield return SendFirebat(Altitude.High, 1.0f);
@@ -370,7 +373,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		yield return new WaitForSeconds(0.3f);
 
-		PlayAnimation("Cast Return");
+		animator.PlayAnimation("Cast Return");
 
 		if (UnityEngine.Random.Range(0,1) == 0)
 		{
@@ -403,17 +406,17 @@ public class ReignitedKingGrimm : EnemyReplacement
 		VoicePlayer.Play(Sounds.GrimmBeginBatCastVoice);
 		WeaverAudio.Play(Sounds.GrimmCapeOpen, transform.position);
 
-		PlayAnimation("Bat Cast Charge");
+		animator.PlayAnimation("Bat Cast Charge");
 
 		yield return new WaitForSeconds(0.2f);
 
-		PlayAnimation("Cast");
+		animator.PlayAnimation("Cast");
 
 		yield return new WaitForSeconds(0.3f);
 		StartCoroutine(SendFirebat(Altitude.High, 1.0f));
 		yield return SendFirebat(Altitude.Low, 1.0f);
 
-		PlayAnimation("Cast Return");
+		animator.PlayAnimation("Cast Return");
 
 		yield return new WaitForSeconds(0.5f);
 
@@ -424,6 +427,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 	IEnumerator GroundSlashMove()
 	{
+		continueToSlash = true;
 		float teleX = 0f;
 		while (true)
 		{
@@ -436,7 +440,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 			teleX = heroX + teleAdder;
 
-			if (teleX > leftEdge || teleX < rightEdge)
+			if (teleX > leftEdge && teleX < rightEdge)
 			{
 				break;
 			}
@@ -448,13 +452,16 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		yield return TeleportIn();
 
-		var raycastDirection = FaceDirection == Direction.Right ? Vector2.right : Vector2.left;
+		var raycastDirection = FaceDirection == GrimmDirection.Right ? Vector2.right : Vector2.left;
 
-		var hit = Physics2D.Raycast(transform.position, raycastDirection, 4, 8, 0, 0);
+		var hit = Physics2D.Raycast(transform.position, raycastDirection, 4, LayerMask.GetMask("Terrain"), 0, 0);
+
+		Debug.DrawLine(transform.position, transform.position + ((Vector3)raycastDirection * 4f));
 
 		//TODO - Make sure this works
-
-		/*if (hit.transform != null)
+		Debugger.Log("HIt = " + hit.transform);
+		Debugger.Log("Hit Distance = " + hit.distance);
+		if (hit.transform != null)
 		{
 			yield return GroundEvade();
 		}
@@ -465,7 +472,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 		else if (!PlayerInFront())
 		{
 			yield return GroundEvade();
-		}*/
+		}
 		if (!continueToSlash)
 		{
 			yield break;
@@ -475,7 +482,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		WeaverAudio.Play(Sounds.SlashAntic, transform.position);
 
-		PlayAnimation("Slash Antic");
+		animator.PlayAnimation("Slash Antic");
 
 		VoicePlayer.Play(Sounds.SlashAnticVoice);
 
@@ -487,48 +494,67 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		var speed = xScale * groundSlashSpeed;
 
-		if (FaceDirection == Direction.Left)
+		if (FaceDirection == GrimmDirection.Left)
 		{
 			speed = -speed;
 		}
 
 		rigidbody.velocity = new Vector2(speed, 0f);
 
+		var lockRoutine = CoroutineUtilities.RunCoroutineWhile(this, HorizontalLock(transform,leftEdge,rightEdge), () => !Stunned);
+
 		DustGround.Play();
 
 		Slash1.enabled = true;
 
-		yield return PlayAnimationTillDone("Slash 1");
+		yield return animator.PlayAnimationTillDone("Slash 1");
 
 		Slash1.enabled = false;
 		Slash2.enabled = true;
 
-		yield return PlayAnimationTillDone("Slash 2");
+		yield return animator.PlayAnimationTillDone("Slash 2");
 
 		Slash2.enabled = false;
 		Slash3.enabled = true;
 
-		yield return PlayAnimationTillDone("Slash 3");
+		yield return animator.PlayAnimationTillDone("Slash 3");
 
 
 		Slash3.enabled = false;
 		DustGround.Stop();
-		PlayAnimation("Slash Recover");
+		animator.PlayAnimation("Slash Recover");
 
 		//This ensures that the current animation is playing
 		yield return null;
 
-		yield return RunForPeriod(GetCurrentAnimationTime(), () =>
+		yield return CoroutineUtilities.RunForPeriod(animator.GetCurrentAnimationTime(), () =>
 		{
-			rigidbody.velocity = Decelerate(rigidbody.velocity, new Vector2(0.65f,0.65f));
+			rigidbody.velocity = VectorUtilities.Decelerate(rigidbody.velocity, new Vector2(0.65f,0.65f));
 		});
-		//yield return GroundEvade();
 
 		rigidbody.velocity = Vector2.zero;
+		StopCoroutine(lockRoutine);
 
 		yield return UpperCut();
 
 		yield break;
+	}
+
+	IEnumerator HorizontalLock(Transform transform, float leftEdge, float rightEdge)
+	{
+		while (true)
+		{
+			if (transform.position.x < leftEdge)
+			{
+				transform.position = transform.position.With(leftEdge);
+			}
+
+			if (transform.position.x > rightEdge)
+			{
+				transform.position = transform.position.With(rightEdge);
+			}
+			yield return null;
+		}
 	}
 
 	IEnumerator UpperCut()
@@ -540,17 +566,17 @@ public class ReignitedKingGrimm : EnemyReplacement
 		}
 		rigidbody.velocity = Vector2.zero;
 
-		//PlayAnimation("Uppercut Antic");
+		//animator.PlayAnimation("Uppercut Antic");
 
 		VoicePlayer.Play(Sounds.GrimmUppercutAttackVoice);
 
 		//yield return new WaitForSeconds(0.45f);
 
-		yield return PlayAnimationTillDone("Uppercut Antic");
+		yield return animator.PlayAnimationTillDone("Uppercut Antic");
 
 		DustUppercut.Play();
 
-		PlayAnimation("Uppercut");
+		animator.PlayAnimation("Uppercut");
 
 		var sf = WeaverAudio.Play(Sounds.UpperCutSoundEffect, transform.position);
 		sf.AudioSource.pitch = 1.1f;
@@ -559,18 +585,20 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		var horizontalSpeed = xScale * uppercutHorizontalSpeed;
 
-		if (FaceDirection == Direction.Left)
+		if (FaceDirection == GrimmDirection.Left)
 		{
 			horizontalSpeed = -horizontalSpeed;
 		}
 
 		rigidbody.velocity = new Vector2(horizontalSpeed,uppercutVerticalSpeed);
-
+		var lockRoutine = CoroutineUtilities.RunCoroutineWhile(this, HorizontalLock(transform, leftEdge, rightEdge), () => !Stunned);
 
 		//This function will wait until either the time is up, or the y position is no longer less than or equal to the uppercut height limit
-		yield return RunForPeriod(0.35f, () => transform.position.y <= upperCutHeightLimit);
+		yield return CoroutineUtilities.RunForPeriod(0.35f, () => transform.position.y <= upperCutHeightLimit);
 
-		transform.position = new Vector3(transform.position.x,upperCutHeightLimit,transform.position.z);
+		transform.position = transform.position.With(y: upperCutHeightLimit);//new Vector3(transform.position.x,upperCutHeightLimit,transform.position.z);
+
+		StopCoroutine(lockRoutine);
 
 		//TODO -- Activate Red Flash 1
 
@@ -600,7 +628,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
 		fireBall.velocity = new Vector2(-36f, 1f);
 
-		yield return PlayAnimationTillDone("Uppercut End");
+		yield return animator.PlayAnimationTillDone("Uppercut End");
 
 		invisible = true;
 		collider.enabled = false;
@@ -621,7 +649,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		VoicePlayer.Play(Sounds.GrimmEvadeVoice);
 
-		yield return PlayAnimationTillDone("Evade Antic");
+		yield return animator.PlayAnimationTillDone("Evade Antic");
 
 		var xScale = transform.lossyScale.x;
 
@@ -629,14 +657,14 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		var speed = xScale * evadeSpeed;
 
-		if (FaceDirection == Direction.Right)
+		if (FaceDirection == GrimmDirection.Right)
 		{
 			speed = -speed;
 		}
 
 		rigidbody.velocity = new Vector2(speed,0f);
 
-		PlayAnimation("Evade");
+		animator.PlayAnimation("Evade");
 
 		//DustScuttle.SetActive(true);
 		DustScuttle.Play();
@@ -665,7 +693,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		rigidbody.velocity = new Vector2(0f, 0f);
 
-		yield return PlayAnimationTillDone("Evade End");
+		yield return animator.PlayAnimationTillDone("Evade End");
 
 		if (Mathf.Abs(transform.position.x - Player.Player1.transform.position.x) > 7f)
 		{
@@ -712,9 +740,9 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		yield return TeleportIn();
 
-		Debugger.Log("Angle To Player = " + GetAngleTo(transform.position, Player.Player1.transform.position));
+		Debugger.Log("Angle To Player = " + transform.position.GetAngleBetween(Player.Player1.transform.position));
 
-		var velocityAngle = Mathf.Clamp(GetAngleTo(transform.position, Player.Player1.transform.position),-135f,-45f);
+		var velocityAngle = Mathf.Clamp(transform.position.GetAngleBetween(Player.Player1.transform.position),-135f,-45f);
 		var spriteAngle = velocityAngle + 90f;
 
 		Debugger.Log("Angle = " + velocityAngle);
@@ -722,12 +750,12 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		//VoicePlayer.Play();
 
-		yield return PlayAnimationTillDone("Air Dash Antic");
+		yield return animator.PlayAnimationTillDone("Air Dash Antic");
 
-		PlayAnimation("Air Dash");
+		animator.PlayAnimation("Air Dash");
 
 
-		rigidbody.velocity = VectorTools.PolarToCartesian(velocityAngle * Mathf.Deg2Rad, airDashSpeed);
+		rigidbody.velocity = VectorUtilities.AngleToVector(velocityAngle * Mathf.Deg2Rad, airDashSpeed);
 		transform.eulerAngles = new Vector3(0f,0f,spriteAngle);
 
 
@@ -755,7 +783,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 			}
 			if (!vertical && (transform.position.x <= leftEdge || transform.position.x >= rightEdge))
 			{
-				rigidbody.velocity = VectorTools.PolarToCartesian(-90f * Mathf.Deg2Rad, airDashSpeed);
+				rigidbody.velocity = VectorUtilities.AngleToVector(- 90f * Mathf.Deg2Rad, airDashSpeed);
 				transform.eulerAngles = Vector3.zero;
 				vertical = true;
 			}
@@ -766,7 +794,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		transform.position = new Vector3(transform.position.x, groundY, transform.position.z);
 
-		PlayAnimation("Ground Dash Antic");
+		animator.PlayAnimation("Ground Dash Antic");
 
 		var landPlayer = WeaverAudio.Play(Sounds.LandSound, transform.position);
 		landPlayer.AudioSource.pitch = 0.9f;
@@ -785,7 +813,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 		var groundEffect = Instantiate(Prefabs.GroundDashEffect, transform.position + Prefabs.GroundDashEffect.transform.position, Quaternion.identity);
 		var dashSpeed = transform.localScale.x * groundDashSpeed;
 
-		if (FaceDirection == Direction.Left)
+		if (FaceDirection == GrimmDirection.Left)
 		{
 			groundEffect.GetComponent<SpriteRenderer>().flipX = true;
 			groundEffect.transform.position -= Prefabs.GroundDashEffect.transform.position * 2f;
@@ -794,7 +822,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		rigidbody.velocity = new Vector2(dashSpeed,0f);
 
-		PlayAnimation("G Dash");
+		animator.PlayAnimation("G Dash");
 
 		DashSpike.enabled = true;
 
@@ -829,7 +857,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 			}
 		} while (waitTimer < groundDashTime);
 
-		PlayAnimation("Ground Dash Antic");
+		animator.PlayAnimation("Ground Dash Antic");
 
 		waitTimer = 0f;
 
@@ -840,7 +868,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 		do
 		{
 			yield return null;
-			rigidbody.velocity = Decelerate(rigidbody.velocity, new Vector2(0.75f,0f));
+			rigidbody.velocity = VectorUtilities.Decelerate(rigidbody.velocity, new Vector2(0.75f,float.NaN));
 			waitTimer += Time.deltaTime;
 		} while (waitTimer < 0.33f);
 
@@ -888,7 +916,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		yield return TeleportIn();
 
-		PlayAnimation("Pillar Idle");
+		animator.PlayAnimation("Pillar Idle");
 
 		WeaverAudio.Play(Sounds.PillarAntic, transform.position);
 
@@ -923,7 +951,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		//TODO - EnemyKillShake
 
-		yield return PlayAnimationTillDone("Balloon Antic");
+		yield return animator.PlayAnimationTillDone("Balloon Antic");
 
 		//TODO - BROADCAST THE CROWD GASP EVENT
 
@@ -940,7 +968,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		var angle = Random.Range(0f, 360f);
 
-		PlayAnimation("Balloon");
+		animator.PlayAnimation("Balloon");
 
 		FacePlayer();
 
@@ -1048,7 +1076,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 			WeaverEvents.BroadcastEvent("EnemyKillShake");
 
-			yield return PlayAnimationTillDone("Tele In");
+			yield return animator.PlayAnimationTillDone("Tele In");
 			collider.enabled = true;
 			invisible = false;
 		}
@@ -1071,7 +1099,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 			}
 			collider.enabled = false;
 
-			yield return PlayAnimationTillDone("Tele Out");
+			yield return animator.PlayAnimationTillDone("Tele Out");
 
 			renderer.enabled = false;
 			animator.enabled = false;
@@ -1087,24 +1115,24 @@ public class ReignitedKingGrimm : EnemyReplacement
 		if (Player.Player1.transform.position.x <= transform.position.x)
 		{
 			renderer.flipX = textureFacesRight;
-			FaceDirection = Direction.Left;
+			FaceDirection = GrimmDirection.Left;
 			FirebatSpawnpoint.transform.localPosition = new Vector3(fireBatSpawnpointX, FirebatSpawnpoint.transform.localPosition.y, FirebatSpawnpoint.transform.localPosition.z);
 		}
 		else
 		{
 			renderer.flipX = !textureFacesRight;
-			FaceDirection = Direction.Right;
+			FaceDirection = GrimmDirection.Right;
 			FirebatSpawnpoint.transform.localPosition = new Vector3(-fireBatSpawnpointX, FirebatSpawnpoint.transform.localPosition.y, FirebatSpawnpoint.transform.localPosition.z);
 		}
 	}
 
 	bool PlayerInFront()
 	{
-		if (FaceDirection == Direction.Left)
+		if (FaceDirection == GrimmDirection.Left)
 		{
 			return Player.Player1.transform.position.x < transform.position.x;
 		}
-		else if (FaceDirection == Direction.Right)
+		else if (FaceDirection == GrimmDirection.Right)
 		{
 			return Player.Player1.transform.position.x > transform.position.x;
 		}
@@ -1112,11 +1140,11 @@ public class ReignitedKingGrimm : EnemyReplacement
 	}
 
 
-	GrimmAttackMode GetRandomAttackMode()
+	/*GrimmAttackMode GetRandomAttackMode()
 	{
 		var values = Enum.GetValues(typeof(GrimmAttackMode));
 		return (GrimmAttackMode)values.GetValue(UnityEngine.Random.Range(1, values.GetLength(0) - 1));
-	}
+	}*/
 
 	void PlayTeleportParticles()
 	{
@@ -1127,12 +1155,12 @@ public class ReignitedKingGrimm : EnemyReplacement
 		teleSmokeFront.Play();
 	}
 
-	float GetAngleTo(Vector3 Source, Vector3 Destination)
+	/*float GetAngleTo(Vector3 Source, Vector3 Destination)
 	{
 		return Mathf.Atan2(Destination.y - Source.y, Destination.x - Source.x) * Mathf.Rad2Deg;
-	}
+	}*/
 
-	IEnumerator RunForPeriod(float time, Action action)
+	/*IEnumerator RunForPeriod(float time, Action action)
 	{
 		yield return RunForPeriod(time, t => action());
 	}
@@ -1178,10 +1206,10 @@ public class ReignitedKingGrimm : EnemyReplacement
 			yield return null;
 			timer += Time.deltaTime;
 		} while (action(timer));
-	}
+	}*/
 
 
-	Vector2 Decelerate(Vector2 source, Vector2 deceleration)
+	/*Vector2 Decelerate(Vector2 source, Vector2 deceleration)
 	{
 		if (deceleration.x > 0f)
 		{
@@ -1192,7 +1220,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 			source.y *= deceleration.y;
 		}
 		return source;
-	}
+	}*/
 
 	public void ReachedHealthStage(int stage)
 	{
@@ -1245,7 +1273,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		rigidbody.velocity = Vector2.zero;
 
-		yield return PlayAnimationTillDone("Explode Antic");
+		yield return animator.PlayAnimationTillDone("Explode Antic");
 
 		VoicePlayer.Play(Sounds.GrimmScream);
 
@@ -1261,7 +1289,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		BatAudioLoop.gameObject.SetActive(true);
 
-		yield return PlayAnimationTillDone("Explode");
+		yield return animator.PlayAnimationTillDone("Explode");
 
 		MakeVisible(false);
 
@@ -1289,7 +1317,7 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		yield return ReformSprite.PlayAnimationTillDone("Default");
 		yield return ReformSprite.PlayAnimationTillDone("Default Loop");
-		//yield return PlayAnimationTillDone("Reform");
+		//yield return animator.PlayAnimationTillDone("Reform");
 
 		ReformSprite.gameObject.SetActive(false);
 
@@ -1377,12 +1405,12 @@ public class ReignitedKingGrimm : EnemyReplacement
 		var endingTune = WeaverAudio.Play(Sounds.EndingTune, transform.position, autoPlay: false);
 		endingTune.AudioSource.PlayDelayed(0.3f);
 
-		SpawnRandomObjects(EffectAssets.GhostSlash1Prefab, transform.position, 8, 8, 2f, 35f, 0f, 360f);
-		SpawnRandomObjects(EffectAssets.GhostSlash2Prefab, transform.position, 2, 3, 2f, 35f, 0f, 360f);
+		TransformUtilities.SpawnRandomObjects(EffectAssets.GhostSlash1Prefab, transform.position, 8, 8, 2f, 35f, 0f, 360f);
+		TransformUtilities.SpawnRandomObjects(EffectAssets.GhostSlash2Prefab, transform.position, 2, 3, 2f, 35f, 0f, 360f);
 
 		DeathBurst.SetActive(true);
 
-		PlayAnimation("Death Stun");
+		animator.PlayAnimation("Death Stun");
 
 		FacePlayer(false);
 
@@ -1398,22 +1426,13 @@ public class ReignitedKingGrimm : EnemyReplacement
 			{
 				snapshot.snapshot.TransitionTo(1f);
 			}
-			/*var snapShot = gameMixer.FindSnapshot("Silent");
-			if (snapShot != null)
-			{
-				snapShot.TransitionTo(1f);
-			}
-			else
-			{
-				Debugger.Log("SNAPSHOT IS NULL");
-			}*/
 		}
 
 		yield return new WaitForSeconds(1f);
 
 		//TODO - HIDE HUD
 
-		var jitterRoutine = StartCoroutine(JitterObject(gameObject,new Vector3(0.2f,0.2f,0f)));
+		var jitterRoutine = StartCoroutine(TransformUtilities.JitterObject(gameObject,new Vector3(0.2f,0.2f,0f)));
 
 		WeaverEvents.BroadcastEvent("HEARTBEAT FAST");
 
@@ -1470,12 +1489,12 @@ public class ReignitedKingGrimm : EnemyReplacement
 
 		WeaverEvents.BroadcastEvent("GRIMM DEFEATED");
 
-		EndBossBattle(2f);
+		//EndBossBattle(2f);
 
 		yield break;
 	}
 
-	IEnumerator JitterObject(GameObject obj, Vector3 amount)
+	/*IEnumerator JitterObject(GameObject obj, Vector3 amount)
 	{
 		Vector3 startPosition = obj.transform.position;
 
@@ -1501,5 +1520,5 @@ public class ReignitedKingGrimm : EnemyReplacement
 				rigid.velocity = new Vector2(Mathf.Cos(angleNum) * Mathf.Deg2Rad,Mathf.Sin(angleNum) * Mathf.Deg2Rad);
 			}
 		}
-	}
+	}*/
 }

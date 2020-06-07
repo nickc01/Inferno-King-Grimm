@@ -493,6 +493,7 @@ GameObject:
   - component: {fileID: 114231667555609428}
   - component: {fileID: 50377839318278512}
   - component: {fileID: 114917356512304760}
+  - component: {fileID: 114920697822161758}
   m_Layer: 11
   m_Name: Reignited King Grimm
   m_TagString: Boss
@@ -1650,6 +1651,17 @@ MonoBehaviour:
   MediumGeo: 0
   LargeGeo: 0
   bossHealthStages: 4
+--- !u!114 &114920697822161758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2068013953, guid: dca9aedea291fb34eb576d841eba1ec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114944724333835108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23025,7 +23037,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -349214895
-  m_SortingLayer: 0
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -23415,7 +23427,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -349214895
-  m_SortingLayer: 0
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300026, guid: a5d0959b8e4d4bc468cc0202d3f60085, type: 3}
   m_Color: {r: 1, g: 0.2426471, b: 0.2426471, a: 1}
@@ -23503,7 +23515,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -349214895
-  m_SortingLayer: 0
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300024, guid: 2a314f2be3cbf7347bfced83d62e9e0c, type: 3}
   m_Color: {r: 1, g: 0.227451, b: 0.227451, a: 1}

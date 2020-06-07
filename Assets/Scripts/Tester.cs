@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Components;
-using WeaverCore.Helpers;
+using WeaverCore.Enums;
+using WeaverCore.Utilities;
 
 public class Tester : MonoBehaviour
 {

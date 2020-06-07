@@ -823,64 +823,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4018655830644162, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4589837798688794, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 199680077292396416, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 199680077292396416, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_MaskInteraction
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 199680077292396416, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortingLayerID
-      value: -97851069
-      objectReference: {fileID: 0}
-    - target: {fileID: 199680077292396416, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199261953408957066, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortingLayerID
-      value: -97851069
-      objectReference: {fileID: 0}
-    - target: {fileID: 199261953408957066, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199135416160936312, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortingLayerID
-      value: -97851069
-      objectReference: {fileID: 0}
-    - target: {fileID: 199135416160936312, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199982121120443656, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortingLayerID
-      value: -97851069
-      objectReference: {fileID: 0}
-    - target: {fileID: 199982121120443656, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-        type: 2}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
   m_IsPrefabParent: 0

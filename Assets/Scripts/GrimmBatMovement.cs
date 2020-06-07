@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
-
+using WeaverCore.Enums;
+using WeaverCore.Utilities;
 using Random = UnityEngine.Random;
 
 public class GrimmBatMovement : MonoBehaviour 

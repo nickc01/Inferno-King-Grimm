@@ -6,7 +6,7 @@ using WeaverCore.Features;
 using System.Reflection;
 using System;
 using System.IO;
-using WeaverCore.Helpers;
+using WeaverCore.Utilities;
 
 [Serializable]
 public class DebugImage

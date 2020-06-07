@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Extensions;
 using WeaverCore;
+using WeaverCore.Utilities;
 
 public class Firebat : MonoBehaviour 
 {
 	public float Angle { get; private set; }
-	public Direction GeneralDirection { get; private set; }
+	public GrimmDirection GeneralDirection { get; private set; }
 	public float DirectionAngle { get; private set; }
 
 	float XVelocity = 0.0f;
@@ -28,7 +28,7 @@ public class Firebat : MonoBehaviour
 		//rigidbody.velocity.
 	}
 
-	public static Firebat Spawn(float angle, float velocity, Direction direction, Vector3 position)
+	public static Firebat Spawn(float angle, float velocity, GrimmDirection direction, Vector3 position)
 	{
 		var fireBat = GameObject.Instantiate(ReignitedKingGrimm.Prefabs.FirebatPrefab, position, Quaternion.identity).GetComponent<Firebat>();
 
@@ -40,7 +40,7 @@ public class Firebat : MonoBehaviour
 		fireBat.XVelocity = velocity;
 		fireBat.GeneralDirection = direction;
 
-		if (direction == Direction.Right)
+		if (direction == GrimmDirection.Right)
 		{
 			fireBat.SetVelocity(new Vector2(velocity, 0));
 			fireBat.renderer.flipX = true;
@@ -50,7 +50,7 @@ public class Firebat : MonoBehaviour
 			fireBat.SetVelocity(new Vector2(-velocity, 0));
 		}
 
-		if (direction == Direction.Right)
+		if (direction == GrimmDirection.Right)
 		{
 			fireBat.DirectionAngle = angle;
 		}
@@ -58,7 +58,7 @@ public class Firebat : MonoBehaviour
 		{
 			fireBat.DirectionAngle = 180 - angle;
 		}
-		fireBat.SetVelocity(fireBat.DirectionAngle.RotationToVector() * velocity);
+		fireBat.SetVelocity(fireBat.DirectionAngle.DegreesToVector() * velocity);
 
 		return fireBat;
 	}

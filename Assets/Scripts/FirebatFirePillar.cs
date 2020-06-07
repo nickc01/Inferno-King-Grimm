@@ -10,7 +10,7 @@ public class FirebatFirePillar : MonoBehaviour
 
 		fireBatPillar.gameObject.SetActive(false);
 
-		if (grimm.FaceDirection == Direction.Left)
+		if (grimm.FaceDirection == GrimmDirection.Left)
 		{
 			fireBatPillar.transform.localPosition = new Vector3(-fireBatPillar.transform.localPosition.x, fireBatPillar.transform.localPosition.y, fireBatPillar.transform.localPosition.z);
 		}

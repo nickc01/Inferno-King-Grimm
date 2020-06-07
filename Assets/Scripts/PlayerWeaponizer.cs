@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Enums;
 
 public class PlayerWeaponizer : MonoBehaviour 
 {

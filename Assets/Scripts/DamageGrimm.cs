@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Components;
-using WeaverCore.Helpers;
+using WeaverCore.DataTypes;
+using WeaverCore.Enums;
 using WeaverCore.Interfaces;
-using WeaverCore.Helpers;
+using WeaverCore.Utilities;
 
 public class DamageGrimm : MonoBehaviour 
 {
