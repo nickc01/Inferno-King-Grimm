@@ -96,7 +96,7 @@ public class GrimmBall : MonoBehaviour
 
 	public static GrimmBall Spawn(Vector3 position, float tweenY, float force, float xVelocity)
 	{
-		var instance = Instantiate(ReignitedKingGrimm.Prefabs.GrimmBall, position, Quaternion.identity);
+		var instance = Instantiate(MainPrefabs.Instance.GrimmBall, position, Quaternion.identity);
 		instance.TweenY = tweenY;
 		instance.Force = force;
 		instance.XVelocity = xVelocity;

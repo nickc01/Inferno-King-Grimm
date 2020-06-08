@@ -7,6 +7,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Prefabs", menuName = "Main Prefabs")]
 public class MainPrefabs : ScriptableObject
 {
+	public static MainPrefabs Instance;
+
 	public GameObject FirebatPrefab;
 	public GameObject FirebatPillarPrefab;
 	public GameObject AirDashEffect;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Enums;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public class FirebatFirePillar : MonoBehaviour
 {
 	public static FirebatFirePillar Spawn(ReignitedKingGrimm grimm, bool autoPlay = true)
 	{
-		var fireBatPillar = GameObject.Instantiate(ReignitedKingGrimm.Prefabs.FirebatPillarPrefab,grimm.transform,false).GetComponent<FirebatFirePillar>();
+		var fireBatPillar = GameObject.Instantiate(grimm.Prefabs.FirebatPillarPrefab,grimm.transform,false).GetComponent<FirebatFirePillar>();
 
 		fireBatPillar.gameObject.SetActive(false);
 

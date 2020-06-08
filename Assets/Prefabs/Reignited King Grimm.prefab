@@ -494,6 +494,12 @@ GameObject:
   - component: {fileID: 50377839318278512}
   - component: {fileID: 114917356512304760}
   - component: {fileID: 114920697822161758}
+  - component: {fileID: 114240577250203990}
+  - component: {fileID: 114815275830715274}
+  - component: {fileID: 114998231595251052}
+  - component: {fileID: 114880484353509956}
+  - component: {fileID: 114988410525424586}
+  - component: {fileID: 114172869002225528}
   m_Layer: 11
   m_Name: Reignited King Grimm
   m_TagString: Boss
@@ -1424,6 +1430,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114172869002225528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e7fe9d8b026134187f93348bed9cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  excludeFromRandomizer: 1
 --- !u!114 &114231667555609428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1435,6 +1453,20 @@ MonoBehaviour:
   m_Script: {fileID: -455627561, guid: dca9aedea291fb34eb576d841eba1ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114240577250203990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa70bf65afcc4f44a8dcfe0ff4818fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  excludeFromRandomizer: 0
+  highAngle: 25
+  lowAngle: -15
 --- !u!114 &114252791202826470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1594,6 +1626,24 @@ MonoBehaviour:
   startColor: {r: 1, g: 0.24313727, b: 0.24313727, a: 1}
   fadeOutColor: {r: 0, g: 0, b: 0, a: 0}
   fadeDuration: 1
+--- !u!114 &114815275830715274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff426e46cd88bc649a25df4390e961de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  excludeFromRandomizer: 0
+  evadeSpeed: 25
+  groundSlashSpeed: 50
+  uppercutHorizontalSpeed: 10
+  uppercutVerticalSpeed: 45
+  upperCutHeightLimit: 17.3
+  upperCutTimeLimit: 0.35
 --- !u!114 &114879189269301354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1608,27 +1658,24 @@ MonoBehaviour:
   featureEnabled: 1
   enemyToReplace: Nightmare Grimm Boss
   prefabs: {fileID: 11400000, guid: 526e6c24b0dec13498110c20a7976c46, type: 2}
-  groundY: 8.3
-  leftEdge: 69.7
-  rightEdge: 102.23
-  highAngle: 25
-  lowAngle: -15
+  StartingPosition: {x: 85.77, y: 13.5, z: 0}
+--- !u!114 &114880484353509956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa54c21625c2a749921daf6f206d8b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  excludeFromRandomizer: 0
   airDashSpeed: 55
   flameSpawnRate: 0.025
   flameSpawnOffset: {x: 0, y: -1, z: 0.001}
   groundDashSpeed: 58
   groundDashTime: 0.25
-  spikeWaitTime: 1.35
-  pillarsToSpawn: 4
-  pillarSpawnRate: 0.75
-  evadeSpeed: 25
-  groundSlashSpeed: 50
-  uppercutHorizontalSpeed: 10
-  uppercutVerticalSpeed: 45
-  upperCutHeightLimit: 17.3
-  upperCutTimeLimit: 0.35
-  BatAudioLoop: {fileID: 82133888540661686}
-  freezePreset: 5
 --- !u!114 &114917356512304760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1674,6 +1721,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doFlashEffects: 1
+--- !u!114 &114988410525424586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553edded97838964589fcc897c5b9bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  excludeFromRandomizer: 0
+  pillarsToSpawn: 4
+  pillarSpawnRate: 0.75
+--- !u!114 &114998231595251052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e5b7514225bf64a8ebce3f470f71e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  excludeFromRandomizer: 0
+  spikeWaitTime: 1.35
 --- !u!198 &198053137438636322
 ParticleSystem:
   m_ObjectHideFlags: 1

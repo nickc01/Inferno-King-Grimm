@@ -182,6 +182,6 @@ public class EnemyTester : MonoBehaviour
 		}
 		//yield return new WaitForSeconds(10.0f);
 		//Debugger.Log("Done Waiting");
-		Enemy.EndBossBattle(0.0f);
+		Boss.EndBossBattle(0.0f);
 	}
 }

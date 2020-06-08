@@ -929,6 +929,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlashBox: {fileID: 352679036}
   AttackTime: 0.3
+--- !u!1 &1622071870 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1950747459824650, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1174126938}
+--- !u!114 &1622071871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1622071870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa70bf65afcc4f44a8dcfe0ff4818fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  excludeFromRandomizer: 0
+  highAngle: 25
+  lowAngle: -15
 --- !u!1 &1649998646
 GameObject:
   m_ObjectHideFlags: 0

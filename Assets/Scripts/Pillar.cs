@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Components;
 
-public class Pillar : MonoBehaviour {
+public class Pillar : MonoBehaviour
+{
 
 	//[SerializeField]
 	//AudioClip FlameChargeSound;
@@ -16,10 +18,24 @@ public class Pillar : MonoBehaviour {
 	[SerializeField]
 	AudioClip FlameExplode;
 
+	DamageHero damager;
+
+	public bool DamagePlayer
+	{
+		get
+		{
+			return damager.enabled;
+		}
+		set
+		{
+			damager.enabled = value;
+		}
+	}
 
 	// Use this for initialization
 	void Start () 
 	{
+		damager = GetComponentInChildren<DamageHero>(true);
 		StartCoroutine(PillarRoutine());
 	}
 	

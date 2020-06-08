@@ -250,7 +250,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1081143158579142}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -6398,7 +6398,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -349214895
-  m_SortingLayer: 0
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 71051c8bd87840c4ebb74d17d533512e, type: 3}
   m_Color: {r: 0.9852941, g: 0.3115268, b: 0.3115268, a: 0.5372549}

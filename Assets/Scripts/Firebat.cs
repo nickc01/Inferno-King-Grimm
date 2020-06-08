@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Enums;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
@@ -30,7 +31,7 @@ public class Firebat : MonoBehaviour
 
 	public static Firebat Spawn(float angle, float velocity, GrimmDirection direction, Vector3 position)
 	{
-		var fireBat = GameObject.Instantiate(ReignitedKingGrimm.Prefabs.FirebatPrefab, position, Quaternion.identity).GetComponent<Firebat>();
+		var fireBat = GameObject.Instantiate(MainPrefabs.Instance.FirebatPrefab, position, Quaternion.identity).GetComponent<Firebat>();
 
 		fireBat.rigidbody = fireBat.GetComponent<Rigidbody2D>();
 		fireBat.renderer = fireBat.GetComponent<SpriteRenderer>();

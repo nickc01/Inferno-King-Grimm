@@ -10,7 +10,6 @@ public class GrimmSounds : MonoBehaviour
 	public AudioClip GrimmCapeOpen;
 	public AudioClip GrimmBatFire;
 
-	//public AudioClip AirDashAntic;
 	public AudioClip AirDash;
 	public AudioClip LandSound;
 	public AudioClip GroundDash;
