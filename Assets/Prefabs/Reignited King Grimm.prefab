@@ -1659,6 +1659,7 @@ MonoBehaviour:
   enemyToReplace: Nightmare Grimm Boss
   prefabs: {fileID: 11400000, guid: 526e6c24b0dec13498110c20a7976c46, type: 2}
   StartingPosition: {x: 85.77, y: 13.5, z: 0}
+  BatAudioLoop: {fileID: 82133888540661686}
 --- !u!114 &114880484353509956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1687,7 +1688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8c263aafd69b64d9f6bd11e81ebba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 500
   DecreaseHealth: 1
   Invincible: 0
   DeflectBlows: 0

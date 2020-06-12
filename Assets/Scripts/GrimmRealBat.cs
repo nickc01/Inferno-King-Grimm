@@ -9,11 +9,13 @@ public class GrimmRealBat : HealthManager
 {
 	public override bool Hit(HitInfo hit)
 	{
-		if (IsValidHit(hit) == HitResult.Valid)
+		Health = int.MaxValue - 1;
+		return base.Hit(hit);
+		/*if (IsValidHit(hit) == HitResult.Valid)
 		{
 			PlayHitEffects(hit);
 			return true;
 		}
-		return false;
+		return false;*/
 	}
 }

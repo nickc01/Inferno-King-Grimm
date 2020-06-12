@@ -17,6 +17,9 @@ using WeaverCore.WeaverAssets;
 public class ReignitedKingGrimm : BossReplacement
 {
 	private List<GrimmMove> AllMoves;
+	private BalloonMove balloonMove;
+
+	bool balloonMoveNext = false;
 
 	private readonly List<GrimmMove> possibleMoveSets = new List<GrimmMove>();
 
@@ -66,7 +69,7 @@ public class ReignitedKingGrimm : BossReplacement
 
 	[Header("Bat Hit Settings")]
 	[SerializeField]
-	private readonly AudioSource BatAudioLoop;
+	private AudioSource BatAudioLoop;
 	private GrimmBatController BatController;
 	[Header("Stun Settings")]
 	[SerializeField]
@@ -128,6 +131,7 @@ public class ReignitedKingGrimm : BossReplacement
 	private void Start()
 	{
 		AllMoves = GetComponents<GrimmMove>().ToList();
+		balloonMove = GetComponent<BalloonMove>();
 
 		Debugger.Log("ENEMY HAS STARTED");
 
@@ -172,6 +176,16 @@ public class ReignitedKingGrimm : BossReplacement
 		GrimmAnimator.enabled = false;
 		spriteRenderer.enabled = false;
 		GrimmCollider.enabled = false;
+
+		var quarterHealth = GrimmHealth.Health / 4;
+		var thirdHealth = GrimmHealth.Health / 3;
+
+		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - quarterHealth,DoBalloonMove);
+		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 2),DoBalloonMove);
+		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 3), DoBalloonMove);
+		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth), Stun);
+		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth * 2), Stun);
+
 	}
 
 	public GrimmMove GetRandomMove()
@@ -208,13 +222,21 @@ public class ReignitedKingGrimm : BossReplacement
 		while (true)
 		{
 			GrimmMove NextMove = null;
-			do
+			if (balloonMoveNext)
 			{
-				NextMove = GetRandomMove();
-			} while (CurrentMove == NextMove);
-			CurrentMove = NextMove;
+				yield return balloonMove.DoMove();
+				balloonMoveNext = false;
+			}
+			else
+			{
+				do
+				{
+					NextMove = GetRandomMove();
+				} while (CurrentMove == NextMove);
+				CurrentMove = NextMove;
 
-			yield return CurrentMove.DoMove();
+				yield return CurrentMove.DoMove();
+			}
 		}
 	}
 
@@ -282,12 +304,18 @@ public class ReignitedKingGrimm : BossReplacement
 		teleSmokeFront.Play();
 	}
 
-	public void ReachedHealthStage(int stage)
+	public void Stun()
 	{
-		Debugger.Log("AT HEALTH STAGE = " + stage);
+		//Debugger.Log("AT HEALTH STAGE = " + stage);
+		StartCoroutine(StunRoutine());
 	}
 
-	private IEnumerator Stun()
+	public void DoBalloonMove()
+	{
+		balloonMoveNext = true;
+	}
+
+	private IEnumerator StunRoutine()
 	{
 		if (Stunned == true)
 		{
@@ -306,8 +334,8 @@ public class ReignitedKingGrimm : BossReplacement
 		transform.rotation = Quaternion.identity;
 		damager.enabled = false;
 		GrimmHealth.Invincible = true;
-		GrimmRigidbody.constraints = RigidbodyConstraints2D.FreezePosition;
 		GrimmRigidbody.velocity = Vector2.zero;
+		GrimmRigidbody.Sleep();
 
 		CurrentMove.OnStun();
 
@@ -389,7 +417,6 @@ public class ReignitedKingGrimm : BossReplacement
 		yield return new WaitForSeconds(0.6f);
 
 		Stunned = false;
-		GrimmRigidbody.constraints = RigidbodyConstraints2D.None;
 		damager.enabled = true;
 		GrimmHealth.Invincible = false;
 
@@ -425,8 +452,8 @@ public class ReignitedKingGrimm : BossReplacement
 		//DustUppercut.Stop();
 		damager.enabled = false;
 		GrimmHealth.Invincible = true;
-		GrimmRigidbody.constraints = RigidbodyConstraints2D.FreezePosition;
 		GrimmRigidbody.velocity = Vector2.zero;
+		GrimmRigidbody.Sleep();
 
 		CurrentMove.OnDeath();
 

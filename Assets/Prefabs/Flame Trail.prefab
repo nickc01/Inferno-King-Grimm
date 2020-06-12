@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 198332095597222384}
   - component: {fileID: 199053643520542890}
   - component: {fileID: 58401562096274802}
+  - component: {fileID: 114803447494589726}
   m_Layer: 22
   m_Name: Flame Trail
   m_TagString: Untagged
@@ -57,6 +58,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3.4
+--- !u!114 &114803447494589726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1982210667780674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -45210390, guid: dca9aedea291fb34eb576d841eba1ec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageDealt: 2
+  HazardType: 1
+  ShadowDashHazard: 0
 --- !u!198 &198332095597222384
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -93,7 +108,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -700977600
+  randomSeed: -584794827
   InitialModule:
     serializedVersion: 3
     enabled: 1

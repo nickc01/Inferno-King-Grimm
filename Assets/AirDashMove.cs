@@ -209,5 +209,6 @@ public class AirDashMove : GrimmMove
 	{
 		DashSpike.enabled = false;
 		body.velocity = Vector2.zero;
+		body.Sleep();
 	}
 }
