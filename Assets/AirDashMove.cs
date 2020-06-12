@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Enums;
 using WeaverCore.Utilities;
 
 public class AirDashMove : GrimmMove
@@ -126,6 +127,7 @@ public class AirDashMove : GrimmMove
 		landPlayer.AudioSource.pitch = 0.9f;
 
 		//TODO : Make Camera Shake
+		WeaverCam.Instance.Shaker.Shake(ShakeType.EnemyKillShake);
 
 		Grimm.FacePlayer();
 		transform.rotation = Quaternion.identity;

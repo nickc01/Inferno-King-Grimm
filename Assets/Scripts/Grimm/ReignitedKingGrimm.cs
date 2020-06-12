@@ -70,7 +70,7 @@ public class ReignitedKingGrimm : BossReplacement
 	private GrimmBatController BatController;
 	[Header("Stun Settings")]
 	[SerializeField]
-	private readonly WeaverGameManager.TImeFreezePreset freezePreset;
+	private readonly WeaverGameManager.TimeFreezePreset freezePreset;
 
 
 	public bool Invisible
@@ -231,7 +231,8 @@ public class ReignitedKingGrimm : BossReplacement
 
 			Invisible = false;
 
-			WeaverEvents.BroadcastEvent("EnemyKillShake");
+			//WeaverEvents.BroadcastEvent("EnemyKillShake");
+			WeaverCam.Instance.Shaker.Shake(ShakeType.EnemyKillShake);
 
 			yield return GrimmAnimator.PlayAnimationTillDone("Tele In");
 			GrimmCollider.enabled = true;

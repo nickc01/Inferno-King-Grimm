@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Enums;
 using WeaverCore.Utilities;
 
 public class GroundSlashMove : GrimmMove
@@ -257,8 +258,6 @@ public class GroundSlashMove : GrimmMove
 
 		StopCoroutine(lockRoutine);
 
-		//TODO -- Activate Red Flash 1
-
 		DustUppercut.Stop();
 
 		var explodeSF = WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);
@@ -266,7 +265,7 @@ public class GroundSlashMove : GrimmMove
 
 		body.velocity = Vector2.zero;
 
-		//TODO Shake Camera - AverageShake
+		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
 
 		UppercutExplosion.Play();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Enums;
 using Random = UnityEngine.Random;
 
 public class SpikesController : MonoBehaviour 
@@ -63,6 +64,7 @@ public class SpikesController : MonoBehaviour
 		yield return new WaitForSeconds(0.15f);
 
 		//TODO - Shake Camera
+		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
 
 		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
 

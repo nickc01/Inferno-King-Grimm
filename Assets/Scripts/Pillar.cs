@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Components;
+using WeaverCore.Enums;
 
 public class Pillar : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class Pillar : MonoBehaviour
 
 		yield return new WaitForSeconds(0.5f);
 
-		//TODO - Shake Camera - EnemyKillShake
+		WeaverCam.Instance.Shaker.Shake(ShakeType.EnemyKillShake);
 
 		WeaverAudio.Play(FlameExplode, transform.position);
 

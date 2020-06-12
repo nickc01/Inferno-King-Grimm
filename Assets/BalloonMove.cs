@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Enums;
 using WeaverCore.Utilities;
 using Random = UnityEngine.Random;
 
@@ -39,12 +40,11 @@ public class BalloonMove : GrimmMove
 
 		yield return Grimm.TeleportIn();
 
-		//TODO - EnemyKillShake
-
 		yield return GrimmAnimator.PlayAnimationTillDone("Balloon Antic");
 
 		//TODO - BROADCAST THE CROWD GASP EVENT
 
+		WeaverEvents.BroadcastEvent("CROWD GASP");
 		//EventReceiver.BroadcastEvent("CROWD GASP");
 
 		//TODO Broadcast HEART HALFWAY EVENT
@@ -56,6 +56,8 @@ public class BalloonMove : GrimmMove
 
 		//TODO Broadcast CROWD CLAP DELAY EVENT
 
+		WeaverEvents.BroadcastEvent("CROWD CLAP DELAY");
+
 		var angle = Random.Range(0f, 360f);
 
 		GrimmAnimator.PlayAnimation("Balloon");
@@ -63,6 +65,9 @@ public class BalloonMove : GrimmMove
 		Grimm.FacePlayer();
 
 		BalloonCollider.SetActive(true);
+
+		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
+		WeaverCam.Instance.Shaker.SetRumble(RumbleType.RumblingSmall);
 
 		BalloonParticles.Play();
 
@@ -91,6 +96,8 @@ public class BalloonMove : GrimmMove
 			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 3f : 5f, -10f, -4.5f);
 		}
 
+		WeaverCam.Instance.Shaker.SetRumble(RumbleType.None);
+
 		yield return new WaitForSeconds(0.75f);
 
 		BalloonParticles.Stop();
@@ -100,6 +107,8 @@ public class BalloonMove : GrimmMove
 		BalloonCollider.SetActive(false);
 
 		//TODO - Broadcast CROWD IDLE EVENT
+
+		WeaverEvents.BroadcastEvent("CROWD IDLE");
 
 		BalloonFireballShoot.SetActive(false);
 
@@ -112,6 +121,7 @@ public class BalloonMove : GrimmMove
 
 	public override void OnStun()
 	{
+		WeaverCam.Instance.Shaker.SetRumble(RumbleType.None);
 		BalloonFireballShoot.SetActive(false);
 		BalloonParticles.Stop();
 	}
