@@ -6,14 +6,14 @@ using WeaverCore;
 
 public abstract class GrimmMove : MonoBehaviour 
 {
-	private ReignitedKingGrimm grimm;
-	public ReignitedKingGrimm Grimm
+	private InfernoKingGrimm grimm;
+	public InfernoKingGrimm Grimm
 	{
 		get
 		{
 			if (grimm == null)
 			{
-				grimm = GetComponent<ReignitedKingGrimm>();
+				grimm = GetComponent<InfernoKingGrimm>();
 			}
 			return grimm;
 		}

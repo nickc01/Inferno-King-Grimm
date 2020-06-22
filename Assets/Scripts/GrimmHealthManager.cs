@@ -31,7 +31,7 @@ public class GrimmHealthManager : HealthManager
 	}
 
 
-	ReignitedKingGrimm grimm;
+	InfernoKingGrimm grimm;
 
 	[SerializeField]
 	int bossHealthStages = 4;
@@ -66,7 +66,7 @@ public class GrimmHealthManager : HealthManager
 
 	void Start()
 	{
-		grimm = GetComponent<ReignitedKingGrimm>();
+		grimm = GetComponent<InfernoKingGrimm>();
 		//nextHealthMilestone = Health - (Health / bossHealthStages);
 	}
 

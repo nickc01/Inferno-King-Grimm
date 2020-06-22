@@ -81,7 +81,7 @@ public class Firebat : MonoBehaviour
 		return Spawn(angle, velocity, direction, position);
 	}*/
 
-	public static Firebat Spawn(float angle, float velocity, ReignitedKingGrimm grimm, Vector3? position = null)
+	public static Firebat Spawn(float angle, float velocity, InfernoKingGrimm grimm, Vector3? position = null)
 	{
 		Debugger.Log("Fire bat D");
 		if (position == null)
@@ -92,7 +92,7 @@ public class Firebat : MonoBehaviour
 		return Spawn(angle, velocity, grimm.FaceDirection,position.Value);
 	}
 
-	public static IEnumerator SendFirebatAsync(ReignitedKingGrimm grimm, float angle, float audioPitch = 1.0f, float speedMultiplier = 1f)
+	public static IEnumerator SendFirebatAsync(InfernoKingGrimm grimm, float angle, float audioPitch = 1.0f, float speedMultiplier = 1f)
 	{
 		Debugger.Log("FIre bat C");
 		var fireBatVelocity = grimm.transform.localScale.x * 20f * speedMultiplier;
@@ -108,7 +108,7 @@ public class Firebat : MonoBehaviour
 		yield break;
 	}
 
-	public static void SendFirebat(ReignitedKingGrimm grimm, float angle, float pitch = 1.0f, float speedMultiplier = 1f)
+	public static void SendFirebat(InfernoKingGrimm grimm, float angle, float pitch = 1.0f, float speedMultiplier = 1f)
 	{
 		Debugger.Log("FIre bat B");
 		CoroutineUtilities.StartCoroutine(SendFirebatAsync(grimm, angle, pitch, speedMultiplier));

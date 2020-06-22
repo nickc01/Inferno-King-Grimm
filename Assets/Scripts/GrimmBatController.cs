@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrimmBatController : MonoBehaviour 
 {
-	public static ReignitedKingGrimm CurrentGrimm { get; private set; }
+	public static InfernoKingGrimm CurrentGrimm { get; private set; }
 
 
 	GrimmBatMovement[] grimmBats;
@@ -14,7 +14,7 @@ public class GrimmBatController : MonoBehaviour
 		grimmBats = GetComponentsInChildren<GrimmBatMovement>(true);
 	}
 
-	public void SendOut(ReignitedKingGrimm grimm)
+	public void SendOut(InfernoKingGrimm grimm)
 	{
 		CurrentGrimm = grimm;
 		foreach (var bat in grimmBats)

@@ -13,18 +13,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: Reignited King Grimm Mod
   modName: Reignited Grimm Mod
-  modAssemblyName: ReignitedKingGrimm
+  modAssemblyName: Assembly-CSharp
   modTypeName: ReignitedGrimmMod
   modListHashCode: 860336640
   features:
   - feature: {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
       type: 2}
-    TypeName: WeaverCore.Features.EnemyReplacement
+    TypeName: WeaverCore.Features.Boss
     AssemblyName: WeaverCore
   featuresRaw:
   - {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  selectedFeatureIndex: 0
+  selectedFeatureIndex: 1
   selectedModIndex: 0
   registryEnabled: 1

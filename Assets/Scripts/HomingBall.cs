@@ -118,12 +118,12 @@ public class HomingBall : MonoBehaviour
 		}
 	}
 
-	public static HomingBall Fire(ReignitedKingGrimm grimm, Vector3 Position, float spawnAngle, float spawnVelocity, float rotationSpeed, bool spawnFlamePillar = true)
+	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, float spawnAngle, float spawnVelocity, float rotationSpeed, bool spawnFlamePillar = true)
 	{
 		return Fire(grimm, Position, VectorUtilities.AngleToVector(spawnAngle * Mathf.Deg2Rad,spawnVelocity), rotationSpeed, spawnFlamePillar);
 	}
 
-	public static HomingBall Fire(ReignitedKingGrimm grimm, Vector3 Position, Vector2 spawnVector, float rotationSpeed, bool spawnFlamePillar = true)
+	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, Vector2 spawnVector, float rotationSpeed, bool spawnFlamePillar = true)
 	{
 		var newBall = Instantiate(MainPrefabs.Instance.HomingBallPrefab,Position,Quaternion.identity);
 

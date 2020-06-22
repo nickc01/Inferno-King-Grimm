@@ -14,7 +14,7 @@ using WeaverCore.WeaverAssets;
 
 
 [RequireComponent(typeof(DamageHero))]
-public class ReignitedKingGrimm : BossReplacement
+public class InfernoKingGrimm : BossReplacement
 {
 	private List<GrimmMove> AllMoves;
 	private BalloonMove balloonMove;

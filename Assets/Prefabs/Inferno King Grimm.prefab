@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 114988410525424586}
   - component: {fileID: 114172869002225528}
   m_Layer: 11
-  m_Name: Reignited King Grimm
+  m_Name: Inferno King Grimm
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1664,7 +1664,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1950747459824650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf8a7c08bdbf2954e9c43693e5e02de4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4892dfad446576149b4f9f03956d145e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   featureEnabled: 1

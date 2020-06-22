@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FirebatFirePillar : MonoBehaviour 
 {
-	public static FirebatFirePillar Spawn(ReignitedKingGrimm grimm, bool autoPlay = true)
+	public static FirebatFirePillar Spawn(InfernoKingGrimm grimm, bool autoPlay = true)
 	{
 		var fireBatPillar = GameObject.Instantiate(grimm.Prefabs.FirebatPillarPrefab,grimm.transform,false).GetComponent<FirebatFirePillar>();
 
