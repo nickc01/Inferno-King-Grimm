@@ -39,6 +39,9 @@ public class GrimmBall : MonoBehaviour
 
 	IEnumerator MainAction()
 	{
+		Debugger.Log("Time Scale = " + Time.timeScale);
+		Debugger.Log("Force = " + Force);
+		Debugger.Log("DT = " + Time.deltaTime);
 		float startY = transform.position.y;
 		float clock = 0f;
 		do
@@ -48,14 +51,16 @@ public class GrimmBall : MonoBehaviour
 			//transform.position = transform.position.With(y: Mathf.Lerp(startY,startY + TweenY,Curve.Evaluate(clock / time)));
 			transform.SetYPosition(Mathf.Lerp(startY, startY + TweenY, Curve.Evaluate(clock / time)));
 
-			rigidbody.AddForce(new Vector2(Force,0f));
+			//rigidbody.AddForce(new Vector2(Force,0f));
+			rigidbody.velocity += new Vector2(Force * Time.deltaTime, 0f);
 
 		} while (clock < time);
 		do
 		{
 			yield return null;
 			clock += Time.deltaTime;
-			rigidbody.AddForce(new Vector2(Force, 0f));
+			//rigidbody.AddForce(new Vector2(Force, 0f));
+			rigidbody.velocity += new Vector2(Force * Time.deltaTime, 0f);
 		} while (clock < maxLifeTime);
 		ShrinkAndStop();
 	}
@@ -75,7 +80,7 @@ public class GrimmBall : MonoBehaviour
 
 	IEnumerator ShrinkRoutine()
 	{
-		Debugger.Log("Stopping");
+		//Debugger.Log("Stopping");
 		Smoke.Stop();
 		Particles.Stop();
 		collider.enabled = false;

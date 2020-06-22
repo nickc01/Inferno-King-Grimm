@@ -545,7 +545,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1950747459824650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 87.84535, y: 8.3, z: 0}
+  m_LocalPosition: {x: 85.75952, y: 8.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4589149406974698}
@@ -1442,6 +1442,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   excludeFromRandomizer: 1
+  balloonPosition: {x: 85.77, y: 15.5}
+  ballSpawnRate: 0.2
+  ballAngleMin: -20
+  ballAngleMax: 20
+  ballInitialVelocityMin: 10
+  ballInitialVelocityMax: 30
+  homingAttackTime: 15
+  homingBallRotationSpeed: 20
+  homingBallVelocity: 10
 --- !u!114 &114231667555609428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1465,8 +1474,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   excludeFromRandomizer: 0
-  highAngle: 25
-  lowAngle: -15
+  highAngle: 35
+  lowAngle: -25
+  homingBallSpawnVelocity: 20
+  homingBallRotationSpeed: 80
+  homingBallVelocity: 30
 --- !u!114 &114252791202826470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1688,7 +1700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8c263aafd69b64d9f6bd11e81ebba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
+  health: 1300
   DecreaseHealth: 1
   Invincible: 0
   DeflectBlows: 0
@@ -1734,8 +1746,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   excludeFromRandomizer: 0
-  pillarsToSpawn: 4
-  pillarSpawnRate: 0.75
+  pillarsToSpawn: 5
+  pillarSpawnRate: 0.65
 --- !u!114 &114998231595251052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1748,7 +1760,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   excludeFromRandomizer: 0
-  spikeWaitTime: 1.35
 --- !u!198 &198053137438636322
 ParticleSystem:
   m_ObjectHideFlags: 1

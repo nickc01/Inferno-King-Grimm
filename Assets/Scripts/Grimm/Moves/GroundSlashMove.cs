@@ -25,7 +25,7 @@ public class GroundSlashMove : GrimmMove
 
 	bool continueToSlash = true;
 
-	Rigidbody2D body;
+	//Rigidbody2D body;
 	ParticleSystem DustGround;
 	PolygonCollider2D Slash1;
 	PolygonCollider2D Slash2;
@@ -37,7 +37,7 @@ public class GroundSlashMove : GrimmMove
 
 	void Awake()
 	{
-		body = GetComponent<Rigidbody2D>();
+		//body = GetComponent<Rigidbody2D>();
 		DustGround = GetChildObject<ParticleSystem>("Dust Ground");
 		Slash1 = GetChildObject<PolygonCollider2D>("Slash1");
 		Slash2 = GetChildObject<PolygonCollider2D>("Slash2");
@@ -104,9 +104,53 @@ public class GroundSlashMove : GrimmMove
 
 		GrimmAnimator.PlayAnimation("Slash Antic");
 
+		var playerPositionOld = Player.Player1.transform.position.x;
+
 		VoicePlayer.Play(Sounds.SlashAnticVoice);
 
 		yield return new WaitForSeconds(0.5f);
+
+		if (Grimm.BossStage >= 2)
+		{
+			teleX = 0f;
+			while (true)
+			{
+				var heroX = Player.Player1.transform.position.x;
+				var teleAdder = Random.Range(9.5f, 11f);
+
+				if (heroX > playerPositionOld)
+				{
+					teleX = heroX + teleAdder;
+					if (teleX > Grimm.RightEdge)
+					{
+						teleX = heroX - teleAdder;
+					}
+				}
+				else
+				{
+					teleX = heroX - teleAdder;
+					if (teleX < Grimm.LeftEdge)
+					{
+						teleX = heroX + teleAdder;
+					}
+				}
+
+				if (teleX > Grimm.LeftEdge && teleX < Grimm.RightEdge)
+				{
+					break;
+				}
+			}
+
+			//transform.position = new Vector3(teleX, Grimm.GroundY, 0f);
+			var telePosition = new Vector3(teleX, Grimm.GroundY, 0f);
+			var teleTime = Teleporter.TeleportEntity(gameObject, telePosition, Teleporter.TeleType.Delayed, Color.red);
+
+			yield return new WaitForSeconds(teleTime / 2f);
+			Grimm.FacePlayer(telePosition);
+			yield return new WaitForSeconds(teleTime / 2f);
+
+			yield return new WaitForSeconds(0.4f);
+		}
 
 		var xScale = transform.lossyScale.x;
 
@@ -119,7 +163,7 @@ public class GroundSlashMove : GrimmMove
 			speed = -speed;
 		}
 
-		body.velocity = new Vector2(speed, 0f);
+		Grimm.Velocity = new Vector2(speed, 0f);
 
 		var lockRoutine = CoroutineUtilities.RunCoroutineWhile(this, HorizontalLock(transform, Grimm.LeftEdge, Grimm.RightEdge), () => !Grimm.Stunned);
 
@@ -149,10 +193,10 @@ public class GroundSlashMove : GrimmMove
 
 		yield return CoroutineUtilities.RunForPeriod(GrimmAnimator.GetCurrentAnimationTime(), () =>
 		{
-			body.velocity = VectorUtilities.Decelerate(body.velocity, new Vector2(0.65f, 0.65f));
+			Grimm.Velocity = VectorUtilities.Decelerate(Grimm.Velocity, new Vector2(0.65f, 0.65f));
 		});
 
-		body.velocity = Vector2.zero;
+		Grimm.Velocity = Vector2.zero;
 		StopCoroutine(lockRoutine);
 
 		yield return UpperCut();
@@ -180,7 +224,7 @@ public class GroundSlashMove : GrimmMove
 			speed = -speed;
 		}
 
-		body.velocity = new Vector2(speed, 0f);
+		Grimm.Velocity = new Vector2(speed, 0f);
 
 		GrimmAnimator.PlayAnimation("Evade");
 
@@ -198,7 +242,7 @@ public class GroundSlashMove : GrimmMove
 			waitTimer += Time.deltaTime;
 			if (horizontal && (transform.position.x <= Grimm.LeftEdge || transform.position.x >= Grimm.RightEdge))
 			{
-				body.velocity = Vector2.zero;
+				Grimm.Velocity = Vector2.zero;
 				horizontal = false;
 			}
 		} while (waitTimer < waitTime);
@@ -206,7 +250,7 @@ public class GroundSlashMove : GrimmMove
 		DustScuttle.Stop();
 		AudioScuttle.SetActive(false);
 
-		body.velocity = new Vector2(0f, 0f);
+		Grimm.Velocity = new Vector2(0f, 0f);
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Evade End");
 
@@ -217,20 +261,26 @@ public class GroundSlashMove : GrimmMove
 		}
 	}
 
-	IEnumerator UpperCut()
+	public IEnumerator UpperCut(bool playVoice = true)
 	{
 		if (Invisible)
 		{
 			Grimm.FacePlayer();
 			yield return Grimm.TeleportIn();
 		}
-		body.velocity = Vector2.zero;
+		Grimm.Velocity = Vector2.zero;
 
+		if (playVoice)
+		{
+			VoicePlayer.Play(Sounds.GrimmUppercutAttackVoice);
+			//yield return GrimmAnimator.PlayAnimationTillDone("Uppercut Antic");
+			yield return GrimmAnimator.PlayAnimationTillDone("Uppercut Antic");
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.5f);
+		}
 
-		VoicePlayer.Play(Sounds.GrimmUppercutAttackVoice);
-
-
-		yield return GrimmAnimator.PlayAnimationTillDone("Uppercut Antic");
 
 		DustUppercut.Play();
 
@@ -248,7 +298,7 @@ public class GroundSlashMove : GrimmMove
 			horizontalSpeed = -horizontalSpeed;
 		}
 
-		body.velocity = new Vector2(horizontalSpeed, uppercutVerticalSpeed);
+		Grimm.Velocity = new Vector2(horizontalSpeed, uppercutVerticalSpeed);
 		var lockRoutine = CoroutineUtilities.RunCoroutineWhile(this, HorizontalLock(transform, Grimm.LeftEdge, Grimm.RightEdge), () => !Grimm.Stunned);
 
 		//This function will wait until either the time is up, or the y position is no longer less than or equal to the uppercut height limit
@@ -263,7 +313,7 @@ public class GroundSlashMove : GrimmMove
 		var explodeSF = WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);
 		explodeSF.AudioSource.pitch = 1.1f;
 
-		body.velocity = Vector2.zero;
+		Grimm.Velocity = Vector2.zero;
 
 		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
 
@@ -290,7 +340,14 @@ public class GroundSlashMove : GrimmMove
 		Invisible = true;
 
 		yield return new WaitForSeconds(1f);
-		yield return new WaitForSeconds(0.6f);
+		if (Grimm.BossStage >= 3)
+		{
+			yield return new WaitForSeconds(0.3f);
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.6f);
+		}
 
 	}
 
@@ -313,7 +370,7 @@ public class GroundSlashMove : GrimmMove
 
 	public override void OnStun()
 	{
-		body.velocity = Vector2.zero;
+		Grimm.Velocity = Vector2.zero;
 		DustGround.Stop();
 		Slash1.enabled = false;
 		Slash2.enabled = false;

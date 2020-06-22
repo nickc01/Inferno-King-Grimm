@@ -32,7 +32,26 @@ public class ReignitedKingGrimm : BossReplacement
 	public GrimmHealthManager GrimmHealth { get; private set; }
 	public Rigidbody2D GrimmRigidbody { get; private set; }
 	public GrimmDirection FaceDirection { get; private set; }
+	public int BossStage { get; private set; }
 	public bool Stunned { get; private set; }
+	public Vector2 Velocity
+	{
+		get
+		{
+			return GrimmRigidbody.velocity;
+		}
+		set
+		{
+			if (Stunned)
+			{
+				GrimmRigidbody.velocity = default(Vector2);
+			}
+			else
+			{
+				GrimmRigidbody.velocity = value;
+			}
+		}
+	}
 
 	private EventReceiver receiver;
 	private SpriteRenderer spriteRenderer;
@@ -47,6 +66,7 @@ public class ReignitedKingGrimm : BossReplacement
 	private ParticleSystem teleSmokeFront;
 	private Coroutine BossRoutine;
 	private GameObject FirebatSpawnpoint;
+	private GrimmMove previousMove;
 	private float fireBatSpawnpointX;
 	private bool invisible = true;
 
@@ -130,6 +150,7 @@ public class ReignitedKingGrimm : BossReplacement
 	// Use this for initialization
 	private void Start()
 	{
+		BossStage = 1;
 		AllMoves = GetComponents<GrimmMove>().ToList();
 		balloonMove = GetComponent<BalloonMove>();
 
@@ -171,7 +192,7 @@ public class ReignitedKingGrimm : BossReplacement
 		}
 		else
 		{
-			StartCoroutine(Waiter(1, () => Wake("WAKE")));
+			StartCoroutine(Waiter(1, () => Wake("WAKE",gameObject)));
 		}
 		GrimmAnimator.enabled = false;
 		spriteRenderer.enabled = false;
@@ -194,6 +215,12 @@ public class ReignitedKingGrimm : BossReplacement
 
 		GrimmMove selectedMove = ValidMoves.GetRandomElement();
 
+		while (ValidMoves.Count > 1 && selectedMove == previousMove)
+		{
+			selectedMove = ValidMoves.GetRandomElement();
+		}
+		previousMove = selectedMove;
+
 		return selectedMove;
 	}
 
@@ -204,9 +231,13 @@ public class ReignitedKingGrimm : BossReplacement
 	}
 
 	//Called when the boss starts
-	private void Wake(string eventName)
+	private void Wake(string eventName, GameObject source)
 	{
-		if (eventName == "WAKE")
+		//Debugger.Log("Event Received for RKG = " + eventName);
+		//Debugger.Log("Event Source for RKG = " + source);
+
+		//Debugger.Log("Waking Trace = " + new System.Diagnostics.StackTrace(true));
+		if (eventName == "WAKE" && (source == gameObject || source.name.Contains("Grimm Control")))
 		{
 			Debugger.Log("THE ENEMY HAS AWOKEN!!!");
 			transform.position = StartingPosition;
@@ -218,6 +249,7 @@ public class ReignitedKingGrimm : BossReplacement
 
 	private IEnumerator MainBossControl()
 	{
+		Debugger.Log("DOING MAIN BOSS CONTROL");
 		yield return new WaitForSeconds(0.6f);
 		while (true)
 		{
@@ -229,11 +261,14 @@ public class ReignitedKingGrimm : BossReplacement
 			}
 			else
 			{
-				do
+				CurrentMove = GetRandomMove();
+
+				Debugger.Log("Current Move = " + CurrentMove.GetType());
+				/*do
 				{
 					NextMove = GetRandomMove();
 				} while (CurrentMove == NextMove);
-				CurrentMove = NextMove;
+				CurrentMove = NextMove;*/
 
 				yield return CurrentMove.DoMove();
 			}
@@ -279,9 +314,9 @@ public class ReignitedKingGrimm : BossReplacement
 		}
 	}
 
-	public void FacePlayer(bool textureFacesRight = true)
+	public void FacePlayer(Vector3 lookingPosition, bool textureFacesRight = true)
 	{
-		if (Player.Player1.transform.position.x <= transform.position.x)
+		if (Player.Player1.transform.position.x <= lookingPosition.x)
 		{
 			spriteRenderer.flipX = textureFacesRight;
 			FaceDirection = GrimmDirection.Left;
@@ -293,6 +328,23 @@ public class ReignitedKingGrimm : BossReplacement
 			FaceDirection = GrimmDirection.Right;
 			FirebatSpawnpoint.transform.localPosition = new Vector3(-fireBatSpawnpointX, FirebatSpawnpoint.transform.localPosition.y, FirebatSpawnpoint.transform.localPosition.z);
 		}
+	}
+
+	public void FacePlayer(bool textureFacesRight = true)
+	{
+		FacePlayer(transform.position, textureFacesRight);
+		/*if (Player.Player1.transform.position.x <= transform.position.x)
+		{
+			spriteRenderer.flipX = textureFacesRight;
+			FaceDirection = GrimmDirection.Left;
+			FirebatSpawnpoint.transform.localPosition = new Vector3(fireBatSpawnpointX, FirebatSpawnpoint.transform.localPosition.y, FirebatSpawnpoint.transform.localPosition.z);
+		}
+		else
+		{
+			spriteRenderer.flipX = !textureFacesRight;
+			FaceDirection = GrimmDirection.Right;
+			FirebatSpawnpoint.transform.localPosition = new Vector3(-fireBatSpawnpointX, FirebatSpawnpoint.transform.localPosition.y, FirebatSpawnpoint.transform.localPosition.z);
+		}*/
 	}
 
 	private void PlayTeleportParticles()
@@ -307,6 +359,7 @@ public class ReignitedKingGrimm : BossReplacement
 	public void Stun()
 	{
 		//Debugger.Log("AT HEALTH STAGE = " + stage);
+		BossStage++;
 		StartCoroutine(StunRoutine());
 	}
 

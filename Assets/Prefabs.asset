@@ -35,3 +35,5 @@ MonoBehaviour:
   StunEffect: {fileID: 1254688935959326, guid: b30799a4e7484f84c991a2b7e1a9ed47, type: 2}
   BatControllerPrefab: {fileID: 114991853994577520, guid: 9bac05e2184f8c24893fa45c01497eb6,
     type: 2}
+  HomingBallPrefab: {fileID: 114606579799045334, guid: 6992c5b90a2cf8f4cac76dcbf0f60417,
+    type: 2}

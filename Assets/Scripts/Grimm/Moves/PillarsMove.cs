@@ -17,6 +17,12 @@ public class PillarsMove : GrimmMove
 
 	public override IEnumerator DoMove()
 	{
+		if (Grimm.BossStage == 3)
+		{
+			yield return null;
+			yield break;
+		}
+
 		float teleX = 0f;
 
 		while (true)
@@ -40,7 +46,14 @@ public class PillarsMove : GrimmMove
 			yield return null;
 		}
 
-		transform.position = new Vector3(teleX, 13.1f, 0f);
+		if (Grimm.BossStage >= 2)
+		{
+			transform.position = new Vector3(teleX, 13.6f, 0f);
+		}
+		else
+		{
+			transform.position = new Vector3(teleX, 13.1f, 0f);
+		}
 
 		Grimm.FacePlayer();
 
@@ -56,14 +69,35 @@ public class PillarsMove : GrimmMove
 
 		for (int i = 0; i < pillarsToSpawn; i++)
 		{
-			var pillar = Instantiate(Prefabs.FlamePillarPrefab, Player.Player1.transform.position + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+			Pillar pillar = null;
+			if (Grimm.BossStage >= 2)
+			{
+				var playerPos1 = Player.Player1.transform.position;
+				yield return null;
+				var playerPos2 = Player.Player1.transform.position;
+
+				var predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.10f) + playerPos2;
+
+				pillar = Instantiate(Prefabs.FlamePillarPrefab, predictivePosition + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+			}
+			else
+			{
+				pillar = Instantiate(Prefabs.FlamePillarPrefab, Player.Player1.transform.position + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+			}
 			SpawnedPillars.Add(pillar);
 
-			yield return new WaitForSeconds(0.75f);
+			yield return new WaitForSeconds(pillarSpawnRate);
 		}
 		yield return new WaitForSeconds(0.25f);
 		yield return Grimm.TeleportOut();
-		yield return new WaitForSeconds(0.6f);
+		if (Grimm.BossStage == 2)
+		{
+			yield return new WaitForSeconds(0.3f);
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.6f);
+		}
 
 		SpawnedPillars.Clear();
 	}

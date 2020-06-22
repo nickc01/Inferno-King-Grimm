@@ -31,12 +31,12 @@ public class EnemyTester : MonoBehaviour
 
 	float CamZ;
 	//SpriteRenderer renderer;
-	class GMProps
+	/*class GMProps
 	{
 		public bool used = false;
-	}
+	}*/
 
-	PropertyTable<GameObject, GMProps> gmProperties = new PropertyTable<GameObject, GMProps>();
+	//PropertyTable<GameObject, GMProps> gmProperties = new PropertyTable<GameObject, GMProps>();
 
 	void Start () 
 	{
@@ -50,11 +50,11 @@ public class EnemyTester : MonoBehaviour
 			texture = renderer.sprite.texture
 		};
 
-		var hijacker = GetComponent<EventReceiver>();
+		//var hijacker = GetComponent<EventReceiver>();
 
-		hijacker.ReceiveAllEventsFromName("WAKE");
+		//hijacker.ReceiveAllEventsFromName("WAKE");
 
-		hijacker.OnReceiveEvent += EnemyTester_OnReceiveEvent;
+		//hijacker.OnReceiveEvent += EnemyTester_OnReceiveEvent;
 
 		//Debugger.Log("Serialized = " + JsonUtility.ToJson(debugImage));
 		//var props = gmProperties.GetOrCreate(gameObject);

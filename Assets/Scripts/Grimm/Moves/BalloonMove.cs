@@ -11,6 +11,32 @@ using Random = UnityEngine.Random;
 
 public class BalloonMove : GrimmMove
 {
+	[SerializeField]
+	Vector2 balloonPosition = new Vector2(85.77f,13.5f);
+
+	[SerializeField]
+	float ballSpawnRate = 0.2f;
+
+	[SerializeField]
+	float ballAngleMin = -20f;
+
+	[SerializeField]
+	float ballAngleMax = 20f;
+
+	[SerializeField]
+	float ballInitialVelocityMin = 2f;
+
+	[SerializeField]
+	float ballInitialVelocityMax = 10f;
+
+	[SerializeField]
+	float homingAttackTime = 10f;
+
+	[SerializeField]
+	float homingBallRotationSpeed = 2f;
+
+	[SerializeField]
+	float homingBallVelocity = 2f;
 
 
 	GameObject BalloonFireballShoot;
@@ -29,7 +55,7 @@ public class BalloonMove : GrimmMove
 
 	public override IEnumerator DoMove()
 	{
-		transform.position = transform.position.With(x: 85.77f, y: 13.5f);
+		transform.position = transform.position.With(x: balloonPosition.x, y: balloonPosition.y);
 
 		while (Vector3.Distance(transform.position, Player.Player1.transform.position) < 6f)
 		{
@@ -80,7 +106,45 @@ public class BalloonMove : GrimmMove
 
 		var ballSpawn = transform.position.With(z: 0.001f);
 
-		for (int i = 0; i < amountOfWaves; i++)
+		float rateCounter = 0f;
+		for (float t = 0; t < homingAttackTime; t += Time.deltaTime)
+		{
+			rateCounter += Time.deltaTime;
+			if (rateCounter >= ballSpawnRate)
+			{
+				rateCounter -= ballSpawnRate;
+
+				var spawnAngle = Random.Range(ballAngleMin, ballAngleMax);
+				var spawnVelocity = Random.Range(ballInitialVelocityMin, ballInitialVelocityMax);
+
+				if (Random.value > 0.5f)
+				{
+					spawnAngle = -spawnAngle;
+					spawnVelocity = -spawnVelocity;
+				}
+
+				var homingBall = HomingBall.Fire(Grimm, transform.position, spawnAngle, spawnVelocity, homingBallRotationSpeed, false);
+				homingBall.Velocity = homingBallVelocity;
+				if (Grimm.BossStage == 1)
+				{
+					homingBall.transform.localScale = new Vector3(1.25f, 1.25f, 1f);
+				}
+				else if (Grimm.BossStage == 2)
+				{
+					homingBall.transform.localScale = new Vector3(1.35f, 1.35f, 1f);
+				}
+				else
+				{
+					homingBall.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+				}
+				homingBall.TargetOffset = new Vector2(Random.Range(-4f,4f),Random.Range(-2f,2f));
+			}
+
+			yield return null;
+
+		}
+
+		/*for (int i = 0; i < amountOfWaves; i++)
 		{
 			yield return new WaitForSeconds(0.6f);
 			ballCounter++;
@@ -94,11 +158,11 @@ public class BalloonMove : GrimmMove
 
 			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 3f : 5f, 10f, 4.5f);
 			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 3f : 5f, -10f, -4.5f);
-		}
+		}*/
 
 		WeaverCam.Instance.Shaker.SetRumble(RumbleType.None);
 
-		yield return new WaitForSeconds(0.75f);
+		yield return new WaitForSeconds(1.75f);
 
 		BalloonParticles.Stop();
 
@@ -116,7 +180,14 @@ public class BalloonMove : GrimmMove
 
 		yield return Grimm.TeleportOut();
 
-		yield return new WaitForSeconds(0.6f);
+		if (Grimm.BossStage >= 3)
+		{
+			yield return new WaitForSeconds(0.3f);
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.6f);
+		}
 	}
 
 	public override void OnStun()

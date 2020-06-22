@@ -11,11 +11,5 @@ public class GrimmRealBat : HealthManager
 	{
 		Health = int.MaxValue - 1;
 		return base.Hit(hit);
-		/*if (IsValidHit(hit) == HitResult.Valid)
-		{
-			PlayHitEffects(hit);
-			return true;
-		}
-		return false;*/
 	}
 }
