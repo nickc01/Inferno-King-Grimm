@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4059244745497184}
   - component: {fileID: 198347583095481364}
   - component: {fileID: 199729571891863456}
-  - component: {fileID: 114669325221356154}
+  - component: {fileID: 114840908821239818}
   m_Layer: 11
   m_Name: tele_smoke_front
   m_TagString: Untagged
@@ -36,13 +36,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1009485548143816}
   m_LocalRotation: {x: 0, y: 0, z: 0.4136777, w: 0.9104234}
-  m_LocalPosition: {x: 0.22, y: -3.27, z: -0.6150999}
+  m_LocalPosition: {x: -1.7573535, y: 14.741706, z: -0.6150999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -48.87214}
---- !u!114 &114669325221356154
+--- !u!114 &114840908821239818
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -50,9 +50,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1009485548143816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HueShiftRed: 0
+  HueShiftGreen: 0
+  HueShiftBlue: 0
 --- !u!198 &198347583095481364
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -89,7 +92,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1580582789
+  randomSeed: -56468361
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -131,7 +134,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.6039216}
+      maxColor: {r: 0.7529412, g: 0.16470589, b: 0.3137255, a: 0.6039216}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

@@ -62,6 +62,11 @@ public class FireBatMove : GrimmMove
 
 			Firebat.SendFirebat(Grimm, lowAngle, 1.2f);
 			yield return Firebat.SendFirebatAsync(Grimm, lowAngle / 2f, 1.2f);
+
+			yield return new WaitForSeconds(0.3f);
+
+			Firebat.SendFirebat(Grimm, lowAngle, 1.3f);
+			yield return Firebat.SendFirebatAsync(Grimm, lowAngle / 2f, 1.3f);
 		}
 		else if (Grimm.BossStage == 2)
 		{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
 
-public class ReignitedGrimmMod : WeaverMod
+public class InfernoGrimmMod : WeaverMod
 {
 	public override bool Unloadable
 	{

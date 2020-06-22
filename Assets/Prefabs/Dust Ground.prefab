@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4809050256104226}
   - component: {fileID: 198172726077337266}
   - component: {fileID: 199674672044717818}
+  - component: {fileID: 114342900997143840}
   m_Layer: 8
   m_Name: Dust Ground
   m_TagString: Untagged
@@ -41,6 +42,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.002530813}
+--- !u!114 &114342900997143840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272328414513464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 0
+  HueShiftGreen: 0
+  HueShiftBlue: 0
 --- !u!198 &198172726077337266
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 58312730811666014}
   - component: {fileID: 114606579799045334}
   - component: {fileID: 50371002054512994}
+  - component: {fileID: 114824351949518322}
   m_Layer: 12
   m_Name: Homing Ball
   m_TagString: Untagged
@@ -59,6 +60,7 @@ GameObject:
   - component: {fileID: 4750072629182834}
   - component: {fileID: 198395628456186690}
   - component: {fileID: 199369432450365784}
+  - component: {fileID: 114743657262501252}
   m_Layer: 8
   m_Name: Smoke
   m_TagString: Untagged
@@ -73,7 +75,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254398893299010}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 73.4, y: 23.1, z: 0}
+  m_LocalPosition: {x: 2.0115209, y: 10.468459, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4750072629182834}
@@ -185,10 +187,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shrinkTime: 0.7
-  velocity: 10
-  rotationSpeed: 0.5
-  initialSpawnTime: 0.75
-  initialVelocity: 20
+  Velocity: 5
+  RotationSpeed: 25
+  SpawnTime: 1
+  SpawnVelocity: 20
+  TargetOffset: {x: 0, y: 0}
+--- !u!114 &114743657262501252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1760839544046542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 0
+  HueShiftGreen: 0
+  HueShiftBlue: 0
+--- !u!114 &114824351949518322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1254398893299010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 1
+  HueShiftGreen: 0
+  HueShiftBlue: 0
 --- !u!198 &198395628456186690
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -4147,7 +4178,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

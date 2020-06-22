@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 50073351923678130}
   - component: {fileID: 114454181506972708}
   - component: {fileID: 61009277396448540}
+  - component: {fileID: 114236977567098424}
   m_Layer: 0
   m_Name: Fire Bat
   m_TagString: Untagged
@@ -39,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1464193261846556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.74554, y: 16.533302, z: -0.29296875}
+  m_LocalPosition: {x: -6.009269, y: 12.335008, z: -0.29296875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -118,6 +119,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe047b6878d525847ba76efe46be1216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114236977567098424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1464193261846556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 0
+  HueShiftGreen: 0
+  HueShiftBlue: 0
 --- !u!114 &114454181506972708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,7 +161,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Audio;
 using WeaverCore;
@@ -69,6 +70,11 @@ public class InfernoKingGrimm : BossReplacement
 	private GrimmMove previousMove;
 	private float fireBatSpawnpointX;
 	private bool invisible = true;
+
+	[SerializeField]
+	string titleLarge = "Grimm";
+	[SerializeField]
+	string titleSmall = "Inferno King";
 
 	[Space]
 	[Space]
@@ -145,11 +151,54 @@ public class InfernoKingGrimm : BossReplacement
 	private void Awake()
 	{
 		MainPrefabs.Instance = prefabs;
+
+		//var allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+		//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Main"));
+		//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Sub"));
+		//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Super"));
+
+
+		//ChangeTitles(GameObject.Find("Title Main"));
+		//ChangeTitles(GameObject.Find("Title Sub"));
+		//ChangeTitles(GameObject.Find("Title Super"));
 	}
+
+	//Changing the title via an ugly reflection method, will refine later
+	/*private void ChangeTitles(GameObject titleObject)
+	{
+		Debugger.Log("Change Title = " + titleObject);
+		if (titleObject != null && Core.LoadState == RunningState.Game)
+		{
+			Debugger.Log("A");
+			var mainAssembly = Assembly.Load("Assembly-CSharp");
+			var tmProT = mainAssembly.GetType("TMPro.TextMeshPro");
+			Debugger.Log("B");
+			foreach (var text in titleObject.GetComponentsInChildren(tmProT))
+			{
+				Debugger.Log("C");
+				var type = text.GetType();
+				var textProp = type.GetProperty("text", BindingFlags.Public | BindingFlags.Instance);
+
+				var textString = (string)textProp.GetGetMethod().Invoke(text, null);
+				Debugger.Log("Text = " + textString);
+				if (textString == "Grimm")
+				{
+					Debugger.Log("D");
+					textProp.GetSetMethod().Invoke(text, new object[] { titleLarge });
+				}
+				else if (textString == "Nightmare King")
+				{
+					textProp.GetSetMethod().Invoke(text, new object[] { titleSmall });
+				}
+			}
+		}
+	}*/
 
 	// Use this for initialization
 	private void Start()
 	{
+		GrimmHue.SetAllGrimmHues(0f, 0f, 0f);
 		BossStage = 1;
 		AllMoves = GetComponents<GrimmMove>().ToList();
 		balloonMove = GetComponent<BalloonMove>();
@@ -427,7 +476,23 @@ public class InfernoKingGrimm : BossReplacement
 		//MakeVisible(false);
 		Invisible = true;
 
-		yield return new WaitForSeconds(2f);
+		//yield return new WaitForSeconds(2f);
+
+		float stunWaitTime = 2f;
+
+		for (float t = 0; t < stunWaitTime; t += Time.deltaTime)
+		{
+			if (BossStage == 2)
+			{
+				GrimmHue.SetAllGrimmHues(Mathf.Lerp(0f, 0.15f,t / stunWaitTime), 0f, 0f);
+			}
+			else if (BossStage == 3)
+			{
+				GrimmHue.SetAllGrimmHues(Mathf.Lerp(0.15f, 0.40f, t / stunWaitTime), 0f, 0f);
+			}
+
+			yield return null;
+		}
 
 		BatController.BringIn();
 
@@ -520,6 +585,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	private IEnumerator DeathRoutine()
 	{
+
 		WeaverAudioPlayer scream = WeaverAudio.Play(Sounds.GrimmScream, transform.position, autoPlay: false);
 		scream.AudioSource.PlayDelayed(0.5f);
 
@@ -540,6 +606,8 @@ public class InfernoKingGrimm : BossReplacement
 		TransformUtilities.SpawnRandomObjects(EffectAssets.GhostSlash2Prefab, transform.position, 2, 3, 2f, 35f, 0f, 360f);
 
 		DeathBurst.SetActive(true);
+
+		yield return null;
 
 		GrimmAnimator.PlayAnimation("Death Stun");
 

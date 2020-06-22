@@ -343,7 +343,7 @@ public class AirDashMove : GrimmMove
 
 		if (Grimm.BossStage >= 3)
 		{
-			yield return new WaitForSeconds(0.675f);
+			yield return new WaitForSeconds(0.650f);
 		}
 		else
 		{

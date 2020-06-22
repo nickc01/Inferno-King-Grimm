@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4329010607643742}
   - component: {fileID: 212705501417065846}
   - component: {fileID: 114136909159475022}
+  - component: {fileID: 114656203594252342}
   m_Layer: 0
   m_Name: Wave
   m_TagString: Untagged
@@ -53,6 +54,7 @@ GameObject:
   - component: {fileID: 4282308432988870}
   - component: {fileID: 198301147464825806}
   - component: {fileID: 199901980864154540}
+  - component: {fileID: 114552293425020436}
   m_Layer: 16
   m_Name: Uninfected Death Pt
   m_TagString: Untagged
@@ -93,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1470378182740444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00510031}
+  m_LocalPosition: {x: 23.22903, y: 19.515526, z: 0.00510031}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4282308432988870}
@@ -120,6 +122,34 @@ MonoBehaviour:
   blackWave: 0
   otherColour: 1
   scaleMultiplier: 1.5
+--- !u!114 &114552293425020436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1909303891856464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 0
+  HueShiftGreen: 0
+  HueShiftBlue: 0
+--- !u!114 &114656203594252342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1345405148858462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 0
+  HueShiftGreen: 0
+  HueShiftBlue: 0
 --- !u!198 &198301147464825806
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -156,7 +186,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1262952727
+  randomSeed: -1187702353
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2097,7 +2127,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

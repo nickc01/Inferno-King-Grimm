@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 95216356489762168}
   - component: {fileID: 61166485918597156}
   - component: {fileID: 114993277360565380}
+  - component: {fileID: 114816902017258610}
   m_Layer: 22
   m_Name: Pillar
   m_TagString: Untagged
@@ -56,6 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4402166677295230}
   - component: {fileID: 212574602696829032}
+  - component: {fileID: 114792191851849916}
   m_Layer: 0
   m_Name: antic haze
   m_TagString: Untagged
@@ -72,6 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4855014650114486}
   - component: {fileID: 212927017169892554}
+  - component: {fileID: 114921187698985264}
   m_Layer: 22
   m_Name: haze2
   m_TagString: Untagged
@@ -89,6 +92,7 @@ GameObject:
   - component: {fileID: 4857741313944416}
   - component: {fileID: 198917271189258990}
   - component: {fileID: 199397568480559154}
+  - component: {fileID: 114854873692585268}
   m_Layer: 22
   m_Name: particle_flame_blast
   m_TagString: Untagged
@@ -106,6 +110,7 @@ GameObject:
   - component: {fileID: 4673300862947050}
   - component: {fileID: 198737359588033880}
   - component: {fileID: 199661112790008920}
+  - component: {fileID: 114975727198998210}
   m_Layer: 22
   m_Name: particle_flame_blast (1)
   m_TagString: Untagged
@@ -125,6 +130,7 @@ GameObject:
   - component: {fileID: 199645999091023876}
   - component: {fileID: 58228582895353350}
   - component: {fileID: 114258646242305454}
+  - component: {fileID: 114781436576115522}
   m_Layer: 22
   m_Name: Pt Afterburn
   m_TagString: Untagged
@@ -152,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1249099479629876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 8.226227, z: 0}
   m_LocalScale: {x: 1, y: 1.416023, z: 1}
   m_Children:
   - {fileID: 4340773936150144}
@@ -261,7 +267,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5063815, y: 0.5355319}
     oldSize: {x: 2.2093697, y: 12.611378}
-    newSize: {x: 2.2093697, y: 12.611378}
+    newSize: {x: 6.071472, y: 2.9502587}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -393,6 +399,90 @@ MonoBehaviour:
   DamageDealt: 2
   HazardType: 1
   ShadowDashHazard: 0
+--- !u!114 &114781436576115522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880425096445234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 1
+  HueShiftGreen: 0
+  HueShiftBlue: 0
+--- !u!114 &114792191851849916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1267558240072366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 1
+  HueShiftGreen: 0
+  HueShiftBlue: 0
+--- !u!114 &114816902017258610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1081143158579142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 1
+  HueShiftGreen: 0
+  HueShiftBlue: 0
+--- !u!114 &114854873692585268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398794000931456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 1
+  HueShiftGreen: 0
+  HueShiftBlue: 0
+--- !u!114 &114921187698985264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1274713014979554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 0
+  HueShiftGreen: 0
+  HueShiftBlue: 0
+--- !u!114 &114975727198998210
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1496613641412908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 1
+  HueShiftGreen: 0
+  HueShiftBlue: 0
 --- !u!114 &114993277360565380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,7 +533,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1913503659
+  randomSeed: -51893963
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2346,7 +2436,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 796928842
+  randomSeed: 831086342
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4249,7 +4339,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 59983396
+  randomSeed: 709882625
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6292,7 +6382,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6336,7 +6426,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6361,7 +6451,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.2093697, y: 12.611378}
+  m_Size: {x: 6.071472, y: 2.9502587}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6380,7 +6470,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: cb31c18d076e12d44b0f4b334bb8f5f5, type: 2}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

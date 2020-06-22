@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 4485480494507008}
   - component: {fileID: 198230989378699642}
   - component: {fileID: 199814089444694862}
+  - component: {fileID: 114620813540142294}
   m_Layer: 0
   m_Name: Death Explode
   m_TagString: Untagged
@@ -202,6 +203,7 @@ GameObject:
   - component: {fileID: 4762213609197766}
   - component: {fileID: 198155245013825418}
   - component: {fileID: 199999012762686036}
+  - component: {fileID: 114814130106403662}
   m_Layer: 11
   m_Name: tele_smoke_front
   m_TagString: Untagged
@@ -235,6 +237,7 @@ GameObject:
   - component: {fileID: 4826958337476586}
   - component: {fileID: 198718169248810894}
   - component: {fileID: 199796424145620480}
+  - component: {fileID: 114372645324022838}
   m_Layer: 8
   m_Name: Dust Uppercut
   m_TagString: Untagged
@@ -301,6 +304,7 @@ GameObject:
   - component: {fileID: 4283254159475396}
   - component: {fileID: 198452071615272188}
   - component: {fileID: 199723059700974236}
+  - component: {fileID: 114426809931032738}
   m_Layer: 8
   m_Name: Dust Scuttle
   m_TagString: Untagged
@@ -318,6 +322,7 @@ GameObject:
   - component: {fileID: 4589149406974698}
   - component: {fileID: 198248337281058252}
   - component: {fileID: 199879067521963012}
+  - component: {fileID: 114522270028934222}
   m_Layer: 11
   m_Name: tele_smoke_back
   m_TagString: Untagged
@@ -335,6 +340,7 @@ GameObject:
   - component: {fileID: 4905703246143776}
   - component: {fileID: 198053137438636322}
   - component: {fileID: 199982121120443656}
+  - component: {fileID: 114581922831376534}
   m_Layer: 0
   m_Name: Uppercut Explosion
   m_TagString: Untagged
@@ -352,6 +358,7 @@ GameObject:
   - component: {fileID: 4589837798688794}
   - component: {fileID: 198499411867380598}
   - component: {fileID: 199261953408957066}
+  - component: {fileID: 114786838166553256}
   m_Layer: 16
   m_Name: Steam Pt
   m_TagString: Untagged
@@ -385,6 +392,7 @@ GameObject:
   - component: {fileID: 4260125839352930}
   - component: {fileID: 198483990493830150}
   - component: {fileID: 199480007972027534}
+  - component: {fileID: 114109644078080336}
   m_Layer: 8
   m_Name: Dust Ground
   m_TagString: Untagged
@@ -402,6 +410,7 @@ GameObject:
   - component: {fileID: 4853417239787864}
   - component: {fileID: 198228574142180526}
   - component: {fileID: 199488765987146142}
+  - component: {fileID: 114041616103339408}
   m_Layer: 17
   m_Name: Balloon Particles
   m_TagString: Untagged
@@ -467,6 +476,7 @@ GameObject:
   - component: {fileID: 4018655830644162}
   - component: {fileID: 198120589657173498}
   - component: {fileID: 199680077292396416}
+  - component: {fileID: 114975653612794496}
   m_Layer: 0
   m_Name: Death Puff
   m_TagString: Untagged
@@ -489,7 +499,6 @@ GameObject:
   - component: {fileID: 61823431700803404}
   - component: {fileID: 114513221751152872}
   - component: {fileID: 114944724333835108}
-  - component: {fileID: 114281814190271960}
   - component: {fileID: 114231667555609428}
   - component: {fileID: 50377839318278512}
   - component: {fileID: 114917356512304760}
@@ -500,6 +509,7 @@ GameObject:
   - component: {fileID: 114880484353509956}
   - component: {fileID: 114988410525424586}
   - component: {fileID: 114172869002225528}
+  - component: {fileID: 114329417124246242}
   m_Layer: 11
   m_Name: Inferno King Grimm
   m_TagString: Boss
@@ -1430,6 +1440,34 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114041616103339408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1783552048378134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
+--- !u!114 &114109644078080336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1707564198083264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114172869002225528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1451,6 +1489,9 @@ MonoBehaviour:
   homingAttackTime: 15
   homingBallRotationSpeed: 20
   homingBallVelocity: 10
+  HomingBallOffset: {x: 0, y: 0, z: 0.1}
+  homingAttackTimeIncrement: 0.5
+  homingSpawnRateIncrement: 0.05
 --- !u!114 &114231667555609428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1498,19 +1539,6 @@ MonoBehaviour:
   blackWave: 0
   otherColour: 1
   scaleMultiplier: 1.5
---- !u!114 &114281814190271960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1950747459824650}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57deec970b627b849a9ed9a924892fb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runInStateOnly: 0
-  stateToRunIn: 1
 --- !u!114 &114291875212994178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1525,6 +1553,34 @@ MonoBehaviour:
   DamageDealt: 2
   HazardType: 1
   ShadowDashHazard: 0
+--- !u!114 &114329417124246242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
+--- !u!114 &114372645324022838
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1459075169644730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114383724075831622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1563,6 +1619,20 @@ MonoBehaviour:
   GrimmBatExplosion: {fileID: 8300000, guid: f32b2ce3547a4154ab9e973bcc327654, type: 3}
   GrimmBatsReform: {fileID: 8300000, guid: d99031638b416d54ba784c1b764bf8f5, type: 3}
   EndingTune: {fileID: 8300000, guid: 989e6098a95402f428980bba6ccfb5ee, type: 3}
+--- !u!114 &114426809931032738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1566213400171600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114513221751152872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1576,6 +1646,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashIntensity: 0
+  CustomFlasherMaterial: {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a,
+    type: 2}
+--- !u!114 &114522270028934222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1619912293032794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114546521167030284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1587,6 +1673,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43687417ee18554bb6b0c2e7524afbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114581922831376534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1655403540564202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
+--- !u!114 &114620813540142294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1375166087759106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114702153927181204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1638,6 +1752,34 @@ MonoBehaviour:
   startColor: {r: 1, g: 0.24313727, b: 0.24313727, a: 1}
   fadeOutColor: {r: 0, g: 0, b: 0, a: 0}
   fadeDuration: 1
+--- !u!114 &114786838166553256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1682338122001922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
+--- !u!114 &114814130106403662
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1417351989473074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114815275830715274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1669,6 +1811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   featureEnabled: 1
   enemyToReplace: Nightmare Grimm Boss
+  title: Inferno King Grimm
   prefabs: {fileID: 11400000, guid: 526e6c24b0dec13498110c20a7976c46, type: 2}
   StartingPosition: {x: 85.77, y: 13.5, z: 0}
   BatAudioLoop: {fileID: 82133888540661686}
@@ -1734,6 +1877,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doFlashEffects: 1
+--- !u!114 &114975653612794496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1948238754803710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114988410525424586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1796,7 +1953,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1421653139
+  randomSeed: -1228048132
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3699,7 +3856,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 428380008
+  randomSeed: -1894490345
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5632,7 +5789,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 112911254
+  randomSeed: 148620374
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5674,7 +5831,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.6039216}
+      maxColor: {r: 0.7529412, g: 0.16470589, b: 0.3137255, a: 0.6039216}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -7571,7 +7728,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.6705883}
+      maxColor: {r: 1, g: 0.46323532, b: 0.46323532, a: 0.6705883}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -11341,7 +11498,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -513566181
+  randomSeed: -734707287
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -11383,7 +11540,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.7529412, g: 0.16470589, b: 0.3137255, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -13238,7 +13395,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -32968790
+  randomSeed: 135990323
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15135,7 +15292,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1954548647
+  randomSeed: -1908339644
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -17032,7 +17189,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1081339384
+  randomSeed: -138037930
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -18941,7 +19098,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 690893349
+  randomSeed: -1761266268
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -23539,7 +23696,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

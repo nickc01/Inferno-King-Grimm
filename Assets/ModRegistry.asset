@@ -11,11 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 967037466, guid: dca9aedea291fb34eb576d841eba1ec3, type: 3}
   m_Name: ModRegistry
   m_EditorClassIdentifier: 
-  registryName: Reignited King Grimm Mod
-  modName: Reignited Grimm Mod
-  modAssemblyName: Assembly-CSharp
-  modTypeName: ReignitedGrimmMod
-  modListHashCode: 860336640
+  registryName: Inferno King Grimm Mod
+  modName: Inferno Grimm Mod
+  modAssemblyName: InfernoKingGrimm
+  modTypeName: InfernoGrimmMod
+  modListHashCode: 883620360
   features:
   - feature: {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
       type: 2}
@@ -25,6 +25,6 @@ MonoBehaviour:
   - {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  selectedFeatureIndex: 1
+  selectedFeatureIndex: 0
   selectedModIndex: 0
   registryEnabled: 1

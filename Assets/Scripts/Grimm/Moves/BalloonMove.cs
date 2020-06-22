@@ -38,6 +38,15 @@ public class BalloonMove : GrimmMove
 	[SerializeField]
 	float homingBallVelocity = 2f;
 
+	[SerializeField]
+	Vector3 HomingBallOffset;
+
+	[SerializeField]
+	float homingAttackTimeIncrement = 0.5f;
+
+	[SerializeField]
+	float homingSpawnRateIncrement = 0.05f;
+
 
 	GameObject BalloonFireballShoot;
 	GameObject BalloonCollider;
@@ -99,20 +108,23 @@ public class BalloonMove : GrimmMove
 
 		healthManager.Invincible = true;
 
-		int amountOfWaves = 12;
+		//int amountOfWaves = 12;
 
-		int ballCounter = 0;
-		int waveCounter = 0;
+		//int ballCounter = 0;
+		//int waveCounter = 0;
 
-		var ballSpawn = transform.position.With(z: 0.001f);
+		//var ballSpawn = transform.position.With(z: 0.001f);
+
+		var attackTime = homingAttackTime + (homingAttackTimeIncrement * (Grimm.BossStage - 1));
+		var spawnRate = ballSpawnRate - (homingSpawnRateIncrement * (Grimm.BossStage - 1));
 
 		float rateCounter = 0f;
-		for (float t = 0; t < homingAttackTime; t += Time.deltaTime)
+		for (float t = 0; t < attackTime; t += Time.deltaTime)
 		{
 			rateCounter += Time.deltaTime;
-			if (rateCounter >= ballSpawnRate)
+			if (rateCounter >= spawnRate)
 			{
-				rateCounter -= ballSpawnRate;
+				rateCounter -= spawnRate;
 
 				var spawnAngle = Random.Range(ballAngleMin, ballAngleMax);
 				var spawnVelocity = Random.Range(ballInitialVelocityMin, ballInitialVelocityMax);
@@ -123,7 +135,7 @@ public class BalloonMove : GrimmMove
 					spawnVelocity = -spawnVelocity;
 				}
 
-				var homingBall = HomingBall.Fire(Grimm, transform.position, spawnAngle, spawnVelocity, homingBallRotationSpeed, false);
+				var homingBall = HomingBall.Fire(Grimm, transform.position + HomingBallOffset, spawnAngle, spawnVelocity, homingBallRotationSpeed, false);
 				homingBall.Velocity = homingBallVelocity;
 				if (Grimm.BossStage == 1)
 				{

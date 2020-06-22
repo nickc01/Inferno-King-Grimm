@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4246279339884446}
   - component: {fileID: 198120295125243028}
   - component: {fileID: 199311067573134748}
+  - component: {fileID: 114473551964993392}
   m_Layer: 0
   m_Name: Death Puff
   m_TagString: Untagged
@@ -41,6 +42,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114473551964993392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1285030609126424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HueShiftRed: 0
+  HueShiftGreen: 0
+  HueShiftBlue: 0
 --- !u!198 &198120295125243028
 ParticleSystem:
   m_ObjectHideFlags: 1
