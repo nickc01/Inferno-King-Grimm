@@ -26,7 +26,7 @@ public class PlayerWeaponizer : MonoBehaviour
 	{
 		if (!attacking && Input.GetKeyDown(KeyCode.Space))
 		{
-			Debugger.Log("Attacking!");
+			//Debugger.Log("Attacking!");
 			attacking = true;
 			StartCoroutine(AttackRoutine());
 		}

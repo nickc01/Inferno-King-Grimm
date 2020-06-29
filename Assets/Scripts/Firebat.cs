@@ -32,7 +32,7 @@ public class Firebat : MonoBehaviour
 
 	public static Firebat Spawn(float angle, float velocity, GrimmDirection direction, Vector3 position)
 	{
-		Debugger.Log("Fire bat F");
+		//Debugger.Log("Fire bat F");
 		var fireBat = GameObject.Instantiate(MainPrefabs.Instance.FirebatPrefab, position, Quaternion.identity).GetComponent<Firebat>();
 
 		fireBat.rigidbody = fireBat.GetComponent<Rigidbody2D>();
@@ -62,7 +62,7 @@ public class Firebat : MonoBehaviour
 			fireBat.DirectionAngle = 180 - angle;
 		}
 		fireBat.SetVelocity(fireBat.DirectionAngle.DegreesToVector() * velocity);
-		Debugger.Log("Fire bat G");
+		//Debugger.Log("Fire bat G");
 		return fireBat;
 	}
 
@@ -83,18 +83,18 @@ public class Firebat : MonoBehaviour
 
 	public static Firebat Spawn(float angle, float velocity, InfernoKingGrimm grimm, Vector3? position = null)
 	{
-		Debugger.Log("Fire bat D");
+		//Debugger.Log("Fire bat D");
 		if (position == null)
 		{
 			position = grimm.transform.Find("Firebat SpawnPoint").position;
 		}
-		Debugger.Log("Fire bat E");
+		//Debugger.Log("Fire bat E");
 		return Spawn(angle, velocity, grimm.FaceDirection,position.Value);
 	}
 
 	public static IEnumerator SendFirebatAsync(InfernoKingGrimm grimm, float angle, float audioPitch = 1.0f, float speedMultiplier = 1f)
 	{
-		Debugger.Log("FIre bat C");
+		//Debugger.Log("FIre bat C");
 		var fireBatVelocity = grimm.transform.localScale.x * 20f * speedMultiplier;
 
 		Spawn(angle, fireBatVelocity, grimm);
@@ -103,6 +103,8 @@ public class Firebat : MonoBehaviour
 		var fireAudio = WeaverAudio.Play(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
 		fireAudio.AudioSource.pitch = audioPitch;
 
+		GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, grimm.transform.Find("Firebat SpawnPoint").position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+
 		yield return new WaitForSeconds(0.3f);
 
 		yield break;
@@ -110,7 +112,7 @@ public class Firebat : MonoBehaviour
 
 	public static void SendFirebat(InfernoKingGrimm grimm, float angle, float pitch = 1.0f, float speedMultiplier = 1f)
 	{
-		Debugger.Log("FIre bat B");
+		//Debugger.Log("FIre bat B");
 		CoroutineUtilities.StartCoroutine(SendFirebatAsync(grimm, angle, pitch, speedMultiplier));
 	}
 

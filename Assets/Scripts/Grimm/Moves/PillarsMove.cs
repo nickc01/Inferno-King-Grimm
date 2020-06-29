@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Features;
 using WeaverCore.Utilities;
 
 public class PillarsMove : GrimmMove
@@ -12,16 +14,24 @@ public class PillarsMove : GrimmMove
 	[SerializeField]
 	float pillarSpawnRate = 0.75f;
 
+	[Header("Second Stage")]
+	[SerializeField]
+	int amountofPillarsEachRound = 6;
+	[SerializeField]
+	float timeBetweenRounds = 1.15f;
+	[SerializeField]
+	int amountOfRounds = 3;
+
 
 	List<Pillar> SpawnedPillars = new List<Pillar>();
 
 	public override IEnumerator DoMove()
 	{
-		if (Grimm.BossStage == 3)
+		/*if (Grimm.BossStage == 3)
 		{
 			yield return null;
 			yield break;
-		}
+		}*/
 
 		float teleX = 0f;
 
@@ -39,7 +49,7 @@ public class PillarsMove : GrimmMove
 
 			teleX = playerX + teleAdder;
 
-			if (teleX >= Grimm.LeftEdge && teleX <= Grimm.RightEdge)
+			if (teleX >= Grimm.LeftEdge + 2f && teleX <= Grimm.RightEdge - 2f)
 			{
 				break;
 			}
@@ -67,30 +77,73 @@ public class PillarsMove : GrimmMove
 
 		yield return new WaitForSeconds(0.5f);
 
+		//if (Grimm.BossStage == 2)
+		//{
+		/*yield return new WaitForSeconds(timeBetweenRounds / 2f);
+		var pillarWidth = Prefabs.FlamePillarPrefab.GetComponentInChildren<CircleCollider2D>().radius * 2f;
+		Debugger.Log("Pillar Width = " + pillarWidth);
+		for (int r = 0; r < amountOfRounds; r++)
+		{
+			Vector3 Offset = Vector3.zero;
+			if (r % 2 == 1)
+			{
+				Offset = new Vector3(pillarWidth / 2f,0f);
+			}
+			for (int i = 0; i < amountofPillarsEachRound; i++)
+			{
+				//SpawnedPillars.Add(pillar);
+				var pillarPosition = Offset + Prefabs.FlamePillarPrefab.transform.position + new Vector3(Mathf.Lerp(Grimm.LeftEdge,Grimm.RightEdge,i / (float)amountofPillarsEachRound),0f,0f);
+				var pillar = Instantiate(Prefabs.FlamePillarPrefab, pillarPosition, Quaternion.identity);
+				pillar.FadeOutTime = 0.65f;
+				pillar.Volume = i / (float)amountofPillarsEachRound;
+				SpawnedPillars.Add(pillar);
+			}
+			yield return new WaitForSeconds(timeBetweenRounds);
+		}*/
+		//}
+		//else
+		//{
 		for (int i = 0; i < pillarsToSpawn; i++)
 		{
 			Pillar pillar = null;
-			if (Grimm.BossStage >= 2)
+			//if (Grimm.BossStage >= 2)
+			//{
+			var playerPos1 = Player.Player1.transform.position;
+			yield return null;
+			var playerPos2 = Player.Player1.transform.position;
+
+			Vector3 predictivePosition = default(Vector3);
+			if (Grimm.BossStage == 1)
 			{
-				var playerPos1 = Player.Player1.transform.position;
-				yield return null;
-				var playerPos2 = Player.Player1.transform.position;
-
-				var predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.10f) + playerPos2;
-
-				pillar = Instantiate(Prefabs.FlamePillarPrefab, predictivePosition + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+				predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.10f) + playerPos2;
 			}
 			else
 			{
-				pillar = Instantiate(Prefabs.FlamePillarPrefab, Player.Player1.transform.position + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+				predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.20f) + playerPos2;
 			}
+
+			pillar = Instantiate(Prefabs.FlamePillarPrefab, predictivePosition + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+			//}
+			//else
+			//{
+			//	pillar = Instantiate(Prefabs.FlamePillarPrefab, Player.Player1.transform.position + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+			//}
+
+			if (i == 2 && Grimm.BossStage >= 3)
+			{
+				Teleporter.TeleportEntity(gameObject, new Vector3(Grimm.RightEdge - (transform.position.x - Grimm.LeftEdge),transform.position.y,transform.position.z),Teleporter.TeleType.Delayed,Color.red);
+			}
+
 			SpawnedPillars.Add(pillar);
 
 			yield return new WaitForSeconds(pillarSpawnRate);
 		}
+		//}
+
+
 		yield return new WaitForSeconds(0.25f);
 		yield return Grimm.TeleportOut();
-		if (Grimm.BossStage == 2)
+		if (Grimm.BossStage >= 2)
 		{
 			yield return new WaitForSeconds(0.3f);
 		}

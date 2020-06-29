@@ -9,7 +9,15 @@ public class InfernoGrimmMod : WeaverMod
 	{
 		get
 		{
-			return true;
+			return false;
+		}
+	}
+
+	public override string Version
+	{
+		get
+		{
+			return "1.0.0.0";
 		}
 	}
 }

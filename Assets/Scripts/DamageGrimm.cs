@@ -24,14 +24,14 @@ public class DamageGrimm : MonoBehaviour
 		
 	}
 
-	void OnCollisionEnter2D(Collision2D collision)
+	/*void OnCollisionEnter2D(Collision2D collision)
 	{
 		Debugger.Log("2 Collided With " + collision.transform.gameObject.name);
-	}
+	}*/
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		Debugger.Log("Collided With " + collider.transform.gameObject.name);
+		//Debugger.Log("Collided With " + collider.transform.gameObject.name);
 		IHittable hittable = null;
 		if ((hittable = collider.GetComponent<IHittable>()) != null)
 		{

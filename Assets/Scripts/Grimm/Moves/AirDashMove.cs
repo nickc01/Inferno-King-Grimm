@@ -41,7 +41,7 @@ public class AirDashMove : GrimmMove
 			yield break;
 		}
 
-		Debugger.Log("A");
+		//Debugger.Log("A");
 
 		float teleX = float.PositiveInfinity;
 		do
@@ -57,7 +57,7 @@ public class AirDashMove : GrimmMove
 
 			teleX = teleAdder + playerPos.x;
 
-			Debugger.Log("Tele X = " + teleX);
+			//Debugger.Log("Tele X = " + teleX);
 
 			if (teleX < 75f || teleX > 99f)
 			{
@@ -69,7 +69,7 @@ public class AirDashMove : GrimmMove
 		}
 		while (teleX == float.PositiveInfinity);
 
-		Debugger.Log("B");
+		//Debugger.Log("B");
 
 		transform.position = new Vector3(teleX, 15f, 0f);
 
@@ -77,12 +77,12 @@ public class AirDashMove : GrimmMove
 
 		yield return Grimm.TeleportIn();
 
-		Debugger.Log("Angle To Player = " + transform.position.GetAngleBetween(Player.Player1.transform.position));
+		//Debugger.Log("Angle To Player = " + transform.position.GetAngleBetween(Player.Player1.transform.position));
 
 		var velocityAngle = Mathf.Clamp(transform.position.GetAngleBetween(Player.Player1.transform.position), -135f, -45f);
 		var spriteAngle = velocityAngle + 90f;
 
-		Debugger.Log("Angle = " + velocityAngle);
+		//Debugger.Log("Angle = " + velocityAngle);
 		//WeaverAudio.Play(Sounds.AirDashAntic, transform.position, 1, AudioChannel.Sound);
 
 		//VoicePlayer.Play();
@@ -156,7 +156,7 @@ public class AirDashMove : GrimmMove
 			yield return new WaitForSeconds(0.5f);
 		}*/
 
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.37f);
 
 		WeaverAudio.Play(Sounds.GroundDash, transform.position);
 
@@ -251,15 +251,15 @@ public class AirDashMove : GrimmMove
 
 		var newPosition = new Vector3(nextPlayerPos.x, 19f, 0f);
 
-		if (newPosition.x <= Grimm.LeftEdge + 1f)
+		if (newPosition.x <= Grimm.LeftEdge + 3f)
 		{
 			//transform.SetXPosition(transform.position.x + 5f);
-			newPosition.x = newPosition.x + 5f;
+			newPosition.x = Grimm.LeftEdge + 3f;
 		}
-		else if (newPosition.x >= Grimm.RightEdge - 1f)
+		else if (newPosition.x >= Grimm.RightEdge - 3f)
 		{
 			//transform.SetXPosition(transform.position.x - 5f);
-			newPosition.x = newPosition.x - 5f;
+			newPosition.x = Grimm.RightEdge - 3f;
 		}
 
 		if (Invisible)
@@ -326,13 +326,13 @@ public class AirDashMove : GrimmMove
 		var fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
 		fireBall.velocity = new Vector2(0f, 18f);
 		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(12f / 2f, 18f);
+		fireBall.velocity = new Vector2(14f / 2f, 20f);
 		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(-12f / 2f, 18f);
+		fireBall.velocity = new Vector2(-14f / 2f, 20f);
 		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(24f / 2f, 18f);
+		fireBall.velocity = new Vector2(28f / 2f, 20f);
 		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(-24f / 2f, 18f);
+		fireBall.velocity = new Vector2(-28f / 2f, 20f);
 		/*fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
 		fireBall.velocity = new Vector2(36f, 18f);
 		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
@@ -343,7 +343,7 @@ public class AirDashMove : GrimmMove
 
 		if (Grimm.BossStage >= 3)
 		{
-			yield return new WaitForSeconds(0.650f);
+			yield return new WaitForSeconds(0.600f);
 		}
 		else
 		{

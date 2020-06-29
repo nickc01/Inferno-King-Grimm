@@ -48,7 +48,7 @@ public class BalloonMove : GrimmMove
 	float homingSpawnRateIncrement = 0.05f;
 
 
-	GameObject BalloonFireballShoot;
+	GameObject BalloonFireballShootSound;
 	GameObject BalloonCollider;
 	GrimmHealthManager healthManager;
 	ParticleSystem BalloonParticles;
@@ -58,7 +58,7 @@ public class BalloonMove : GrimmMove
 		healthManager = GetComponent<GrimmHealthManager>();
 
 		BalloonParticles = GetChildObject<ParticleSystem>("Balloon Particles");
-		BalloonFireballShoot = GetChildGameObject("Balloon Fireball Loop Audio");
+		BalloonFireballShootSound = GetChildGameObject("Balloon Fireball Loop Audio");
 		BalloonCollider = GetChildGameObject("Balloon Collider");
 	}
 
@@ -83,8 +83,12 @@ public class BalloonMove : GrimmMove
 		//EventReceiver.BroadcastEvent("CROWD GASP");
 
 		//TODO Broadcast HEART HALFWAY EVENT
+		if (Grimm.BossStage == 2)
+		{
+			WeaverEvents.BroadcastEvent("HEART HALFWAY");
+		}
 
-		BalloonFireballShoot.SetActive(true);
+		BalloonFireballShootSound.SetActive(true);
 
 		WeaverAudio.Play(Sounds.GrimmScream, transform.position);
 		WeaverAudio.Play(Sounds.InflateSoundEffect, transform.position);
@@ -186,7 +190,7 @@ public class BalloonMove : GrimmMove
 
 		WeaverEvents.BroadcastEvent("CROWD IDLE");
 
-		BalloonFireballShoot.SetActive(false);
+		BalloonFireballShootSound.SetActive(false);
 
 		WeaverAudio.Play(Sounds.DeflateSoundEffect, transform.position);
 
@@ -205,7 +209,7 @@ public class BalloonMove : GrimmMove
 	public override void OnStun()
 	{
 		WeaverCam.Instance.Shaker.SetRumble(RumbleType.None);
-		BalloonFireballShoot.SetActive(false);
+		BalloonFireballShootSound.SetActive(false);
 		BalloonParticles.Stop();
 	}
 }

@@ -21,6 +21,10 @@ public class Pillar : MonoBehaviour
 
 	DamageHero damager;
 
+	public bool PlaySound = true;
+	public float Volume = 1f;
+	public float FadeOutTime = 1f;
+
 	public bool DamagePlayer
 	{
 		get
@@ -55,7 +59,11 @@ public class Pillar : MonoBehaviour
 
 		WeaverCam.Instance.Shaker.Shake(ShakeType.EnemyKillShake);
 
-		WeaverAudio.Play(FlameExplode, transform.position);
+		if (PlaySound)
+		{
+			var explosion = WeaverAudio.Play(FlameExplode, transform.position);
+			explosion.Volume = Volume;
+		}
 
 		yield return new WaitForSeconds(0.3f);
 
@@ -68,7 +76,9 @@ public class Pillar : MonoBehaviour
 
 		collider.enabled = true;
 
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(FadeOutTime);
+
+		afterBurn.Stop();
 
 		collider.enabled = false;
 

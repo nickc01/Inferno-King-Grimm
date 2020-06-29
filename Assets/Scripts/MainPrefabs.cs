@@ -24,5 +24,6 @@ public class MainPrefabs : ScriptableObject
 	public GameObject StunEffect;
 	public GrimmBatController BatControllerPrefab;
 	public HomingBall HomingBallPrefab;
+	public GameObject GlowPrefab;
 }
 

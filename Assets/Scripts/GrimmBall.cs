@@ -39,9 +39,9 @@ public class GrimmBall : MonoBehaviour
 
 	IEnumerator MainAction()
 	{
-		Debugger.Log("Time Scale = " + Time.timeScale);
-		Debugger.Log("Force = " + Force);
-		Debugger.Log("DT = " + Time.deltaTime);
+		//Debugger.Log("Time Scale = " + Time.timeScale);
+		//Debugger.Log("Force = " + Force);
+		//Debugger.Log("DT = " + Time.deltaTime);
 		float startY = transform.position.y;
 		float clock = 0f;
 		do

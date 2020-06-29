@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 4675649771786390}
   - component: {fileID: 212775719010515808}
   - component: {fileID: 114252791202826470}
+  - component: {fileID: 114366378603705368}
   m_Layer: 0
   m_Name: Wave
   m_TagString: Untagged
@@ -103,6 +104,7 @@ GameObject:
   - component: {fileID: 4728437745006186}
   - component: {fileID: 212283521766461830}
   - component: {fileID: 114785851938200420}
+  - component: {fileID: 114998102381997960}
   m_Layer: 0
   m_Name: White Flash
   m_TagString: Untagged
@@ -136,6 +138,7 @@ GameObject:
   - component: {fileID: 4795285079826078}
   - component: {fileID: 198821085892865496}
   - component: {fileID: 199135416160936312}
+  - component: {fileID: 114358577089557580}
   m_Layer: 16
   m_Name: Uninfected Death Pt
   m_TagString: Untagged
@@ -271,6 +274,7 @@ GameObject:
   - component: {fileID: 212080108664610308}
   - component: {fileID: 95697423797711678}
   - component: {fileID: 114546521167030284}
+  - component: {fileID: 114192816169541700}
   m_Layer: 0
   m_Name: Burst
   m_TagString: Untagged
@@ -528,6 +532,7 @@ GameObject:
   - component: {fileID: 212044511994548856}
   - component: {fileID: 95522573960625888}
   - component: {fileID: 114712087280709358}
+  - component: {fileID: 114398944093973122}
   m_Layer: 0
   m_Name: Pillar Burst
   m_TagString: Untagged
@@ -563,8 +568,8 @@ Transform:
   - {fileID: 4076581942038278}
   - {fileID: 4991751557639022}
   - {fileID: 4797626244064136}
-  - {fileID: 4283254159475396}
   - {fileID: 4166959696993166}
+  - {fileID: 4283254159475396}
   - {fileID: 4905703246143776}
   - {fileID: 4849648978874542}
   - {fileID: 4939700711879796}
@@ -609,7 +614,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4023218805753568}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4230260724875720
 Transform:
@@ -663,7 +668,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.01, z: 1}
   m_Children: []
   m_Father: {fileID: 4023218805753568}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.002530813}
 --- !u!4 &4352420068171956
 Transform:
@@ -948,7 +953,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1466130863649274}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.93, y: -1.32, z: 0}
+  m_LocalPosition: {x: -1.68, y: -0.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4023218805753568}
@@ -1491,7 +1496,21 @@ MonoBehaviour:
   homingBallVelocity: 10
   HomingBallOffset: {x: 0, y: 0, z: 0.1}
   homingAttackTimeIncrement: 0.5
-  homingSpawnRateIncrement: 0.05
+  homingSpawnRateIncrement: 0.04
+--- !u!114 &114192816169541700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1476878358479016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114231667555609428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1518,8 +1537,14 @@ MonoBehaviour:
   highAngle: 35
   lowAngle: -25
   homingBallSpawnVelocity: 20
-  homingBallRotationSpeed: 80
-  homingBallVelocity: 30
+  homingBallRotationSpeed: 27
+  homingBallVelocity: 14
+  homingBallAngleRange: {x: 4, y: 60}
+  homingBallSpawnVelocityRange: {x: 10, y: 28}
+  homingBallSpawnRate: 0.2
+  homingBallTimePeriod: 2
+  HomingBallPitchRange: {x: 1, y: 1.6}
+  HomingBallVolume: 1
 --- !u!114 &114252791202826470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1559,6 +1584,34 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
+--- !u!114 &114358577089557580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1323576689725598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
+--- !u!114 &114366378603705368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292637292761594}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
@@ -1619,6 +1672,20 @@ MonoBehaviour:
   GrimmBatExplosion: {fileID: 8300000, guid: f32b2ce3547a4154ab9e973bcc327654, type: 3}
   GrimmBatsReform: {fileID: 8300000, guid: d99031638b416d54ba784c1b764bf8f5, type: 3}
   EndingTune: {fileID: 8300000, guid: 989e6098a95402f428980bba6ccfb5ee, type: 3}
+--- !u!114 &114398944093973122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1961359519151502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114426809931032738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1811,7 +1878,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   featureEnabled: 1
   enemyToReplace: Nightmare Grimm Boss
-  title: Inferno King Grimm
+  titleLarge: Grimm
+  titleSmall: Inferno King
   prefabs: {fileID: 11400000, guid: 526e6c24b0dec13498110c20a7976c46, type: 2}
   StartingPosition: {x: 85.77, y: 13.5, z: 0}
   BatAudioLoop: {fileID: 82133888540661686}
@@ -1904,7 +1972,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   excludeFromRandomizer: 0
   pillarsToSpawn: 5
-  pillarSpawnRate: 0.65
+  pillarSpawnRate: 0.6
+  amountofPillarsEachRound: 5
+  timeBetweenRounds: 1.4
+  amountOfRounds: 3
+--- !u!114 &114998102381997960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1297540545146250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114998231595251052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23520,7 +23605,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23564,7 +23649,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23652,7 +23737,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23740,7 +23825,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

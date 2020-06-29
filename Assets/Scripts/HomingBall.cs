@@ -31,6 +31,8 @@ public class HomingBall : MonoBehaviour
 
 	Vector2 travelDirection = Vector2.up;
 
+	float lifeTime = 0f;
+
 	void Start () 
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
@@ -38,6 +40,11 @@ public class HomingBall : MonoBehaviour
 		Smoke = transform.Find("Smoke").GetComponent<ParticleSystem>();
 		Particles = transform.Find("Particles").GetComponent<ParticleSystem>();
 		MainCoroutine = StartCoroutine(MainAction());
+	}
+
+	void Update()
+	{
+		lifeTime += Time.deltaTime;
 	}
 
 	void ShrinkAndStop()
@@ -112,7 +119,7 @@ public class HomingBall : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain") && ShrinkCoroutine == null)
+		if (lifeTime >= 0.3f && collision.gameObject.layer == LayerMask.NameToLayer("Terrain") && ShrinkCoroutine == null)
 		{
 			ShrinkAndStop();
 		}
@@ -141,6 +148,8 @@ public class HomingBall : MonoBehaviour
 
 			var fireAudio = WeaverAudio.Play(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
 			fireAudio.AudioSource.pitch = 1.0f;
+
+			GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, Position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
 		}
 
 		return newBall;
