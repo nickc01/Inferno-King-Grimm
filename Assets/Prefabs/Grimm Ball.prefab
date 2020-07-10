@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114038370869809066}
   - component: {fileID: 50407433614459252}
   - component: {fileID: 114810738106362834}
+  - component: {fileID: 114134600775478198}
   m_Layer: 12
   m_Name: Grimm Ball
   m_TagString: Untagged
@@ -195,6 +196,18 @@ MonoBehaviour:
   XVelocity: 5
   time: 0.7
   maxLifeTime: 10
+--- !u!114 &114134600775478198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1261328296716982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09caf810109ed97489b528149c075812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
 --- !u!114 &114592027971363154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,9 +219,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114626969024592728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,12 +230,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1261328296716982}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -45210390, guid: dca9aedea291fb34eb576d841eba1ec3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fd11a7a3b9c16940bc7acd10ca21a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageDealt: 2
-  HazardType: 1
-  ShadowDashHazard: 0
+  damageDealt: 2
+  hazardType: 1
+  shadowDashHazard: 0
 --- !u!114 &114810738106362834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -234,9 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!198 &198219466445004892
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -273,7 +286,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -910512855
+  randomSeed: -1590353990
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2200,7 +2213,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -863122047
+  randomSeed: 1158312946
   InitialModule:
     serializedVersion: 3
     enabled: 1

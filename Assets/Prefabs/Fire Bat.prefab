@@ -21,11 +21,12 @@ GameObject:
   - component: {fileID: 4376594799910058}
   - component: {fileID: 212595665113671624}
   - component: {fileID: 95628088165098232}
-  - component: {fileID: 114069809931480634}
-  - component: {fileID: 50073351923678130}
   - component: {fileID: 114454181506972708}
+  - component: {fileID: 50073351923678130}
+  - component: {fileID: 114832326577868188}
   - component: {fileID: 61009277396448540}
   - component: {fileID: 114236977567098424}
+  - component: {fileID: 114659651327445312}
   m_Layer: 0
   m_Name: Fire Bat
   m_TagString: Untagged
@@ -108,17 +109,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114069809931480634
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1464193261846556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe047b6878d525847ba76efe46be1216, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114236977567098424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114454181506972708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,12 +131,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 1464193261846556}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -45210390, guid: dca9aedea291fb34eb576d841eba1ec3, type: 3}
+  m_Script: {fileID: 11500000, guid: fe047b6878d525847ba76efe46be1216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageDealt: 2
-  HazardType: 1
-  ShadowDashHazard: 0
+--- !u!114 &114659651327445312
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1464193261846556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09caf810109ed97489b528149c075812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+--- !u!114 &114832326577868188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1464193261846556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd11a7a3b9c16940bc7acd10ca21a1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageDealt: 2
+  hazardType: 1
+  shadowDashHazard: 0
 --- !u!212 &212595665113671624
 SpriteRenderer:
   m_ObjectHideFlags: 1

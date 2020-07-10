@@ -131,7 +131,22 @@ public class PillarsMove : GrimmMove
 
 			if (i == 2 && Grimm.BossStage >= 3)
 			{
-				Teleporter.TeleportEntity(gameObject, new Vector3(Grimm.RightEdge - (transform.position.x - Grimm.LeftEdge),transform.position.y,transform.position.z),Teleporter.TeleType.Delayed,Color.red);
+				var newPosition = new Vector3(Grimm.RightEdge - (transform.position.x - Grimm.LeftEdge), transform.position.y, transform.position.z);
+
+				if (Vector3.Distance(newPosition, Player.Player1.transform.position) <= 7f)
+				{
+					//If the player is moving right
+					if (playerPos2.x > playerPos1.x)
+					{
+						newPosition.x = Player.Player1.transform.position.x - 6f;
+					}
+					else
+					{
+						newPosition.x = Player.Player1.transform.position.x + 6f;
+					}
+				}
+
+				Teleporter.TeleportEntity(gameObject, newPosition,Teleporter.TeleType.Delayed,Color.red);
 			}
 
 			SpawnedPillars.Add(pillar);

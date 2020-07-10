@@ -20,7 +20,7 @@ namespace Assets.Scripts
 
 		private void SceneManager_sceneLoaded(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
 		{
-			if (Core.LoadState == WeaverCore.Enums.RunningState.Game && arg0.name.Contains("GG_Workshop"))
+			if (CoreInfo.LoadState == WeaverCore.Enums.RunningState.Game && arg0.name.Contains("GG_Workshop"))
 			{
 				GGWorkshop.ChangeStatue("GG_Statue_Grimm", "Inferno King Grimm");
 			}

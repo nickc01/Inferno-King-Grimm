@@ -5,7 +5,7 @@ using WeaverCore;
 using WeaverCore.Components;
 using WeaverCore.DataTypes;
 
-public class GrimmRealBat : HealthManager
+public class GrimmRealBat : EntityHealth
 {
 	public override bool Hit(HitInfo hit)
 	{

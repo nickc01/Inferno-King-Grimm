@@ -47,7 +47,7 @@ public class HomingBall : MonoBehaviour
 		lifeTime += Time.deltaTime;
 	}
 
-	void ShrinkAndStop()
+	public void ShrinkAndStop()
 	{
 		if (MainCoroutine != null)
 		{

@@ -3,21 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
 
-public class InfernoGrimmMod : WeaverMod
-{
-	public override bool Unloadable
-	{
-		get
-		{
-			return false;
-		}
-	}
 
-	public override string Version
+namespace IKG
+{
+	public class InfernoGrimmMod : WeaverMod
 	{
-		get
+		public override string GetVersion()
 		{
-			return "1.0.0.0";
+			return "1.1.0.0";
 		}
 	}
 }

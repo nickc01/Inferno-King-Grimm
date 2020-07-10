@@ -50,12 +50,12 @@ public class BalloonMove : GrimmMove
 
 	GameObject BalloonFireballShootSound;
 	GameObject BalloonCollider;
-	GrimmHealthManager healthManager;
+	GrimmHealth healthManager;
 	ParticleSystem BalloonParticles;
 
 	void Awake()
 	{
-		healthManager = GetComponent<GrimmHealthManager>();
+		healthManager = GetComponent<GrimmHealth>();
 
 		BalloonParticles = GetChildObject<ParticleSystem>("Balloon Particles");
 		BalloonFireballShootSound = GetChildGameObject("Balloon Fireball Loop Audio");
@@ -64,6 +64,9 @@ public class BalloonMove : GrimmMove
 
 	public override IEnumerator DoMove()
 	{
+		healthManager.Invincible = true;
+
+
 		transform.position = transform.position.With(x: balloonPosition.x, y: balloonPosition.y);
 
 		while (Vector3.Distance(transform.position, Player.Player1.transform.position) < 6f)
@@ -110,19 +113,13 @@ public class BalloonMove : GrimmMove
 
 		BalloonParticles.Play();
 
-		healthManager.Invincible = true;
-
-		//int amountOfWaves = 12;
-
-		//int ballCounter = 0;
-		//int waveCounter = 0;
-
-		//var ballSpawn = transform.position.With(z: 0.001f);
-
 		var attackTime = homingAttackTime + (homingAttackTimeIncrement * (Grimm.BossStage - 1));
 		var spawnRate = ballSpawnRate - (homingSpawnRateIncrement * (Grimm.BossStage - 1));
 
 		float rateCounter = 0f;
+
+		HashSet<HomingBall> homingBalls = new HashSet<HomingBall>();
+
 		for (float t = 0; t < attackTime; t += Time.deltaTime)
 		{
 			rateCounter += Time.deltaTime;
@@ -154,6 +151,7 @@ public class BalloonMove : GrimmMove
 					homingBall.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
 				}
 				homingBall.TargetOffset = new Vector2(Random.Range(-4f,4f),Random.Range(-2f,2f));
+				homingBalls.Add(homingBall);
 			}
 
 			yield return null;
@@ -182,8 +180,6 @@ public class BalloonMove : GrimmMove
 
 		BalloonParticles.Stop();
 
-		healthManager.Invincible = false;
-
 		BalloonCollider.SetActive(false);
 
 		//TODO - Broadcast CROWD IDLE EVENT
@@ -196,13 +192,25 @@ public class BalloonMove : GrimmMove
 
 		yield return Grimm.TeleportOut();
 
+		healthManager.Invincible = false;
+
+		yield return new WaitForSeconds(0.3f);
+
+		foreach (var homingBall in homingBalls)
+		{
+			if (homingBall != null)
+			{
+				homingBall.ShrinkAndStop();
+			}
+		}
+
 		if (Grimm.BossStage >= 3)
 		{
 			yield return new WaitForSeconds(0.3f);
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.3f);
 		}
 	}
 

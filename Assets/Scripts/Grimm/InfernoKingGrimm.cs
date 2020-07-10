@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 using WeaverCore;
 using WeaverCore.Components;
 using WeaverCore.Enums;
@@ -32,7 +34,7 @@ public class InfernoKingGrimm : BossReplacement
 	public BoxCollider2D GrimmCollider { get; private set; }
 	public GrimmSounds Sounds { get; private set; }
 	public WeaverAudioPlayer VoicePlayer { get; private set; }
-	public GrimmHealthManager GrimmHealth { get; private set; }
+	public GrimmHealth GrimmHealth { get; private set; }
 	public Rigidbody2D GrimmRigidbody { get; private set; }
 	public GrimmDirection FaceDirection { get; private set; }
 	public int BossStage { get; private set; }
@@ -192,12 +194,34 @@ public class InfernoKingGrimm : BossReplacement
 	private void ChangeTitles(GameObject titleObject)
 	{
 		//Debugger.Log("Change Title = " + titleObject);
-		if (titleObject != null && Core.LoadState == RunningState.Game)
+		if (titleObject != null && CoreInfo.LoadState == RunningState.Game)
 		{
-			if (titleObject.GetComponent(TMProTextSetter.TMProT) != null)
+			var text = titleObject.GetComponent<TMP_Text>();
+			if (text != null)
+			{
+				var setter = titleObject.AddComponent<TMProTextSetter>();
+				if (titleObject.name == "Title Sub")
+				{
+					setter.textToSet = "";
+				}
+				else if (text.text == "Infinite" || text.text == "Nightmare King")
+				{
+					setter.textToSet = titleSmall;
+				}
+				else if (text.text == "Grimm")
+				{
+					setter.textToSet = titleLarge;
+				}
+				else if (text.text.Contains("Nightmare King Grimm") || text.text.Contains("Infinite King Grimm") || text.text.Contains("Infinite Grimm"))
+				{
+					setter.textToSet = titleSmall + " " + titleLarge;
+				}
+			}
+
+			/*if (titleObject.GetComponent(TMProTextSetterOLD.TMProT) != null)
 			{
 				//Debugger.Log("ADDING TITLE SETTER");
-				var setter = titleObject.AddComponent<TMProTextSetter>();
+				var setter = titleObject.AddComponent<TMProTextSetterOLD>();
 				if (titleObject.name == "Title Sub")
 				{
 					setter.UpdateText = "";
@@ -215,10 +239,10 @@ public class InfernoKingGrimm : BossReplacement
 					setter.UpdateText = titleSmall + " " + titleLarge;
 				}
 			}
-			else if (titleObject.GetComponent(TMProTextSetterGUI.TMProUGUIT) != null)
+			else if (titleObject.GetComponent(TMProTextSetterGUIOLD.TMProUGUIT) != null)
 			{
 				//Debugger.Log("ADDING TITLE SETTER GUI");
-				var setter = titleObject.AddComponent<TMProTextSetterGUI>();
+				var setter = titleObject.AddComponent<TMProTextSetterGUIOLD>();
 				if (setter.Text == "Infinite" || setter.Text == "Nightmare King")
 				{
 					setter.UpdateText = titleSmall;
@@ -231,7 +255,7 @@ public class InfernoKingGrimm : BossReplacement
 				{
 					setter.UpdateText = titleSmall + " " + titleLarge;
 				}
-			}
+			}*/
 			/*foreach (var text in titleObject.GetComponentsInChildren(TMProT))
 			{
 				Debugger.Log("C");
@@ -274,7 +298,7 @@ public class InfernoKingGrimm : BossReplacement
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		GrimmAnimator = GetComponent<Animator>();
 		GrimmCollider = GetComponent<BoxCollider2D>();
-		GrimmHealth = GetComponent<GrimmHealthManager>();
+		GrimmHealth = GetComponent<GrimmHealth>();
 		damager = GetComponent<DamageHero>();
 		BatController = Instantiate(Prefabs.BatControllerPrefab);
 		explosions = GetComponentInChildren<ExplosionEffects>(true);
@@ -292,7 +316,7 @@ public class InfernoKingGrimm : BossReplacement
 		teleSmokeBack = transform.Find("tele_smoke_back").GetComponent<ParticleSystem>();
 		teleSmokeFront = transform.Find("tele_smoke_front").GetComponent<ParticleSystem>();
 
-		if (Core.LoadState == RunningState.Game)
+		if (CoreInfo.LoadState == RunningState.Game)
 		{
 			receiver.ReceiveAllEventsFromName("WAKE");
 			receiver.OnReceiveEvent += Wake;
@@ -702,7 +726,7 @@ public class InfernoKingGrimm : BossReplacement
 				snapshot.snapshot.TransitionTo(1f);
 			}
 		}*/
-		if (Core.LoadState == RunningState.Game)
+		if (CoreInfo.LoadState == RunningState.Game)
 		{
 			SilentSnapshot.TransitionTo(1f);
 		}

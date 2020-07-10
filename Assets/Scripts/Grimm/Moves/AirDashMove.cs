@@ -133,6 +133,9 @@ public class AirDashMove : GrimmMove
 
 		GrimmAnimator.PlayAnimation("Ground Dash Antic");
 
+		DashSpike.enabled = true;
+		GrimmCollider.enabled = false;
+
 		var landPlayer = WeaverAudio.Play(Sounds.LandSound, transform.position);
 		landPlayer.AudioSource.pitch = 0.9f;
 
@@ -174,8 +177,6 @@ public class AirDashMove : GrimmMove
 
 		GrimmAnimator.PlayAnimation("G Dash");
 
-		DashSpike.enabled = true;
-
 		var dustEffect = Instantiate(Prefabs.DustGroundEffect, transform.position + Prefabs.DustGroundEffect.transform.position, Prefabs.DustGroundEffect.transform.rotation).GetComponent<ParticleSystem>();
 		var mainParticles = dustEffect.main;
 
@@ -211,8 +212,6 @@ public class AirDashMove : GrimmMove
 
 		waitTimer = 0f;
 
-		DashSpike.enabled = false;
-
 		dustEffect.Stop();
 
 		do
@@ -223,6 +222,9 @@ public class AirDashMove : GrimmMove
 		} while (waitTimer < 0.33f);
 
 		Grimm.Velocity = Vector2.zero;
+
+		DashSpike.enabled = false;
+		GrimmCollider.enabled = true;
 
 		yield return Grimm.TeleportOut();
 

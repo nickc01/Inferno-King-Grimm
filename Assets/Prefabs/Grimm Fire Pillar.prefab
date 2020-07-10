@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 61166485918597156}
   - component: {fileID: 114993277360565380}
   - component: {fileID: 114816902017258610}
+  - component: {fileID: 114807862085838580}
   m_Layer: 22
   m_Name: Pillar
   m_TagString: Untagged
@@ -131,6 +132,7 @@ GameObject:
   - component: {fileID: 58228582895353350}
   - component: {fileID: 114258646242305454}
   - component: {fileID: 114781436576115522}
+  - component: {fileID: 114725174448388946}
   m_Layer: 22
   m_Name: Pt Afterburn
   m_TagString: Untagged
@@ -385,6 +387,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PillarSpawnY: 5.1
   FlameExplode: {fileID: 8300000, guid: 69221813eb8d19046b22a00a51f1db73, type: 3}
+  PlaySound: 1
+  Volume: 1
+  FadeOutTime: 1
 --- !u!114 &114258646242305454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -393,12 +398,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1880425096445234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -45210390, guid: dca9aedea291fb34eb576d841eba1ec3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fd11a7a3b9c16940bc7acd10ca21a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageDealt: 2
-  HazardType: 1
-  ShadowDashHazard: 0
+  damageDealt: 1
+  hazardType: 1
+  shadowDashHazard: 0
+--- !u!114 &114725174448388946
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880425096445234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09caf810109ed97489b528149c075812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
 --- !u!114 &114781436576115522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -410,9 +427,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 1
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114792191851849916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -424,9 +441,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 1
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
+--- !u!114 &114807862085838580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1081143158579142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09caf810109ed97489b528149c075812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
 --- !u!114 &114816902017258610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -438,9 +467,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 1
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114854873692585268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -452,9 +481,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 1
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114921187698985264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -466,9 +495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114975727198998210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -480,9 +509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HueShiftRed: 1
-  HueShiftGreen: 0
-  HueShiftBlue: 0
+  hueShiftRed: 0
+  hueShiftGreen: 0
+  hueShiftBlue: 0
 --- !u!114 &114993277360565380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -491,12 +520,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1081143158579142}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -45210390, guid: dca9aedea291fb34eb576d841eba1ec3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fd11a7a3b9c16940bc7acd10ca21a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageDealt: 2
-  HazardType: 1
-  ShadowDashHazard: 0
+  damageDealt: 2
+  hazardType: 1
+  shadowDashHazard: 0
 --- !u!198 &198531003271743082
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -533,7 +562,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -51893963
+  randomSeed: 755116795
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2436,7 +2465,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 831086342
+  randomSeed: 1900439811
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4339,7 +4368,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 709882625
+  randomSeed: 1740968938
   InitialModule:
     serializedVersion: 3
     enabled: 1
