@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using WeaverCore;
 
 namespace Assets.Scripts
 {
@@ -27,10 +28,23 @@ namespace Assets.Scripts
 
 		void SetText()
 		{
-			if (text != null && textToSet != null)
+
+			if (text.text.Contains("Nightmare"))
+			{
+				WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Nightmare", "Inferno"));
+				text.text = text.text.Replace("Nightmare", "Inferno");
+				WeaverLog.Log("Change 1");
+			}
+			if (text.text.Contains("Infinite"))
+			{
+				WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Infinite", "Inferno King"));
+				text.text = text.text.Replace("Infinite", "Inferno King");
+				WeaverLog.Log("Change 2");
+			}
+			/*if (text != null && textToSet != null)
 			{
 				text.text = textToSet;
-			}
+			}*/
 		}
 	}
 }

@@ -172,13 +172,21 @@ public class InfernoKingGrimm : BossReplacement
 
 		var allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
 
+
 		foreach (var obj in allObjects)
+		{
+			if (obj.GetComponent<TMP_Text>() != null && obj.scene != null && obj.scene.name != null)
+			{
+				ChangeTitles(obj);
+			}
+		}
+		/*foreach (var obj in allObjects)
 		{
 			if (obj.name.Contains("Title"))
 			{
 				ChangeTitles(obj);
 			}
-		}
+		}*/
 
 		//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Main"));
 		//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Sub"));
@@ -196,26 +204,49 @@ public class InfernoKingGrimm : BossReplacement
 		//Debugger.Log("Change Title = " + titleObject);
 		if (titleObject != null && CoreInfo.LoadState == RunningState.Game)
 		{
+			WeaverLog.Log("Title Object = " + titleObject);
 			var text = titleObject.GetComponent<TMP_Text>();
 			if (text != null)
 			{
-				var setter = titleObject.AddComponent<TMProTextSetter>();
-				if (titleObject.name == "Title Sub")
+
+				WeaverLog.Log("Text = " + text.text);
+				if (titleObject.GetComponent<TMProTextSetter>() == null)
+				{
+					titleObject.AddComponent<TMProTextSetter>();
+				}
+				//var setter = 
+
+				/*if (text.text.Contains("Nightmare"))
+				{
+					setter.textToSet = text.text.Replace("Nightmare","Inferno");
+					WeaverLog.Log("Change 1");
+				}
+				if (text.text.Contains("Infinite"))
+				{
+					setter.textToSet = text.text.Replace("Infinite", "Inferno King");
+					WeaverLog.Log("Change 2");
+				}*/
+
+				//var textContents = text.text.ToLower();
+
+				
+
+				/*if (titleObject.name == "Title Sub")
 				{
 					setter.textToSet = "";
 				}
-				else if (text.text == "Infinite" || text.text == "Nightmare King")
+				else if (textContents == "infinite" || textContents == "nightmare king")
 				{
 					setter.textToSet = titleSmall;
 				}
-				else if (text.text == "Grimm")
+				else if (textContents == "grimm")
 				{
 					setter.textToSet = titleLarge;
 				}
-				else if (text.text.Contains("Nightmare King Grimm") || text.text.Contains("Infinite King Grimm") || text.text.Contains("Infinite Grimm"))
+				else if (textContents.Contains("nightmare king grimm") || text.text.Contains("infinite king grimm") || text.text.Contains("Infinite Grimm"))
 				{
 					setter.textToSet = titleSmall + " " + titleLarge;
-				}
+				}*/
 			}
 
 			/*if (titleObject.GetComponent(TMProTextSetterOLD.TMProT) != null)
