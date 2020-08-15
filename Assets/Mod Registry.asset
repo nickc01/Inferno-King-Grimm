@@ -23,6 +23,7 @@ MonoBehaviour:
     AssemblyName: WeaverCore
   featuresRaw:
   - {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+  - {fileID: 0}
   selectedFeatureIndex: 0
   selectedModIndex: 0
   registryEnabled: 1

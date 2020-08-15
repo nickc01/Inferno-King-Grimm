@@ -1,0 +1,1878 @@
+fileFormatVersion: 2
+guid: 4ee52644e96aa894a8840cb52328612c
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Grimm_evade0005
+    21300002: Grimm_evade0001
+    21300004: ground_dash_effect0000
+    21300006: Grimm_evade0003
+    21300008: Grimm_evade0004
+    21300010: Grimm_evade0002
+    21300018: Grimm_air_dash0009
+    21300020: Grimm_air_dash0011
+    21300022: Grimm_air_dash0005
+    21300024: Grimm_air_dash0010
+    21300026: Grimm_air_dash0002
+    21300028: Grimm_air_dash0008
+    21300030: Grimm_air_dash0003
+    21300032: Grimm_air_dash0004
+    21300034: Grimm_air_dash0007
+    21300036: Grimm_air_dash0001
+    21300038: Grimm_air_dash0006
+    21300040: Grimm_air_dash0000
+    21300042: Grimm_boss_balloon_attack0003
+    21300044: Grimm_boss_balloon_attack0000
+    21300046: Grimm_boss_balloon_attack0004
+    21300048: Grimm_boss_balloon_attack0002
+    21300050: Grimm_boss_balloon_attack0001
+    21300052: temp0004
+    21300054: temp0003
+    21300056: temp0005
+    21300058: temp0006
+    21300060: temp0007
+    21300062: Flame_bat0003
+    21300064: Flame_bat0002
+    21300066: Flame_bat0004
+    21300068: Flame_bat0001
+    21300070: Flame_bat0000
+    21300072: Grimm_ground_spike0009
+    21300074: Grimm_ground_spike0010
+    21300076: Grimm_ground_spike0001
+    21300078: Grimm_ground_spike0005
+    21300080: Grimm_Boss_ground_spike_attack0004
+    21300082: Grimm_Boss_ground_spike_attack0005
+    21300084: Grimm_ground_spike0003
+    21300086: Grimm_ground_spike0008
+    21300088: Grimm_ground_spike0012
+    21300090: Grimm_ground_spike0004
+    21300092: Grimm_ground_spike0011
+    21300094: ground_dash_effect0004
+    21300096: Grimm_ground_spike0007
+    21300098: air_dash_effects0004
+    21300100: Grimm_Boss_ground_spike_attack0006
+    21300102: Grimm_ground_spike0006
+    21300104: Grimm_ground_spike0000
+    21300106: Grimm_ground_spike0013
+    21300108: Grimm_ground_spike0002
+    21300110: air_dash_effects0000
+    21300112: Grimm_Boss_ground_spike_attack0003
+    21300114: Grimm_slash0003
+    21300116: Grimm_slash0001
+    21300118: Grimm_slash0000
+    21300120: Grimm_slash0002
+    21300122: Grimm_idle0001
+    21300124: Grimm_idle0003
+    21300126: Grimm_idle0000
+    21300128: Grimm_idle0002
+    21300130: Grimm_slash_antic0000
+    21300132: Grimm_slash_antic0003
+    21300134: Grimm_slash_antic0002
+    21300136: Grimm_slash_antic0001
+    21300138: Grimm_stun_bat0000
+    21300140: Grimm_stun_bat0001
+    21300142: Grimm_stun_bat0006
+    21300144: Grimm_stun_bat0004
+    21300146: Grimm_stun_bat0007
+    21300148: Grimm_stun_bat0008
+    21300150: Grimm_stun_bat0005
+    21300152: Grimm_stun_bat0003
+    21300154: Grimm_stun_bat0002
+    21300156: Grimm_stun_explode0001
+    21300158: Grimm_stun_explode0003
+    21300160: Grimm_stun_explode0002
+    21300162: Grimm_stun_explode0004
+    21300164: Grimm_stun_explode0000
+    21300166: Grimm_teleport0000
+    21300168: Grimm_teleport0001
+    21300170: Grimm_teleport0006
+    21300172: Grimm_teleport0004
+    21300174: Grimm_teleport0005
+    21300176: Grimm_teleport0002
+    21300178: Grimm_teleport0003
+    21300180: ground_dash_effect0002
+    21300182: ground_dash_effect0001
+    21300184: ground_dash_effect0003
+    21300186: air_dash_effects0001
+    21300188: ground_dash_effect0005
+    21300190: air_dash_effects0003
+    21300192: air_dash_effects0002
+    21300194: Grimm_stun_extra_frames0002
+    21300196: Grimm_stun_extra_frames0000
+    21300198: Grimm_stun_extra_frames0001
+    21300200: Grimm_nightmare_flame_pillar0005
+    21300202: Grimm_nightmare_flame_pillar0003
+    21300204: Grimm_nightmare_flame_pillar0010
+    21300206: Grimm_nightmare_flame_pillar0002
+    21300208: Grimm_nightmare_flame_pillar0008
+    21300210: Grimm_nightmare_flame_pillar0007
+    21300212: Grimm_nightmare_flame_pillar0006
+    21300214: Grimm_nightmare_flame_pillar0001
+    21300216: Grimm_nightmare_flame_pillar0009
+    21300218: Grimm_nightmare_flame_pillar0004
+    21300220: Grimm_nightmare_flame_pillar0000
+    21300222: Grimm_anims_v050001
+    21300224: Grimm_anims_v050003
+    21300226: Grimm_anims_v050002
+    21300228: Grimm_anims_v050004
+    21300230: Grimm_anims_v050000
+    21300232: Grimm_anims_v050005
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 62.760464
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: iPhone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Windows Store Apps
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Grimm_evade0005
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3774
+        width: 239
+        height: 259
+      alignment: 9
+      pivot: {x: 0.57142854, y: 0.6511628}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_evade0001
+      rect:
+        serializedVersion: 2
+        x: 3532
+        y: 705
+        width: 255
+        height: 342
+      alignment: 9
+      pivot: {x: 0.6259843, y: 0.61876833}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ground_dash_effect0000
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 2063
+        width: 310
+        height: 151
+      alignment: 9
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_evade0003
+      rect:
+        serializedVersion: 2
+        x: 2745
+        y: 347
+        width: 424
+        height: 288
+      alignment: 9
+      pivot: {x: 0.46099293, y: 0.75609756}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_evade0004
+      rect:
+        serializedVersion: 2
+        x: 1636
+        y: 705
+        width: 422
+        height: 256
+      alignment: 9
+      pivot: {x: 0.42755342, y: 0.67058825}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_evade0002
+      rect:
+        serializedVersion: 2
+        x: 3525
+        y: 347
+        width: 418
+        height: 278
+      alignment: 9
+      pivot: {x: 0.5755396, y: 0.7039711}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 275
+        width: 3
+        height: 3
+      alignment: 9
+      pivot: {x: 0.984375, y: 0.984375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 279
+        width: 3
+        height: 3
+      alignment: 9
+      pivot: {x: 0.984375, y: 0.984375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 283
+        width: 3
+        height: 3
+      alignment: 9
+      pivot: {x: 0.984375, y: 0.984375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0009
+      rect:
+        serializedVersion: 2
+        x: 1827
+        y: 347
+        width: 507
+        height: 252
+      alignment: 9
+      pivot: {x: 0.43478256, y: 0.8446215}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0011
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 0
+        width: 800
+        height: 274
+      alignment: 9
+      pivot: {x: 0.4380476, y: 0.75091577}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0005
+      rect:
+        serializedVersion: 2
+        x: 1733
+        y: 1896
+        width: 199
+        height: 479
+      alignment: 9
+      pivot: {x: 0.58080804, y: 0.45188284}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0010
+      rect:
+        serializedVersion: 2
+        x: 2172
+        y: 0
+        width: 750
+        height: 268
+      alignment: 9
+      pivot: {x: 0.5113485, y: 0.74157304}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0002
+      rect:
+        serializedVersion: 2
+        x: 3142
+        y: 1478
+        width: 254
+        height: 384
+      alignment: 9
+      pivot: {x: 0.58102775, y: 0.4908616}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0008
+      rect:
+        serializedVersion: 2
+        x: 2059
+        y: 705
+        width: 397
+        height: 243
+      alignment: 9
+      pivot: {x: 0.47979796, y: 0.88429755}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0003
+      rect:
+        serializedVersion: 2
+        x: 2863
+        y: 705
+        width: 262
+        height: 348
+      alignment: 9
+      pivot: {x: 0.5977012, y: 0.5129683}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0004
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 1076
+        width: 208
+        height: 501
+      alignment: 9
+      pivot: {x: 0.43478268, y: 0.476}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0007
+      rect:
+        serializedVersion: 2
+        x: 2457
+        y: 705
+        width: 405
+        height: 233
+      alignment: 9
+      pivot: {x: 0.48762375, y: 0.9181034}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0001
+      rect:
+        serializedVersion: 2
+        x: 2643
+        y: 1478
+        width: 257
+        height: 384
+      alignment: 9
+      pivot: {x: 0.57421875, y: 0.49347258}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0006
+      rect:
+        serializedVersion: 2
+        x: 2335
+        y: 347
+        width: 409
+        height: 310
+      alignment: 9
+      pivot: {x: 0.495098, y: 0.6925567}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_air_dash0000
+      rect:
+        serializedVersion: 2
+        x: 2901
+        y: 1478
+        width: 240
+        height: 411
+      alignment: 9
+      pivot: {x: 0.5313808, y: 0.49512196}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_boss_balloon_attack0003
+      rect:
+        serializedVersion: 2
+        x: 1430
+        y: 1064
+        width: 353
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5056818, y: 0.6140776}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_boss_balloon_attack0000
+      rect:
+        serializedVersion: 2
+        x: 3788
+        y: 705
+        width: 248
+        height: 342
+      alignment: 9
+      pivot: {x: 0.45748985, y: 0.56304985}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_boss_balloon_attack0004
+      rect:
+        serializedVersion: 2
+        x: 1733
+        y: 1478
+        width: 328
+        height: 417
+      alignment: 9
+      pivot: {x: 0.50152904, y: 0.6129808}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_boss_balloon_attack0002
+      rect:
+        serializedVersion: 2
+        x: 2062
+        y: 1478
+        width: 316
+        height: 414
+      alignment: 9
+      pivot: {x: 0.5015873, y: 0.6125908}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_boss_balloon_attack0001
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 2462
+        width: 400
+        height: 446
+      alignment: 9
+      pivot: {x: 0.4887218, y: 0.5977528}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: temp0004
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 3343
+        width: 402
+        height: 425
+      alignment: 9
+      pivot: {x: 0.34912717, y: 0.504717}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: temp0003
+      rect:
+        serializedVersion: 2
+        x: 1933
+        y: 2323
+        width: 220
+        height: 426
+      alignment: 9
+      pivot: {x: 0.48858452, y: 0.5129412}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: temp0005
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 2027
+        width: 419
+        height: 434
+      alignment: 9
+      pivot: {x: 0.35645932, y: 0.51732105}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: temp0006
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 2909
+        width: 403
+        height: 433
+      alignment: 9
+      pivot: {x: 0.35572135, y: 0.5185185}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: temp0007
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 1064
+        width: 440
+        height: 435
+      alignment: 9
+      pivot: {x: 0.33485192, y: 0.5184332}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_bat0003
+      rect:
+        serializedVersion: 2
+        x: 3649
+        y: 2056
+        width: 236
+        height: 148
+      alignment: 9
+      pivot: {x: 0.3319149, y: 0.63265306}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_bat0002
+      rect:
+        serializedVersion: 2
+        x: 3649
+        y: 1896
+        width: 243
+        height: 159
+      alignment: 9
+      pivot: {x: 0.32644624, y: 0.35443032}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_bat0004
+      rect:
+        serializedVersion: 2
+        x: 3399
+        y: 2072
+        width: 243
+        height: 160
+      alignment: 9
+      pivot: {x: 0.338843, y: 0.327044}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_bat0001
+      rect:
+        serializedVersion: 2
+        x: 3399
+        y: 1896
+        width: 249
+        height: 175
+      alignment: 9
+      pivot: {x: 0.31451613, y: 0.29310346}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_bat0000
+      rect:
+        serializedVersion: 2
+        x: 1933
+        y: 3839
+        width: 202
+        height: 187
+      alignment: 9
+      pivot: {x: 0.39800996, y: 0.46774197}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0009
+      rect:
+        serializedVersion: 2
+        x: 2003
+        y: 3109
+        width: 69
+        height: 670
+      alignment: 9
+      pivot: {x: 0.4852941, y: 0.03437966}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0010
+      rect:
+        serializedVersion: 2
+        x: 1733
+        y: 2938
+        width: 76
+        height: 664
+      alignment: 9
+      pivot: {x: 0.5333333, y: 0.113122165}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0001
+      rect:
+        serializedVersion: 2
+        x: 4023
+        y: 0
+        width: 65
+        height: 156
+      alignment: 9
+      pivot: {x: 0.421875, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0005
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 2013
+        width: 79
+        height: 246
+      alignment: 9
+      pivot: {x: 0.525641, y: 0.08979595}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_Boss_ground_spike_attack0004
+      rect:
+        serializedVersion: 2
+        x: 2456
+        y: 1064
+        width: 331
+        height: 363
+      alignment: 9
+      pivot: {x: 0.53636366, y: 0.58563536}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_Boss_ground_spike_attack0005
+      rect:
+        serializedVersion: 2
+        x: 2115
+        y: 1064
+        width: 340
+        height: 363
+      alignment: 9
+      pivot: {x: 0.5516224, y: 0.58563536}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0003
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 3082
+        width: 90
+        height: 132
+      alignment: 9
+      pivot: {x: 0.49438202, y: 0.030534387}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0008
+      rect:
+        serializedVersion: 2
+        x: 1933
+        y: 3109
+        width: 69
+        height: 729
+      alignment: 9
+      pivot: {x: 0.5147059, y: 0.04395604}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0012
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 3774
+        width: 80
+        height: 285
+      alignment: 9
+      pivot: {x: 0.48101264, y: 0.10211265}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0004
+      rect:
+        serializedVersion: 2
+        x: 1827
+        y: 600
+        width: 97
+        height: 88
+      alignment: 9
+      pivot: {x: 0.5104166, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0011
+      rect:
+        serializedVersion: 2
+        x: 1850
+        y: 2376
+        width: 82
+        height: 403
+      alignment: 9
+      pivot: {x: 0.56790125, y: 0.07213932}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ground_dash_effect0004
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 705
+        width: 646
+        height: 358
+      alignment: 9
+      pivot: {x: 0.64496124, y: 0.48459387}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0007
+      rect:
+        serializedVersion: 2
+        x: 2154
+        y: 2630
+        width: 64
+        height: 772
+      alignment: 9
+      pivot: {x: 0.4761905, y: 0.30220497}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: air_dash_effects0004
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1683
+        width: 337
+        height: 568
+      alignment: 9
+      pivot: {x: 0.66964287, y: 0.50088185}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_Boss_ground_spike_attack0006
+      rect:
+        serializedVersion: 2
+        x: 1784
+        y: 1064
+        width: 330
+        height: 374
+      alignment: 9
+      pivot: {x: 0.5410334, y: 0.5978552}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0006
+      rect:
+        serializedVersion: 2
+        x: 2219
+        y: 2630
+        width: 84
+        height: 395
+      alignment: 9
+      pivot: {x: 0.50602406, y: 0.06598985}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0000
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 2260
+        width: 56
+        height: 119
+      alignment: 9
+      pivot: {x: 0.3090909, y: 0.10169494}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0013
+      rect:
+        serializedVersion: 2
+        x: 4037
+        y: 705
+        width: 48
+        height: 146
+      alignment: 9
+      pivot: {x: 0.7659575, y: 0.19999999}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_ground_spike0002
+      rect:
+        serializedVersion: 2
+        x: 4023
+        y: 157
+        width: 70
+        height: 140
+      alignment: 9
+      pivot: {x: 0.44927537, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: air_dash_effects0000
+      rect:
+        serializedVersion: 2
+        x: 3148
+        y: 1896
+        width: 250
+        height: 218
+      alignment: 9
+      pivot: {x: 0.09638554, y: 0.5299539}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_Boss_ground_spike_attack0003
+      rect:
+        serializedVersion: 2
+        x: 2154
+        y: 1896
+        width: 228
+        height: 363
+      alignment: 9
+      pivot: {x: 0.5110132, y: 0.58563536}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_slash0003
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 2828
+        width: 510
+        height: 387
+      alignment: 9
+      pivot: {x: 0.5697446, y: 0.5569948}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_slash0001
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 2013
+        width: 537
+        height: 375
+      alignment: 9
+      pivot: {x: 0.4365672, y: 0.51069516}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_slash0000
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 705
+        width: 635
+        height: 370
+      alignment: 9
+      pivot: {x: 0.5867508, y: 0.5176152}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_slash0002
+      rect:
+        serializedVersion: 2
+        x: 1544
+        y: 0
+        width: 627
+        height: 345
+      alignment: 9
+      pivot: {x: 0.48242813, y: 0.61627907}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_idle0001
+      rect:
+        serializedVersion: 2
+        x: 1430
+        y: 1478
+        width: 302
+        height: 455
+      alignment: 9
+      pivot: {x: 0.48504978, y: 0.48237884}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_idle0003
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3316
+        width: 305
+        height: 457
+      alignment: 9
+      pivot: {x: 0.43421048, y: 0.48464912}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_idle0000
+      rect:
+        serializedVersion: 2
+        x: 1430
+        y: 1934
+        width: 279
+        height: 459
+      alignment: 9
+      pivot: {x: 0.46402878, y: 0.48471618}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_idle0002
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2860
+        width: 318
+        height: 455
+      alignment: 9
+      pivot: {x: 0.50157726, y: 0.4801762}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_slash_antic0000
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 3685
+        width: 229
+        height: 400
+      alignment: 9
+      pivot: {x: 0.4517544, y: 0.5413534}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_slash_antic0003
+      rect:
+        serializedVersion: 2
+        x: 3324
+        y: 1064
+        width: 266
+        height: 396
+      alignment: 9
+      pivot: {x: 0.51320755, y: 0.52911395}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_slash_antic0002
+      rect:
+        serializedVersion: 2
+        x: 2788
+        y: 1064
+        width: 268
+        height: 396
+      alignment: 9
+      pivot: {x: 0.5168539, y: 0.52911395}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_slash_antic0001
+      rect:
+        serializedVersion: 2
+        x: 3057
+        y: 1064
+        width: 266
+        height: 398
+      alignment: 9
+      pivot: {x: 0.56226414, y: 0.5491184}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0000
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 2964
+        width: 108
+        height: 117
+      alignment: 9
+      pivot: {x: 0.55140185, y: 0.47413802}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0001
+      rect:
+        serializedVersion: 2
+        x: 2586
+        y: 939
+        width: 125
+        height: 119
+      alignment: 9
+      pivot: {x: 0.3709677, y: 0.35593212}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0006
+      rect:
+        serializedVersion: 2
+        x: 2211
+        y: 949
+        width: 151
+        height: 109
+      alignment: 9
+      pivot: {x: 0.5133333, y: 0.5370371}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0004
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 2828
+        width: 113
+        height: 135
+      alignment: 9
+      pivot: {x: 0.71428573, y: 0.51492536}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0007
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 347
+        width: 377
+        height: 354
+      alignment: 9
+      pivot: {x: 0.46542555, y: 0.5184136}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0008
+      rect:
+        serializedVersion: 2
+        x: 3170
+        y: 347
+        width: 354
+        height: 334
+      alignment: 9
+      pivot: {x: 0.49575073, y: 0.5495495}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0005
+      rect:
+        serializedVersion: 2
+        x: 2059
+        y: 949
+        width: 151
+        height: 114
+      alignment: 9
+      pivot: {x: 0.4666667, y: 0.5663717}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0003
+      rect:
+        serializedVersion: 2
+        x: 3126
+        y: 928
+        width: 140
+        height: 131
+      alignment: 9
+      pivot: {x: 0.37410074, y: 0.64615387}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_bat0002
+      rect:
+        serializedVersion: 2
+        x: 2457
+        y: 939
+        width: 128
+        height: 118
+      alignment: 9
+      pivot: {x: 0.35433078, y: 0.5299145}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_explode0001
+      rect:
+        serializedVersion: 2
+        x: 1933
+        y: 2750
+        width: 210
+        height: 358
+      alignment: 9
+      pivot: {x: 0.5358852, y: 0.54901963}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_explode0003
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 1578
+        width: 464
+        height: 434
+      alignment: 9
+      pivot: {x: 0.49676025, y: 0.5196305}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_explode0002
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 2389
+        width: 454
+        height: 438
+      alignment: 9
+      pivot: {x: 0.54083884, y: 0.47597253}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_explode0004
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 3216
+        width: 410
+        height: 468
+      alignment: 9
+      pivot: {x: 0.5134474, y: 0.5631692}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_explode0000
+      rect:
+        serializedVersion: 2
+        x: 3874
+        y: 1478
+        width: 222
+        height: 360
+      alignment: 9
+      pivot: {x: 0.38009048, y: 0.55431753}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_teleport0000
+      rect:
+        serializedVersion: 2
+        x: 1810
+        y: 2938
+        width: 91
+        height: 426
+      alignment: 9
+      pivot: {x: 0.66666675, y: 0.48470592}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_teleport0001
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 1578
+        width: 157
+        height: 415
+      alignment: 9
+      pivot: {x: 0.51923084, y: 0.51690817}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_teleport0006
+      rect:
+        serializedVersion: 2
+        x: 1933
+        y: 1896
+        width: 220
+        height: 426
+      alignment: 9
+      pivot: {x: 0.4520548, y: 0.5011765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_teleport0004
+      rect:
+        serializedVersion: 2
+        x: 3638
+        y: 1478
+        width: 235
+        height: 366
+      alignment: 9
+      pivot: {x: 0.517094, y: 0.58356166}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_teleport0005
+      rect:
+        serializedVersion: 2
+        x: 3858
+        y: 1064
+        width: 224
+        height: 408
+      alignment: 9
+      pivot: {x: 0.44843048, y: 0.5331695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_teleport0002
+      rect:
+        serializedVersion: 2
+        x: 808
+        y: 2389
+        width: 180
+        height: 384
+      alignment: 9
+      pivot: {x: 0.3798883, y: 0.56657964}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_teleport0003
+      rect:
+        serializedVersion: 2
+        x: 2154
+        y: 2260
+        width: 224
+        height: 369
+      alignment: 9
+      pivot: {x: 0.60538113, y: 0.55978256}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ground_dash_effect0002
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 742
+        height: 346
+      alignment: 9
+      pivot: {x: 0.5398111, y: 0.5362319}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ground_dash_effect0001
+      rect:
+        serializedVersion: 2
+        x: 3455
+        y: 0
+        width: 567
+        height: 284
+      alignment: 9
+      pivot: {x: 0.2915194, y: 0.65371025}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ground_dash_effect0003
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 347
+        width: 685
+        height: 357
+      alignment: 9
+      pivot: {x: 0.60818714, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: air_dash_effects0001
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 3685
+        width: 398
+        height: 406
+      alignment: 9
+      pivot: {x: 0.46095723, y: 0.49135804}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ground_dash_effect0005
+      rect:
+        serializedVersion: 2
+        x: 2923
+        y: 0
+        width: 531
+        height: 335
+      alignment: 9
+      pivot: {x: 0.7849057, y: 0.4491018}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: air_dash_effects0003
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 1500
+        width: 361
+        height: 526
+      alignment: 9
+      pivot: {x: 0.625, y: 0.48571432}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: air_dash_effects0002
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 1076
+        width: 403
+        height: 501
+      alignment: 9
+      pivot: {x: 0.5597015, y: 0.48399997}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_extra_frames0002
+      rect:
+        serializedVersion: 2
+        x: 3397
+        y: 1478
+        width: 240
+        height: 377
+      alignment: 9
+      pivot: {x: 0.5899582, y: 0.57446814}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_extra_frames0000
+      rect:
+        serializedVersion: 2
+        x: 3591
+        y: 1064
+        width: 266
+        height: 378
+      alignment: 9
+      pivot: {x: 0.5320755, y: 0.5729443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_stun_extra_frames0001
+      rect:
+        serializedVersion: 2
+        x: 2379
+        y: 1478
+        width: 263
+        height: 380
+      alignment: 9
+      pivot: {x: 0.5648855, y: 0.56992084}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0005
+      rect:
+        serializedVersion: 2
+        x: 1430
+        y: 3191
+        width: 130
+        height: 794
+      alignment: 9
+      pivot: {x: 0.48837215, y: 0.5346784}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0003
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 347
+        width: 352
+        height: 703
+      alignment: 9
+      pivot: {x: 0.5128205, y: 0.61396015}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0010
+      rect:
+        serializedVersion: 2
+        x: 3944
+        y: 347
+        width: 117
+        height: 263
+      alignment: 9
+      pivot: {x: 0.32758617, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0002
+      rect:
+        serializedVersion: 2
+        x: 2383
+        y: 2075
+        width: 358
+        height: 183
+      alignment: 9
+      pivot: {x: 0.49299717, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0008
+      rect:
+        serializedVersion: 2
+        x: 1733
+        y: 2376
+        width: 116
+        height: 561
+      alignment: 9
+      pivot: {x: 0.40869564, y: 0.35000002}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0007
+      rect:
+        serializedVersion: 2
+        x: 1561
+        y: 3191
+        width: 122
+        height: 624
+      alignment: 9
+      pivot: {x: 0.41322315, y: 0.34028894}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0006
+      rect:
+        serializedVersion: 2
+        x: 1430
+        y: 2394
+        width: 152
+        height: 796
+      alignment: 9
+      pivot: {x: 0.4437086, y: 0.53207546}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0001
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 1896
+        width: 375
+        height: 166
+      alignment: 9
+      pivot: {x: 0.5187166, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0009
+      rect:
+        serializedVersion: 2
+        x: 1733
+        y: 3603
+        width: 126
+        height: 394
+      alignment: 9
+      pivot: {x: 0.408, y: 0.22391856}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0004
+      rect:
+        serializedVersion: 2
+        x: 1583
+        y: 2394
+        width: 144
+        height: 760
+      alignment: 9
+      pivot: {x: 0.4755245, y: 0.5586298}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_nightmare_flame_pillar0000
+      rect:
+        serializedVersion: 2
+        x: 2383
+        y: 1896
+        width: 388
+        height: 178
+      alignment: 9
+      pivot: {x: 0.501292, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_anims_v050001
+      rect:
+        serializedVersion: 2
+        x: 3126
+        y: 705
+        width: 405
+        height: 222
+      alignment: 9
+      pivot: {x: 0.4851485, y: 0.9592759}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_anims_v050003
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1051
+        width: 304
+        height: 631
+      alignment: 9
+      pivot: {x: 0.38283825, y: 0.3920635}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_anims_v050002
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 3769
+        width: 397
+        height: 188
+      alignment: 9
+      pivot: {x: 0.47727275, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_anims_v050004
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2252
+        width: 309
+        height: 607
+      alignment: 9
+      pivot: {x: 0.41883117, y: 0.3778878}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_anims_v050000
+      rect:
+        serializedVersion: 2
+        x: 1417
+        y: 347
+        width: 409
+        height: 313
+      alignment: 9
+      pivot: {x: 0.49264705, y: 0.6826923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_anims_v050005
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 3216
+        width: 208
+        height: 452
+      alignment: 9
+      pivot: {x: 0.40096623, y: 0.47450113}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

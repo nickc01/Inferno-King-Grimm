@@ -113,7 +113,7 @@ public class Firebat : MonoBehaviour
 	public static void SendFirebat(InfernoKingGrimm grimm, float angle, float pitch = 1.0f, float speedMultiplier = 1f)
 	{
 		//Debugger.Log("FIre bat B");
-		CoroutineUtilities.StartCoroutine(SendFirebatAsync(grimm, angle, pitch, speedMultiplier));
+		UnboundCoroutine.Start(SendFirebatAsync(grimm, angle, pitch, speedMultiplier));
 	}
 
 
