@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEngine;
 
-namespace Assets.Scripts
+namespace WeaverCore.Utilities
 {
-	/*public class Randomizer<T> : IComparer<T>
+	public class Randomizer<T> : IComparer<T>
 	{
 		public static Randomizer<T> Instance = new Randomizer<T>();
 
@@ -14,5 +13,5 @@ namespace Assets.Scripts
 		{
 			return UnityEngine.Random.Range(-1, 2);
 		}
-	}*/
+	}
 }

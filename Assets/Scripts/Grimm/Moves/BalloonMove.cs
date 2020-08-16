@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Components;
 using WeaverCore.Enums;
 using WeaverCore.Utilities;
 using Random = UnityEngine.Random;
@@ -50,12 +51,12 @@ public class BalloonMove : GrimmMove
 
 	GameObject BalloonFireballShootSound;
 	GameObject BalloonCollider;
-	GrimmHealth healthManager;
+	EntityHealth healthManager;
 	ParticleSystem BalloonParticles;
 
 	void Awake()
 	{
-		healthManager = GetComponent<GrimmHealth>();
+		healthManager = GetComponent<EntityHealth>();
 
 		BalloonParticles = GetChildObject<ParticleSystem>("Balloon Particles");
 		BalloonFireballShootSound = GetChildGameObject("Balloon Fireball Loop Audio");

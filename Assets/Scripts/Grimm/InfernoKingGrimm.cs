@@ -21,23 +21,23 @@ using WeaverCore.WeaverAssets;
 [RequireComponent(typeof(DamageHero))]
 public class InfernoKingGrimm : BossReplacement
 {
-	private List<GrimmMove> AllMoves;
+	//private List<GrimmMove> AllMoves;
 	private BalloonMove balloonMove;
 
 	bool balloonMoveNext = false;
 
 	//private readonly List<GrimmMove> possibleMoveSets = new List<GrimmMove>();
 
-	public GrimmAttackMode CurrentAttackMode { get; private set; }
-	public GrimmMove CurrentMove { get; private set; }
+	//public GrimmAttackMode CurrentAttackMode { get; private set; }
+	//public GrimmMove CurrentMove { get; private set; }
 	public Animator GrimmAnimator { get; private set; }
 	public BoxCollider2D GrimmCollider { get; private set; }
 	public GrimmSounds Sounds { get; private set; }
 	public WeaverAudioPlayer VoicePlayer { get; private set; }
-	public GrimmHealth GrimmHealth { get; private set; }
+	public EntityHealth GrimmHealth { get; private set; }
 	public Rigidbody2D GrimmRigidbody { get; private set; }
 	public GrimmDirection FaceDirection { get; private set; }
-	public int BossStage { get; private set; }
+	//public int BossStage { get; private set; }
 	public bool Stunned { get; private set; }
 	public Vector2 Velocity
 	{
@@ -166,7 +166,26 @@ public class InfernoKingGrimm : BossReplacement
 		}
 	}
 
-	private void Awake()
+	protected override void Awake()
+	{
+		base.Awake();
+		MainPrefabs.Instance = prefabs;
+
+		var allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+
+		foreach (var obj in allObjects)
+		{
+			if (obj.GetComponent<TMP_Text>() != null && obj.scene != null && obj.scene.name != null)
+			{
+				ChangeTitles(obj);
+			}
+		}
+	}
+
+	/*override 
+
+	protected  void Awake()
 	{
 		MainPrefabs.Instance = prefabs;
 
@@ -180,23 +199,16 @@ public class InfernoKingGrimm : BossReplacement
 				ChangeTitles(obj);
 			}
 		}
-		/*foreach (var obj in allObjects)
-		{
-			if (obj.name.Contains("Title"))
-			{
-				ChangeTitles(obj);
-			}
-		}*/
 
-		//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Main"));
-		//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Sub"));
-		//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Super"));
+	//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Main"));
+	//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Sub"));
+	//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Super"));
 
 
-		//ChangeTitles(GameObject.Find("Title Main"));
-		//ChangeTitles(GameObject.Find("Title Sub"));
-		//ChangeTitles(GameObject.Find("Title Super"));
-	}
+	//ChangeTitles(GameObject.Find("Title Main"));
+	//ChangeTitles(GameObject.Find("Title Sub"));
+	//ChangeTitles(GameObject.Find("Title Super"));
+}*/
 
 	//Changing the title via an ugly reflection method, will refine later
 	private void ChangeTitles(GameObject titleObject)
@@ -312,8 +324,9 @@ public class InfernoKingGrimm : BossReplacement
 	private void Start()
 	{
 		GrimmHue.SetAllGrimmHues(0f, 0f, 0f);
-		BossStage = 1;
-		AllMoves = GetComponents<GrimmMove>().ToList();
+		//BossStage = 1;
+		//AllMoves = GetComponents<GrimmMove>().ToList();
+		AddMoves(GetComponents<GrimmMove>());
 		balloonMove = GetComponent<BalloonMove>();
 
 		//Debugger.Log("ENEMY HAS STARTED");
@@ -329,7 +342,7 @@ public class InfernoKingGrimm : BossReplacement
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		GrimmAnimator = GetComponent<Animator>();
 		GrimmCollider = GetComponent<BoxCollider2D>();
-		GrimmHealth = GetComponent<GrimmHealth>();
+		GrimmHealth = GetComponent<EntityHealth>();
 		damager = GetComponent<DamageHero>();
 		BatController = Instantiate(Prefabs.BatControllerPrefab);
 		explosions = GetComponentInChildren<ExplosionEffects>(true);
@@ -366,8 +379,10 @@ public class InfernoKingGrimm : BossReplacement
 		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - quarterHealth,DoBalloonMove);
 		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 2),DoBalloonMove);
 		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 3), DoBalloonMove);
-		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth), Stun);
-		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth * 2), Stun);
+		//GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth), Stun);
+		//GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth * 2), Stun);
+		AddStunMilestone(GrimmHealth.Health - thirdHealth);
+		AddStunMilestone(GrimmHealth.Health - (thirdHealth * 2));
 
 		var snapshots = Resources.FindObjectsOfTypeAll<AudioMixerSnapshot>();
 		foreach (var snapshot in snapshots)
@@ -381,7 +396,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	}
 
-	public GrimmMove GetRandomMove()
+	/*public GrimmMove GetRandomMove()
 	{
 		if (randomMoveStorage == null)
 		{
@@ -406,18 +421,7 @@ public class InfernoKingGrimm : BossReplacement
 			randomMoveIndex++;
 		}
 		return SelectedMove;
-		/*List<GrimmMove> ValidMoves = AllMoves.Where(m => m.ExcludeFromRandomizer == false).ToList();
-
-		GrimmMove selectedMove = ValidMoves.GetRandomElement();
-
-		while (ValidMoves.Count > 1 && selectedMove == previousMove)
-		{
-			selectedMove = ValidMoves.GetRandomElement();
-		}
-		previousMove = selectedMove;
-
-		return selectedMove;*/
-	}
+	}*/
 
 	private IEnumerator Waiter(float waitTime, Action OnDone)
 	{
@@ -445,8 +449,22 @@ public class InfernoKingGrimm : BossReplacement
 
 	private IEnumerator MainBossControl()
 	{
+		foreach (var randomMove in RandomMoveIter())
+		{
+			if (balloonMoveNext)
+			{
+				balloonMoveNext = false;
+				yield return RunMove(balloonMove);
+			}
+			else
+			{
+				yield return RunMove(randomMove);
+			}
+		}
+
+
 		//Debugger.Log("DOING MAIN BOSS CONTROL");
-		yield return new WaitForSeconds(0.6f);
+		/*yield return new WaitForSeconds(0.6f);
 		while (true)
 		{
 			GrimmMove NextMove = null;
@@ -460,15 +478,10 @@ public class InfernoKingGrimm : BossReplacement
 				CurrentMove = GetRandomMove();
 
 				//Debugger.Log("Current Move = " + CurrentMove.GetType());
-				/*do
-				{
-					NextMove = GetRandomMove();
-				} while (CurrentMove == NextMove);
-				CurrentMove = NextMove;*/
 
 				yield return CurrentMove.DoMove();
 			}
-		}
+		}*/
 	}
 
 	public IEnumerator TeleportIn(bool playSound = true)
@@ -540,9 +553,14 @@ public class InfernoKingGrimm : BossReplacement
 		teleSmokeFront.Play();
 	}
 
-	public void Stun()
+	/*public void Stun()
 	{
-		BossStage++;
+		
+	}*/
+
+	protected override void OnStun()
+	{
+		base.OnStun();
 		Stunned = true;
 
 		GrimmCollider.enabled = false;
@@ -674,8 +692,9 @@ public class InfernoKingGrimm : BossReplacement
 		yield break;
 	}
 
-	public void OnDeath()
+	protected override void OnDeath()
 	{
+		base.OnDeath();
 		if (Stunned == true)
 		{
 			return;

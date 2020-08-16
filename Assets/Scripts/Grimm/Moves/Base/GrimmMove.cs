@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Interfaces;
 
-public abstract class GrimmMove : MonoBehaviour 
+public abstract class GrimmMove : MonoBehaviour, IBossMove
 {
 	private InfernoKingGrimm grimm;
 	public InfernoKingGrimm Grimm
@@ -76,18 +77,17 @@ public abstract class GrimmMove : MonoBehaviour
 	}
 
 	[SerializeField]
-	protected bool excludeFromRandomizer = false;
+	private bool moveEnabled = true;
 
-
-	public bool ExcludeFromRandomizer
+	public bool MoveEnabled
 	{
 		get
 		{
-			return excludeFromRandomizer;
+			return moveEnabled;
 		}
 		protected set
 		{
-			excludeFromRandomizer = value;
+			moveEnabled = value;
 		}
 	}
 
@@ -137,6 +137,11 @@ public abstract class GrimmMove : MonoBehaviour
 		
 	}
 	public virtual void OnDeath()
+	{
+		OnStun();
+	}
+
+	public void OnCancel()
 	{
 		OnStun();
 	}

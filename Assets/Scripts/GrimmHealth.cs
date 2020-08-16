@@ -6,29 +6,8 @@ using WeaverCore;
 using WeaverCore.Components;
 using WeaverCore.DataTypes;
 
-public class GrimmHealth : EntityHealth
+/*public class GrimmHealth : EntityHealth
 {
-	class Milestone
-	{
-		public int HealthNumber;
-		public Action MilestoneReached;
-
-		public Milestone(int health, Action action)
-		{
-			HealthNumber = health;
-			MilestoneReached = action;
-		}
-
-		class ComparerDef : IComparer<Milestone>
-		{
-			public int Compare(Milestone x, Milestone y)
-			{
-				return x.HealthNumber - y.HealthNumber;
-			}
-		}
-
-		public static IComparer<Milestone> Comparer = new ComparerDef();
-	}
 
 
 	InfernoKingGrimm grimm;
@@ -97,19 +76,6 @@ public class GrimmHealth : EntityHealth
 			}
 			return successfulHit;
 		}
-		//grimm.ReachedHealthStage(0);
-		//return base.Hit(hit);
-
-		/*int previousHealth = Health;
-		var success = base.Hit(hit);
-		if (success && Health <= nextHealthMilestone && Health > 0)
-		{
-			currentHealthStage++;
-			grimm.ReachedHealthStage(currentHealthStage);
-			nextHealthMilestone = Health - (Health / bossHealthStages);
-		}
-
-		return success;*/
 	}
 
 	protected override void OnDeath()
@@ -117,4 +83,4 @@ public class GrimmHealth : EntityHealth
 		grimm.OnDeath();
 		base.OnDeath();
 	}
-}
+}*/
