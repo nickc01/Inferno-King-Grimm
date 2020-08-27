@@ -1989,7 +1989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ef1f1e87184a94880a741b5ebf10dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  _health: 100
   DecreaseHealth: 1
   Invincible: 0
   DeflectBlows: 0
@@ -2179,7 +2179,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.9374998, y: 1.8444998}
+  m_Size: {x: 6.0069666, y: 5.640494}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -2226,7 +2226,7 @@ SpriteRenderer:
   m_Size: {x: 2.171875, y: 2.0322545}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!212 &212084971442429988
 SpriteRenderer:

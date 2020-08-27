@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: Inferno King Grimm
   modName: Inferno Grimm Mod
-  modAssemblyName: Assembly-CSharp
+  modAssemblyName: InfernoKingGrimm
   modTypeName: IKG.InfernoGrimmMod
   modListHashCode: 1684387993
   features:

@@ -501,6 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4023218805753568}
   - component: {fileID: 114879189269301354}
+  - component: {fileID: 114893949498375372}
   - component: {fileID: 212596471275547278}
   - component: {fileID: 95939501209690446}
   - component: {fileID: 114291875212994178}
@@ -518,7 +519,6 @@ GameObject:
   - component: {fileID: 114172869002225528}
   - component: {fileID: 114329417124246242}
   - component: {fileID: 114489183100290032}
-  - component: {fileID: 114893949498375372}
   m_Layer: 11
   m_Name: Inferno King Grimm
   m_TagString: Boss
