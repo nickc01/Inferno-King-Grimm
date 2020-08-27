@@ -15,7 +15,7 @@ using WeaverCore.Components;
 using WeaverCore.Enums;
 using WeaverCore.Features;
 using WeaverCore.Utilities;
-using WeaverCore.WeaverAssets;
+using WeaverCore.Assets;
 
 
 [RequireComponent(typeof(DamageHero))]

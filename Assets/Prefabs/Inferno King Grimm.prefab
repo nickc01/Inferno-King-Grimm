@@ -509,7 +509,6 @@ GameObject:
   - component: {fileID: 114944724333835108}
   - component: {fileID: 114231667555609428}
   - component: {fileID: 50377839318278512}
-  - component: {fileID: 114917356512304760}
   - component: {fileID: 114920697822161758}
   - component: {fileID: 114240577250203990}
   - component: {fileID: 114815275830715274}
@@ -519,6 +518,7 @@ GameObject:
   - component: {fileID: 114172869002225528}
   - component: {fileID: 114329417124246242}
   - component: {fileID: 114489183100290032}
+  - component: {fileID: 114893949498375372}
   m_Layer: 11
   m_Name: Inferno King Grimm
   m_TagString: Boss
@@ -1503,7 +1503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e7fe9d8b026134187f93348bed9cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  excludeFromRandomizer: 1
+  moveEnabled: 0
   balloonPosition: {x: 85.77, y: 15.5}
   ballSpawnRate: 0.2
   ballAngleMin: -20
@@ -1552,7 +1552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa70bf65afcc4f44a8dcfe0ff4818fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  excludeFromRandomizer: 0
+  moveEnabled: 1
   highAngle: 35
   lowAngle: -25
   homingBallSpawnVelocity: 20
@@ -1922,7 +1922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff426e46cd88bc649a25df4390e961de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  excludeFromRandomizer: 0
+  moveEnabled: 1
   evadeSpeed: 25
   groundSlashSpeed: 50
   uppercutHorizontalSpeed: 10
@@ -1972,13 +1972,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa54c21625c2a749921daf6f206d8b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  excludeFromRandomizer: 0
+  moveEnabled: 1
   airDashSpeed: 55
   flameSpawnRate: 0.025
   flameSpawnOffset: {x: 0, y: -1, z: 0.001}
   groundDashSpeed: 58
   groundDashTime: 0.25
---- !u!114 &114917356512304760
+--- !u!114 &114893949498375372
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1986,10 +1986,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1950747459824650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44be1793e9504604b848e40c974fb602, type: 3}
+  m_Script: {fileID: 11500000, guid: 042bb1662729b5441bc0eda3f9bb3240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1300
+  _health: 1300
   DecreaseHealth: 1
   Invincible: 0
   DeflectBlows: 0
@@ -1999,7 +1999,6 @@ MonoBehaviour:
   SmallGeo: 0
   MediumGeo: 0
   LargeGeo: 0
-  bossHealthStages: 4
 --- !u!114 &114920697822161758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2048,7 +2047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553edded97838964589fcc897c5b9bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  excludeFromRandomizer: 0
+  moveEnabled: 1
   pillarsToSpawn: 5
   pillarSpawnRate: 0.6
   amountofPillarsEachRound: 5
@@ -2079,7 +2078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e5b7514225bf64a8ebce3f470f71e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  excludeFromRandomizer: 0
+  moveEnabled: 1
 --- !u!198 &198053137438636322
 ParticleSystem:
   m_ObjectHideFlags: 1
