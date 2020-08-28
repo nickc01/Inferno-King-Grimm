@@ -8,6 +8,9 @@ TextureImporter:
     21300006: Grimm_evade0003
     21300008: Grimm_evade0004
     21300010: Grimm_evade0002
+    21300012: Empty
+    21300014: Empty
+    21300016: Empty
     21300018: Grimm_air_dash0009
     21300020: Grimm_air_dash0011
     21300022: Grimm_air_dash0005
@@ -317,7 +320,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: Empty
       rect:
         serializedVersion: 2
         x: 743
@@ -331,7 +334,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: Empty
       rect:
         serializedVersion: 2
         x: 743
@@ -345,7 +348,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: Empty
       rect:
         serializedVersion: 2
         x: 743
@@ -1683,7 +1686,7 @@ TextureImporter:
         width: 358
         height: 183
       alignment: 9
-      pivot: {x: 0.49299717, y: 1}
+      pivot: {x: 0.49299717, y: 2.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1739,7 +1742,7 @@ TextureImporter:
         width: 375
         height: 166
       alignment: 9
-      pivot: {x: 0.5187166, y: 1}
+      pivot: {x: 0.5187166, y: 2.6}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1781,7 +1784,7 @@ TextureImporter:
         width: 388
         height: 178
       alignment: 9
-      pivot: {x: 0.501292, y: 1}
+      pivot: {x: 0.501292, y: 2.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
