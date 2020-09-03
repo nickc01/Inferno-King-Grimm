@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4404073476794004}
   - component: {fileID: 198022684780810436}
   - component: {fileID: 199473189964857244}
-  - component: {fileID: 114469395360318066}
   m_Layer: 22
   m_Name: particle_flame_blast (1)
   m_TagString: Untagged
@@ -42,20 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -1.499011}
---- !u!114 &114469395360318066
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1266881612553268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
 --- !u!198 &198022684780810436
 ParticleSystem:
   m_ObjectHideFlags: 1

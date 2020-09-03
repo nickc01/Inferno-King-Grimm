@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4180780968002376}
   - component: {fileID: 198289727992434936}
   - component: {fileID: 199111267142378522}
-  - component: {fileID: 114227658960754680}
   m_Layer: 0
   m_Name: particle_flame_blast
   m_TagString: Untagged
@@ -55,7 +54,6 @@ GameObject:
   - component: {fileID: 4086913503152624}
   - component: {fileID: 198977021074668906}
   - component: {fileID: 199901979239216360}
-  - component: {fileID: 114405703652552472}
   m_Layer: 0
   m_Name: particle_flame_blast (1)
   m_TagString: Untagged
@@ -115,34 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf1885004ce81045b55c938cc1c0364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114227658960754680
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1648240273678548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
---- !u!114 &114405703652552472
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1986593734860236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
 --- !u!198 &198289727992434936
 ParticleSystem:
   m_ObjectHideFlags: 1

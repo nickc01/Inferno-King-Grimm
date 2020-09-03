@@ -25,8 +25,8 @@ GameObject:
   - component: {fileID: 50236719136342486}
   - component: {fileID: 114890836713159660}
   - component: {fileID: 114133106575465106}
-  - component: {fileID: 114642934384973090}
   - component: {fileID: 114503442476101714}
+  - component: {fileID: 114100298543539912}
   m_Layer: 22
   m_Name: Nightmare UP Ball
   m_TagString: Untagged
@@ -82,6 +82,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.03
+--- !u!114 &114100298543539912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1258148121706430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 077215681bb93fc459665a9a61bb4327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114133106575465106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,20 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
---- !u!114 &114642934384973090
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1258148121706430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114890836713159660
 MonoBehaviour:
   m_ObjectHideFlags: 1

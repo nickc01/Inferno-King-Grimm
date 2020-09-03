@@ -92,16 +92,18 @@ public class Firebat : MonoBehaviour
 		return Spawn(angle, velocity, grimm.FaceDirection,position.Value);
 	}
 
-	public static IEnumerator SendFirebatAsync(InfernoKingGrimm grimm, float angle, float audioPitch = 1.0f, float speedMultiplier = 1f)
+	public static IEnumerator SendFirebatAsync(InfernoKingGrimm grimm, float angle, float audioPitch = 1.0f, float speedMultiplier = 1f, bool playSound = true)
 	{
 		//Debugger.Log("FIre bat C");
 		var fireBatVelocity = grimm.transform.localScale.x * 20f * speedMultiplier;
 
 		Spawn(angle, fireBatVelocity, grimm);
 		FirebatFirePillar.Spawn(grimm);
-
-		var fireAudio = WeaverAudio.Play(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
-		fireAudio.AudioSource.pitch = audioPitch;
+		if (playSound)
+		{
+			var fireAudio = WeaverAudio.Play(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
+			fireAudio.AudioSource.pitch = audioPitch;
+		}
 
 		GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, grimm.transform.Find("Firebat SpawnPoint").position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
 
@@ -110,10 +112,10 @@ public class Firebat : MonoBehaviour
 		yield break;
 	}
 
-	public static void SendFirebat(InfernoKingGrimm grimm, float angle, float pitch = 1.0f, float speedMultiplier = 1f)
+	public static void SendFirebat(InfernoKingGrimm grimm, float angle, float pitch = 1.0f, float speedMultiplier = 1f, bool playSound = true)
 	{
 		//Debugger.Log("FIre bat B");
-		UnboundCoroutine.Start(SendFirebatAsync(grimm, angle, pitch, speedMultiplier));
+		UnboundCoroutine.Start(SendFirebatAsync(grimm, angle, pitch, speedMultiplier,playSound));
 	}
 
 

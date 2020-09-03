@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 4675649771786390}
   - component: {fileID: 212775719010515808}
   - component: {fileID: 114252791202826470}
-  - component: {fileID: 114366378603705368}
   m_Layer: 0
   m_Name: Wave
   m_TagString: Untagged
@@ -105,7 +104,6 @@ GameObject:
   - component: {fileID: 4728437745006186}
   - component: {fileID: 212283521766461830}
   - component: {fileID: 114785851938200420}
-  - component: {fileID: 114998102381997960}
   m_Layer: 0
   m_Name: White Flash
   m_TagString: Untagged
@@ -139,7 +137,6 @@ GameObject:
   - component: {fileID: 4795285079826078}
   - component: {fileID: 198821085892865496}
   - component: {fileID: 199135416160936312}
-  - component: {fileID: 114358577089557580}
   m_Layer: 16
   m_Name: Uninfected Death Pt
   m_TagString: Untagged
@@ -173,7 +170,6 @@ GameObject:
   - component: {fileID: 4485480494507008}
   - component: {fileID: 198230989378699642}
   - component: {fileID: 199814089444694862}
-  - component: {fileID: 114620813540142294}
   m_Layer: 0
   m_Name: Death Explode
   m_TagString: Untagged
@@ -207,7 +203,6 @@ GameObject:
   - component: {fileID: 4762213609197766}
   - component: {fileID: 198155245013825418}
   - component: {fileID: 199999012762686036}
-  - component: {fileID: 114814130106403662}
   m_Layer: 11
   m_Name: tele_smoke_front
   m_TagString: Untagged
@@ -242,7 +237,6 @@ GameObject:
   - component: {fileID: 4826958337476586}
   - component: {fileID: 198718169248810894}
   - component: {fileID: 199796424145620480}
-  - component: {fileID: 114372645324022838}
   m_Layer: 8
   m_Name: Dust Uppercut
   m_TagString: Untagged
@@ -276,7 +270,6 @@ GameObject:
   - component: {fileID: 212080108664610308}
   - component: {fileID: 95697423797711678}
   - component: {fileID: 114546521167030284}
-  - component: {fileID: 114192816169541700}
   m_Layer: 0
   m_Name: Burst
   m_TagString: Untagged
@@ -293,6 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4632549871026722}
   - component: {fileID: 82133888540661686}
+  - component: {fileID: 114847916016842922}
   m_Layer: 0
   m_Name: Bat Audio Loop
   m_TagString: Untagged
@@ -310,7 +304,6 @@ GameObject:
   - component: {fileID: 4283254159475396}
   - component: {fileID: 198452071615272188}
   - component: {fileID: 199723059700974236}
-  - component: {fileID: 114426809931032738}
   m_Layer: 8
   m_Name: Dust Scuttle
   m_TagString: Untagged
@@ -328,7 +321,6 @@ GameObject:
   - component: {fileID: 4589149406974698}
   - component: {fileID: 198248337281058252}
   - component: {fileID: 199879067521963012}
-  - component: {fileID: 114522270028934222}
   m_Layer: 11
   m_Name: tele_smoke_back
   m_TagString: Untagged
@@ -346,7 +338,6 @@ GameObject:
   - component: {fileID: 4905703246143776}
   - component: {fileID: 198053137438636322}
   - component: {fileID: 199982121120443656}
-  - component: {fileID: 114581922831376534}
   m_Layer: 0
   m_Name: Uppercut Explosion
   m_TagString: Untagged
@@ -364,7 +355,6 @@ GameObject:
   - component: {fileID: 4589837798688794}
   - component: {fileID: 198499411867380598}
   - component: {fileID: 199261953408957066}
-  - component: {fileID: 114786838166553256}
   m_Layer: 16
   m_Name: Steam Pt
   m_TagString: Untagged
@@ -381,6 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4230260724875720}
   - component: {fileID: 82406191262537632}
+  - component: {fileID: 114402699106393204}
   m_Layer: 0
   m_Name: Balloon Fireball Loop Audio
   m_TagString: Untagged
@@ -398,7 +389,6 @@ GameObject:
   - component: {fileID: 4260125839352930}
   - component: {fileID: 198483990493830150}
   - component: {fileID: 199480007972027534}
-  - component: {fileID: 114109644078080336}
   m_Layer: 8
   m_Name: Dust Ground
   m_TagString: Untagged
@@ -416,7 +406,6 @@ GameObject:
   - component: {fileID: 4853417239787864}
   - component: {fileID: 198228574142180526}
   - component: {fileID: 199488765987146142}
-  - component: {fileID: 114041616103339408}
   m_Layer: 17
   m_Name: Balloon Particles
   m_TagString: Untagged
@@ -484,7 +473,6 @@ GameObject:
   - component: {fileID: 4018655830644162}
   - component: {fileID: 198120589657173498}
   - component: {fileID: 199680077292396416}
-  - component: {fileID: 114975653612794496}
   m_Layer: 0
   m_Name: Death Puff
   m_TagString: Untagged
@@ -517,7 +505,7 @@ GameObject:
   - component: {fileID: 114880484353509956}
   - component: {fileID: 114988410525424586}
   - component: {fileID: 114172869002225528}
-  - component: {fileID: 114329417124246242}
+  - component: {fileID: 114666702633382612}
   - component: {fileID: 114489183100290032}
   m_Layer: 11
   m_Name: Inferno King Grimm
@@ -537,7 +525,6 @@ GameObject:
   - component: {fileID: 212044511994548856}
   - component: {fileID: 95522573960625888}
   - component: {fileID: 114712087280709358}
-  - component: {fileID: 114398944093973122}
   m_Layer: 0
   m_Name: Pillar Burst
   m_TagString: Untagged
@@ -695,7 +682,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811042915894992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.817902, y: 45.342537, z: 0.000000059604645}
+  m_LocalPosition: {x: 1.31, y: 0.51, z: 0.000000059604645}
   m_LocalScale: {x: 1.15, y: 1.15, z: 1}
   m_Children: []
   m_Father: {fileID: 4023218805753568}
@@ -906,7 +893,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1421005393093360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.817902, y: 45.342537, z: 0.000000059604645}
+  m_LocalPosition: {x: -0.83, y: -0.02, z: 0.000000059604645}
   m_LocalScale: {x: 1.15, y: 1.15, z: 1}
   m_Children: []
   m_Father: {fileID: 4023218805753568}
@@ -945,7 +932,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1794418403235406}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.817902, y: 45.342537, z: 0.000000059604645}
+  m_LocalPosition: {x: 1.51, y: 0.33, z: 0.000000059604645}
   m_LocalScale: {x: 1.15, y: 1.15, z: 1}
   m_Children: []
   m_Father: {fileID: 4023218805753568}
@@ -1133,8 +1120,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.4520548, y: 0.5011765}
-    oldSize: {x: 3.421875, y: 6.625994}
-    newSize: {x: 2.2, y: 4.26}
+    oldSize: {x: 3.5053916, y: 6.7877126}
+    newSize: {x: 3.5053916, y: 6.7877126}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1369,7 +1356,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1450,20 +1437,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114041616103339408
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1783552048378134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114086795583852034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1478,20 +1451,6 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
---- !u!114 &114109644078080336
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1707564198083264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114172869002225528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1505,7 +1464,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveEnabled: 0
   balloonPosition: {x: 85.77, y: 15.5}
-  ballSpawnRate: 0.2
   ballAngleMin: -20
   ballAngleMax: 20
   ballInitialVelocityMin: 10
@@ -1516,20 +1474,12 @@ MonoBehaviour:
   HomingBallOffset: {x: 0, y: 0, z: 0.1}
   homingAttackTimeIncrement: 0.5
   homingSpawnRateIncrement: 0.04
---- !u!114 &114192816169541700
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1476878358479016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
+  easySpawnRateStage1: 0.2
+  easySpawnRateStage2: 0.18
+  easySpawnRateStage3: 0.17
+  hardSpawnRateStage1: 0.2
+  hardSpawnRateStage2: 0.16
+  hardSpawnRateStage3: 0.12
 --- !u!114 &114231667555609428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1564,6 +1514,13 @@ MonoBehaviour:
   homingBallTimePeriod: 2
   HomingBallPitchRange: {x: 1, y: 1.6}
   HomingBallVolume: 1
+  hardModePhase2WaitTime: 0.3
+  hardModeBallAngleRange: {x: -10, y: 5}
+  hardModeBallAngleRangeTop: {x: 30, y: 55}
+  hardModeBallVelocityRange: {x: 8, y: 12}
+  hardModeBallSpawnVelocity: 5
+  hardModeBallRotationSpeed: 32
+  hardModeBallsPerRound: 4
 --- !u!114 &114252791202826470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1583,6 +1540,7 @@ MonoBehaviour:
   blackWave: 0
   otherColour: 1
   scaleMultiplier: 1.5
+  destroyAfterTime: 0
 --- !u!114 &114291875212994178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1597,62 +1555,6 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
---- !u!114 &114329417124246242
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1950747459824650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
---- !u!114 &114358577089557580
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1323576689725598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
---- !u!114 &114366378603705368
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292637292761594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
---- !u!114 &114372645324022838
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1459075169644730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114383724075831622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1691,34 +1593,18 @@ MonoBehaviour:
   GrimmBatExplosion: {fileID: 8300000, guid: f32b2ce3547a4154ab9e973bcc327654, type: 3}
   GrimmBatsReform: {fileID: 8300000, guid: d99031638b416d54ba784c1b764bf8f5, type: 3}
   EndingTune: {fileID: 8300000, guid: 989e6098a95402f428980bba6ccfb5ee, type: 3}
---- !u!114 &114398944093973122
+--- !u!114 &114402699106393204
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1961359519151502}
+  m_GameObject: {fileID: 1687735285231940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Script: {fileID: 11500000, guid: c9a4d3a1013522e4ebb2de6ee0c912a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
---- !u!114 &114426809931032738
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1566213400171600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
+  ChannelToUse: 3
 --- !u!114 &114466956665670494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1779,20 +1665,6 @@ MonoBehaviour:
   flashIntensity: 0
   CustomFlasherMaterial: {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a,
     type: 2}
---- !u!114 &114522270028934222
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1619912293032794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114546521167030284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1804,34 +1676,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43687417ee18554bb6b0c2e7524afbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114581922831376534
+--- !u!114 &114666702633382612
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1655403540564202}
+  m_GameObject: {fileID: 1950747459824650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
+  m_Script: {fileID: 11500000, guid: d4151a2b2a1df9347ba9a3cbefc46103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
---- !u!114 &114620813540142294
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1375166087759106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
+  moveEnabled: 1
+  spawnPosition: {x: 85.77, y: 16}
+  anticTime: 0.5
+  BurstOffset: {x: 0, y: 0, z: 0}
+  burstScale: 1.5
+  startDelay: 0
+  endDelay: 0.5
+  JitterAmount: {x: 0.02, y: 0.02}
+  jitterFPS: 12
+  homingBallSpawnOffset: {x: 0, y: 0, z: 0}
+  homingBallVelocity: 15
+  homingBallRotationSpeed: 35
+  amountOfDirectShots: 30
+  timeBetweenDirectShots: 0.18
+  GlowScale: {x: 1, y: 1}
+  FirePillarOffset: {x: 0, y: 7.8}
+  amountOfWaves: 20
+  shotsPerWave: 7
+  angleBetweenSprayShots: 30
+  sprayShotVelocity: 10
+  sprayShotRotationSpeed: 0
+  timeBetweenWavesMinRange: {x: 0.18, y: 0.25}
+  timeBetweenWavesMaxRange: {x: 0.43, y: 0.5}
+  pitchLow: 1
+  pitchHigh: 1.4
 --- !u!114 &114702153927181204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1883,34 +1763,6 @@ MonoBehaviour:
   startColor: {r: 1, g: 0.24313727, b: 0.24313727, a: 1}
   fadeOutColor: {r: 0, g: 0, b: 0, a: 0}
   fadeDuration: 1
---- !u!114 &114786838166553256
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1682338122001922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
---- !u!114 &114814130106403662
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1417351989473074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114815275830715274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1929,6 +1781,18 @@ MonoBehaviour:
   uppercutVerticalSpeed: 45
   upperCutHeightLimit: 17.3
   upperCutTimeLimit: 0.35
+--- !u!114 &114847916016842922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1552678413288054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a4d3a1013522e4ebb2de6ee0c912a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelToUse: 3
 --- !u!114 &114872809052209714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1955,12 +1819,95 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   featureEnabled: 1
+  _bossStage: 1
   enemyToReplace: Nightmare Grimm Boss
   titleLarge: Grimm
   titleSmall: Inferno King
+  easyAttunedHealth: 1300
+  easyAscendedHealth: 1450
+  easyRadiantHealth: 1600
+  hardAttunedHealth: 1950
+  hardAscendedHealth: 2000
+  hardRadiantHealth: 2050
+  Settings: {fileID: 11400000, guid: e236bb9aa60bebf4f84623a415c67534, type: 2}
+  Colors: {fileID: 11400000, guid: d1948ff4091634a418442281a1707753, type: 2}
+  CameraMaterial: {fileID: 2100000, guid: 5881ccc7b8ffb234d8bc3ead89bf1b7f, type: 2}
   prefabs: {fileID: 11400000, guid: 526e6c24b0dec13498110c20a7976c46, type: 2}
   StartingPosition: {x: 85.77, y: 13.5, z: 0}
   BatAudioLoop: {fileID: 82133888540661686}
+  freezePreset: 0
+  ShaderPercentageCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  HueShiftCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.5
+      value: 0.3
+      inSlope: -0.038366675
+      outSlope: -0.038366675
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0.1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  SaturationShiftCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0.1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  ValueShiftCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0.1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114880484353509956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1978,6 +1925,15 @@ MonoBehaviour:
   flameSpawnOffset: {x: 0, y: -1, z: 0.001}
   groundDashSpeed: 58
   groundDashTime: 0.25
+  aheadOfTimeMovement: 0.6
+  flankTime: 0
+  stageOneWaitTime: 0.6
+  stageThreeWaitTime: 0.4
+  stageTwoHardModeWaitTime: 0.42
+  hardModeFireballs: 6
+  hardModeAngleBetweenFireballs: 37
+  hardModeFireballVelocity: 28
+  hardModeFireballGapAngle: -26
 --- !u!114 &114893949498375372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1993,7 +1949,7 @@ MonoBehaviour:
   DecreaseHealth: 1
   Invincible: 0
   DeflectBlows: 0
-  EvasionTime: 0.15
+  EvasionTime: 0.2
   GainSoul: 1
   EffectsOffset: {x: 0, y: 0, z: 0}
   SmallGeo: 0
@@ -2022,20 +1978,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doFlashEffects: 1
---- !u!114 &114975653612794496
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1948238754803710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114988410525424586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2053,20 +1995,12 @@ MonoBehaviour:
   amountofPillarsEachRound: 5
   timeBetweenRounds: 1.4
   amountOfRounds: 3
---- !u!114 &114998102381997960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1297540545146250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
+  predictiveAmountStage1: 0.1
+  predictiveAmountStage2: 0.2
+  predictiveAmountStage3: 0.2
+  hardModePredictiveAmountStage1: 0.1
+  hardModePredictiveAmountStage2: 0.5
+  hardModePredictiveAmountStage3: 0.6
 --- !u!114 &114998231595251052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2079,6 +2013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveEnabled: 1
+  maxDashDistance: 6
 --- !u!198 &198053137438636322
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2115,7 +2050,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 617743783
+  randomSeed: -1045889481
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4018,7 +3953,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 172252318
+  randomSeed: -93871759
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7848,7 +7783,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1095710488
+  randomSeed: -1057262370
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -11660,7 +11595,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -837056889
+  randomSeed: -531283911
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -13557,7 +13492,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 412301721
+  randomSeed: 1901591881
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15454,7 +15389,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 2024163081
+  randomSeed: 1075767000
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -17351,7 +17286,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1083231440
+  randomSeed: -224683536
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -19260,7 +19195,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1329054863
+  randomSeed: 167785066
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -23878,12 +23813,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 41333db9ecf4bf745a7cbddbe0025c1c, type: 3}
+  m_Sprite: {fileID: 21300170, guid: 4ee52644e96aa894a8840cb52328612c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.2, y: 4.26}
+  m_Size: {x: 3.5053916, y: 6.7877126}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

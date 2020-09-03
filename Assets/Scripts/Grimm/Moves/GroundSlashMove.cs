@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements.StyleEnums;
 using WeaverCore;
 using WeaverCore.Enums;
+using WeaverCore.Features;
 using WeaverCore.Utilities;
 
 public class GroundSlashMove : GrimmMove
@@ -25,6 +27,9 @@ public class GroundSlashMove : GrimmMove
 
 	bool continueToSlash = true;
 
+	[Header("Hard Mode")]
+	float extraWaitTime = 0.15f;
+
 	//Rigidbody2D body;
 	ParticleSystem DustGround;
 	PolygonCollider2D Slash1;
@@ -34,6 +39,8 @@ public class GroundSlashMove : GrimmMove
 	ParticleSystem DustScuttle;
 	ParticleSystem DustUppercut;
 	ParticleSystem UppercutExplosion;
+
+	GrimmDirection slashDirection = GrimmDirection.Left;
 
 	void Awake()
 	{
@@ -98,59 +105,41 @@ public class GroundSlashMove : GrimmMove
 			yield break;
 		}
 
-		Grimm.FacePlayer();
-
 		WeaverAudio.Play(Sounds.SlashAntic, transform.position);
+		VoicePlayer.Play(Sounds.SlashAnticVoice);
+
+		yield return DoSlash();
+
+		if (Grimm.Settings.hardMode && Grimm.BossStage >= 2)
+		{
+			var playerPositionOld = Player.Player1.transform.position.x;
+			WeaverAudio.Play(Sounds.SlashAntic, transform.position);
+			StartCoroutine(Teleport(playerPositionOld));
+			yield return DoSlash();
+		}
+		/*Grimm.FacePlayer();
 
 		GrimmAnimator.PlayAnimation("Slash Antic");
 
 		var playerPositionOld = Player.Player1.transform.position.x;
 
-		VoicePlayer.Play(Sounds.SlashAnticVoice);
-
 		yield return new WaitForSeconds(0.5f);
 
-		if (Grimm.BossStage >= 2)
+		if (Grimm.Settings.hardMode)
 		{
-			teleX = 0f;
-			while (true)
+			if (Random.value > 0.5f)
 			{
-				var heroX = Player.Player1.transform.position.x;
-				var teleAdder = Random.Range(9.5f, 11f);
-
-				if (heroX > playerPositionOld)
-				{
-					teleX = heroX + teleAdder;
-					if (teleX > Grimm.RightEdge)
-					{
-						teleX = heroX - teleAdder;
-					}
-				}
-				else
-				{
-					teleX = heroX - teleAdder;
-					if (teleX < Grimm.LeftEdge)
-					{
-						teleX = heroX + teleAdder;
-					}
-				}
-
-				if (teleX > Grimm.LeftEdge && teleX < Grimm.RightEdge)
-				{
-					break;
-				}
+				yield return Teleport(playerPositionOld);
 			}
-
-			//transform.position = new Vector3(teleX, Grimm.GroundY, 0f);
-			var telePosition = new Vector3(teleX, Grimm.GroundY, 0f);
-			var teleTime = Teleporter.TeleportEntity(gameObject, telePosition, Teleporter.TeleType.Delayed, Color.red);
-
-			yield return new WaitForSeconds(teleTime / 2f);
-			Grimm.FacePlayer(telePosition);
-			yield return new WaitForSeconds(teleTime / 2f);
-
-			yield return new WaitForSeconds(0.4f);
 		}
+		else
+		{
+			if (Grimm.BossStage >= 2)
+			{
+				yield return Teleport(playerPositionOld);
+			}
+		}
+
 
 		var xScale = transform.lossyScale.x;
 
@@ -169,6 +158,8 @@ public class GroundSlashMove : GrimmMove
 
 		DustGround.Play();
 
+		AlignSlashes();
+
 		Slash1.enabled = true;
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Slash 1");
@@ -185,6 +176,97 @@ public class GroundSlashMove : GrimmMove
 
 
 		Slash3.enabled = false;
+
+		ResetSlashes();
+
+		DustGround.Stop();
+		GrimmAnimator.PlayAnimation("Slash Recover");
+
+		//This ensures that the current animation is playing
+		yield return null;
+
+		yield return CoroutineUtilities.RunForPeriod(GrimmAnimator.GetCurrentAnimationTime(), () =>
+		{
+			Grimm.Velocity = VectorUtilities.Decelerate(Grimm.Velocity, new Vector2(0.65f, 0.65f));
+		});
+
+		Grimm.Velocity = Vector2.zero;
+		StopCoroutine(lockRoutine);*/
+
+		yield return UpperCut();
+
+		yield break;
+	}
+
+	IEnumerator DoSlash()
+	{
+		Grimm.FacePlayer();
+
+		GrimmAnimator.PlayAnimation("Slash Antic");
+
+		var playerPositionOld = Player.Player1.transform.position.x;
+
+		yield return new WaitForSeconds(0.5f);
+
+		if (Grimm.Settings.hardMode && Grimm.BossStage == 2)
+		{
+			yield return new WaitForSeconds(extraWaitTime);
+		}
+
+		if (Grimm.Settings.hardMode)
+		{
+			if (Grimm.BossStage == 1)
+			{
+				yield return Teleport(playerPositionOld);
+			}
+		}
+		else
+		{
+			if (Grimm.BossStage >= 2)
+			{
+				yield return Teleport(playerPositionOld);
+			}
+		}
+
+
+		var xScale = transform.lossyScale.x;
+
+		WeaverAudio.Play(Sounds.GroundSlashAttack, transform.position);
+
+		var speed = xScale * groundSlashSpeed;
+
+		if (FaceDirection == GrimmDirection.Left)
+		{
+			speed = -speed;
+		}
+
+		Grimm.Velocity = new Vector2(speed, 0f);
+
+		var lockRoutine = CoroutineUtilities.RunCoroutineWhile(this, HorizontalLock(transform, Grimm.LeftEdge, Grimm.RightEdge), () => !Grimm.Stunned);
+
+		DustGround.Play();
+
+		AlignSlashes();
+
+		Slash1.enabled = true;
+
+		yield return GrimmAnimator.PlayAnimationTillDone("Slash 1");
+
+		Slash1.enabled = false;
+		Slash2.enabled = true;
+
+		yield return GrimmAnimator.PlayAnimationTillDone("Slash 2");
+
+		Slash2.enabled = false;
+		Slash3.enabled = true;
+
+		yield return GrimmAnimator.PlayAnimationTillDone("Slash 3");
+
+
+		Slash3.enabled = false;
+
+		ResetSlashes();
+
 		DustGround.Stop();
 		GrimmAnimator.PlayAnimation("Slash Recover");
 
@@ -198,10 +280,80 @@ public class GroundSlashMove : GrimmMove
 
 		Grimm.Velocity = Vector2.zero;
 		StopCoroutine(lockRoutine);
+	}
 
-		yield return UpperCut();
+	void AlignSlashes()
+	{
+		slashDirection = Grimm.FaceDirection;
 
-		yield break;
+		if (slashDirection == GrimmDirection.Right)
+		{
+			Slash1.transform.SetXLocalScale(-Slash1.transform.localScale.x);
+			Slash2.transform.SetXLocalScale(-Slash2.transform.localScale.x);
+			Slash3.transform.SetXLocalScale(-Slash3.transform.localScale.x);
+
+			Slash1.transform.SetXLocalPosition(-Slash1.transform.localPosition.x);
+			Slash2.transform.SetXLocalPosition(-Slash2.transform.localPosition.x);
+			Slash3.transform.SetXLocalPosition(-Slash3.transform.localPosition.x);
+		}
+	}
+
+	void ResetSlashes()
+	{
+		if (slashDirection == GrimmDirection.Right)
+		{
+			Slash1.transform.SetXLocalScale(-Slash1.transform.localScale.x);
+			Slash2.transform.SetXLocalScale(-Slash2.transform.localScale.x);
+			Slash3.transform.SetXLocalScale(-Slash3.transform.localScale.x);
+
+			Slash1.transform.SetXLocalPosition(-Slash1.transform.localPosition.x);
+			Slash2.transform.SetXLocalPosition(-Slash2.transform.localPosition.x);
+			Slash3.transform.SetXLocalPosition(-Slash3.transform.localPosition.x);
+
+			slashDirection = GrimmDirection.Left;
+		}
+	}
+
+	IEnumerator Teleport(float originalPlayerX)
+	{
+		float teleX = 0f;
+		while (true)
+		{
+			var heroX = Player.Player1.transform.position.x;
+			var teleAdder = Random.Range(9.5f, 11f);
+
+			if (heroX > originalPlayerX)
+			{
+				teleX = heroX + teleAdder;
+				if (teleX > Grimm.RightEdge)
+				{
+					teleX = heroX - teleAdder;
+				}
+			}
+			else
+			{
+				teleX = heroX - teleAdder;
+				if (teleX < Grimm.LeftEdge)
+				{
+					teleX = heroX + teleAdder;
+				}
+			}
+
+			if (teleX > Grimm.LeftEdge && teleX < Grimm.RightEdge)
+			{
+				break;
+			}
+		}
+
+		//transform.position = new Vector3(teleX, Grimm.GroundY, 0f);
+		var telePosition = new Vector3(teleX, Grimm.GroundY, 0f);
+		var teleTime = Teleporter.TeleportEntity(gameObject, telePosition, Teleporter.TeleType.Delayed, Color.red);
+
+		yield return new WaitForSeconds(teleTime / 2f);
+		Grimm.FacePlayer(telePosition);
+		yield return new WaitForSeconds(teleTime / 2f);
+
+		yield return new WaitForSeconds(0.4f);
 	}
 
 	IEnumerator GroundEvade()
@@ -375,9 +527,24 @@ public class GroundSlashMove : GrimmMove
 		Slash1.enabled = false;
 		Slash2.enabled = false;
 		Slash3.enabled = false;
+		ResetSlashes();
 		DustScuttle.Stop();
 		AudioScuttle.SetActive(false);
 		DustUppercut.Stop();
 		UppercutExplosion.Stop();
+		GetComponent<FireBatMove>().OnStun();
+	}
+
+	public override void OnDeath()
+	{
+		//base.OnDeath();
+		OnStun();
+		GetComponent<FireBatMove>().OnDeath();
+	}
+
+	public override void OnCancel()
+	{
+		OnStun();
+		GetComponent<FireBatMove>().OnCancel();
 	}
 }

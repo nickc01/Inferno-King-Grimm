@@ -22,17 +22,27 @@ public class PillarsMove : GrimmMove
 	[SerializeField]
 	int amountOfRounds = 3;
 
+	[Header("Easy Mode")]
+	[SerializeField]
+	float predictiveAmountStage1 = 0.1f;
+	[SerializeField]
+	float predictiveAmountStage2 = 0.2f;
+	[SerializeField]
+	float predictiveAmountStage3 = 0.2f;
+
+	[Header("Hard Mode")]
+	[SerializeField]
+	float hardModePredictiveAmountStage1 = 0.1f;
+	[SerializeField]
+	float hardModePredictiveAmountStage2 = 0.2f;
+	[SerializeField]
+	float hardModePredictiveAmountStage3 = 0.2f;
+
 
 	List<Pillar> SpawnedPillars = new List<Pillar>();
 
 	public override IEnumerator DoMove()
 	{
-		/*if (Grimm.BossStage == 3)
-		{
-			yield return null;
-			yield break;
-		}*/
-
 		float teleX = 0f;
 
 		while (true)
@@ -77,32 +87,6 @@ public class PillarsMove : GrimmMove
 
 		yield return new WaitForSeconds(0.5f);
 
-		//if (Grimm.BossStage == 2)
-		//{
-		/*yield return new WaitForSeconds(timeBetweenRounds / 2f);
-		var pillarWidth = Prefabs.FlamePillarPrefab.GetComponentInChildren<CircleCollider2D>().radius * 2f;
-		Debugger.Log("Pillar Width = " + pillarWidth);
-		for (int r = 0; r < amountOfRounds; r++)
-		{
-			Vector3 Offset = Vector3.zero;
-			if (r % 2 == 1)
-			{
-				Offset = new Vector3(pillarWidth / 2f,0f);
-			}
-			for (int i = 0; i < amountofPillarsEachRound; i++)
-			{
-				//SpawnedPillars.Add(pillar);
-				var pillarPosition = Offset + Prefabs.FlamePillarPrefab.transform.position + new Vector3(Mathf.Lerp(Grimm.LeftEdge,Grimm.RightEdge,i / (float)amountofPillarsEachRound),0f,0f);
-				var pillar = Instantiate(Prefabs.FlamePillarPrefab, pillarPosition, Quaternion.identity);
-				pillar.FadeOutTime = 0.65f;
-				pillar.Volume = i / (float)amountofPillarsEachRound;
-				SpawnedPillars.Add(pillar);
-			}
-			yield return new WaitForSeconds(timeBetweenRounds);
-		}*/
-		//}
-		//else
-		//{
 		for (int i = 0; i < pillarsToSpawn; i++)
 		{
 			Pillar pillar = null;
@@ -113,14 +97,31 @@ public class PillarsMove : GrimmMove
 			var playerPos2 = Player.Player1.transform.position;
 
 			Vector3 predictivePosition = default(Vector3);
-			if (Grimm.BossStage == 1)
+			float predictiveAmount = 0f;
+
+			switch (Grimm.BossStage)
+			{
+				case 1:
+					predictiveAmount = Grimm.Settings.hardMode ? hardModePredictiveAmountStage1 : predictiveAmountStage1;
+					break;
+				case 2:
+					predictiveAmount = Grimm.Settings.hardMode ? hardModePredictiveAmountStage2 : predictiveAmountStage2;
+					break;
+				default:
+					predictiveAmount = Grimm.Settings.hardMode ? hardModePredictiveAmountStage3 : predictiveAmountStage3;
+					break;
+			}
+
+			predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * predictiveAmount) + playerPos2;
+
+			/*if (Grimm.BossStage == 1)
 			{
 				predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.10f) + playerPos2;
 			}
 			else
 			{
 				predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.20f) + playerPos2;
-			}
+			}*/
 
 			pillar = Instantiate(Prefabs.FlamePillarPrefab, predictivePosition + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
 			//}

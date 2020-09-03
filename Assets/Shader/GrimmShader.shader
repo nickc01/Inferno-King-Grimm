@@ -7,7 +7,7 @@
 		[MaterialToggle] PixelSnap("Pixel snap", Float) = 0
 		[PerRendererData]_FlashColor("Flash Color", Color) = (1,1,1,1)
 		[PerRendererData]_FlashAmount("Flash Amount", Range(0,1)) = 0
-		[PerRendererData]_HueShift("Shift Hue", Color) = (0,0,0,0)
+		_HueShift("Shift Hue", Color) = (0,0,0,0)
 	}
 
 		SubShader

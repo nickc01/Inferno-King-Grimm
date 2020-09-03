@@ -1,10 +1,13 @@
 ﻿using Enums;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Components;
 using WeaverCore.Enums;
 using WeaverCore.Utilities;
+using Random = UnityEngine.Random;
 
 public class AirDashMove : GrimmMove
 {
@@ -19,6 +22,34 @@ public class AirDashMove : GrimmMove
 	float groundDashSpeed = 58f;
 	[SerializeField]
 	float groundDashTime = 0.25f;
+	[SerializeField]
+	float aheadOfTimeMovement = 0.6f;
+	[SerializeField]
+	float flankTime = 0.4f;
+
+	[Header("Wait Times")]
+	[SerializeField]
+	float stageOneWaitTime = 0.6f;
+	[SerializeField]
+	float stageThreeWaitTime = 0.400f;
+	[SerializeField]
+	float stageTwoHardModeWaitTime = 0.285f;
+
+	DamageHero damager;
+	int previousDamageAmount = 0;
+
+	/*[Serializable]
+	class GroundPoundHardMode
+	{
+
+	}*/
+	[Header("Ground Pound Hard Mode")]
+	[SerializeField]
+	public int hardModeFireballs = 6;
+	public float hardModeAngleBetweenFireballs = 37f;
+	public float hardModeFireballVelocity = 28f;
+	public float hardModeFireballGapAngle = 18f;
+	//GroundPoundHardMode groundPoundHardMode;
 
 	//Rigidbody2D body;
 	PolygonCollider2D DashSpike;
@@ -31,18 +62,21 @@ public class AirDashMove : GrimmMove
 		DashSpike = GetChildObject<PolygonCollider2D>("Dash Spike");
 		UppercutExplosion = GetChildObject<ParticleSystem>("Uppercut Explosion");
 		groundSlash = GetComponent<GroundSlashMove>();
+		damager = GetComponent<DamageHero>();
 	}
 
 	public override IEnumerator DoMove()
 	{
-		if (Grimm.BossStage >= 2)
+		if (Grimm.Settings.hardMode || Grimm.BossStage >= 2)
 		{
 			yield return GroundPoundMove();
 			yield break;
 		}
+		yield return NormalMove();
+	}
 
-		//Debugger.Log("A");
-
+	IEnumerator NormalMove()
+	{
 		float teleX = float.PositiveInfinity;
 		do
 		{
@@ -92,7 +126,7 @@ public class AirDashMove : GrimmMove
 		GrimmAnimator.PlayAnimation("Air Dash");
 
 
-		Grimm.Velocity = VectorUtilities.AngleToVector(velocityAngle * Mathf.Deg2Rad, airDashSpeed);
+		Grimm.Velocity = VectorUtilities.DegreesToVector(velocityAngle, airDashSpeed);
 		transform.eulerAngles = new Vector3(0f, 0f, spriteAngle);
 
 
@@ -120,7 +154,7 @@ public class AirDashMove : GrimmMove
 			}
 			if (!vertical && (transform.position.x <= Grimm.LeftEdge || transform.position.x >= Grimm.RightEdge))
 			{
-				Grimm.Velocity = VectorUtilities.AngleToVector(-90f * Mathf.Deg2Rad, airDashSpeed);
+				Grimm.Velocity = VectorUtilities.DegreesToVector(-90f, airDashSpeed);
 				transform.eulerAngles = Vector3.zero;
 				vertical = true;
 			}
@@ -146,18 +180,6 @@ public class AirDashMove : GrimmMove
 		transform.rotation = Quaternion.identity;
 
 		Instantiate(Prefabs.SlamEffect, transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
-
-
-		/*if (Grimm.BossStage >= 2)
-		{
-			yield return new WaitForSeconds(0.2f);
-			yield return groundSlash.UpperCut(false);
-			yield break;
-		}
-		else
-		{
-			yield return new WaitForSeconds(0.5f);
-		}*/
 
 		yield return new WaitForSeconds(0.37f);
 
@@ -238,8 +260,322 @@ public class AirDashMove : GrimmMove
 		}
 	}
 
-	IEnumerator GroundPoundMove(bool doMultiple = true, bool extra = false)
+	IEnumerator GroundPoundMove()
 	{
+		var disableDamager = Grimm.Settings.hardMode && Grimm.BossStage >= 2;
+		yield return GroundPoundAlt(disableDamager);
+		if (Grimm.BossStage >= 3 || (Grimm.BossStage == 2 && Grimm.Settings.hardMode))
+		{
+			yield return GroundPoundAlt(disableDamager);
+			yield return GroundPoundAlt(disableDamager);
+		}
+
+		yield return Grimm.TeleportOut();
+
+		if (Grimm.Settings.hardMode && Grimm.BossStage >= 3)
+		{
+			yield return new WaitForSeconds(0.35f);
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.6f);
+		}
+
+	}
+
+	IEnumerator GroundPoundAlt(bool disableDamager = false)
+	{
+		yield return GroundPoundTeleIn(0f);
+
+		yield return GrimmAnimator.PlayAnimationTillDone("Air Dash Antic");
+
+		GrimmAnimator.PlayAnimation("Air Dash");
+
+		Grimm.Velocity = Vector2.down * airDashSpeed * 1.25f;
+
+		WeaverAudio.Play(Sounds.AirDash, transform.position);
+
+		var effect = Instantiate(Prefabs.AirDashEffect, transform, false);
+		effect.transform.parent = null;
+
+		//float timer = 0f;
+		float fireTimer = 0f;
+		do
+		{
+			yield return null;
+			fireTimer += Time.deltaTime;
+			if (fireTimer >= flameSpawnRate)
+			{
+				fireTimer -= flameSpawnRate;
+				Instantiate(Prefabs.FlameTrailEffects, transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
+			}
+		} while (transform.position.y > Grimm.GroundY);
+
+		//}
+
+
+		Grimm.Velocity = Vector2.zero;
+
+		transform.position = new Vector3(transform.position.x, Grimm.GroundY, transform.position.z);
+
+		GrimmAnimator.PlayAnimation("Ground Dash Antic");
+
+		var landPlayer = WeaverAudio.Play(Sounds.LandSound, transform.position);
+		landPlayer.AudioSource.pitch = 0.9f;
+
+		if (Grimm.Settings.hardMode)
+		{
+			yield return GroundPoundEffectsHarder(hardModeFireballs, hardModeAngleBetweenFireballs, hardModeFireballVelocity);
+		}
+		else
+		{
+			yield return GroundPoundSlamEffects(5, 14f, 20f);
+		}
+
+		yield return new WaitForSeconds(0.2f);
+
+		if (disableDamager)
+		{
+			previousDamageAmount = damager.DamageDealt;
+			damager.DamageDealt = 0;
+		}
+
+		if (Grimm.Settings.hardMode && Grimm.BossStage >= 2)
+		{
+			yield return new WaitForSeconds(stageTwoHardModeWaitTime);
+		}
+		else if (Grimm.BossStage >= 3)
+		{
+			yield return new WaitForSeconds(stageThreeWaitTime);
+		}
+		else
+		{
+			yield return new WaitForSeconds(stageOneWaitTime);
+		}
+
+		if (disableDamager)
+		{
+			damager.DamageDealt = previousDamageAmount;
+			previousDamageAmount = 0;
+		}
+
+		/*if (Grimm.BossStage >= 3)
+		{
+			if (Grimm.Settings.hardMode)
+			{
+				yield return new WaitForSeconds(0.35f);
+			}
+			else
+			{
+				yield return new WaitForSeconds(0.600f);
+			}
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.8f);
+		}*/
+
+		/*if (doMultiple && (Grimm.BossStage >= 3 || (Grimm.BossStage == 2 && Grimm.Settings.hardMode)))
+		{
+			yield return GroundPoundMove(false, true);
+			yield return GroundPoundMove(false, true);
+		}
+		if (!extra)
+		{
+			yield return Grimm.TeleportOut();
+
+			yield return new WaitForSeconds(0.6f);
+		}*/
+	}
+
+	/*IEnumerator GroundPoundMove(bool doMultiple = true, bool extra = false)
+	{
+		yield return GroundPoundTeleIn(predictiveMovement);
+
+
+		yield return GrimmAnimator.PlayAnimationTillDone("Air Dash Antic");
+
+		GrimmAnimator.PlayAnimation("Air Dash");
+
+		Grimm.Velocity = Vector2.down * airDashSpeed * 1.25f;
+
+		WeaverAudio.Play(Sounds.AirDash, transform.position);
+
+		var effect = Instantiate(Prefabs.AirDashEffect, transform, false);
+		effect.transform.parent = null;
+
+		float timer = 0f;
+		float fireTimer = 0f;
+		do
+		{
+			yield return null;
+			fireTimer += Time.deltaTime;
+			if (fireTimer >= flameSpawnRate)
+			{
+				fireTimer -= flameSpawnRate;
+				Instantiate(Prefabs.FlameTrailEffects, transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
+			}
+		} while (transform.position.y > Grimm.GroundY);
+
+		//}
+
+
+		Grimm.Velocity = Vector2.zero;
+
+		transform.position = new Vector3(transform.position.x, Grimm.GroundY, transform.position.z);
+
+		GrimmAnimator.PlayAnimation("Ground Dash Antic");
+
+		var landPlayer = WeaverAudio.Play(Sounds.LandSound, transform.position);
+		landPlayer.AudioSource.pitch = 0.9f;
+
+		if (Grimm.Settings.hardMode)
+		{
+			yield return GroundPoundEffectsHarder(hardModeFireballs, hardModeAngleBetweenFireballs, hardModeFireballVelocity);
+		}
+		else
+		{
+			yield return GroundPoundSlamEffects(5, 14f, 20f);
+		}
+
+		if (Grimm.Settings.hardMode && Grimm.BossStage >= 2)
+		{
+			yield return new WaitForSeconds(0.485f);
+		}
+		else if (Grimm.BossStage >= 3)
+		{
+			yield return new WaitForSeconds(0.600f);
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.8f);
+		}
+
+		if (doMultiple && (Grimm.BossStage >= 3 || (Grimm.BossStage == 2 && Grimm.Settings.hardMode)))
+		{
+			yield return GroundPoundMove(false, true);
+			yield return GroundPoundMove(false, true);
+		}
+		if (!extra)
+		{
+			yield return Grimm.TeleportOut();
+
+			yield return new WaitForSeconds(0.6f);
+		}
+	}*/
+
+	IEnumerator GroundPoundEffectsHarder(int amountOfFireballs, float angleBetweenFireballs, float velocity)
+	{
+		WeaverCam.Instance.Shaker.Shake(ShakeType.BigShake);
+
+		Grimm.FacePlayer();
+
+		Instantiate(Prefabs.SlamEffect, transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
+
+		UppercutExplosion.Play();
+
+		var upAngle = VectorUtilities.VectorToDegrees(Vector2.up);
+
+		List<Rigidbody2D> Fireballs = new List<Rigidbody2D>();
+
+		foreach (var value in VectorUtilities.CalculateSpacedValues(amountOfFireballs, angleBetweenFireballs))
+		{
+			var fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
+			fireBall.velocity = VectorUtilities.DegreesToVector(upAngle + value, velocity);
+			Fireballs.Add(fireBall);
+		}
+
+		if (Fireballs.Count >= 4)
+		{
+			CreateFireballGap(Fireballs[2],hardModeFireballGapAngle,upAngle);
+			CreateFireballGap(Fireballs[3], hardModeFireballGapAngle, upAngle);
+		}
+
+		var explodeSF = WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);
+		explodeSF.AudioSource.pitch = 1.1f;
+
+		yield break;
+	}
+
+	void CreateFireballGap(Rigidbody2D fireball, float gapAngle, float upAngle)
+	{
+		float degrees = VectorUtilities.VectorToDegrees(fireball.velocity);
+		float magnitude = fireball.velocity.magnitude;
+
+		if (degrees - upAngle > 0)
+		{
+			degrees -= gapAngle;
+		}
+		else
+		{
+			degrees += gapAngle;
+		}
+
+		fireball.velocity = VectorUtilities.DegreesToVector(degrees, magnitude);
+	}
+
+	IEnumerator GroundPoundSlamEffects(int fireballs, float maxHorizontalSpan, float height)
+	{
+		WeaverCam.Instance.Shaker.Shake(ShakeType.BigShake);
+
+		Grimm.FacePlayer();
+
+		Instantiate(Prefabs.SlamEffect, transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
+
+		UppercutExplosion.Play();
+
+		/*if (Grimm.Settings.hardMode)
+		{
+			var afterBurn = GameObject.Instantiate(Prefabs.GroundPoundAfterburn, transform.position, Quaternion.identity);
+			afterBurn.transform.SetZPosition(afterBurn.transform.GetZPosition() - 0.1f);
+		}*/
+
+		/*if (fireballs % 2 == 1)
+		{
+			var fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
+			fireBall.velocity = new Vector2(0f, height);
+			fireballs -= 1;
+		}
+		float xVelocity = maxHorizontalSpan / (fireballs / 2);
+
+		for (int i = 0; i < fireballs / 2; i++)
+		{
+			var fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
+			fireBall.velocity = new Vector2(xVelocity + (i * xVelocity), height);
+			fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
+			fireBall.velocity = new Vector2(-xVelocity - (i * xVelocity), height);
+		}*/
+
+		foreach (var value in VectorUtilities.CalculateSpacedValues(fireballs, 7f))
+		{
+			var fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
+			fireBall.velocity = new Vector2(value, height);
+		}
+
+		/*if (Grimm.Settings.hardMode)
+		{
+			foreach (var value in VectorUtilities.CalculateSpacedValues(fireballs, 15f))
+			{
+				var fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
+				fireBall.velocity = 
+				fireBall.velocity = new Vector2(value, height);
+			}
+		}
+		else
+		{
+			
+		}*/
+
+		var explodeSF = WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);
+		explodeSF.AudioSource.pitch = 1.1f;
+
+		yield break;
+	}
+
+	IEnumerator GroundPoundTeleIn(float aheadOfTimeMovement)
+	{
+		Grimm.Velocity = Vector2.zero;
+
 		var previousPlayerPos = Player.Player1.transform.position;
 
 		yield return null;
@@ -248,19 +584,17 @@ public class AirDashMove : GrimmMove
 
 		var playerPosDiff = newPlayerPos - previousPlayerPos;
 
-		var nextPlayerPos = Player.Player1.transform.position + ((playerPosDiff / Time.deltaTime) * 0.0f);
+		var nextPlayerPos = Player.Player1.transform.position + ((playerPosDiff / Time.deltaTime) * aheadOfTimeMovement);
 
 
 		var newPosition = new Vector3(nextPlayerPos.x, 19f, 0f);
 
 		if (newPosition.x <= Grimm.LeftEdge + 3f)
 		{
-			//transform.SetXPosition(transform.position.x + 5f);
 			newPosition.x = Grimm.LeftEdge + 3f;
 		}
 		else if (newPosition.x >= Grimm.RightEdge - 3f)
 		{
-			//transform.SetXPosition(transform.position.x - 5f);
 			newPosition.x = Grimm.RightEdge - 3f;
 		}
 
@@ -278,95 +612,15 @@ public class AirDashMove : GrimmMove
 			Grimm.FacePlayer(newPosition);
 			yield return new WaitForSeconds(time / 2f);
 		}
-
-
-		yield return GrimmAnimator.PlayAnimationTillDone("Air Dash Antic");
-
-		GrimmAnimator.PlayAnimation("Air Dash");
-
-		Grimm.Velocity = Vector2.down * airDashSpeed * 1.25f;
-
-		WeaverAudio.Play(Sounds.AirDash, transform.position);
-
-
-
-		var effect = Instantiate(Prefabs.AirDashEffect, transform, false);
-		effect.transform.parent = null;
-
-
-		float fireTimer = 0f;
-		do
-		{
-			yield return null;
-			fireTimer += Time.deltaTime;
-			if (fireTimer >= flameSpawnRate)
-			{
-				fireTimer -= flameSpawnRate;
-				Instantiate(Prefabs.FlameTrailEffects, transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
-			}
-		} while (transform.position.y > Grimm.GroundY);
-
-
-		Grimm.Velocity = Vector2.zero;
-
-		transform.position = new Vector3(transform.position.x, Grimm.GroundY, transform.position.z);
-
-		GrimmAnimator.PlayAnimation("Ground Dash Antic");
-
-		var landPlayer = WeaverAudio.Play(Sounds.LandSound, transform.position);
-		landPlayer.AudioSource.pitch = 0.9f;
-
-		//TODO : Make Camera Shake
-		WeaverCam.Instance.Shaker.Shake(ShakeType.BigShake);
-
-		Grimm.FacePlayer();
-
-		Instantiate(Prefabs.SlamEffect, transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
-
-		UppercutExplosion.Play();
-
-		var fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(0f, 18f);
-		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(14f / 2f, 20f);
-		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(-14f / 2f, 20f);
-		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(28f / 2f, 20f);
-		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(-28f / 2f, 20f);
-		/*fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(36f, 18f);
-		fireBall = Instantiate(Prefabs.UppercutFireball, transform.position, Quaternion.identity);
-		fireBall.velocity = new Vector2(-36f, 18f);*/
-
-		var explodeSF = WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);
-		explodeSF.AudioSource.pitch = 1.1f;
-
-		if (Grimm.BossStage >= 3)
-		{
-			yield return new WaitForSeconds(0.600f);
-		}
-		else
-		{
-			yield return new WaitForSeconds(0.8f);
-		}
-
-		if (Grimm.BossStage >= 3 && doMultiple)
-		{
-			yield return GroundPoundMove(false,true);
-			yield return GroundPoundMove(false,true);
-		}
-		if (!extra)
-		{
-			yield return Grimm.TeleportOut();
-
-			yield return new WaitForSeconds(0.6f);
-		}
 	}
 
 	public override void OnStun()
 	{
+		if (previousDamageAmount != 0)
+		{
+			damager.DamageDealt = previousDamageAmount;
+			previousDamageAmount = 0;
+		}
 		DashSpike.enabled = false;
 		Grimm.Velocity = Vector2.zero;
 		groundSlash.OnStun();

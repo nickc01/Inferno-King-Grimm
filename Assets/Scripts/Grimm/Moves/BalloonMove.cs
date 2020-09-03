@@ -15,8 +15,8 @@ public class BalloonMove : GrimmMove
 	[SerializeField]
 	Vector2 balloonPosition = new Vector2(85.77f,13.5f);
 
-	[SerializeField]
-	float ballSpawnRate = 0.2f;
+	//[SerializeField]
+	//float ballSpawnRate = 0.2f;
 
 	[SerializeField]
 	float ballAngleMin = -20f;
@@ -47,6 +47,22 @@ public class BalloonMove : GrimmMove
 
 	[SerializeField]
 	float homingSpawnRateIncrement = 0.05f;
+
+	[Header("Easy Mode")]
+	[SerializeField]
+	float easySpawnRateStage1 = 0.2f;
+	[SerializeField]
+	float easySpawnRateStage2 = 0.18f;
+	[SerializeField]
+	float easySpawnRateStage3 = 0.17f;
+
+	[Header("Easy Mode")]
+	[SerializeField]
+	float hardSpawnRateStage1 = 0.2f;
+	[SerializeField]
+	float hardSpawnRateStage2 = 0.16f;
+	[SerializeField]
+	float hardSpawnRateStage3 = 0.12f;
 
 
 	GameObject BalloonFireballShootSound;
@@ -115,7 +131,21 @@ public class BalloonMove : GrimmMove
 		BalloonParticles.Play();
 
 		var attackTime = homingAttackTime + (homingAttackTimeIncrement * (Grimm.BossStage - 1));
-		var spawnRate = ballSpawnRate - (homingSpawnRateIncrement * (Grimm.BossStage - 1));
+		//var spawnRate = ballSpawnRate - (homingSpawnRateIncrement * (Grimm.BossStage - 1));
+		float spawnRate = 0f;
+
+		switch (Grimm.BossStage)
+		{
+			case 1:
+				spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage1 : easySpawnRateStage1;
+				break;
+			case 2:
+				spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage2 : easySpawnRateStage2;
+				break;
+			default:
+				spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage3 : easySpawnRateStage3;
+				break;
+		}
 
 		float rateCounter = 0f;
 
@@ -138,7 +168,7 @@ public class BalloonMove : GrimmMove
 				}
 
 				var homingBall = HomingBall.Fire(Grimm, transform.position + HomingBallOffset, spawnAngle, spawnVelocity, homingBallRotationSpeed, false);
-				homingBall.Velocity = homingBallVelocity;
+				homingBall.Phase2Velocity = homingBallVelocity;
 				if (Grimm.BossStage == 1)
 				{
 					homingBall.transform.localScale = new Vector3(1.25f, 1.25f, 1f);
@@ -151,7 +181,7 @@ public class BalloonMove : GrimmMove
 				{
 					homingBall.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
 				}
-				homingBall.TargetOffset = new Vector2(Random.Range(-4f,4f),Random.Range(-2f,2f));
+				homingBall.Phase2TargetOffset = new Vector2(Random.Range(-4f,4f),Random.Range(-2f,2f));
 				homingBalls.Add(homingBall);
 			}
 

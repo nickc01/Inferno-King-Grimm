@@ -4,7 +4,7 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
     Properties{
         _MainTex("Particle Texture", 2D) = "white" {}
         _InvFade("Soft Particles Factor", Range(0.01,3.0)) = 1.0
-        [PerRendererData]_HueShift("Shift Hue", Color) = (0,0,0,0)
+        _HueShift("Shift Hue", Color) = (0,0,0,0)
     }
 
         Category{

@@ -16,20 +16,15 @@ using WeaverCore.Enums;
 using WeaverCore.Features;
 using WeaverCore.Utilities;
 using WeaverCore.Assets;
-
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(DamageHero))]
 public class InfernoKingGrimm : BossReplacement
 {
-	//private List<GrimmMove> AllMoves;
 	private BalloonMove balloonMove;
 
 	bool balloonMoveNext = false;
 
-	//private readonly List<GrimmMove> possibleMoveSets = new List<GrimmMove>();
-
-	//public GrimmAttackMode CurrentAttackMode { get; private set; }
-	//public GrimmMove CurrentMove { get; private set; }
 	public Animator GrimmAnimator { get; private set; }
 	public BoxCollider2D GrimmCollider { get; private set; }
 	public GrimmSounds Sounds { get; private set; }
@@ -37,8 +32,8 @@ public class InfernoKingGrimm : BossReplacement
 	public EntityHealth GrimmHealth { get; private set; }
 	public Rigidbody2D GrimmRigidbody { get; private set; }
 	public GrimmDirection FaceDirection { get; private set; }
-	//public int BossStage { get; private set; }
 	public bool Stunned { get; private set; }
+	public float MaxHealth { get; set; }
 	public Vector2 Velocity
 	{
 		get
@@ -80,6 +75,34 @@ public class InfernoKingGrimm : BossReplacement
 	string titleLarge = "Grimm";
 	[SerializeField]
 	string titleSmall = "Inferno King";
+	/*[SerializeField]
+	AnimationCurve cameraColorCurve;*/
+	/*[SerializeField]
+	int easyModeHealth = 1300;
+	[SerializeField]
+	int hardModeHealth = 2100;*/
+
+	[Header("Easy Mode")]
+	[SerializeField]
+	int easyAttunedHealth = 1300;
+	[SerializeField]
+	int easyAscendedHealth = 1450;
+	[SerializeField]
+	int easyRadiantHealth = 1600;
+
+	[Header("Hard Mode")]
+	[SerializeField]
+	int hardAttunedHealth = 1950;
+	[SerializeField]
+	int hardAscendedHealth = 2000;
+	[SerializeField]
+	int hardRadiantHealth = 2050;
+
+	public IKGSettings Settings;
+	public GrimmColors Colors;
+	public Material CameraMaterial;
+
+	CameraHueShift cameraHueShifter;
 
 	[Space]
 	[Space]
@@ -104,20 +127,41 @@ public class InfernoKingGrimm : BossReplacement
 	private GrimmBatController BatController;
 	[Header("Stun Settings")]
 	[SerializeField]
-	private readonly WeaverGameManager.TimeFreezePreset freezePreset;
+	private WeaverGameManager.TimeFreezePreset freezePreset;
+
+
+	/*[Header("Camera Colors A")]
+	[SerializeField]
+	float shiftPercentageA = 1f;
+	[SerializeField]
+	float hueShiftA = 0.5f;
+	[SerializeField]
+	float satShiftA = 0f;
+	[SerializeField]
+	float valueShiftA = 0f;
+
+	[Header("Camera Colors B")]
+	[SerializeField]
+	float shiftPercentageB = 1f;
+	[SerializeField]
+	float hueShiftB = 0.1f;
+	[SerializeField]
+	float satShiftB = 0.1f;
+	[SerializeField]
+	float valueShiftB = 0.1f;*/
+
+	[Header("Camera Color Curves")]
+	[SerializeField]
+	AnimationCurve ShaderPercentageCurve;
+	[SerializeField]
+	AnimationCurve HueShiftCurve;
+	[SerializeField]
+	AnimationCurve SaturationShiftCurve;
+	[SerializeField]
+	AnimationCurve ValueShiftCurve;
 
 	List<GrimmMove> randomMoveStorage;
 	int randomMoveIndex = 0;
-
-	/*[Header("GG Statue")]
-	[SerializeField]
-	bool changeStatue = false;
-	[SerializeField]
-	string statueToReplace = "GG_Statue_Grimm";
-	[SerializeField]
-	string statueText = "Inferno King Grimm";
-	[SerializeField]
-	string statueDescription = "";*/
 
 
 	public bool Invisible
@@ -183,153 +227,32 @@ public class InfernoKingGrimm : BossReplacement
 		}
 	}
 
-	/*override 
-
-	protected  void Awake()
-	{
-		MainPrefabs.Instance = prefabs;
-
-		var allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-
-
-		foreach (var obj in allObjects)
-		{
-			if (obj.GetComponent<TMP_Text>() != null && obj.scene != null && obj.scene.name != null)
-			{
-				ChangeTitles(obj);
-			}
-		}
-
-	//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Main"));
-	//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Sub"));
-	//ChangeTitles(allObjects.FirstOrDefault(g => g.name == "Title Super"));
-
-
-	//ChangeTitles(GameObject.Find("Title Main"));
-	//ChangeTitles(GameObject.Find("Title Sub"));
-	//ChangeTitles(GameObject.Find("Title Super"));
-}*/
-
-	//Changing the title via an ugly reflection method, will refine later
 	private void ChangeTitles(GameObject titleObject)
 	{
-		//Debugger.Log("Change Title = " + titleObject);
 		if (titleObject != null && CoreInfo.LoadState == RunningState.Game)
 		{
-			WeaverLog.Log("Title Object = " + titleObject);
 			var text = titleObject.GetComponent<TMP_Text>();
 			if (text != null)
 			{
-
-				WeaverLog.Log("Text = " + text.text);
-				if (titleObject.GetComponent<TMProTextSetter>() == null)
+				var setter = titleObject.GetComponent<TMProTextSetter>();
+				if (setter == null)
 				{
-					titleObject.AddComponent<TMProTextSetter>();
+					setter = titleObject.AddComponent<TMProTextSetter>();
 				}
-				//var setter = 
-
-				/*if (text.text.Contains("Nightmare"))
-				{
-					setter.textToSet = text.text.Replace("Nightmare","Inferno");
-					WeaverLog.Log("Change 1");
-				}
-				if (text.text.Contains("Infinite"))
-				{
-					setter.textToSet = text.text.Replace("Infinite", "Inferno King");
-					WeaverLog.Log("Change 2");
-				}*/
-
-				//var textContents = text.text.ToLower();
-
-				
-
-				/*if (titleObject.name == "Title Sub")
-				{
-					setter.textToSet = "";
-				}
-				else if (textContents == "infinite" || textContents == "nightmare king")
-				{
-					setter.textToSet = titleSmall;
-				}
-				else if (textContents == "grimm")
-				{
-					setter.textToSet = titleLarge;
-				}
-				else if (textContents.Contains("nightmare king grimm") || text.text.Contains("infinite king grimm") || text.text.Contains("Infinite Grimm"))
-				{
-					setter.textToSet = titleSmall + " " + titleLarge;
-				}*/
+				setter.grimm = this;
 			}
-
-			/*if (titleObject.GetComponent(TMProTextSetterOLD.TMProT) != null)
-			{
-				//Debugger.Log("ADDING TITLE SETTER");
-				var setter = titleObject.AddComponent<TMProTextSetterOLD>();
-				if (titleObject.name == "Title Sub")
-				{
-					setter.UpdateText = "";
-				}
-				else if (setter.Text == "Infinite" || setter.Text == "Nightmare King")
-				{
-					setter.UpdateText = titleSmall;
-				}
-				else if (setter.Text == "Grimm")
-				{
-					setter.UpdateText = titleLarge;
-				}
-				else if (setter.Text.Contains("Nightmare King Grimm") || setter.Text.Contains("Infinite King Grimm") || setter.Text.Contains("Infinite Grimm"))
-				{
-					setter.UpdateText = titleSmall + " " + titleLarge;
-				}
-			}
-			else if (titleObject.GetComponent(TMProTextSetterGUIOLD.TMProUGUIT) != null)
-			{
-				//Debugger.Log("ADDING TITLE SETTER GUI");
-				var setter = titleObject.AddComponent<TMProTextSetterGUIOLD>();
-				if (setter.Text == "Infinite" || setter.Text == "Nightmare King")
-				{
-					setter.UpdateText = titleSmall;
-				}
-				else if (setter.Text == "Grimm")
-				{
-					setter.UpdateText = titleLarge;
-				}
-				else if (setter.Text.Contains("Nightmare King Grimm") || setter.Text.Contains("Infinite King Grimm") || setter.Text.Contains("Infinite Grimm"))
-				{
-					setter.UpdateText = titleSmall + " " + titleLarge;
-				}
-			}*/
-			/*foreach (var text in titleObject.GetComponentsInChildren(TMProT))
-			{
-				Debugger.Log("C");
-				var type = text.GetType();
-				var textProp = type.GetProperty("text", BindingFlags.Public | BindingFlags.Instance);
-
-				var textString = (string)textProp.GetGetMethod().Invoke(text, null);
-				Debugger.Log("Text = " + textString);
-				if (textString == "Grimm")
-				{
-					Debugger.Log("D");
-					textProp.GetSetMethod().Invoke(text, new object[] { titleLarge });
-				}
-				else if (textString == "Nightmare King")
-				{
-					textProp.GetSetMethod().Invoke(text, new object[] { titleSmall });
-				}
-			}*/
 		}
 	}
 
 	// Use this for initialization
 	private void Start()
 	{
-		GrimmHue.SetAllGrimmHues(0f, 0f, 0f);
-		//BossStage = 1;
-		//AllMoves = GetComponents<GrimmMove>().ToList();
+		//BossStage = 2;
+		//GrimmHue.SetAllGrimmHues(0f, 0f, 0f);
+		Colors.SetHues(0f, 0f, 0f);
 		AddMoves(GetComponents<GrimmMove>());
 		balloonMove = GetComponent<BalloonMove>();
 
-		//Debugger.Log("ENEMY HAS STARTED");
 
 		if ((receiver = GetComponent<EventReceiver>()) == null)
 		{
@@ -373,16 +296,79 @@ public class InfernoKingGrimm : BossReplacement
 		spriteRenderer.enabled = false;
 		GrimmCollider.enabled = false;
 
+		if (Settings.enableCustomHealth)
+		{
+			GrimmHealth.Health = Settings.CustomHealthValue;
+		}
+		else
+		{
+			switch (Diffculty)
+			{
+				case WeaverCore.DataTypes.BossDifficulty.Attuned:
+					GrimmHealth.Health = Settings.hardMode ? hardAttunedHealth : easyAttunedHealth;
+					break;
+				case WeaverCore.DataTypes.BossDifficulty.Ascended:
+					GrimmHealth.Health = Settings.hardMode ? hardAscendedHealth : easyAscendedHealth;
+					break;
+				case WeaverCore.DataTypes.BossDifficulty.Radiant:
+					GrimmHealth.Health = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
+					break;
+			}
+		}
+
+		if (Settings.hardMode)
+		{
+			WeaverLog.Log("IKG : Hard Mode Enabled");
+		}
+		else
+		{
+			WeaverLog.Log("IKG : Hard Mode Disabled");
+		}
+
+		WeaverLog.Log("IKG : Difficulty = " + Diffculty);
+		WeaverLog.Log("IKG : Health = " + GrimmHealth.Health);
+		/*GrimmHealth.Health = easyModeHealth;
+		if (Settings.hardMode)
+		{
+			GrimmHealth.Health = hardModeHealth;
+		}*/
+		MaxHealth = GrimmHealth.Health;
+
 		var quarterHealth = GrimmHealth.Health / 4;
 		var thirdHealth = GrimmHealth.Health / 3;
 
-		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - quarterHealth,DoBalloonMove);
-		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 2),DoBalloonMove);
+		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - quarterHealth, DoBalloonMove);
+		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 2), DoBalloonMove);
 		GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 3), DoBalloonMove);
-		//GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth), Stun);
-		//GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth * 2), Stun);
 		AddStunMilestone(GrimmHealth.Health - thirdHealth);
 		AddStunMilestone(GrimmHealth.Health - (thirdHealth * 2));
+
+		/*if (Settings.hardMode)
+		{
+			var fifthHealth = GrimmHealth.Health / 5;
+			var quarterHealth = GrimmHealth.Health / 4;
+
+			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - fifthHealth, DoBalloonMove);
+			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (fifthHealth * 2), DoBalloonMove);
+			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (fifthHealth * 3), DoBalloonMove);
+			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (fifthHealth * 4), DoBalloonMove);
+			AddStunMilestone(GrimmHealth.Health - quarterHealth);
+			AddStunMilestone(GrimmHealth.Health - (quarterHealth * 2));
+			AddStunMilestone(GrimmHealth.Health - (quarterHealth * 3));
+		}
+		else
+		{
+			var quarterHealth = GrimmHealth.Health / 4;
+			var thirdHealth = GrimmHealth.Health / 3;
+
+			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - quarterHealth, DoBalloonMove);
+			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 2), DoBalloonMove);
+			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 3), DoBalloonMove);
+			//GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth), Stun);
+			//GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (thirdHealth * 2), Stun);
+			AddStunMilestone(GrimmHealth.Health - thirdHealth);
+			AddStunMilestone(GrimmHealth.Health - (thirdHealth * 2));
+		}*/
 
 		var snapshots = Resources.FindObjectsOfTypeAll<AudioMixerSnapshot>();
 		foreach (var snapshot in snapshots)
@@ -394,34 +380,40 @@ public class InfernoKingGrimm : BossReplacement
 			}
 		}
 
+		if (Settings.hardMode && !Settings.DisableColorEffects)
+		{
+			if (cameraHueShifter == null)
+			{
+				cameraHueShifter = WeaverCam.Instance.gameObject.GetComponent<CameraHueShift>();
+				if (cameraHueShifter == null)
+				{
+					cameraHueShifter = WeaverCam.Instance.gameObject.AddComponent<CameraHueShift>();
+				}
+				cameraHueShifter.cameraMaterial = CameraMaterial;
+				cameraHueShifter.ShiftPercentage = 0f;
+				//WeaverLog.Log("Shift Percentage = " + cameraHueShifter.ShiftPercentage);
+				SceneManager.sceneLoaded += OnSceneChange;
+			}
+		}
 	}
 
-	/*public GrimmMove GetRandomMove()
+	private void Update()
 	{
-		if (randomMoveStorage == null)
+		if (Settings.hardMode && !Settings.DisableColorEffects)
 		{
-			randomMoveStorage = new List<GrimmMove>(AllMoves);
-			randomMoveStorage.Sort(Randomizer<GrimmMove>.Instance);
-			randomMoveIndex = 0;
+			var t = 1f - (GrimmHealth.Health / MaxHealth);
+			cameraHueShifter.SetValues(ShaderPercentageCurve.Evaluate(t),
+				HueShiftCurve.Evaluate(t),
+				SaturationShiftCurve.Evaluate(t),
+				ValueShiftCurve.Evaluate(t));
+			/*var t = cameraColorCurve.Evaluate(1 - (GrimmHealth.Health / maxHealth));
+			cameraHueShifter.SetValues(Mathf.Lerp(shiftPercentageA,shiftPercentageB, t),
+				Mathf.Lerp(hueShiftA, hueShiftB, t),
+				Mathf.Lerp(satShiftA, satShiftB, t),
+				Mathf.Lerp(valueShiftA, valueShiftB, t));*/
+			//cameraHueShifter.ShiftPercentage = cameraColorCurve.Evaluate(1 - (GrimmHealth.Health / maxHealth));
 		}
-		GrimmMove SelectedMove = null;
-		while (SelectedMove == null)
-		{
-			if (randomMoveIndex == randomMoveStorage.Count)
-			{
-				randomMoveIndex = 0;
-				randomMoveStorage.Sort(Randomizer<GrimmMove>.Instance);
-			}
-			//WeaverLog.Log("RandomMoveIndex = " + randomMoveIndex);
-			SelectedMove = randomMoveStorage[randomMoveIndex];
-			if (SelectedMove.ExcludeFromRandomizer)
-			{
-				SelectedMove = null;
-			}
-			randomMoveIndex++;
-		}
-		return SelectedMove;
-	}*/
+	}
 
 	private IEnumerator Waiter(float waitTime, Action OnDone)
 	{
@@ -432,23 +424,18 @@ public class InfernoKingGrimm : BossReplacement
 	//Called when the boss starts
 	private void Wake(string eventName, GameObject source)
 	{
-		//Debugger.Log("Event Received for RKG = " + eventName);
-		//Debugger.Log("Event Source for RKG = " + source);
-
-		//Debugger.Log("Waking Trace = " + new System.Diagnostics.StackTrace(true));
 		if (eventName == "WAKE" && (source == gameObject || source.name.Contains("Grimm Control")))
 		{
-			//Debugger.Log("THE ENEMY HAS AWOKEN!!!");
 			WeaverLog.Log("Starting Inferno King Grimm Boss fight");
 			transform.position = StartingPosition;
 
-			//BossRoutine = StartCoroutine(StopWhenStunned(MainBossControl()));
 			BossRoutine = CoroutineUtilities.RunCoroutineWhile(this, MainBossControl(), () => !Stunned);
 		}
 	}
 
 	private IEnumerator MainBossControl()
 	{
+		yield return new WaitForSeconds(0.6f);
 		foreach (var randomMove in RandomMoveIter())
 		{
 			if (balloonMoveNext)
@@ -461,30 +448,9 @@ public class InfernoKingGrimm : BossReplacement
 				yield return RunMove(randomMove);
 			}
 		}
-
-
-		//Debugger.Log("DOING MAIN BOSS CONTROL");
-		/*yield return new WaitForSeconds(0.6f);
-		while (true)
-		{
-			GrimmMove NextMove = null;
-			if (balloonMoveNext)
-			{
-				yield return balloonMove.DoMove();
-				balloonMoveNext = false;
-			}
-			else
-			{
-				CurrentMove = GetRandomMove();
-
-				//Debugger.Log("Current Move = " + CurrentMove.GetType());
-
-				yield return CurrentMove.DoMove();
-			}
-		}*/
 	}
 
-	public IEnumerator TeleportIn(bool playSound = true)
+	public IEnumerator TeleportIn(bool playSound = true, string animationName = "Tele In")
 	{
 		if (Invisible)
 		{
@@ -500,12 +466,12 @@ public class InfernoKingGrimm : BossReplacement
 			//WeaverEvents.BroadcastEvent("EnemyKillShake");
 			WeaverCam.Instance.Shaker.Shake(ShakeType.EnemyKillShake);
 
-			yield return GrimmAnimator.PlayAnimationTillDone("Tele In");
+			yield return GrimmAnimator.PlayAnimationTillDone(animationName);
 			GrimmCollider.enabled = true;
 		}
 	}
 
-	public IEnumerator TeleportOut(bool playSound = true)
+	public IEnumerator TeleportOut(bool playSound = true, string animationName = "Tele Out")
 	{
 		if (!invisible)
 		{
@@ -515,7 +481,7 @@ public class InfernoKingGrimm : BossReplacement
 			}
 			GrimmCollider.enabled = false;
 
-			yield return GrimmAnimator.PlayAnimationTillDone("Tele Out");
+			yield return GrimmAnimator.PlayAnimationTillDone(animationName);
 
 			Invisible = true;
 
@@ -628,19 +594,28 @@ public class InfernoKingGrimm : BossReplacement
 
 		float stunWaitTime = 2f;
 
+		//if (!Settings.hardMode)
+		//{
 		for (float t = 0; t < stunWaitTime; t += Time.deltaTime)
 		{
-			if (BossStage == 2)
+			if (!Settings.hardMode && !Settings.DisableColorEffects)
 			{
-				GrimmHue.SetAllGrimmHues(Mathf.Lerp(0f, 0.30f,t / stunWaitTime), 0f, 0f);
-			}
-			else if (BossStage == 3)
-			{
-				GrimmHue.SetAllGrimmHues(Mathf.Lerp(0.30f, 0.45f, t / stunWaitTime), 0f, 0f);
+				if (BossStage == 2)
+				{
+					//GrimmHue.SetAllGrimmHues(Mathf.Lerp(0f, 0.30f,t / stunWaitTime), 0f, 0f);
+					Colors.SetHues(Mathf.Lerp(0f, 0.30f, t / stunWaitTime), 0f, 0f);
+				}
+				else if (BossStage == 3)
+				{
+					//GrimmHue.SetAllGrimmHues(Mathf.Lerp(0.30f, 0.45f, t / stunWaitTime), 0f, 0f);
+					Colors.SetHues(Mathf.Lerp(0.30f, 0.45f, t / stunWaitTime), 0f, 0f);
+				}
 			}
 
 			yield return null;
 		}
+
+		//}
 
 		BatController.BringIn();
 
@@ -844,6 +819,46 @@ public class InfernoKingGrimm : BossReplacement
 
 		yield break;
 	}
+
+	void OnSceneChange(Scene scene, LoadSceneMode loadMode)
+	{
+		SceneManager.sceneLoaded -= OnSceneChange;
+		cameraHueShifter.ShiftPercentage = 0f;
+	}
+
+	//void MaterialDebug()
+	//{
+		/*if (WeaverCam.Instance.GetComponent<CameraHueShift>() == null)
+		{
+			var camComponent = WeaverCam.Instance.gameObject.AddComponent<CameraHueShift>();
+			camComponent.cameraMaterial = CameraMaterial;
+			//camComponent.HueShiftRed = 1f;
+		}*/
+
+		/*Dictionary<Material, List<Renderer>> AllMaterials = new Dictionary<Material, List<Renderer>>();
+
+		foreach (var renderer in UnityEngine.Object.FindObjectsOfType<Renderer>())
+		{
+			var material = renderer.sharedMaterial;
+			if (AllMaterials.ContainsKey(material))
+			{
+				AllMaterials[material].Add(renderer);
+			}
+			else
+			{
+				AllMaterials.Add(material, new List<Renderer>() { renderer });
+			}
+		}
+
+		foreach (var pair in AllMaterials)
+		{
+			WeaverLog.Log("---Material: " + pair.Key.name + "-----------------------");
+			foreach (var renderer in pair.Value)
+			{
+				WeaverLog.Log(renderer.gameObject.name);
+			}
+		}*/
+	//}
 
 	/*IEnumerator MusicFader(float fadeTime = 0.5f)
 	{

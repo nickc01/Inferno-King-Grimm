@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4022445994546506}
   - component: {fileID: 198886292385304208}
   - component: {fileID: 199766645765800742}
-  - component: {fileID: 114757202357604516}
   m_Layer: 0
   m_Name: Death Explode
   m_TagString: Untagged
@@ -42,20 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114757202357604516
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1407886090723672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
 --- !u!198 &198886292385304208
 ParticleSystem:
   m_ObjectHideFlags: 1

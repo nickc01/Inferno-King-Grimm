@@ -25,5 +25,7 @@ public class MainPrefabs : ScriptableObject
 	public GrimmBatController BatControllerPrefab;
 	public HomingBall HomingBallPrefab;
 	public GameObject GlowPrefab;
+	public GameObject GroundPoundAfterburn;
+	public GameObject RedBurst;
 }
 

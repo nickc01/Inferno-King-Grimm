@@ -141,7 +141,7 @@ public abstract class GrimmMove : MonoBehaviour, IBossMove
 		OnStun();
 	}
 
-	public void OnCancel()
+	public virtual void OnCancel()
 	{
 		OnStun();
 	}

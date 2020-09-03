@@ -48,8 +48,6 @@ public class SpikesController : MonoBehaviour
 	}
 	public List<GrimmSpike> AllSpikes;
 
-	//public float CurrentWaitTime { get; private set; }
-
 	class SpikeSorter : IComparer<GrimmSpike>
 	{
 		public int Compare(GrimmSpike x, GrimmSpike y)
@@ -112,8 +110,6 @@ public class SpikesController : MonoBehaviour
 
 	public IEnumerator PlayAsync()
 	{
-		//CurrentWaitTime = 1.35f;
-
 		float positionFloat = Random.Range(66f, 67.125f);
 
 		transform.position = new Vector3(positionFloat,transform.position.y,transform.position.z);
@@ -121,44 +117,10 @@ public class SpikesController : MonoBehaviour
 		DoSpikes(AllSpikes.Where((g,i) => i % 2 == 0));
 
 		yield return new WaitForSeconds(1.35f);
-
-		/*foreach (var spike in NormalSpikes)
-		{
-			spike.PrepareForAttack();
-		}
-
-		WeaverAudio.Play(SpikesPrepare, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.55f);
-
-		foreach (var spike in NormalSpikes)
-		{
-			spike.RaiseSpikes();
-		}
-
-		yield return new WaitForSeconds(0.15f);
-
-		//TODO - Shake Camera
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
-
-		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.45f);
-
-		foreach (var spike in NormalSpikes)
-		{
-			spike.LowerSpikes();
-		}
-
-		WeaverAudio.Play(SpikesDown, Player.Player1.transform.position);*/
-
-		//CurrentWaitTime = 0f;
 	}
 
 	public IEnumerator PlayMiddleSideAsync()
 	{
-		//CurrentWaitTime = 2.2f;
-
 		bool sidesFirst = Random.value >= 0.5f;
 
 		float positionFloat = Random.Range(66f, 67.125f);
@@ -173,281 +135,18 @@ public class SpikesController : MonoBehaviour
 		yield return new WaitForSeconds(0.85f);
 
 		yield return DoSpikesAsync(second, 0.75f);
-
-		/*bool sidesFirst = Random.value >= 0.5f;
-
-		float positionFloat = Random.Range(66f, 67.125f);
-
-		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in SideSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-		else
-		{
-			foreach (var spike in MiddleSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-
-		WeaverAudio.Play(SpikesPrepare, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.70f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in SideSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in MiddleSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-
-		yield return new WaitForSeconds(0.15f);
-
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
-
-		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.05f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in MiddleSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-		else
-		{
-			foreach (var spike in SideSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-
-		WeaverAudio.Play(SpikesPrepare, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.40f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in SideSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in MiddleSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-
-		WeaverAudio.Play(SpikesDown, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.35f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in MiddleSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in SideSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-
-		yield return new WaitForSeconds(0.15f);
-
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
-
-		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.45f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in MiddleSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in SideSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-
-		WeaverAudio.Play(SpikesDown, Player.Player1.transform.position);*/
-		//CurrentWaitTime = 0f;
 	}
-
 
 	public IEnumerator PlayAlternatingAsync()
 	{
 		float positionFloat = Random.Range(66f, 67.125f);
 
 		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
-
-		//var first = sidesFirst ? SideSpikes : MiddleSpikes;
-		//var second = sidesFirst ? MiddleSpikes : SideSpikes;
-
 		DoSpikes(AllSpikes.Where((g,i) => i % 2 == 0), 0.70f);
 
 		yield return new WaitForSeconds(0.85f);
 
 		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 1), 0.75f);
-		/*var evenSpikes = AllSpikes.Where((s, i) => i % 2 == 0);
-		var	oddSpikes = AllSpikes.Where((s, i) => i % 2 == 1);
-
-		//CurrentWaitTime = 2.2f;
-
-		bool sidesFirst = Random.value >= 0.5f;
-
-		float positionFloat = Random.Range(66f, 67.125f);
-
-		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-		else
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-
-		WeaverAudio.Play(SpikesPrepare, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.70f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-
-		yield return new WaitForSeconds(0.15f);
-
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
-
-		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.05f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-		else
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-
-		WeaverAudio.Play(SpikesPrepare, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.40f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-
-		WeaverAudio.Play(SpikesDown, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.35f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-
-		yield return new WaitForSeconds(0.15f);
-
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
-
-		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.45f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-
-		WeaverAudio.Play(SpikesDown, Player.Player1.transform.position);
-		//CurrentWaitTime = 0f;*/
 	}
 
 
@@ -466,137 +165,63 @@ public class SpikesController : MonoBehaviour
 		yield return new WaitForSeconds(0.80f);
 
 		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 0), 0.65f);
-		/*var evenSpikes = AllSpikes.Where((s, i) => i % 2 == 0);
-		var oddSpikes = AllSpikes.Where((s, i) => i % 2 == 1);
-
-		//CurrentWaitTime = 2.2f;
-
-		bool sidesFirst = Random.value >= 0.5f;
-
-		float positionFloat = Random.Range(66f, 67.125f);
-
-		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-		else
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-
-		WeaverAudio.Play(SpikesPrepare, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.70f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-
-		yield return new WaitForSeconds(0.15f);
-
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
-
-		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.05f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-		else
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.PrepareForAttack();
-			}
-		}
-
-		WeaverAudio.Play(SpikesPrepare, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.40f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-
-		WeaverAudio.Play(SpikesDown, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.35f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.RaiseSpikes();
-			}
-		}
-
-		yield return new WaitForSeconds(0.15f);
-
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
-
-		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
-
-		yield return new WaitForSeconds(0.45f);
-
-		if (sidesFirst)
-		{
-			foreach (var spike in oddSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-		else
-		{
-			foreach (var spike in evenSpikes)
-			{
-				spike.LowerSpikes();
-			}
-		}
-
-		WeaverAudio.Play(SpikesDown, Player.Player1.transform.position);*/
-		//CurrentWaitTime = 0f;
 	}
 
+	public IEnumerator PlayDashSpikes(float dashDistance, int spikesDown = int.MaxValue)
+	{
+		GrimmSpike nearestSpike = null;
+		float distance = float.PositiveInfinity;
+		int spikeIndex = 0;
+		//foreach (var spike in AllSpikes)
+		for (int i = 0; i < AllSpikes.Count; i++)
+		{
+			var spike = AllSpikes[i];
+			var currentSpikeDist = Mathf.Abs(spike.transform.position.x - Player.Player1.transform.position.x);
+			if (currentSpikeDist < distance)
+			{
+				distance = currentSpikeDist;
+				nearestSpike = spike;
+				spikeIndex = i;
+			}
+		}
+
+		List<GrimmSpike> DownSpikes = new List<GrimmSpike>();
+
+		float spikeX = nearestSpike.transform.position.x;
+
+		int downSpikes = 0;
+		for (int i = spikeIndex; i < AllSpikes.Count; i++)
+		{
+			var spike = AllSpikes[i];
+			if (spike.transform.position.x > (spikeX + dashDistance))
+			{
+				DownSpikes.Add(spike);
+				downSpikes++;
+				if (downSpikes >= spikesDown)
+				{
+					break;
+				}
+			}
+		}
+		downSpikes = 0;
+		for (int i = spikeIndex - 1; i >= 0; i--)
+		{
+			var spike = AllSpikes[i];
+			if (spike.transform.position.x < (spikeX - dashDistance))
+			{
+				DownSpikes.Add(spike);
+				downSpikes++;
+				if (downSpikes >= spikesDown)
+				{
+					break;
+				}
+			}
+		}
+
+		DoSpikes(AllSpikes.Except(DownSpikes), 0.65f);
+
+		yield return new WaitForSeconds(0.80f);
+
+		yield return DoSpikesAsync(DownSpikes, 0.65f);
+	}
 }

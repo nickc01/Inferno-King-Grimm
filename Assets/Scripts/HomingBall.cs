@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using WeaverCore;
 using WeaverCore.Enums;
 using WeaverCore.Utilities;
@@ -15,21 +16,34 @@ public class HomingBall : MonoBehaviour
 
 	Coroutine MainCoroutine;
 	Coroutine ShrinkCoroutine;
+	[Header("Phase 1")]
+	public bool EnablePhase1 = true;
+	[FormerlySerializedAs("SpawnTime")]
+	public float Phase1Time = 1f;
+	[FormerlySerializedAs("SpawnVelocity")]
+	public float Phase1Velocity = 20f;
+	public Vector2 Phase1TravelDirection = default(Vector2);
 
-	[SerializeField]
-	float shrinkTime = 0.7f;
+	[Header("Phase 2")]
+	public bool EnablePhase2 = true;
+	[FormerlySerializedAs("RotationSpeed")]
+	public float Phase2RotationSpeed = 25f;
+	[FormerlySerializedAs("Velocity")]
+	public float Phase2Velocity = 5f;
+	[FormerlySerializedAs("TargetOffset")]
+	public Vector2 Phase2TargetOffset = default(Vector2);
+	public Vector2 Phase2TravelDirection = default(Vector2);
 
-	public float Velocity = 5f;
+	[Header("Death")]
+	[FormerlySerializedAs("shrinkTime")]
+	[Tooltip("How fast the homing ball shrinks when it hits an obstacle")]
+	public float ShrinkTime = 0.7f;
 
-	[SerializeField]
-	public float RotationSpeed = 25f;
+	public static Vector2 GlowScale = Vector2.one;
+	public static Vector2 FirePillarOffset = Vector2.zero;
 
-	public float SpawnTime = 1f;
-	public float SpawnVelocity = 20f;
-
-	public Vector2 TargetOffset = default(Vector2);
-
-	Vector2 travelDirection = Vector2.up;
+	//TODO : TODO : TODO : TODO : TODO : TODO : TODO : TODO :TODO : TODO : TODO : TODO :TODO : TODO : TODO : TODO :
+	//public Vector2 travelDirection = Vector2.up;
 
 	float lifeTime = 0f;
 
@@ -62,33 +76,32 @@ public class HomingBall : MonoBehaviour
 
 	IEnumerator MainAction()
 	{
-		float time = 0f;
-
-		Vector2 spawnVelocityVector = travelDirection * SpawnVelocity;
-		//Vector2 currentVelocityVector = spawnVelocityVector;
-
-		while (time < SpawnTime)
+		if (EnablePhase1)
 		{
-			transform.position += (Vector3)Vector2.Lerp(spawnVelocityVector, Vector2.zero, time / SpawnTime) * Time.deltaTime;
+			float phase1Timer = 0f;
 
-			//transform.position += (Vector3)currentVelocityVector * Time.deltaTime;
+			while (phase1Timer < Phase1Time)
+			{
+				transform.position += (Vector3)Vector2.Lerp(Phase1TravelDirection * Phase1Velocity, Vector2.zero, phase1Timer / Phase1Time) * Time.deltaTime;
 
-			//currentVelocityVector = Vector2.Lerp(spawnVelocityVector, Vector2.zero,time / SpawnTime);
+				yield return null;
 
-			yield return null;
+				phase1Timer += Time.deltaTime;
+			}
 
-			time += Time.deltaTime;
+			Phase1TravelDirection = Vector3.zero;
+		}
+		if (EnablePhase2)
+		{
+			while (true)
+			{
+				transform.position += (Vector3)Phase2TravelDirection * Time.deltaTime;
+				Phase2TravelDirection = Vector3.RotateTowards(Phase2TravelDirection, ((Player.Player1.transform.position + (Vector3)Phase2TargetOffset) - transform.position) * 100f, Phase2RotationSpeed * Mathf.Deg2Rad * Time.deltaTime, Phase2Velocity * Time.deltaTime);
+				yield return null;
+			}
 		}
 
-		travelDirection = Vector3.zero;
-
-		while (true)
-		{
-			//rigidbody.velocity += Difference(transform.position, Player.Player1.transform.position).normalized * -(acceleration * Time.deltaTime);
-			transform.position += (Vector3)travelDirection * Time.deltaTime;
-			travelDirection = Vector3.RotateTowards(travelDirection, ((Player.Player1.transform.position + (Vector3)TargetOffset) - transform.position) * 100f, RotationSpeed * Mathf.Deg2Rad * Time.deltaTime, Velocity * Time.deltaTime);
-			yield return null;
-		}
+		ShrinkAndStop();
 	}
 
 	Vector2 Difference(Vector2 a, Vector2 b)
@@ -98,7 +111,6 @@ public class HomingBall : MonoBehaviour
 
 	IEnumerator ShrinkRoutine()
 	{
-		//Debugger.Log("Stopping");
 		Smoke.Stop();
 		Particles.Stop();
 		collider.enabled = false;
@@ -110,7 +122,7 @@ public class HomingBall : MonoBehaviour
 		{
 			yield return null;
 			clock += Time.deltaTime;
-			transform.localScale = Vector3.Lerp(oldScale, Vector3.zero, clock / shrinkTime);
+			transform.localScale = Vector3.Lerp(oldScale, Vector3.zero, clock / ShrinkTime);
 			rigidbody.velocity *= 0.85f;
 		} while (clock < end);
 
@@ -125,12 +137,12 @@ public class HomingBall : MonoBehaviour
 		}
 	}
 
-	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, float spawnAngle, float spawnVelocity, float rotationSpeed, bool spawnFlamePillar = true)
+	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, float spawnAngle, float spawnVelocity, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)
 	{
-		return Fire(grimm, Position, VectorUtilities.AngleToVector(spawnAngle * Mathf.Deg2Rad,spawnVelocity), rotationSpeed, spawnFlamePillar);
+		return Fire(grimm, Position, VectorUtilities.DegreesToVector(spawnAngle,spawnVelocity), rotationSpeed, playEffects, audioPitch);
 	}
 
-	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, Vector2 spawnVector, float rotationSpeed, bool spawnFlamePillar = true)
+	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, Vector2 spawnVector, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)
 	{
 		var newBall = Instantiate(MainPrefabs.Instance.HomingBallPrefab,Position,Quaternion.identity);
 
@@ -138,25 +150,25 @@ public class HomingBall : MonoBehaviour
 		{
 			spawnVector = spawnVector.With(-spawnVector.x);
 		}
-		newBall.travelDirection = spawnVector.normalized;
-		newBall.SpawnVelocity = spawnVector.magnitude;
-		newBall.RotationSpeed = rotationSpeed;
+		newBall.Phase1TravelDirection = spawnVector.normalized;
+		newBall.Phase1Velocity = spawnVector.magnitude;
+		newBall.Phase2RotationSpeed = rotationSpeed;
 
-		if (spawnFlamePillar)
+		if (playEffects)
 		{
-			FirebatFirePillar.Spawn(grimm);
+			var pillar = FirebatFirePillar.Spawn(grimm);
+			if (FirePillarOffset != Vector2.zero)
+			{
+				pillar.transform.position = Position + (Vector3)FirePillarOffset;
+			}
 
 			var fireAudio = WeaverAudio.Play(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
-			fireAudio.AudioSource.pitch = 1.0f;
+			fireAudio.AudioSource.pitch = audioPitch;
 
-			GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, Position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+			var glow = GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, Position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+			glow.transform.localScale = GlowScale;
 		}
 
 		return newBall;
 	}
-
-	/*void OnTriggerEnter2D(Collider2D collider)
-	{
-		Debugger.Log("Trigger = " + collider);
-	}*/
 }

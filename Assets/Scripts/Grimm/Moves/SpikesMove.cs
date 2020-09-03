@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpikesMove : GrimmMove
 {
+	[SerializeField]
+	float maxDashDistance = 6f;
 	//[Header("Grimm Spike Settings")]
 	//[SerializeField]
 	//float spikeWaitTime = 1.35f;
@@ -17,32 +19,53 @@ public class SpikesMove : GrimmMove
 
 	public override IEnumerator DoMove()
 	{
-		if (Grimm.BossStage == 1)
+		if (Grimm.Settings.hardMode)
 		{
-			//spikeController.Play();
-			yield return spikeController.PlayAlternatingAsync();
-		}
-		else if (Grimm.BossStage == 2)
-		{
-			yield return spikeController.PlayMiddleSideAsync();
-		}
-		else
-		{
-			yield return spikeController.PlayAlternatingTripleAsync();
-		}
-
-		yield return new WaitForSeconds(0.2f);
-		//yield return null;
-
-		//yield return new WaitForSeconds(spikeController.CurrentWaitTime);
-
-		if (Grimm.BossStage >= 3)
-		{
-			yield return new WaitForSeconds(0.3f);
+			if (Grimm.BossStage == 1)
+			{
+				yield return spikeController.PlayAlternatingTripleAsync();
+				yield return new WaitForSeconds(0.6f);
+			}
+			else if (Grimm.BossStage == 2)
+			{
+				yield return spikeController.PlayDashSpikes(maxDashDistance, 3);
+				yield return new WaitForSeconds(0.45f);
+			}
+			else if (Grimm.BossStage == 3)
+			{
+				yield return spikeController.PlayDashSpikes(maxDashDistance + 1, 2);
+				yield return new WaitForSeconds(0.45f);
+			}
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			if (Grimm.BossStage == 1)
+			{
+				//spikeController.Play();
+				yield return spikeController.PlayAlternatingAsync();
+			}
+			else if (Grimm.BossStage == 2)
+			{
+				yield return spikeController.PlayMiddleSideAsync();
+			}
+			else
+			{
+				yield return spikeController.PlayAlternatingTripleAsync();
+			}
+
+			yield return new WaitForSeconds(0.2f);
+			//yield return null;
+
+			//yield return new WaitForSeconds(spikeController.CurrentWaitTime);
+
+			if (Grimm.BossStage >= 3)
+			{
+				yield return new WaitForSeconds(0.3f);
+			}
+			else
+			{
+				yield return new WaitForSeconds(0.6f);
+			}
 		}
 
 	}

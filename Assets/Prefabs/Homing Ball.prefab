@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 58312730811666014}
   - component: {fileID: 114606579799045334}
   - component: {fileID: 50371002054512994}
-  - component: {fileID: 114824351949518322}
   - component: {fileID: 114299322621681336}
   m_Layer: 12
   m_Name: Homing Ball
@@ -61,7 +60,6 @@ GameObject:
   - component: {fileID: 4750072629182834}
   - component: {fileID: 198395628456186690}
   - component: {fileID: 199369432450365784}
-  - component: {fileID: 114743657262501252}
   m_Layer: 8
   m_Name: Smoke
   m_TagString: Untagged
@@ -205,34 +203,6 @@ MonoBehaviour:
   SpawnTime: 1
   SpawnVelocity: 20
   TargetOffset: {x: 0, y: 0}
---- !u!114 &114743657262501252
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1760839544046542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
---- !u!114 &114824351949518322
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1254398893299010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!198 &198395628456186690
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 58233554991257052}
   - component: {fileID: 114038370869809066}
   - component: {fileID: 50407433614459252}
-  - component: {fileID: 114810738106362834}
   - component: {fileID: 114134600775478198}
   m_Layer: 12
   m_Name: Grimm Ball
@@ -44,7 +43,6 @@ GameObject:
   - component: {fileID: 4090646683272868}
   - component: {fileID: 198219466445004892}
   - component: {fileID: 199068543160900050}
-  - component: {fileID: 114592027971363154}
   m_Layer: 8
   m_Name: Smoke
   m_TagString: Untagged
@@ -208,20 +206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
---- !u!114 &114592027971363154
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1429621058489062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114626969024592728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -236,20 +220,6 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
---- !u!114 &114810738106362834
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1261328296716982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!198 &198219466445004892
 ParticleSystem:
   m_ObjectHideFlags: 1

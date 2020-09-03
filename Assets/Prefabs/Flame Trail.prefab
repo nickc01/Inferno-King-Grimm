@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 199053643520542890}
   - component: {fileID: 58401562096274802}
   - component: {fileID: 114803447494589726}
-  - component: {fileID: 114521756160336770}
   - component: {fileID: 114618734257712330}
   m_Layer: 22
   m_Name: Flame Trail
@@ -60,20 +59,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3.4
---- !u!114 &114521756160336770
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982210667780674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!114 &114618734257712330
 MonoBehaviour:
   m_ObjectHideFlags: 1

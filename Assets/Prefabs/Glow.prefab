@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4292612872697124}
   - component: {fileID: 95669381685981148}
   - component: {fileID: 212972543968061864}
-  - component: {fileID: 114388862405478474}
   - component: {fileID: 114175577682364316}
   m_Layer: 0
   m_Name: Glow
@@ -71,20 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d8b42d611ac1d499d321ebfb68299e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114388862405478474
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1692822014628848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hueShiftRed: 0
-  hueShiftGreen: 0
-  hueShiftBlue: 0
 --- !u!212 &212972543968061864
 SpriteRenderer:
   m_ObjectHideFlags: 1

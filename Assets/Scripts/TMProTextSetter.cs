@@ -11,6 +11,7 @@ namespace Assets.Scripts
 {
 	public class TMProTextSetter : MonoBehaviour
 	{
+		public InfernoKingGrimm grimm;
 		TMP_Text text;
 
 		public string textToSet = null;
@@ -31,15 +32,34 @@ namespace Assets.Scripts
 
 			if (text.text.Contains("Nightmare"))
 			{
-				WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Nightmare", "Inferno"));
-				text.text = text.text.Replace("Nightmare", "Inferno");
-				WeaverLog.Log("Change 1");
+				var replacement = "Inferno";
+				if (grimm.Settings.hardMode)
+				{
+					replacement = "Absolute " + replacement;
+				}
+				//WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Nightmare", "Inferno"));
+				text.text = text.text.Replace("Nightmare", replacement);
+				//WeaverLog.Log("Text Color =" + text.color);
+				//WeaverLog.Log("Change 1");
 			}
 			if (text.text.Contains("Infinite"))
 			{
-				WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Infinite", "Inferno King"));
-				text.text = text.text.Replace("Infinite", "Inferno King");
-				WeaverLog.Log("Change 2");
+				var replacement = "Inferno King";
+				if (grimm.Settings.hardMode)
+				{
+					replacement = "Absolute " + replacement;
+				}
+				//WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Infinite", "Inferno King"));
+				text.text = text.text.Replace("Infinite", replacement);
+				//WeaverLog.Log("Text Color =" + text.color);
+				//WeaverLog.Log("Change 2");
+			}
+			if (grimm.Settings.hardMode)
+			{
+				if (text.color.r > 0.7f && text.color.g < 0.2f && text.color.b < 0.2f)
+				{
+					text.color = new Color(text.color.b, text.color.g, text.color.r, text.color.a);
+				}
 			}
 			/*if (text != null && textToSet != null)
 			{

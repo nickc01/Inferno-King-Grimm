@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4329010607643742}
   - component: {fileID: 212705501417065846}
   - component: {fileID: 114136909159475022}
-  - component: {fileID: 114656203594252342}
   m_Layer: 0
   m_Name: Wave
   m_TagString: Untagged
@@ -54,7 +53,6 @@ GameObject:
   - component: {fileID: 4282308432988870}
   - component: {fileID: 198301147464825806}
   - component: {fileID: 199901980864154540}
-  - component: {fileID: 114552293425020436}
   m_Layer: 16
   m_Name: Uninfected Death Pt
   m_TagString: Untagged
@@ -122,34 +120,6 @@ MonoBehaviour:
   blackWave: 0
   otherColour: 1
   scaleMultiplier: 1.5
---- !u!114 &114552293425020436
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1909303891856464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
---- !u!114 &114656203594252342
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1345405148858462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9950a4042a59bd41865a716705aeb36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HueShiftRed: 0
-  HueShiftGreen: 0
-  HueShiftBlue: 0
 --- !u!198 &198301147464825806
 ParticleSystem:
   m_ObjectHideFlags: 1
