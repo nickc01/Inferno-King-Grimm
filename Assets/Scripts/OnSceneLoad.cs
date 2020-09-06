@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Configuration;
 using WeaverCore.GodsOfGlory;
 using WeaverCore.Interfaces;
 using WeaverCore.Utilities;
@@ -22,7 +23,15 @@ namespace Assets.Scripts
 		{
 			if (CoreInfo.LoadState == WeaverCore.Enums.RunningState.Game && arg0.name.Contains("GG_Workshop"))
 			{
-				GGWorkshop.ChangeStatue("GG_Statue_Grimm", "Inferno King Grimm");
+				var settings = ModSettings.GetSettings<IKGSettings>();
+				if (settings.hardMode)
+				{
+					GGWorkshop.ChangeStatue("GG_Statue_Grimm", "Absolute Inferno King Grimm");
+				}
+				else
+				{
+					GGWorkshop.ChangeStatue("GG_Statue_Grimm", "Inferno King Grimm");
+				}
 			}
 		}
 	}

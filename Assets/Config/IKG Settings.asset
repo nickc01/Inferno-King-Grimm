@@ -13,4 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   featureEnabled: 1
   TabName: Inferno King Grimm
-  hardMode: 1
+  hardMode: 0
+  enableCustomHealth: 0
+  CustomHealthValue: 1300
+  DisableColorEffects: 0

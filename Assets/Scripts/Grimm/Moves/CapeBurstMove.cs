@@ -223,7 +223,7 @@ public class CapeBurstMove : GrimmMove
 	{
 		HomingBall.GlowScale = GlowScale;
 		HomingBall.FirePillarOffset = FirePillarOffset;
-		WeaverLog.Log("Spawning Ball");
+		//WeaverLog.Log("Spawning Ball");
 		var homingBall = HomingBall.Fire(Grimm, position + homingBallSpawnOffset, angle, velocity, rotationSpeed, playEffects, audioPitch);
 		homingBall.EnablePhase1 = false;
 		homingBall.Phase2Velocity = velocity;
@@ -235,8 +235,12 @@ public class CapeBurstMove : GrimmMove
 
 	public override void OnStun()
 	{
-
-		
+		base.OnStun();
+		if (jitterRoutine != null)
+		{
+			StopCoroutine(jitterRoutine);
+			jitterRoutine = null;
+		}
 	}
 }
 

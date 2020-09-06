@@ -11,7 +11,7 @@ namespace Assets.Scripts
 {
 	public class TMProTextSetter : MonoBehaviour
 	{
-		public InfernoKingGrimm grimm;
+		//public InfernoKingGrimm grimm;
 		TMP_Text text;
 
 		public string textToSet = null;
@@ -33,7 +33,7 @@ namespace Assets.Scripts
 			if (text.text.Contains("Nightmare"))
 			{
 				var replacement = "Inferno";
-				if (grimm.Settings.hardMode)
+				if (InfernoKingGrimm.Instance != null && InfernoKingGrimm.Instance.Settings.hardMode)
 				{
 					replacement = "Absolute " + replacement;
 				}
@@ -45,7 +45,7 @@ namespace Assets.Scripts
 			if (text.text.Contains("Infinite"))
 			{
 				var replacement = "Inferno King";
-				if (grimm.Settings.hardMode)
+				if (InfernoKingGrimm.Instance != null && InfernoKingGrimm.Instance.Settings.hardMode)
 				{
 					replacement = "Absolute " + replacement;
 				}
@@ -54,7 +54,7 @@ namespace Assets.Scripts
 				//WeaverLog.Log("Text Color =" + text.color);
 				//WeaverLog.Log("Change 2");
 			}
-			if (grimm.Settings.hardMode)
+			if (InfernoKingGrimm.Instance != null && InfernoKingGrimm.Instance.Settings.hardMode)
 			{
 				if (text.color.r > 0.7f && text.color.g < 0.2f && text.color.b < 0.2f)
 				{

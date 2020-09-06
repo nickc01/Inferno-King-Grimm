@@ -1515,11 +1515,11 @@ MonoBehaviour:
   HomingBallPitchRange: {x: 1, y: 1.6}
   HomingBallVolume: 1
   hardModePhase2WaitTime: 0.3
-  hardModeBallAngleRange: {x: -10, y: 5}
-  hardModeBallAngleRangeTop: {x: 30, y: 55}
+  hardModeBallAngleRange: {x: -2, y: 3}
+  hardModeBallAngleRangeTop: {x: 40, y: 55}
   hardModeBallVelocityRange: {x: 8, y: 12}
   hardModeBallSpawnVelocity: 5
-  hardModeBallRotationSpeed: 32
+  hardModeBallRotationSpeed: 25
   hardModeBallsPerRound: 4
 --- !u!114 &114252791202826470
 MonoBehaviour:
@@ -3953,7 +3953,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -93871759
+  randomSeed: 1304854721
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -17286,7 +17286,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -224683536
+  randomSeed: -1787270849
   InitialModule:
     serializedVersion: 3
     enabled: 1

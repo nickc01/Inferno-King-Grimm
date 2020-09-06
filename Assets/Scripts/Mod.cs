@@ -12,21 +12,21 @@ namespace IKG
 		public override void Initialize()
 		{
 			base.Initialize();
-			try
+			/*try
 			{
-				var shader = Shader.Find("Sprites/GrimmShaderV2");
-				WeaverLog.Log("MOD SHADER = " + shader);
+				//var shader = Shader.Find("Sprites/GrimmShaderV2");
+				//WeaverLog.Log("MOD SHADER = " + shader);
 			}
 			catch (Exception e)
 			{
-				WeaverLog.LogError("IKG E => " + e);
-			}
+				//WeaverLog.LogError("IKG E => " + e);
+			}*/
 		}
 
 
 		public override string GetVersion()
 		{
-			return "1.1.0.0";
+			return "2.0.0.0";
 		}
 	}
 }

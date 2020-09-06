@@ -25,6 +25,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	bool balloonMoveNext = false;
 
+	public static InfernoKingGrimm Instance { get; private set; }
 	public Animator GrimmAnimator { get; private set; }
 	public BoxCollider2D GrimmCollider { get; private set; }
 	public GrimmSounds Sounds { get; private set; }
@@ -212,6 +213,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	protected override void Awake()
 	{
+		Instance = this;
 		base.Awake();
 		MainPrefabs.Instance = prefabs;
 
@@ -239,7 +241,6 @@ public class InfernoKingGrimm : BossReplacement
 				{
 					setter = titleObject.AddComponent<TMProTextSetter>();
 				}
-				setter.grimm = this;
 			}
 		}
 	}
@@ -527,7 +528,14 @@ public class InfernoKingGrimm : BossReplacement
 	protected override void OnStun()
 	{
 		base.OnStun();
-		Stunned = true;
+		if (!Stunned)
+		{
+			Stunned = true;
+		}
+		else
+		{
+			return;
+		}
 
 		GrimmCollider.enabled = false;
 
@@ -670,11 +678,13 @@ public class InfernoKingGrimm : BossReplacement
 	protected override void OnDeath()
 	{
 		base.OnDeath();
-		if (Stunned == true)
+		StopAllCoroutines();
+		Stunned = true;
+		/*if (Stunned == true)
 		{
 			return;
 		}
-		Stunned = true;
+		Stunned = true;*/
 
 		GrimmCollider.enabled = false;
 		if (BossRoutine != null)
