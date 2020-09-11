@@ -1930,6 +1930,7 @@ MonoBehaviour:
   stageOneWaitTime: 0.6
   stageThreeWaitTime: 0.4
   stageTwoHardModeWaitTime: 0.42
+  loweringOffset: 2.5
   hardModeFireballs: 6
   hardModeAngleBetweenFireballs: 37
   hardModeFireballVelocity: 28

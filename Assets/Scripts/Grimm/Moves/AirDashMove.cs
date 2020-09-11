@@ -38,6 +38,10 @@ public class AirDashMove : GrimmMove
 	DamageHero damager;
 	int previousDamageAmount = 0;
 
+	[SerializeField]
+	[Tooltip("How much lower should the lowest fireballs be in the hard mode ground pound move")]
+	float loweringOffset = 0f;
+
 	/*[Serializable]
 	class GroundPoundHardMode
 	{
@@ -489,6 +493,19 @@ public class AirDashMove : GrimmMove
 		{
 			CreateFireballGap(Fireballs[2],hardModeFireballGapAngle,upAngle);
 			CreateFireballGap(Fireballs[3], hardModeFireballGapAngle, upAngle);
+
+			var selectedFireball = Fireballs[Fireballs.Count - 1];
+
+			var fireBall = Instantiate(Prefabs.UppercutFireball, transform.position.With(y: transform.position.y - loweringOffset), Quaternion.identity);
+			fireBall.velocity = selectedFireball.velocity;
+			//Instantiate(selectedFireball, selectedFireball.transform.position.With(y: selectedFireball.transform.position.y - loweringOffset), Quaternion.identity);
+
+			selectedFireball = Fireballs[Fireballs.Count - 2];
+
+			fireBall = Instantiate(Prefabs.UppercutFireball, transform.position.With(y: transform.position.y - loweringOffset), Quaternion.identity);
+			fireBall.velocity = selectedFireball.velocity;
+
+			//Instantiate(selectedFireball, selectedFireball.transform.position.With(y: selectedFireball.transform.position.y - loweringOffset), Quaternion.identity);
 		}
 
 		var explodeSF = WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);

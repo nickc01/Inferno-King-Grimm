@@ -407,12 +407,6 @@ public class InfernoKingGrimm : BossReplacement
 				HueShiftCurve.Evaluate(t),
 				SaturationShiftCurve.Evaluate(t),
 				ValueShiftCurve.Evaluate(t));
-			/*var t = cameraColorCurve.Evaluate(1 - (GrimmHealth.Health / maxHealth));
-			cameraHueShifter.SetValues(Mathf.Lerp(shiftPercentageA,shiftPercentageB, t),
-				Mathf.Lerp(hueShiftA, hueShiftB, t),
-				Mathf.Lerp(satShiftA, satShiftB, t),
-				Mathf.Lerp(valueShiftA, valueShiftB, t));*/
-			//cameraHueShifter.ShiftPercentage = cameraColorCurve.Evaluate(1 - (GrimmHealth.Health / maxHealth));
 		}
 	}
 

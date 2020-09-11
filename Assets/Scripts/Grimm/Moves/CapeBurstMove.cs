@@ -169,9 +169,21 @@ public class CapeBurstMove : GrimmMove
 	{
 		var downAngle = VectorUtilities.VectorToDegrees(Vector2.down);
 
+		var previousPlayerPosition = Player.Player1.transform.position;
+		float previousPlayerAngle = GetAngleToPlayer();
+
+		var currentPlayerPosition = Player.Player1.transform.position;
+		float currentPlayerAngle = GetAngleToPlayer();
+
 		bool evenWave = true;
 		for (float i = 0; i < amountOfWaves; i++)
 		{
+			previousPlayerPosition = currentPlayerPosition;
+			previousPlayerAngle = currentPlayerAngle;
+
+			currentPlayerPosition = Player.Player1.transform.position;
+			currentPlayerAngle = GetAngleToPlayer();
+
 			int trueAmountOfShots = shotsPerWave;
 			if (evenWave && shotsPerWave % 2 == 1)
 			{
@@ -179,14 +191,58 @@ public class CapeBurstMove : GrimmMove
 			}
 
 			var angles = VectorUtilities.CalculateSpacedValues(trueAmountOfShots, angleBetweenShots);
+			float angleOffset = 0f;
+
+			//Debug.Log("Player Diff Angle = " + Mathf.Abs(currentPlayerAngle - previousPlayerAngle));
+			//Debug.Log("Angle Between Shots = " + (angleBetweenShots / 5f));
+
+			if (i >= 2 && (Vector3.Distance(currentPlayerPosition, previousPlayerPosition) < 0.02f || currentPlayerPosition.y > transform.position.y + 2f))
+			{
+				float nearestAngleIndex = 0f;
+				float nearestValue = float.PositiveInfinity;
+				for (int j = 0; j < angles.Count; j++)
+				{
+					var difference = currentPlayerAngle - (angles[j] + downAngle);
+					if (Mathf.Abs(difference) <= nearestValue)
+					{
+						nearestValue = difference;
+						nearestAngleIndex = j;
+					}
+				}
+				if (!float.IsInfinity(nearestValue))
+				{
+					angleOffset = nearestValue;
+				}
+			}
+			/*if (!(Mathf.Abs(currentPlayerAngle - previousPlayerAngle) > (angleBetweenShots / 4f) || Vector3.Distance(currentPlayerPosition,previousPlayerPosition) > 2f) || currentPlayerPosition.y > transform.position.y + 2f)
+			{
+				float nearestAngleIndex = 0f;
+				float nearestValue = float.PositiveInfinity;
+				for (int j = 0; j < angles.Count; j++)
+				{
+					var difference = currentPlayerAngle - angles[j];
+					if (Mathf.Abs(difference) <= nearestValue)
+					{
+						nearestValue = difference;
+						nearestAngleIndex = j;
+					}
+				}
+				if (!float.IsInfinity(nearestValue))
+				{
+					angleOffset = nearestValue;
+				}
+			}*/
 
 			for (int j = 0; j < trueAmountOfShots; j++)
 			{
 				//var angle = downAngle + Mathf.Lerp(angleBetweenShots, -angleBetweenShots, j / (trueAmountOfShots - 1));
-				var angle = downAngle + angles[j];
+				var angle = downAngle + angles[j] + angleOffset;
 				//WeaverLog.Log("Angle = " + angle);
 				//WeaverLog.Log("Lerp Val = " + (j / (trueAmountOfShots - 1)));
-				SpawnHomingBall(angle, sprayShotVelocity, sprayShotRotationSpeed, j == trueAmountOfShots - 1, Mathf.Lerp(pitchLow,pitchHigh,i / (amountOfWaves - 1)));
+				var homingBall = SpawnHomingBall(angle, sprayShotVelocity, sprayShotRotationSpeed, j == trueAmountOfShots - 1, Mathf.Lerp(pitchLow,pitchHigh,i / (amountOfWaves - 1)));
+				var growth = homingBall.gameObject.AddComponent<Growth>();
+				homingBall.transform.localScale = Vector3.one * 1.8f;
+				growth.GrowthSpeed = 0.30f + (Mathf.Clamp(Mathf.Abs(angles[j] / angleBetweenShots), 0f,3f) * 0.20f);
 			}
 			evenWave = !evenWave;
 
@@ -195,6 +251,14 @@ public class CapeBurstMove : GrimmMove
 
 			yield return new WaitForSeconds(Mathf.Lerp(maxTime, minTime, i / (amountOfWaves - 1)));
 		}
+	}
+
+	float GetAngleToPlayer()
+	{
+		//position + homingBallSpawnOffset
+		var playerPos = Player.Player1.transform.position;
+		var angle = Mathf.Atan2(playerPos.y - (transform.position.y + homingBallSpawnOffset.y), playerPos.x - (transform.position.x + homingBallSpawnOffset.x));
+		return angle * Mathf.Rad2Deg;
 	}
 
 

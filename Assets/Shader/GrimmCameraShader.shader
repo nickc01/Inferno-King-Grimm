@@ -7,6 +7,7 @@
         _HueShift("Shift Hue", Range(0,1)) = 0
         _SatShift("Saturation Shift", Range(0,1)) = 0
         _ValShift("Value Shift", Range(0,1)) = 0
+        _ColorRangeOffset("Color Range Offset", Range(-3,3)) = 0
     }
     SubShader
     {
@@ -24,6 +25,7 @@
             uniform float _HueShift;
             uniform float _SatShift;
             uniform float _ValShift;
+            uniform float _ColorRangeOffset;
 
             const float Epsilon = 1e-10;
 
@@ -64,7 +66,10 @@
 
             float RedCheck(float adjustedHue)
             {
-                return saturate(-abs((6 * adjustedHue) - 3) + 1);
+                //float y = -0.5;
+
+                return saturate(-abs((3 + _ColorRangeOffset) * ((2 * adjustedHue) - 1)) + 1);
+                //return saturate(-abs((6 * adjustedHue) - 3) + 1);
             }
 
             float4 frag(v2f_img i) : COLOR 
