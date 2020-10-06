@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02952cc6f90a0454088dad5b501d1885, type: 3}
   m_Name: Prefabs
   m_EditorClassIdentifier: 
-  FirebatPrefab: {fileID: 1464193261846556, guid: e80450af474333642ad7e49d3c28383a,
+  FirebatPrefab: {fileID: 114454181506972708, guid: e80450af474333642ad7e49d3c28383a,
     type: 2}
-  FirebatPillarPrefab: {fileID: 1781696492537948, guid: 8c8f059688e0c99439e196c28a0dcb53,
+  FirebatPillarPrefab: {fileID: 114158762599598620, guid: 8c8f059688e0c99439e196c28a0dcb53,
     type: 2}
   AirDashEffect: {fileID: 1498589351218266, guid: 2e54858e23613564bb6923ccb51f398c,
     type: 2}
@@ -28,7 +28,7 @@ MonoBehaviour:
     type: 2}
   FlamePillarPrefab: {fileID: 114094571786797900, guid: a0157e492b120c349a8f0976f216ec11,
     type: 2}
-  UppercutFireball: {fileID: 50236719136342486, guid: 4d0512f7700410249a10c2abda85064b,
+  UppercutFireball: {fileID: 114196652289941390, guid: 4d0512f7700410249a10c2abda85064b,
     type: 2}
   GrimmBall: {fileID: 114038370869809066, guid: 6fce8bfc51dca7f4a8a97e3b7a0c7567,
     type: 2}
@@ -37,7 +37,8 @@ MonoBehaviour:
     type: 2}
   HomingBallPrefab: {fileID: 114606579799045334, guid: 6992c5b90a2cf8f4cac76dcbf0f60417,
     type: 2}
-  GlowPrefab: {fileID: 1692822014628848, guid: 593422000f514c046b98e482cb06df86, type: 2}
+  GlowPrefab: {fileID: 114514241402101138, guid: 593422000f514c046b98e482cb06df86,
+    type: 2}
   GroundPoundAfterburn: {fileID: 1647277108886450, guid: 8a438b71db9c4ef4bbf5eaf2764dc90e,
     type: 2}
   RedBurst: {fileID: 1475515931397962, guid: dfc16e4695675ec458ca5abd006d64ec, type: 2}

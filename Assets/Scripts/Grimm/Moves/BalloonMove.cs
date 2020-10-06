@@ -149,7 +149,7 @@ public class BalloonMove : GrimmMove
 
 		float rateCounter = 0f;
 
-		HashSet<HomingBall> homingBalls = new HashSet<HomingBall>();
+		//HashSet<HomingBall> homingBalls = new HashSet<HomingBall>();
 
 		for (float t = 0; t < attackTime; t += Time.deltaTime)
 		{
@@ -182,7 +182,7 @@ public class BalloonMove : GrimmMove
 					homingBall.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
 				}
 				homingBall.Phase2TargetOffset = new Vector2(Random.Range(-4f,4f),Random.Range(-2f,2f));
-				homingBalls.Add(homingBall);
+				//homingBalls.Add(homingBall);
 			}
 
 			yield return null;
@@ -227,7 +227,7 @@ public class BalloonMove : GrimmMove
 
 		yield return new WaitForSeconds(0.3f);
 
-		foreach (var homingBall in homingBalls)
+		foreach (var homingBall in HomingBall.ActiveHomingBalls)
 		{
 			if (homingBall != null)
 			{

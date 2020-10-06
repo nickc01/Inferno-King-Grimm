@@ -79,8 +79,8 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
 
                         fixed4 col = i.color * tex2D(_MainTex, i.texcoord);
                         col.rgb = lerp(col.rgb, col.gbr, _HueShift.r); //90 degrees
-                        col.rgb = lerp(col.rgb, col.gbr, _HueShift.g); //180 degrees
-                        col.rgb = lerp(col.rgb, col.bgr, _HueShift.b); //270 degrees
+                        //col.rgb = lerp(col.rgb, col.gbr, _HueShift.g); //180 degrees
+                        //col.rgb = lerp(col.rgb, col.bgr, _HueShift.b); //270 degrees
                         col.rgb *= col.a;
                         UNITY_APPLY_FOG_COLOR(i.fogCoord, col, fixed4(0,0,0,0)); // fog towards black due to our blend mode
                         return col;

@@ -7,7 +7,7 @@ using WeaverCore.Configuration;
 
 namespace Assets.Scripts
 {
-	public class IKGSettings : ModSettings
+	public class IKGSettings : GlobalWeaverSettings
 	{
 		[Tooltip(@"Checking this will make the boss fight considerably harder
 

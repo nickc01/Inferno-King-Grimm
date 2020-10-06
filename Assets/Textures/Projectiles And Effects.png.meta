@@ -1,0 +1,496 @@
+fileFormatVersion: 2
+guid: 10e08ac0b15f7ef4a9c1238954b3577a
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Flame_Pillar_flash0005
+    21300002: Grimm_flash0002
+    21300004: grimm_fireball0004
+    21300006: grimm_fireball0005
+    21300008: grimm_fireball_explode0002
+    21300010: smash_effect0005
+    21300012: smash_effect0001
+    21300014: smash_effect0003
+    21300016: grimm_fireball0007
+    21300018: grimm_fireball_explode0000
+    21300020: Flame_Pillar_flash0004
+    21300022: grimm_fireball0003
+    21300024: grimm_fireball0006
+    21300026: smash_effect0000
+    21300028: smash_effect0004
+    21300030: Grimm_flash0001
+    21300032: grimm_fireball0001
+    21300034: Flame_Pillar_flash0001
+    21300036: grimm_fireball_explode0001
+    21300038: Flame_Pillar_flash0003
+    21300040: grimm_fireball_explode0003
+    21300042: smash_effect0002
+    21300044: Flame_Pillar_flash0000
+    21300046: Grimm_flash0003
+    21300048: Flame_Pillar_flash0002
+    21300050: Grimm_flash0004
+    21300052: grimm_fireball0000
+    21300054: grimm_fireball0002
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64.40797
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Flame_Pillar_flash0005
+      rect:
+        serializedVersion: 2
+        x: 1545
+        y: 0
+        width: 140
+        height: 900
+      alignment: 9
+      pivot: {x: 0.46043164, y: 0.5005562}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_flash0002
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 724
+        width: 229
+        height: 159
+      alignment: 9
+      pivot: {x: 0.4649123, y: 0.49367088}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball0004
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 663
+        width: 100
+        height: 94
+      alignment: 9
+      pivot: {x: 0.5252526, y: 0.5483871}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball0005
+      rect:
+        serializedVersion: 2
+        x: 857
+        y: 758
+        width: 98
+        height: 97
+      alignment: 9
+      pivot: {x: 0.51546395, y: 0.47916663}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball_explode0002
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 884
+        width: 192
+        height: 124
+      alignment: 9
+      pivot: {x: 0.49738216, y: 0.3902439}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: smash_effect0005
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 757
+        height: 161
+      alignment: 9
+      pivot: {x: 0.5, y: 0.48125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: smash_effect0001
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 601
+        width: 504
+        height: 122
+      alignment: 9
+      pivot: {x: 0.51689863, y: 0.74380165}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: smash_effect0003
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 312
+        width: 716
+        height: 154
+      alignment: 9
+      pivot: {x: 0.51188815, y: 0.5163399}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball0007
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 467
+        width: 86
+        height: 92
+      alignment: 9
+      pivot: {x: 0.54117644, y: 0.46153843}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball_explode0000
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 329
+        width: 180
+        height: 138
+      alignment: 9
+      pivot: {x: 0.5865922, y: 0.5912409}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_Pillar_flash0004
+      rect:
+        serializedVersion: 2
+        x: 1218
+        y: 0
+        width: 165
+        height: 849
+      alignment: 9
+      pivot: {x: 0.4878049, y: 0.5294811}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball0003
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 663
+        width: 91
+        height: 87
+      alignment: 9
+      pivot: {x: 0.48888886, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball0006
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 758
+        width: 98
+        height: 101
+      alignment: 9
+      pivot: {x: 0.5360825, y: 0.53}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: smash_effect0000
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 601
+        width: 251
+        height: 39
+      alignment: 9
+      pivot: {x: 0.568, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: smash_effect0004
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 162
+        width: 734
+        height: 149
+      alignment: 9
+      pivot: {x: 0.5115962, y: 0.47972977}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_flash0001
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 556
+        width: 107
+        height: 106
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5333333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball0001
+      rect:
+        serializedVersion: 2
+        x: 866
+        y: 556
+        width: 100
+        height: 104
+      alignment: 9
+      pivot: {x: 0.50505054, y: 0.49514562}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_Pillar_flash0001
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 0
+        width: 228
+        height: 900
+      alignment: 9
+      pivot: {x: 0.43612337, y: 0.5005562}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball_explode0001
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 877
+        width: 198
+        height: 134
+      alignment: 9
+      pivot: {x: 0.5177665, y: 0.43609023}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_Pillar_flash0003
+      rect:
+        serializedVersion: 2
+        x: 1686
+        y: 0
+        width: 136
+        height: 762
+      alignment: 9
+      pivot: {x: 0.4518519, y: 0.5558476}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball_explode0003
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 468
+        width: 145
+        height: 87
+      alignment: 9
+      pivot: {x: 0.44444442, y: 0.1976744}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: smash_effect0002
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 467
+        width: 668
+        height: 133
+      alignment: 9
+      pivot: {x: 0.5127436, y: 0.67424244}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_Pillar_flash0000
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 0
+        width: 230
+        height: 328
+      alignment: 9
+      pivot: {x: 0.5327511, y: 0.65749234}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_flash0003
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 724
+        width: 241
+        height: 230
+      alignment: 9
+      pivot: {x: 0.4375, y: 0.46724892}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flame_Pillar_flash0002
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 0
+        width: 160
+        height: 646
+      alignment: 9
+      pivot: {x: 0.5031446, y: 0.5860465}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Grimm_flash0004
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 724
+        width: 242
+        height: 152
+      alignment: 9
+      pivot: {x: 0.46473026, y: 0.51655626}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball0000
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 860
+        width: 89
+        height: 83
+      alignment: 9
+      pivot: {x: 0.53409094, y: 0.47560978}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: grimm_fireball0002
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 860
+        width: 91
+        height: 97
+      alignment: 9
+      pivot: {x: 0.56666666, y: 0.5208334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

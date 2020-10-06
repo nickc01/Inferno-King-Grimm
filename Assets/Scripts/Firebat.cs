@@ -1,13 +1,26 @@
-﻿using Enums;
+﻿using Assets.Scripts;
+using Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.DataTypes;
 using WeaverCore.Enums;
+using WeaverCore.Interfaces;
 using WeaverCore.Utilities;
 
-public class Firebat : MonoBehaviour 
+public class Firebat : MonoBehaviour, IPoolableObject 
 {
+	static ObjectPool<Firebat> Pool;
+
+	class Hook : GrimmHooks
+	{
+		public override void OnGrimmAwake(InfernoKingGrimm grimm)
+		{
+			Pool = ObjectPool<Firebat>.CreatePool(grimm.Prefabs.FirebatPrefab, ObjectPoolStorageType.ActiveSceneOnly, 6);
+		}
+	}
+
 	public float Angle { get; private set; }
 	public GrimmDirection GeneralDirection { get; private set; }
 	public float DirectionAngle { get; private set; }
@@ -16,11 +29,30 @@ public class Firebat : MonoBehaviour
 
 	new Rigidbody2D rigidbody;
 	new SpriteRenderer renderer;
+	static Transform _fbSpawnPoint;
+	static Transform FirebatSpawnPoint
+	{
+		get
+		{
+			if (_fbSpawnPoint == null)
+			{
+				_fbSpawnPoint = InfernoKingGrimm.Instance.transform.Find("Firebat SpawnPoint");
+			}
+			return _fbSpawnPoint;
+		}
+	}
 
 	// Use this for initialization
 	void Start () 
 	{
-		Destroy(gameObject, 3);
+		//Destroy(gameObject, 3);
+		StartCoroutine(Waiter(3));
+	}
+
+	IEnumerator Waiter(float time)
+	{
+		yield return new WaitForSeconds(time);
+		Pool.ReturnToPool(this);
 	}
 	
 	// Update is called once per frame
@@ -33,10 +65,13 @@ public class Firebat : MonoBehaviour
 	public static Firebat Spawn(float angle, float velocity, GrimmDirection direction, Vector3 position)
 	{
 		//Debugger.Log("Fire bat F");
-		var fireBat = GameObject.Instantiate(MainPrefabs.Instance.FirebatPrefab, position, Quaternion.identity).GetComponent<Firebat>();
+		var fireBat = Pool.RetrieveFromPool(position, Quaternion.identity);
 
-		fireBat.rigidbody = fireBat.GetComponent<Rigidbody2D>();
-		fireBat.renderer = fireBat.GetComponent<SpriteRenderer>();
+		if (fireBat.rigidbody == null)
+		{
+			fireBat.rigidbody = fireBat.GetComponent<Rigidbody2D>();
+			fireBat.renderer = fireBat.GetComponent<SpriteRenderer>();
+		}
 
 		//fireBat.Altitude = altitude;
 		fireBat.Angle = angle;
@@ -86,7 +121,7 @@ public class Firebat : MonoBehaviour
 		//Debugger.Log("Fire bat D");
 		if (position == null)
 		{
-			position = grimm.transform.Find("Firebat SpawnPoint").position;
+			position = FirebatSpawnPoint.position;
 		}
 		//Debugger.Log("Fire bat E");
 		return Spawn(angle, velocity, grimm.FaceDirection,position.Value);
@@ -105,7 +140,8 @@ public class Firebat : MonoBehaviour
 			fireAudio.AudioSource.pitch = audioPitch;
 		}
 
-		GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, grimm.transform.Find("Firebat SpawnPoint").position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+		//GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, grimm.transform.Find("Firebat SpawnPoint").position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+		GrimmGlow.Create(FirebatSpawnPoint.position + new Vector3(0f, 0f, -0.1f));
 
 		yield return new WaitForSeconds(0.3f);
 
@@ -122,5 +158,12 @@ public class Firebat : MonoBehaviour
 	void SetVelocity(Vector2 velocity)
 	{
 		rigidbody.velocity = velocity;
+	}
+
+	void IPoolableObject.OnPool()
+	{
+		renderer.flipX = false;
+		renderer.flipY = false;
+		rigidbody.velocity = Vector2.zero;
 	}
 }

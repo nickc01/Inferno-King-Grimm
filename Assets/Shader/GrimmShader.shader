@@ -8,6 +8,7 @@
 		[PerRendererData]_FlashColor("Flash Color", Color) = (1,1,1,1)
 		[PerRendererData]_FlashAmount("Flash Amount", Range(0,1)) = 0
 		_HueShift("Shift Hue", Color) = (0,0,0,0)
+
 	}
 
 		SubShader
@@ -87,12 +88,16 @@
 				{
 					fixed4 c = SampleSpriteTexture(IN.texcoord) * IN.color;
 					
-					c.rgb = lerp(c.rgb, c.gbr, _HueShift.r); //90 degrees
-					c.rgb = lerp(c.rgb, c.gbr, _HueShift.g); //180 degrees
-					c.rgb = lerp(c.rgb, c.bgr, _HueShift.b); //270 degrees
+					//c.rgb = lerp(c.rgb, c.gbr, _HueShift.r); //90 degrees
+					//c.rgb = lerp(c.rgb, c.gbr, _HueShift.g); //180 degrees
+					//c.rgb = lerp(c.rgb, c.bgr, _HueShift.b); //270 degrees
 					
-					c.rgb = lerp(c.rgb, _FlashColor.rgb, _FlashAmount);
-					c.rgb *= c.a;
+					//c.rgb = lerp(c.rgb, _FlashColor.rgb, _FlashAmount);
+					//c.rgb *= c.a;
+
+				c.rgb = lerp(lerp(c.rgb, c.gbr, _HueShift.r), _FlashColor.rgb, _FlashAmount) * c.a;
+				//final.rgb *= c.a;
+					//return lerp(lerp(c.rgb, c.gbr, _HueShift.r), _FlashColor.rgb, _FlashAmount) * c.a;
 					return c;
 				}
 			ENDCG

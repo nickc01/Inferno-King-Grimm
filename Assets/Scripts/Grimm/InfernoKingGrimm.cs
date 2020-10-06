@@ -23,6 +23,8 @@ public class InfernoKingGrimm : BossReplacement
 {
 	private BalloonMove balloonMove;
 
+	IEnumerable<GrimmHooks> Hooks = ReflectionUtilities.GetObjectsOfType<GrimmHooks>();
+
 	bool balloonMoveNext = false;
 
 	public static InfernoKingGrimm Instance { get; private set; }
@@ -70,7 +72,9 @@ public class InfernoKingGrimm : BossReplacement
 	private GrimmMove previousMove;
 	private float fireBatSpawnpointX;
 	private bool invisible = true;
+#if !UNITY_EDITOR
 	private AudioMixerSnapshot SilentSnapshot;
+#endif
 
 	[SerializeField]
 	string titleLarge = "Grimm";
@@ -163,7 +167,10 @@ public class InfernoKingGrimm : BossReplacement
 
 	List<GrimmMove> randomMoveStorage;
 	int randomMoveIndex = 0;
+	//public ObjectPoolOLD2<HomingBall> HomingBallPool;
 
+	//public Recycler Recycler { get; private set; }
+	//public ObjectPool<HomingBall> HomingBallPool;
 
 	public bool Invisible
 	{
@@ -231,7 +238,8 @@ public class InfernoKingGrimm : BossReplacement
 
 	private void ChangeTitles(GameObject titleObject)
 	{
-		if (titleObject != null && CoreInfo.LoadState == RunningState.Game)
+#if !UNITY_EDITOR
+		if (titleObject != null)
 		{
 			var text = titleObject.GetComponent<TMP_Text>();
 			if (text != null)
@@ -243,11 +251,13 @@ public class InfernoKingGrimm : BossReplacement
 				}
 			}
 		}
+#endif
 	}
 
 	// Use this for initialization
 	private void Start()
 	{
+		//Recycler = Recycler.CreateRecycler();
 		//BossStage = 2;
 		//GrimmHue.SetAllGrimmHues(0f, 0f, 0f);
 		Colors.SetHues(0f, 0f, 0f);
@@ -284,15 +294,13 @@ public class InfernoKingGrimm : BossReplacement
 		teleSmokeBack = transform.Find("tele_smoke_back").GetComponent<ParticleSystem>();
 		teleSmokeFront = transform.Find("tele_smoke_front").GetComponent<ParticleSystem>();
 
-		if (CoreInfo.LoadState == RunningState.Game)
-		{
-			receiver.ReceiveAllEventsFromName("WAKE");
-			receiver.OnReceiveEvent += Wake;
-		}
-		else
-		{
-			StartCoroutine(Waiter(1, () => Wake("WAKE",gameObject)));
-		}
+		//HomingBallPool = Recycler.CreatePool(Prefabs.HomingBallPrefab, 20, true);
+#if UNITY_EDITOR
+		StartCoroutine(Waiter(1, () => Wake("WAKE", gameObject)));
+#else
+		receiver.ReceiveAllEventsFromName("WAKE");
+		receiver.OnReceiveEvent += Wake;
+#endif
 		GrimmAnimator.enabled = false;
 		spriteRenderer.enabled = false;
 		GrimmCollider.enabled = false;
@@ -371,6 +379,7 @@ public class InfernoKingGrimm : BossReplacement
 			AddStunMilestone(GrimmHealth.Health - (thirdHealth * 2));
 		}*/
 
+#if !UNITY_EDITOR
 		var snapshots = Resources.FindObjectsOfTypeAll<AudioMixerSnapshot>();
 		foreach (var snapshot in snapshots)
 		{
@@ -380,7 +389,7 @@ public class InfernoKingGrimm : BossReplacement
 				break;
 			}
 		}
-
+#endif
 		if (Settings.hardMode && !Settings.DisableColorEffects)
 		{
 			if (cameraHueShifter == null)
@@ -395,6 +404,11 @@ public class InfernoKingGrimm : BossReplacement
 				//WeaverLog.Log("Shift Percentage = " + cameraHueShifter.ShiftPercentage);
 				SceneManager.sceneLoaded += OnSceneChange;
 			}
+		}
+
+		foreach (var hook in Hooks)
+		{
+			hook.OnGrimmAwake(this);
 		}
 	}
 
@@ -421,8 +435,13 @@ public class InfernoKingGrimm : BossReplacement
 	{
 		if (eventName == "WAKE" && (source == gameObject || source.name.Contains("Grimm Control")))
 		{
-			WeaverLog.Log("Starting Inferno King Grimm Boss fight");
+			WeaverLog.Log("IKG : Starting Boss fight");
 			transform.position = StartingPosition;
+
+			foreach (var hook in Hooks)
+			{
+				hook.OnGrimmBattleBegin(this);
+			}
 
 			BossRoutine = CoroutineUtilities.RunCoroutineWhile(this, MainBossControl(), () => !Stunned);
 		}
@@ -687,7 +706,7 @@ public class InfernoKingGrimm : BossReplacement
 			BossRoutine = null;
 		}
 		//Debugger.Log("Boss Dead");
-		WeaverLog.Log("Inferno King Grimm Boss Defeated");
+		WeaverLog.Log("IKG : Boss Defeated");
 
 		//Slash1.enabled = false;
 		//Slash2.enabled = false;
@@ -703,6 +722,11 @@ public class InfernoKingGrimm : BossReplacement
 		GrimmRigidbody.Sleep();
 
 		CurrentMove.OnDeath();
+
+		foreach (var hook in Hooks)
+		{
+			hook.OnGrimmBattleEnd(this);
+		}
 
 		StartCoroutine(DeathRoutine());
 	}
@@ -755,10 +779,9 @@ public class InfernoKingGrimm : BossReplacement
 				snapshot.snapshot.TransitionTo(1f);
 			}
 		}*/
-		if (CoreInfo.LoadState == RunningState.Game)
-		{
-			SilentSnapshot.TransitionTo(1f);
-		}
+#if !UNITY_EDITOR
+		SilentSnapshot.TransitionTo(1f);
+#endif
 
 		yield return new WaitForSeconds(1f);
 
@@ -829,43 +852,4 @@ public class InfernoKingGrimm : BossReplacement
 		SceneManager.sceneLoaded -= OnSceneChange;
 		cameraHueShifter.ShiftPercentage = 0f;
 	}
-
-	//void MaterialDebug()
-	//{
-		/*if (WeaverCam.Instance.GetComponent<CameraHueShift>() == null)
-		{
-			var camComponent = WeaverCam.Instance.gameObject.AddComponent<CameraHueShift>();
-			camComponent.cameraMaterial = CameraMaterial;
-			//camComponent.HueShiftRed = 1f;
-		}*/
-
-		/*Dictionary<Material, List<Renderer>> AllMaterials = new Dictionary<Material, List<Renderer>>();
-
-		foreach (var renderer in UnityEngine.Object.FindObjectsOfType<Renderer>())
-		{
-			var material = renderer.sharedMaterial;
-			if (AllMaterials.ContainsKey(material))
-			{
-				AllMaterials[material].Add(renderer);
-			}
-			else
-			{
-				AllMaterials.Add(material, new List<Renderer>() { renderer });
-			}
-		}
-
-		foreach (var pair in AllMaterials)
-		{
-			WeaverLog.Log("---Material: " + pair.Key.name + "-----------------------");
-			foreach (var renderer in pair.Value)
-			{
-				WeaverLog.Log(renderer.gameObject.name);
-			}
-		}*/
-	//}
-
-	/*IEnumerator MusicFader(float fadeTime = 0.5f)
-	{
-		float originalVolume = 
-	}*/
 }

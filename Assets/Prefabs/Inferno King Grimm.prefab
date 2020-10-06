@@ -490,7 +490,6 @@ GameObject:
   - component: {fileID: 4023218805753568}
   - component: {fileID: 114879189269301354}
   - component: {fileID: 114893949498375372}
-  - component: {fileID: 212596471275547278}
   - component: {fileID: 95939501209690446}
   - component: {fileID: 114291875212994178}
   - component: {fileID: 61823431700803404}
@@ -507,6 +506,7 @@ GameObject:
   - component: {fileID: 114172869002225528}
   - component: {fileID: 114666702633382612}
   - component: {fileID: 114489183100290032}
+  - component: {fileID: 212922553320451850}
   m_Layer: 11
   m_Name: Inferno King Grimm
   m_TagString: Boss
@@ -552,7 +552,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1950747459824650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 85.75952, y: 8.3, z: 0}
+  m_LocalPosition: {x: 82.2199, y: 8.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4589149406974698}
@@ -1818,7 +1818,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4892dfad446576149b4f9f03956d145e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  featureEnabled: 1
   _bossStage: 1
   enemyToReplace: Nightmare Grimm Boss
   titleLarge: Grimm
@@ -2013,7 +2012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e5b7514225bf64a8ebce3f470f71e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveEnabled: 1
+  moveEnabled: 0
   maxDashDistance: 6
 --- !u!198 &198053137438636322
 ParticleSystem:
@@ -2051,7 +2050,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1045889481
+  randomSeed: 168353587
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3954,7 +3953,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1304854721
+  randomSeed: -272070203
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5887,7 +5886,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1557334524
+  randomSeed: 657087371
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7784,7 +7783,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1057262370
+  randomSeed: 283833912
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -11596,7 +11595,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -531283911
+  randomSeed: 1196785426
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -13493,7 +13492,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1901591881
+  randomSeed: -966231873
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15390,7 +15389,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1075767000
+  randomSeed: -431383409
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -17287,7 +17286,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1787270849
+  randomSeed: -1093397275
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -19196,7 +19195,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 167785066
+  randomSeed: -1815448114
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -23646,7 +23645,7 @@ SpriteRenderer:
   m_Size: {x: 1.65625, y: 1.640771}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!212 &212080108664610308
 SpriteRenderer:
@@ -23690,7 +23689,7 @@ SpriteRenderer:
   m_Size: {x: 1.65625, y: 1.640771}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!212 &212271871676217948
 SpriteRenderer:
@@ -23726,12 +23725,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a17a43f3fe2192349835349463024406, type: 3}
+  m_Sprite: {fileID: 21300016, guid: a2c8c10a79d4c9e499c9d55c13c906b9, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.03125, y: 6.2645836}
+  m_Size: {x: 1.4934058, y: 6.2380805}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -23770,17 +23769,61 @@ SpriteRenderer:
   m_SortingLayerID: -349214895
   m_SortingLayer: 13
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300026, guid: a5d0959b8e4d4bc468cc0202d3f60085, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c87f1e5b081bcd14c97a244a07e29801, type: 3}
   m_Color: {r: 1, g: 0.2426471, b: 0.2426471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.75, y: 3.4375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!212 &212596471275547278
+--- !u!212 &212775719010515808
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292637292761594}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -349214895
+  m_SortingLayer: 13
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 6cd0ba5ec86a32a44a0924c06d4a5e2f, type: 3}
+  m_Color: {r: 1, g: 0.227451, b: 0.227451, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5.953125, y: 5.953125}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+--- !u!212 &212922553320451850
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -23820,50 +23863,6 @@ SpriteRenderer:
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 3.5053916, y: 6.7877126}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
---- !u!212 &212775719010515808
-SpriteRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292637292761594}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 2100000, guid: f8fb64b618f5f2b409243f7ac45d340a, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -349214895
-  m_SortingLayer: 13
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300024, guid: 2a314f2be3cbf7347bfced83d62e9e0c, type: 3}
-  m_Color: {r: 1, g: 0.227451, b: 0.227451, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 5.953125, y: 5.953125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

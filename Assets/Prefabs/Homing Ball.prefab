@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114606579799045334}
   - component: {fileID: 50371002054512994}
   - component: {fileID: 114299322621681336}
+  - component: {fileID: 114938575714997048}
   m_Layer: 12
   m_Name: Homing Ball
   m_TagString: Untagged
@@ -197,12 +198,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb844631ce752949a3f8c030722c35f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shrinkTime: 0.7
-  Velocity: 5
-  RotationSpeed: 25
-  SpawnTime: 1
-  SpawnVelocity: 20
-  TargetOffset: {x: 0, y: 0}
+  EnablePhase1: 1
+  Phase1Time: 1
+  Phase1Velocity: 20
+  Phase1TravelDirection: {x: 0, y: 0}
+  EnablePhase2: 1
+  Phase2RotationSpeed: 25
+  Phase2Velocity: 5
+  Phase2TargetOffset: {x: 0, y: 0}
+  Phase2TravelDirection: {x: 0, y: 0}
+  ShrinkTime: 0.7
+  LifeTime: 5
+--- !u!114 &114938575714997048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1254398893299010}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e8e4c2ef634ab46ad2adab1affd781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 0
+  DisableOnCollision: 1
+  GrowthSpeed: 1.5
 --- !u!198 &198395628456186690
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -4186,8 +4206,8 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.375, y: 1.2823033}
+  m_Size: {x: 1.3352386, y: 1.4283947}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0

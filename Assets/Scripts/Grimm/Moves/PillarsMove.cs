@@ -123,7 +123,8 @@ public class PillarsMove : GrimmMove
 				predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.20f) + playerPos2;
 			}*/
 
-			pillar = Instantiate(Prefabs.FlamePillarPrefab, predictivePosition + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+			//pillar = Instantiate(Prefabs.FlamePillarPrefab, predictivePosition + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
+			pillar = Pillar.Create(predictivePosition + Prefabs.FlamePillarPrefab.transform.position);
 			//}
 			//else
 			//{

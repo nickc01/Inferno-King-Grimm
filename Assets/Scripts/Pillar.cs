@@ -1,15 +1,25 @@
-﻿using System.Collections;
+﻿using Assets.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Components;
+using WeaverCore.DataTypes;
 using WeaverCore.Enums;
+using WeaverCore.Interfaces;
+using WeaverCore.Utilities;
 
-public class Pillar : MonoBehaviour
+public class Pillar : MonoBehaviour, IPoolableObject
 {
+	static ObjectPool<Pillar> Pool;
 
-	//[SerializeField]
-	//AudioClip FlameChargeSound;
+	class Hook : GrimmHooks
+	{
+		public override void OnGrimmAwake(InfernoKingGrimm grimm)
+		{
+			Pool = ObjectPool<Pillar>.CreatePool(grimm.Prefabs.FlamePillarPrefab, ObjectPoolStorageType.ActiveSceneOnly, 4);
+		}
+	}
 
 	[SerializeField]
 	float PillarSpawnY = 5.1f;
@@ -20,6 +30,8 @@ public class Pillar : MonoBehaviour
 	AudioClip FlameExplode;
 
 	DamageHero damager;
+	ParticleSystem AfterBurn;
+	CircleCollider2D AfterBurnCollider;
 
 	public bool PlaySound = true;
 	public float Volume = 1f;
@@ -37,17 +49,19 @@ public class Pillar : MonoBehaviour
 		}
 	}
 
-	// Use this for initialization
-	void Start () 
+	void Awake()
 	{
-		damager = GetComponentInChildren<DamageHero>(true);
-		StartCoroutine(PillarRoutine());
+		if (damager == null)
+		{
+			damager = GetComponentInChildren<DamageHero>(true);
+			AfterBurn = transform.Find("Pt Afterburn").GetComponent<ParticleSystem>();
+			AfterBurnCollider = AfterBurn.GetComponent<CircleCollider2D>();
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () 
+
+	void Start() 
 	{
-		
+		StartCoroutine(PillarRoutine());
 	}
 
 	IEnumerator PillarRoutine()
@@ -67,25 +81,40 @@ public class Pillar : MonoBehaviour
 
 		yield return new WaitForSeconds(0.3f);
 
-		var afterBurnObject = transform.Find("Pt Afterburn").gameObject;
+		//var afterBurnObject = transform.Find("Pt Afterburn").gameObject;
 
-		var afterBurn = afterBurnObject.GetComponent<ParticleSystem>();
-		afterBurn.Play();
+		//var afterBurn = afterBurnObject.GetComponent<ParticleSystem>();
+		//afterBurn.Play();
+		AfterBurn.Play();
 
-		var collider = afterBurnObject.GetComponent<CircleCollider2D>();
+		//var collider = afterBurnObject.GetComponent<CircleCollider2D>();
 
-		collider.enabled = true;
+		//collider.enabled = true;
+		AfterBurnCollider.enabled = true;
 
 		yield return new WaitForSeconds(FadeOutTime);
 
-		afterBurn.Stop();
+		//afterBurn.Stop();
+		AfterBurn.Stop();
 
-		collider.enabled = false;
+		//collider.enabled = false;
+		AfterBurnCollider.enabled = false;
 
 		yield return new WaitForSeconds(0.22f);
 
 		Destroy(gameObject);
 
 		//yield break;
+	}
+
+	void IPoolableObject.OnPool()
+	{
+		AfterBurnCollider.enabled = false;
+		AfterBurn.Stop();
+	}
+
+	public static Pillar Create(Vector3 position)
+	{
+		return Pool.RetrieveFromPool(position, Quaternion.identity);
 	}
 }

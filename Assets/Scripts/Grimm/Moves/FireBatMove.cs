@@ -282,7 +282,8 @@ public class FireBatMove : GrimmMove
 					ball.Phase2Velocity = hardModeBallSpawnVelocity;
 					ball.Phase2RotationSpeed = hardModeBallRotationSpeed;
 					FirebatFirePillar.Spawn(Grimm);
-					GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, spawnPoint + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+					//GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, spawnPoint + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+					GrimmGlow.Create(spawnPoint + new Vector3(0f, 0f, -0.1f));
 					if (fireBallsShot >= hardModeBallsPerRound)
 					{
 						fireBallsShot = 0;
@@ -296,7 +297,8 @@ public class FireBatMove : GrimmMove
 					var fireAudio = WeaverAudio.Play(Grimm.Sounds.GrimmBatFire, Grimm.transform.position, HomingBallVolume, AudioChannel.Sound);
 					fireAudio.AudioSource.pitch = Mathf.Lerp(HomingBallPitchRange.x, HomingBallPitchRange.y, t / homingBallTimePeriod);
 					FirebatFirePillar.Spawn(Grimm);
-					GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, spawnPoint + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+					//GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, spawnPoint + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+					GrimmGlow.Create(spawnPoint + new Vector3(0f, 0f, -0.1f));
 				}
 			}
 		}

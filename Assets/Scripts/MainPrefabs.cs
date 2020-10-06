@@ -9,8 +9,8 @@ public class MainPrefabs : ScriptableObject
 {
 	public static MainPrefabs Instance;
 
-	public GameObject FirebatPrefab;
-	public GameObject FirebatPillarPrefab;
+	public Firebat FirebatPrefab;
+	public FirebatFirePillar FirebatPillarPrefab;
 	public GameObject AirDashEffect;
 
 	public GameObject FlameTrailEffects;
@@ -19,12 +19,12 @@ public class MainPrefabs : ScriptableObject
 	public GameObject DustGroundEffect;
 	public SpikesController spikeControllerPrefab;
 	public Pillar FlamePillarPrefab;
-	public Rigidbody2D UppercutFireball;
+	public UppercutFireball UppercutFireball;
 	public GrimmBall GrimmBall;
 	public GameObject StunEffect;
 	public GrimmBatController BatControllerPrefab;
 	public HomingBall HomingBallPrefab;
-	public GameObject GlowPrefab;
+	public GrimmGlow GlowPrefab;
 	public GameObject GroundPoundAfterburn;
 	public GameObject RedBurst;
 }

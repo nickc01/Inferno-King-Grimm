@@ -5,9 +5,9 @@
         _MainTex("Base (RGB)", 2D) = "white" {}
         _ShiftPercentage("Shift Percentage",Range(0,1)) = 0
         _HueShift("Shift Hue", Range(0,1)) = 0
-        _SatShift("Saturation Shift", Range(0,1)) = 0
-        _ValShift("Value Shift", Range(0,1)) = 0
-        _ColorRangeOffset("Color Range Offset", Range(-3,3)) = 0
+        //_SatShift("Saturation Shift", Range(0,1)) = 0
+        //_ValShift("Value Shift", Range(0,1)) = 0
+        //_ColorRangeOffset("Color Range Offset", Range(-3,3)) = 0
     }
     SubShader
     {
@@ -23,15 +23,15 @@
             uniform float _bwBlend;
             uniform float _ShiftPercentage;
             uniform float _HueShift;
-            uniform float _SatShift;
-            uniform float _ValShift;
-            uniform float _ColorRangeOffset;
+            //uniform float _SatShift;
+            //uniform float _ValShift;
+            //uniform float _ColorRangeOffset;
 
             const float Epsilon = 1e-10;
 
-            const float hue60 = 60 / 360;
-            const float hue300 = 300 / 360;
-            const float hue240 = 240 / 360;
+            //const float hue60 = 60 / 360;
+            //const float hue300 = 300 / 360;
+            //const float hue240 = 240 / 360;
 
             float3 HUEtoRGB(in float H)
             {
@@ -41,10 +41,16 @@
                 return saturate(float3(R, G, B));
             }
 
-            float3 HSVtoRGB(in float3 HSV)
+            /*float3 HSVtoRGB(in float3 HSV)
             {
                 float3 RGB = HUEtoRGB(HSV.x);
                 return ((RGB - 1) * HSV.y + 1) * HSV.z;
+            }*/
+
+            float3 HSVtoRGB(in float H, in float S, in float V)
+            {
+                float3 RGB = HUEtoRGB(H);
+                return ((RGB - 1) * S + 1) * V;
             }
 
             float3 RGBtoHCV(in float3 RGB)
@@ -68,7 +74,9 @@
             {
                 //float y = -0.5;
 
-                return saturate(-abs((3 + _ColorRangeOffset) * ((2 * adjustedHue) - 1)) + 1);
+                //return saturate(-abs((3 + _ColorRangeOffset) * ((2 * adjustedHue) - 1)) + 1);
+
+                return saturate(-abs(2.6 * ((2 * adjustedHue) - 1)) + 1);
                 //return saturate(-abs((6 * adjustedHue) - 3) + 1);
             }
 
@@ -85,17 +93,19 @@
                 float redShiftPercentage = RedCheck(redHueCheck);
 
                 float blueHue = fmod(redHueCheck + _HueShift, 1.0);
+
+                //float interpolatedHue = lerp(redHue,blueHue, _ShiftPercentage * redShiftPercentage);
                 //float blueHue = 1 - fmod((1 - redHue.x) + _HueShift, 1.0);
 
                 //c.rgb = HSVtoRGB(float3(lerp(redHue.x,blueHue, _ShiftPercentage * redShiftPercentage), redHue.y + _SatShift, redHue.z + _ValShift));
 
 
 
-                float3 blueRGB = HSVtoRGB(float3(blueHue, redHue.y + _SatShift, redHue.z + _ValShift));
+                //c.rgb = HSVtoRGB(float3(interpolatedHue, redHue.y + _SatShift, redHue.z + _ValShift));
 
-                c.rgb = sqrt(lerp(pow(c.rgb,2), pow(blueRGB.rgb,2), _ShiftPercentage * redShiftPercentage));
+                c.rgb = lerp(c.rgb, HSVtoRGB(blueHue, redHue.y, redHue.z), _ShiftPercentage * redShiftPercentage);
 
-
+                //c.rgb = 
 
 
                 //c.rgb = HUEtoRGB(_HueShift);

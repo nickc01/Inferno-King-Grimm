@@ -240,7 +240,9 @@ public class CapeBurstMove : GrimmMove
 				//WeaverLog.Log("Angle = " + angle);
 				//WeaverLog.Log("Lerp Val = " + (j / (trueAmountOfShots - 1)));
 				var homingBall = SpawnHomingBall(angle, sprayShotVelocity, sprayShotRotationSpeed, j == trueAmountOfShots - 1, Mathf.Lerp(pitchLow,pitchHigh,i / (amountOfWaves - 1)));
-				var growth = homingBall.gameObject.AddComponent<Growth>();
+				//var growth = homingBall.gameObject.AddComponent<Growth>();
+				var growth = homingBall.GetComponent<Growth>();
+				growth.enabled = true;
 				homingBall.transform.localScale = Vector3.one * 1.8f;
 				growth.GrowthSpeed = 0.30f + (Mathf.Clamp(Mathf.Abs(angles[j] / angleBetweenShots), 0f,3f) * 0.20f);
 			}
