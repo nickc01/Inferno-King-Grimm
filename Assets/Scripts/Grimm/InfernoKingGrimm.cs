@@ -438,10 +438,10 @@ public class InfernoKingGrimm : BossReplacement
 			WeaverLog.Log("IKG : Starting Boss fight");
 			transform.position = StartingPosition;
 
-			foreach (var hook in Hooks)
+			/*foreach (var hook in Hooks)
 			{
 				hook.OnGrimmBattleBegin(this);
-			}
+			}*/
 
 			BossRoutine = CoroutineUtilities.RunCoroutineWhile(this, MainBossControl(), () => !Stunned);
 		}
