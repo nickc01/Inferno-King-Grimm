@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore.DataTypes;
+using WeaverCore.Enums;
 using WeaverCore.Interfaces;
 using WeaverCore.Utilities;
 
-public class GrimmGlow : MonoBehaviour, IPoolableObject 
+public class GrimmGlow : MonoBehaviour
 {
-	static ObjectPool<GrimmGlow> Pool;
+	static ObjectPool GlowPool;
 
 	[SerializeField]
 	string startingStateName;
@@ -27,26 +28,32 @@ public class GrimmGlow : MonoBehaviour, IPoolableObject
 		animator.Play(startingStateName);
 	}
 
-	class Hooks : GrimmHooks
+	/*class Hooks : GrimmHooks
 	{
 		public override void OnGrimmAwake(InfernoKingGrimm grimm)
 		{
-			Pool = ObjectPool<GrimmGlow>.CreatePool(grimm.Prefabs.GlowPrefab, ObjectPoolStorageType.ActiveSceneOnly, 3, true);
+			GlowPool = new Pool(grimm.Prefabs.GlowPrefab, PoolType.Local);
+			GlowPool.FillPoolAsync(1);
+			//Pool = Pool.CreatePool(grimm.Prefabs.GlowPrefab, ObjectPoolStorageType.ActiveSceneOnly, 3, true);
 		}
-	}
+	}*/
 
-	void IPoolableObject.OnPool()
+	[OnIKGAwake]
+	static void OnGrimmAwake()
 	{
-		
+		GlowPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.GlowPrefab, PoolLoadType.Local);
+		GlowPool.FillPoolAsync(1);
 	}
 
 	public void Destroy()
 	{
-		Pool.ReturnToPool(this);
+		//Pool.ReturnToPool(this);
+		GlowPool.ReturnToPool(this);
 	}
 
 	public static GrimmGlow Create(Vector3 position)
 	{
-		return Pool.RetrieveFromPool(position, Quaternion.identity);
+		//return Pool.RetrieveFromPool(position, Quaternion.identity);
+		return GlowPool.Instantiate<GrimmGlow>(position, Quaternion.identity);
 	}
 }

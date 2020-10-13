@@ -41,9 +41,10 @@ GameObject:
   - component: {fileID: 114558936380330302}
   - component: {fileID: 58312730811666014}
   - component: {fileID: 114606579799045334}
-  - component: {fileID: 50371002054512994}
   - component: {fileID: 114299322621681336}
   - component: {fileID: 114938575714997048}
+  - component: {fileID: 114596093223757736}
+  - component: {fileID: 50607458140334114}
   m_Layer: 12
   m_Name: Homing Ball
   m_TagString: Untagged
@@ -109,7 +110,7 @@ Transform:
   m_Father: {fileID: 4194634121738004}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50371002054512994
+--- !u!50 &50607458140334114
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -123,12 +124,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
+  m_SleepingMode: 2
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!58 &58312730811666014
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -187,6 +188,17 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+--- !u!114 &114596093223757736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1254398893299010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a6abec551ce95408d93cbfa3708833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114606579799045334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2137,7 +2149,7 @@ ParticleSystem:
   simulationSpeed: 1
   stopAction: 0
   looping: 1
-  prewarm: 1
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1

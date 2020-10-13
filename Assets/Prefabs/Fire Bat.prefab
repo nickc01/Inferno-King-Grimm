@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114832326577868188}
   - component: {fileID: 61009277396448540}
   - component: {fileID: 114659651327445312}
+  - component: {fileID: 114819353739503262}
   m_Layer: 0
   m_Name: Fire Bat
   m_TagString: Untagged
@@ -131,6 +132,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+--- !u!114 &114819353739503262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1464193261846556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a6abec551ce95408d93cbfa3708833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114832326577868188
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 4111523477919470}
   - component: {fileID: 82863380208808390}
   - component: {fileID: 114094571786797900}
+  - component: {fileID: 114890266302473690}
   m_Layer: 0
   m_Name: Grimm Fire Pillar
   m_TagString: Untagged
@@ -422,6 +423,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+--- !u!114 &114890266302473690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1249099479629876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a6abec551ce95408d93cbfa3708833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114993277360565380
 MonoBehaviour:
   m_ObjectHideFlags: 1

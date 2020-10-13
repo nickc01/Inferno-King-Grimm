@@ -8,9 +8,9 @@ using WeaverCore.DataTypes;
 using WeaverCore.Interfaces;
 using WeaverCore.Utilities;
 
-public class UppercutFireball : MonoBehaviour, IPoolableObject
+public class UppercutFireball : MonoBehaviour, IOnPool
 {
-	static ObjectPool<UppercutFireball> Pool;
+	static ObjectPool UppercutFBPool;
 
 	[SerializeField]
 	float lifeTime = 1.5f;
@@ -42,7 +42,7 @@ public class UppercutFireball : MonoBehaviour, IPoolableObject
 		circleCollider.enabled = true;
 	}
 
-	void IPoolableObject.OnPool()
+	void IOnPool.OnPool()
 	{
 		RigidBody.velocity = Vector2.zero;
 		if (disabler == null)
@@ -57,7 +57,7 @@ public class UppercutFireball : MonoBehaviour, IPoolableObject
 		counter += Time.deltaTime;
 		if (counter >= lifeTime)
 		{
-			Pool.ReturnToPool(this);
+			UppercutFBPool.ReturnToPool(this);
 		}
 	}
 
@@ -67,14 +67,23 @@ public class UppercutFireball : MonoBehaviour, IPoolableObject
 		{
 			rotation = Quaternion.identity;
 		}
-		return Pool.RetrieveFromPool(position, rotation);
+		return UppercutFBPool.Instantiate<UppercutFireball>(position, rotation);
 	}
 
-	class UppercutBallHook : GrimmHooks
+	/*class UppercutBallHook : GrimmHooks
 	{
 		public override void OnGrimmAwake(InfernoKingGrimm grimm)
 		{
-			Pool = ObjectPool<UppercutFireball>.CreatePool(grimm.Prefabs.UppercutFireball, ObjectPoolStorageType.ActiveSceneOnly, 8);
+			//UppercutFBPool = ObjectPool<UppercutFireball>.CreatePool(grimm.Prefabs.UppercutFireball, ObjectPoolStorageType.ActiveSceneOnly, 8);
+			UppercutFBPool = new Pool(grimm.Prefabs.UppercutFireball, WeaverCore.Enums.PoolType.Local);
+			UppercutFBPool.FillPoolAsync(8);
 		}
+	}*/
+
+	[OnIKGAwake]
+	static void OnGrimmAwake()
+	{
+		UppercutFBPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.UppercutFireball, WeaverCore.Enums.PoolLoadType.Local);
+		UppercutFBPool.FillPoolAsync(8);
 	}
 }

@@ -77,7 +77,7 @@ public class SpikesController : MonoBehaviour
 			spike.PrepareForAttack();
 		}
 
-		WeaverAudio.Play(SpikesPrepare, Player.Player1.transform.position);
+		WeaverAudio.PlayAtPoint(SpikesPrepare, Player.Player1.transform.position);
 
 		yield return new WaitForSeconds(prepareTime);
 
@@ -91,7 +91,7 @@ public class SpikesController : MonoBehaviour
 		//TODO - Shake Camera
 		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
 
-		WeaverAudio.Play(SpikesUp, Player.Player1.transform.position);
+		WeaverAudio.PlayAtPoint(SpikesUp, Player.Player1.transform.position);
 
 		yield return new WaitForSeconds(lowerTime);
 
@@ -100,7 +100,7 @@ public class SpikesController : MonoBehaviour
 			spike.LowerSpikes();
 		}
 
-		WeaverAudio.Play(SpikesDown, Player.Player1.transform.position);
+		WeaverAudio.PlayAtPoint(SpikesDown, Player.Player1.transform.position);
 	}
 
 	void DoSpikes(IEnumerable<GrimmSpike> spikes, float prepareTime = 0.55f, float raiseTime = 0.15f, float lowerTime = 0.45f)

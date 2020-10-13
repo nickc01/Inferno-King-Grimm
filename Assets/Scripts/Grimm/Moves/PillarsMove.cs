@@ -81,7 +81,7 @@ public class PillarsMove : GrimmMove
 
 		GrimmAnimator.PlayAnimation("Pillar Idle");
 
-		WeaverAudio.Play(Sounds.PillarAntic, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.PillarAntic, transform.position);
 
 		VoicePlayer.Play(Sounds.PillarCastVoice);
 
@@ -113,23 +113,7 @@ public class PillarsMove : GrimmMove
 			}
 
 			predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * predictiveAmount) + playerPos2;
-
-			/*if (Grimm.BossStage == 1)
-			{
-				predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.10f) + playerPos2;
-			}
-			else
-			{
-				predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * 0.20f) + playerPos2;
-			}*/
-
-			//pillar = Instantiate(Prefabs.FlamePillarPrefab, predictivePosition + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
 			pillar = Pillar.Create(predictivePosition + Prefabs.FlamePillarPrefab.transform.position);
-			//}
-			//else
-			//{
-			//	pillar = Instantiate(Prefabs.FlamePillarPrefab, Player.Player1.transform.position + Prefabs.FlamePillarPrefab.transform.position, Quaternion.identity);
-			//}
 
 			if (i == 2 && Grimm.BossStage >= 3)
 			{

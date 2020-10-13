@@ -50,13 +50,21 @@ public class BalloonMove : GrimmMove
 
 	[Header("Easy Mode")]
 	[SerializeField]
-	float easySpawnRateStage1 = 0.2f;
+	float easySpawnRateStage1 = 0.22f;
 	[SerializeField]
-	float easySpawnRateStage2 = 0.18f;
+	float easySpawnRateStage2 = 0.21f;
 	[SerializeField]
-	float easySpawnRateStage3 = 0.17f;
+	float easySpawnRateStage3 = 0.205f;
 
-	[Header("Easy Mode")]
+	[Header("Intermediate Mode")]
+	[SerializeField]
+	float mediumSpawnRateStage1 = 0.2f;
+	[SerializeField]
+	float mediumSpawnRateStage2 = 0.18f;
+	[SerializeField]
+	float mediumSpawnRateStage3 = 0.17f;
+
+	[Header("Hard Mode")]
 	[SerializeField]
 	float hardSpawnRateStage1 = 0.2f;
 	[SerializeField]
@@ -81,6 +89,11 @@ public class BalloonMove : GrimmMove
 
 	public override IEnumerator DoMove()
 	{
+		if (Grimm.Settings.PufferFishDifficulty == PufferFishDifficulty.Off)
+		{
+			yield break;
+		}
+
 		healthManager.Invincible = true;
 
 
@@ -110,8 +123,8 @@ public class BalloonMove : GrimmMove
 
 		BalloonFireballShootSound.SetActive(true);
 
-		WeaverAudio.Play(Sounds.GrimmScream, transform.position);
-		WeaverAudio.Play(Sounds.InflateSoundEffect, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.GrimmScream, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.InflateSoundEffect, transform.position);
 
 		//TODO Broadcast CROWD CLAP DELAY EVENT
 
@@ -134,16 +147,63 @@ public class BalloonMove : GrimmMove
 		//var spawnRate = ballSpawnRate - (homingSpawnRateIncrement * (Grimm.BossStage - 1));
 		float spawnRate = 0f;
 
-		switch (Grimm.BossStage)
+		switch (Grimm.Settings.PufferFishDifficulty)
 		{
-			case 1:
-				spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage1 : easySpawnRateStage1;
+			case PufferFishDifficulty.Easy:
+				switch (Grimm.BossStage)
+				{
+					case 1:
+						spawnRate = easySpawnRateStage1;
+						break;
+					case 2:
+						spawnRate = easySpawnRateStage2;
+						break;
+					default:
+						spawnRate = easySpawnRateStage3;
+						break;
+				}
 				break;
-			case 2:
-				spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage2 : easySpawnRateStage2;
+			case PufferFishDifficulty.Intermediate:
+				switch (Grimm.BossStage)
+				{
+					case 1:
+						spawnRate = mediumSpawnRateStage1;
+						break;
+					case 2:
+						spawnRate = mediumSpawnRateStage2;
+						break;
+					default:
+						spawnRate = mediumSpawnRateStage3;
+						break;
+				}
+				break;
+			case PufferFishDifficulty.Hard:
+				switch (Grimm.BossStage)
+				{
+					case 1:
+						spawnRate = hardSpawnRateStage1;
+						break;
+					case 2:
+						spawnRate = hardSpawnRateStage2;
+						break;
+					default:
+						spawnRate = hardSpawnRateStage3;
+						break;
+				}
 				break;
 			default:
-				spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage3 : easySpawnRateStage3;
+				switch (Grimm.BossStage)
+				{
+					case 1:
+						spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage1 : mediumSpawnRateStage1;
+						break;
+					case 2:
+						spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage2 : mediumSpawnRateStage2;
+						break;
+					default:
+						spawnRate = Grimm.Settings.hardMode ? hardSpawnRateStage3 : mediumSpawnRateStage3;
+						break;
+				}
 				break;
 		}
 
@@ -219,7 +279,7 @@ public class BalloonMove : GrimmMove
 
 		BalloonFireballShootSound.SetActive(false);
 
-		WeaverAudio.Play(Sounds.DeflateSoundEffect, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.DeflateSoundEffect, transform.position);
 
 		yield return Grimm.TeleportOut();
 

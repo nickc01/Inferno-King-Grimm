@@ -9,16 +9,24 @@ using WeaverCore.Enums;
 using WeaverCore.Interfaces;
 using WeaverCore.Utilities;
 
-public class Pillar : MonoBehaviour, IPoolableObject
+public class Pillar : MonoBehaviour, IOnPool
 {
-	static ObjectPool<Pillar> Pool;
-
-	class Hook : GrimmHooks
+	static ObjectPool PillarPool;
+	/*class Hook : GrimmHooks
 	{
 		public override void OnGrimmAwake(InfernoKingGrimm grimm)
 		{
-			Pool = ObjectPool<Pillar>.CreatePool(grimm.Prefabs.FlamePillarPrefab, ObjectPoolStorageType.ActiveSceneOnly, 4);
+			//Pool = ObjectPool<Pillar>.CreatePool(grimm.Prefabs.FlamePillarPrefab, ObjectPoolStorageType.ActiveSceneOnly, 4);
+			PillarPool = new Pool(grimm.Prefabs.FlamePillarPrefab,PoolType.Local);
+			PillarPool.FillPoolAsync(4);
 		}
+	}*/
+
+	[OnIKGAwake]
+	static void OnGrimmAwake()
+	{
+		PillarPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.FlamePillarPrefab, PoolLoadType.Local);
+		PillarPool.FillPoolAsync(4);
 	}
 
 	[SerializeField]
@@ -75,7 +83,7 @@ public class Pillar : MonoBehaviour, IPoolableObject
 
 		if (PlaySound)
 		{
-			var explosion = WeaverAudio.Play(FlameExplode, transform.position);
+			var explosion = WeaverAudio.PlayAtPoint(FlameExplode, transform.position);
 			explosion.Volume = Volume;
 		}
 
@@ -102,12 +110,13 @@ public class Pillar : MonoBehaviour, IPoolableObject
 
 		yield return new WaitForSeconds(0.22f);
 
-		Destroy(gameObject);
+		//Destroy(gameObject);
+		PillarPool.ReturnToPool(this);
 
 		//yield break;
 	}
 
-	void IPoolableObject.OnPool()
+	void IOnPool.OnPool()
 	{
 		AfterBurnCollider.enabled = false;
 		AfterBurn.Stop();
@@ -115,6 +124,6 @@ public class Pillar : MonoBehaviour, IPoolableObject
 
 	public static Pillar Create(Vector3 position)
 	{
-		return Pool.RetrieveFromPool(position, Quaternion.identity);
+		return PillarPool.Instantiate<Pillar>(position, Quaternion.identity);
 	}
 }

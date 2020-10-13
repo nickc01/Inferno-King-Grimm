@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Enums;
 using WeaverCore.Features;
 using WeaverCore.Utilities;
 
 public class CapeBurstMove : GrimmMove
 {
+	static ObjectPool RedBurstPool;
+
 	[SerializeField]
 	Vector2 spawnPosition = new Vector2(85.77f, 13.5f);
 
@@ -86,11 +90,17 @@ public class CapeBurstMove : GrimmMove
 
 	Coroutine jitterRoutine = null;
 
-	void Awake()
+	[OnIKGAwake]
+	static void OnGrimmAwake()
+	{
+		RedBurstPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.RedBurst, PoolLoadType.Local);
+	}
+
+	/*void Awake()
 	{
 		
 		//MoveEnabled = true;
-	}
+	}*/
 
 	public override IEnumerator DoMove()
 	{
@@ -200,7 +210,7 @@ public class CapeBurstMove : GrimmMove
 			{
 				float nearestAngleIndex = 0f;
 				float nearestValue = float.PositiveInfinity;
-				for (int j = 0; j < angles.Count; j++)
+				for (int j = 0; j < angles.GetLength(0); j++)
 				{
 					var difference = currentPlayerAngle - (angles[j] + downAngle);
 					if (Mathf.Abs(difference) <= nearestValue)
@@ -266,18 +276,18 @@ public class CapeBurstMove : GrimmMove
 
 	public void PlayBurst()
 	{
-		var instance = GameObject.Instantiate(Grimm.Prefabs.RedBurst, transform.position + BurstOffset, Quaternion.identity);
+		var instance = RedBurstPool.Instantiate(transform.position + BurstOffset, Quaternion.identity);
 		instance.transform.localScale = new Vector3(burstScale, burstScale, 1f);
 	}
 
 	public void PlayScreamSound()
 	{
-		WeaverAudio.Play(Sounds.GrimmScream, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.GrimmScream, transform.position);
 	}
 
 	public void PlayCapeSound()
 	{
-		WeaverAudio.Play(Sounds.GrimmCapeOpen, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.GrimmCapeOpen, transform.position);
 	}
 
 	HomingBall SpawnHomingBall(float angle, float velocity, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)

@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114503442476101714}
   - component: {fileID: 114100298543539912}
   - component: {fileID: 114196652289941390}
+  - component: {fileID: 114348147366275350}
   m_Layer: 22
   m_Name: Uppercut Fireball
   m_TagString: Untagged
@@ -93,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077215681bb93fc459665a9a61bb4327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clock: 0
 --- !u!114 &114133106575465106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,6 +121,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 1.205
+--- !u!114 &114348147366275350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1258148121706430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a6abec551ce95408d93cbfa3708833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114503442476101714
 MonoBehaviour:
   m_ObjectHideFlags: 1

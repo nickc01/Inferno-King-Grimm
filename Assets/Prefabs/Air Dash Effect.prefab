@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212432596978601920}
   - component: {fileID: 95665795880284968}
   - component: {fileID: 114607358787265352}
+  - component: {fileID: 114379551240145078}
   m_Layer: 0
   m_Name: Air Dash Effect
   m_TagString: Untagged
@@ -59,6 +60,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114379551240145078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1498589351218266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a6abec551ce95408d93cbfa3708833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114607358787265352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d8b42d611ac1d499d321ebfb68299e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  partOfPool: 1
 --- !u!212 &212432596978601920
 SpriteRenderer:
   m_ObjectHideFlags: 1

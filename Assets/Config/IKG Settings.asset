@@ -16,3 +16,4 @@ MonoBehaviour:
   enableCustomHealth: 0
   CustomHealthValue: 1300
   DisableColorEffects: 0
+  PufferFishDifficulty: 0

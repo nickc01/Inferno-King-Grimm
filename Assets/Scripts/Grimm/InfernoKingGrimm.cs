@@ -23,7 +23,7 @@ public class InfernoKingGrimm : BossReplacement
 {
 	private BalloonMove balloonMove;
 
-	IEnumerable<GrimmHooks> Hooks = ReflectionUtilities.GetObjectsOfType<GrimmHooks>();
+	//IEnumerable<GrimmHooks> Hooks = ReflectionUtilities.GetObjectsOfType<GrimmHooks>();
 
 	bool balloonMoveNext = false;
 
@@ -406,10 +406,12 @@ public class InfernoKingGrimm : BossReplacement
 			}
 		}
 
-		foreach (var hook in Hooks)
+		ReflectionUtilities.ExecuteMethodsWithAttribute<OnIKGAwakeAttribute>();
+
+		/*foreach (var hook in Hooks)
 		{
 			hook.OnGrimmAwake(this);
-		}
+		}*/
 	}
 
 	private void Update()
@@ -470,7 +472,7 @@ public class InfernoKingGrimm : BossReplacement
 		{
 			if (playSound)
 			{
-				WeaverAudio.Play(Sounds.GrimmTeleportIn, transform.position, 1.0f, AudioChannel.Sound);
+				WeaverAudio.PlayAtPoint(Sounds.GrimmTeleportIn, transform.position, 1.0f, AudioChannel.Sound);
 			}
 
 			PlayTeleportParticles();
@@ -491,7 +493,7 @@ public class InfernoKingGrimm : BossReplacement
 		{
 			if (playSound)
 			{
-				WeaverAudio.Play(Sounds.GrimmTeleportOut, transform.position, 1.0f, AudioChannel.Sound);
+				WeaverAudio.PlayAtPoint(Sounds.GrimmTeleportOut, transform.position, 1.0f, AudioChannel.Sound);
 			}
 			GrimmCollider.enabled = false;
 
@@ -595,7 +597,7 @@ public class InfernoKingGrimm : BossReplacement
 		VoicePlayer.Play(Sounds.GrimmScream);
 
 		//TODO Broadcast Event - CROWD STILL
-		WeaverAudio.Play(Sounds.GrimmBatExplosion, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.GrimmBatExplosion, transform.position);
 
 		explosions.Play();
 
@@ -653,8 +655,8 @@ public class InfernoKingGrimm : BossReplacement
 		//renderer.enabled = true;
 		//MakeVisible();
 
-		WeaverAudio.Play(Sounds.GrimmTeleportOut, transform.position);
-		WeaverAudio.Play(Sounds.GrimmBatsReform, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.GrimmTeleportOut, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.GrimmBatsReform, transform.position);
 
 		ReformSprite.gameObject.SetActive(true);
 
@@ -723,10 +725,10 @@ public class InfernoKingGrimm : BossReplacement
 
 		CurrentMove.OnDeath();
 
-		foreach (var hook in Hooks)
+		/*foreach (var hook in Hooks)
 		{
 			hook.OnGrimmBattleEnd(this);
-		}
+		}*/
 
 		StartCoroutine(DeathRoutine());
 	}
@@ -739,21 +741,22 @@ public class InfernoKingGrimm : BossReplacement
 	private IEnumerator DeathRoutine()
 	{
 
-		WeaverAudioPlayer scream = WeaverAudio.Play(Sounds.GrimmScream, transform.position, autoPlay: false);
-		scream.AudioSource.PlayDelayed(0.5f);
+		WeaverAudioPlayer scream = WeaverAudio.Create(Sounds.GrimmScream, transform.position);
+		scream.PlayDelayed(0.5f);
+		//scream.AudioSource.PlayDelayed(0.5f);
 
 		WeaverEvents.BroadcastEvent("HEARTBEAT STOP");
 
 		//TODO : Shake Camera AverageShake
 
-		WeaverAudioPlayer swordDeath = WeaverAudio.Play(AudioAssets.EnemyDeathBySword, transform.position);
+		WeaverAudioPlayer swordDeath = WeaverAudio.PlayAtPoint(AudioAssets.EnemyDeathBySword, transform.position);
 		swordDeath.AudioSource.pitch = 0.75f;
 
-		WeaverAudioPlayer enemyDamage = WeaverAudio.Play(AudioAssets.DamageEnemy, transform.position);
+		WeaverAudioPlayer enemyDamage = WeaverAudio.PlayAtPoint(AudioAssets.DamageEnemy, transform.position);
 		enemyDamage.AudioSource.pitch = 0.75f;
 
-		WeaverAudioPlayer endingTune = WeaverAudio.Play(Sounds.EndingTune, transform.position, autoPlay: false);
-		endingTune.AudioSource.PlayDelayed(0.3f);
+		WeaverAudioPlayer endingTune = WeaverAudio.Create(Sounds.EndingTune, transform.position);
+		endingTune.PlayDelayed(0.3f);
 
 		TransformUtilities.SpawnRandomObjects(EffectAssets.GhostSlash1Prefab, transform.position, 8, 8, 2f, 35f, 0f, 360f);
 		TransformUtilities.SpawnRandomObjects(EffectAssets.GhostSlash2Prefab, transform.position, 2, 3, 2f, 35f, 0f, 360f);
@@ -791,8 +794,8 @@ public class InfernoKingGrimm : BossReplacement
 
 		WeaverEvents.BroadcastEvent("HEARTBEAT FAST");
 
-		WeaverAudio.Play(AudioAssets.BossFinalHit, transform.position);
-		WeaverAudio.Play(AudioAssets.BossGushing, transform.position);
+		WeaverAudio.PlayAtPoint(AudioAssets.BossFinalHit, transform.position);
+		WeaverAudio.PlayAtPoint(AudioAssets.BossGushing, transform.position);
 
 		WeaverEvents.BroadcastEvent("BigShake"); //???
 
@@ -828,7 +831,7 @@ public class InfernoKingGrimm : BossReplacement
 		DeathPuff.Stop();
 		SteamParticles.Stop();
 
-		WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.UpperCutExplodeEffect, transform.position);
 
 		WeaverEvents.BroadcastEvent("CROWD STILL");
 
@@ -840,7 +843,7 @@ public class InfernoKingGrimm : BossReplacement
 
 		DeathExplosion.Play();
 
-		WeaverAudio.Play(AudioAssets.BossExplosionUninfected, transform.position);
+		WeaverAudio.PlayAtPoint(AudioAssets.BossExplosionUninfected, transform.position);
 
 		WeaverEvents.BroadcastEvent("GRIMM DEFEATED");
 

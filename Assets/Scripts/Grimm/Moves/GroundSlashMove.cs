@@ -105,7 +105,7 @@ public class GroundSlashMove : GrimmMove
 			yield break;
 		}
 
-		WeaverAudio.Play(Sounds.SlashAntic, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.SlashAntic, transform.position);
 		VoicePlayer.Play(Sounds.SlashAnticVoice);
 
 		yield return DoSlash();
@@ -113,7 +113,7 @@ public class GroundSlashMove : GrimmMove
 		if (Grimm.Settings.hardMode && Grimm.BossStage >= 2)
 		{
 			var playerPositionOld = Player.Player1.transform.position.x;
-			WeaverAudio.Play(Sounds.SlashAntic, transform.position);
+			WeaverAudio.PlayAtPoint(Sounds.SlashAntic, transform.position);
 			StartCoroutine(Teleport(playerPositionOld));
 			yield return DoSlash();
 		}
@@ -231,7 +231,7 @@ public class GroundSlashMove : GrimmMove
 
 		var xScale = transform.lossyScale.x;
 
-		WeaverAudio.Play(Sounds.GroundSlashAttack, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.GroundSlashAttack, transform.position);
 
 		var speed = xScale * groundSlashSpeed;
 
@@ -367,7 +367,7 @@ public class GroundSlashMove : GrimmMove
 
 		var xScale = transform.lossyScale.x;
 
-		WeaverAudio.Play(Sounds.EvadeSoundEffect, transform.position);
+		WeaverAudio.PlayAtPoint(Sounds.EvadeSoundEffect, transform.position);
 
 		var speed = xScale * evadeSpeed;
 
@@ -438,7 +438,7 @@ public class GroundSlashMove : GrimmMove
 
 		GrimmAnimator.PlayAnimation("Uppercut");
 
-		var sf = WeaverAudio.Play(Sounds.UpperCutSoundEffect, transform.position);
+		var sf = WeaverAudio.PlayAtPoint(Sounds.UpperCutSoundEffect, transform.position);
 		sf.AudioSource.pitch = 1.1f;
 
 		var xScale = transform.lossyScale.x;
@@ -462,7 +462,7 @@ public class GroundSlashMove : GrimmMove
 
 		DustUppercut.Stop();
 
-		var explodeSF = WeaverAudio.Play(Sounds.UpperCutExplodeEffect, transform.position);
+		var explodeSF = WeaverAudio.PlayAtPoint(Sounds.UpperCutExplodeEffect, transform.position);
 		explodeSF.AudioSource.pitch = 1.1f;
 
 		Grimm.Velocity = Vector2.zero;

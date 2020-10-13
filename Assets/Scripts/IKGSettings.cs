@@ -37,5 +37,19 @@ Hard Mode Radiant		: 2050")]
 		[Tooltip(@"Checking this will disable color effects that take place throughout the fight")]
 		public bool DisableColorEffects = false;
 
+		[Tooltip(@"This determines how difficult the pufferfish attack of the fight will be
+
+-Default:  Leaves everything set to their default values
+
+-Easy:     A toned down version of the attack
+
+-Medium:   The same difficulty as regular IKG
+
+-Hard:     The same difficutly as Absolute IKG
+
+-Off:      Turns the attack off completely
+")]
+		public PufferFishDifficulty PufferFishDifficulty;
+
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
@@ -101,6 +102,7 @@ public class GrimmBall : MonoBehaviour
 
 	public static GrimmBall Spawn(Vector3 position, float tweenY, float force, float xVelocity)
 	{
+		throw new NotImplementedException();
 		var instance = Instantiate(MainPrefabs.Instance.GrimmBall, position, Quaternion.identity);
 		instance.TweenY = tweenY;
 		instance.Force = force;

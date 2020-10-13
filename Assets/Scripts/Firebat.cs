@@ -9,16 +9,24 @@ using WeaverCore.Enums;
 using WeaverCore.Interfaces;
 using WeaverCore.Utilities;
 
-public class Firebat : MonoBehaviour, IPoolableObject 
+public class Firebat : MonoBehaviour, IOnPool 
 {
-	static ObjectPool<Firebat> Pool;
+	static ObjectPool FirebatPool;
 
-	class Hook : GrimmHooks
+	/*class Hook : GrimmHooks
 	{
 		public override void OnGrimmAwake(InfernoKingGrimm grimm)
 		{
-			Pool = ObjectPool<Firebat>.CreatePool(grimm.Prefabs.FirebatPrefab, ObjectPoolStorageType.ActiveSceneOnly, 6);
+			FirebatPool = new Pool(grimm.Prefabs.FirebatPillarPrefab, PoolType.Local);
+			FirebatPool.FillPoolAsync(6);
 		}
+	}*/
+
+	[OnIKGAwake]
+	static void OnGrimmStart()
+	{
+		FirebatPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.FirebatPrefab, PoolLoadType.Local);
+		FirebatPool.FillPoolAsync(6);
 	}
 
 	public float Angle { get; private set; }
@@ -52,7 +60,7 @@ public class Firebat : MonoBehaviour, IPoolableObject
 	IEnumerator Waiter(float time)
 	{
 		yield return new WaitForSeconds(time);
-		Pool.ReturnToPool(this);
+		FirebatPool.ReturnToPool(this);
 	}
 	
 	// Update is called once per frame
@@ -65,7 +73,8 @@ public class Firebat : MonoBehaviour, IPoolableObject
 	public static Firebat Spawn(float angle, float velocity, GrimmDirection direction, Vector3 position)
 	{
 		//Debugger.Log("Fire bat F");
-		var fireBat = Pool.RetrieveFromPool(position, Quaternion.identity);
+		//var fireBat = FirebatPool.RetrieveFromPool(position, Quaternion.identity);
+		var fireBat = FirebatPool.Instantiate<Firebat>(position, Quaternion.identity);
 
 		if (fireBat.rigidbody == null)
 		{
@@ -101,21 +110,6 @@ public class Firebat : MonoBehaviour, IPoolableObject
 		return fireBat;
 	}
 
-	/*public static Firebat Spawn(Altitude altitude, float velocity, Direction direction, Vector3 position)
-	{
-
-		float angle = 0f;
-		if (altitude == Altitude.High)
-		{
-			angle = 
-		}
-		else
-		{
-			angle = -17f;
-		}
-		return Spawn(angle, velocity, direction, position);
-	}*/
-
 	public static Firebat Spawn(float angle, float velocity, InfernoKingGrimm grimm, Vector3? position = null)
 	{
 		//Debugger.Log("Fire bat D");
@@ -136,11 +130,10 @@ public class Firebat : MonoBehaviour, IPoolableObject
 		FirebatFirePillar.Spawn(grimm);
 		if (playSound)
 		{
-			var fireAudio = WeaverAudio.Play(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
+			var fireAudio = WeaverAudio.PlayAtPoint(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
 			fireAudio.AudioSource.pitch = audioPitch;
 		}
 
-		//GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, grimm.transform.Find("Firebat SpawnPoint").position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
 		GrimmGlow.Create(FirebatSpawnPoint.position + new Vector3(0f, 0f, -0.1f));
 
 		yield return new WaitForSeconds(0.3f);
@@ -150,7 +143,6 @@ public class Firebat : MonoBehaviour, IPoolableObject
 
 	public static void SendFirebat(InfernoKingGrimm grimm, float angle, float pitch = 1.0f, float speedMultiplier = 1f, bool playSound = true)
 	{
-		//Debugger.Log("FIre bat B");
 		UnboundCoroutine.Start(SendFirebatAsync(grimm, angle, pitch, speedMultiplier,playSound));
 	}
 
@@ -160,7 +152,7 @@ public class Firebat : MonoBehaviour, IPoolableObject
 		rigidbody.velocity = velocity;
 	}
 
-	void IPoolableObject.OnPool()
+	void IOnPool.OnPool()
 	{
 		renderer.flipX = false;
 		renderer.flipY = false;
