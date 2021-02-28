@@ -114,6 +114,16 @@ namespace WeaverCore.Utilities
 			SourcePool.ReturnToPool(this,time);
 		}
 
+		void AnimatorReturnToPool()
+		{
+			SourcePool.ReturnToPool(this);
+		}
+
+		void AnimatorReturnToPoolAfterTime(float time)
+		{
+			SourcePool.ReturnToPool(this, time);
+		}
+
 		void OnParticleSystemStopped()
 		{
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "IKG/GrimmColors")]
+/*[CreateAssetMenu(menuName = "IKG/GrimmColors")]
 public class GrimmColors : ScriptableObject
 {
 	public static GrimmColors Instance { get; private set; }
@@ -111,3 +111,4 @@ public class GrimmColors : ScriptableObject
 	}
 }
 
+*/

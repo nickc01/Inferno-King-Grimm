@@ -37,7 +37,7 @@ MonoBehaviour:
     type: 2}
   HomingBallPrefab: {fileID: 114606579799045334, guid: 6992c5b90a2cf8f4cac76dcbf0f60417,
     type: 2}
-  GlowPrefab: {fileID: 114514241402101138, guid: 593422000f514c046b98e482cb06df86,
+  GlowPrefab: {fileID: 114225376935539284, guid: 593422000f514c046b98e482cb06df86,
     type: 2}
   GroundPoundAfterburn: {fileID: 1647277108886450, guid: 8a438b71db9c4ef4bbf5eaf2764dc90e,
     type: 2}

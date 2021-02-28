@@ -11,8 +11,8 @@ public class GrimmGlow : MonoBehaviour
 {
 	static ObjectPool GlowPool;
 
-	[SerializeField]
-	string startingStateName;
+	//[SerializeField]
+	//string startingStateName;
 	Animator animator;
 
 	void Awake()
@@ -25,7 +25,7 @@ public class GrimmGlow : MonoBehaviour
 
 	void Start()
 	{
-		animator.Play(startingStateName);
+		animator.Play("Default");
 	}
 
 	/*class Hooks : GrimmHooks

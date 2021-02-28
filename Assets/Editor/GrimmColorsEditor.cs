@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(GrimmColors))]
+/*[CustomEditor(typeof(GrimmColors))]
 public class GrimmColorsEditor : Editor
 {
 	public override void OnInspectorGUI()
@@ -22,3 +22,4 @@ public class GrimmColorsEditor : Editor
 		((GrimmColors)target).Refresh();
 	}
 }
+*/

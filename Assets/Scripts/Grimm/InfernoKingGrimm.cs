@@ -104,7 +104,7 @@ public class InfernoKingGrimm : BossReplacement
 	int hardRadiantHealth = 2050;
 
 	public IKGSettings Settings;
-	public GrimmColors Colors;
+	//public GrimmColors Colors;
 	public Material CameraMaterial;
 
 	CameraHueShift cameraHueShifter;
@@ -260,7 +260,7 @@ public class InfernoKingGrimm : BossReplacement
 		//Recycler = Recycler.CreateRecycler();
 		//BossStage = 2;
 		//GrimmHue.SetAllGrimmHues(0f, 0f, 0f);
-		Colors.SetHues(0f, 0f, 0f);
+		//Colors.SetHues(0f, 0f, 0f);
 		AddMoves(GetComponents<GrimmMove>());
 		balloonMove = GetComponent<BalloonMove>();
 
@@ -390,7 +390,7 @@ public class InfernoKingGrimm : BossReplacement
 			}
 		}
 #endif
-		if (Settings.hardMode && !Settings.DisableColorEffects)
+		if (!Settings.DisableColorEffects)
 		{
 			if (cameraHueShifter == null)
 			{
@@ -414,15 +414,37 @@ public class InfernoKingGrimm : BossReplacement
 		}*/
 	}
 
+	int healthCache = -1;
+
 	private void Update()
 	{
-		if (Settings.hardMode && !Settings.DisableColorEffects)
+		if (!Settings.DisableColorEffects)
 		{
-			var t = 1f - (GrimmHealth.Health / MaxHealth);
-			cameraHueShifter.SetValues(ShaderPercentageCurve.Evaluate(t),
-				HueShiftCurve.Evaluate(t),
-				SaturationShiftCurve.Evaluate(t),
-				ValueShiftCurve.Evaluate(t));
+			if (GrimmHealth.Health != healthCache)
+			{
+				healthCache = GrimmHealth.Health;
+				var t = 1f - (GrimmHealth.Health / MaxHealth);
+				if (!Settings.hardMode)
+				{
+					t *= 0.13f;
+				}
+				UnityEngine.Debug.Log("Health Value = " + t);
+				cameraHueShifter.SetValues(ShaderPercentageCurve.Evaluate(t),
+					HueShiftCurve.Evaluate(t),
+					SaturationShiftCurve.Evaluate(t),
+					ValueShiftCurve.Evaluate(t));
+
+				/*if (BossStage == 2)
+				{
+					//GrimmHue.SetAllGrimmHues(Mathf.Lerp(0f, 0.30f,t / stunWaitTime), 0f, 0f);
+					//Colors.SetHues(Mathf.Lerp(0f, 0.30f, t / stunWaitTime), 0f, 0f);
+				}
+				else if (BossStage == 3)
+				{
+					//GrimmHue.SetAllGrimmHues(Mathf.Lerp(0.30f, 0.45f, t / stunWaitTime), 0f, 0f);
+					//Colors.SetHues(Mathf.Lerp(0.30f, 0.45f, t / stunWaitTime), 0f, 0f);
+				}*/
+			}
 		}
 	}
 
@@ -621,7 +643,7 @@ public class InfernoKingGrimm : BossReplacement
 		//{
 		for (float t = 0; t < stunWaitTime; t += Time.deltaTime)
 		{
-			if (!Settings.hardMode && !Settings.DisableColorEffects)
+			/*if (!Settings.hardMode && !Settings.DisableColorEffects)
 			{
 				if (BossStage == 2)
 				{
@@ -633,7 +655,7 @@ public class InfernoKingGrimm : BossReplacement
 					//GrimmHue.SetAllGrimmHues(Mathf.Lerp(0.30f, 0.45f, t / stunWaitTime), 0f, 0f);
 					Colors.SetHues(Mathf.Lerp(0.30f, 0.45f, t / stunWaitTime), 0f, 0f);
 				}
-			}
+			}*/
 
 			yield return null;
 		}
