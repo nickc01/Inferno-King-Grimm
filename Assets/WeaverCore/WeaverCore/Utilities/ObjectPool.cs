@@ -247,6 +247,7 @@ namespace WeaverCore.Utilities
 
 		private void SendBackToPool(PoolableObject poolableObject)
 		{
+			//Debug.Log("Sending " + poolableObject.gameObject + " back to the pool");
 			ComponentPath[] objComponents = poolableObject.GetAllComponents();
 			ComponentPath[] prefabComponents = Prefab.GetAllComponents();
 
@@ -359,7 +360,8 @@ namespace WeaverCore.Utilities
 				obj.SourcePool = this;
 				obj.InPool = false;
 				Transform t = obj.transform;
-				t.parent = parent;
+				//t.parent = parent;
+				t.SetParent(parent);
 				t.position = position;
 				t.rotation = rotation;
 				obj.gameObject.SetActive(Prefab.gameObject.activeSelf);
@@ -389,6 +391,10 @@ namespace WeaverCore.Utilities
 				{
 					StorageLocation.AddStartCallerEntry(objComponents, ComponentData);
 				}
+				//Debug.Log("Instantiating Pooled Object = " + obj.gameObject.name);
+				//Debug.Log("Parent = " + t.parent);
+				//Debug.Log("Enabled = " + obj.gameObject.activeSelf);
+				//Debug.Log("Parent = " + )
 				return obj;
 			}
 			else
@@ -397,9 +403,11 @@ namespace WeaverCore.Utilities
 				obj.SourcePool = this;
 				obj.gameObject.name = InstanceName;
 				Transform t = obj.transform;
-				t.parent = parent;
+				//t.parent = parent;
+				t.SetParent(parent);
 				t.position = position;
 				t.rotation = rotation;
+				//Debug.Log("Instantiating New Object = " + obj.gameObject.name);
 				return obj;
 			}
 		}
@@ -573,6 +581,7 @@ namespace WeaverCore.Utilities
 			{
 				return null;
 			}
+#if USE_EMIT
 			DynamicMethod awakeCaller = new DynamicMethod("", MethodAttributes.Public | MethodAttributes.Static, CallingConventions.Standard, null, new Type[1] { typeof(Component) }, sourceType, true);
 			ILGenerator gen = awakeCaller.GetILGenerator();
 			gen.Emit(OpCodes.Ldarg_0);
@@ -588,6 +597,12 @@ namespace WeaverCore.Utilities
 			}
 			gen.Emit(OpCodes.Ret);
 			return (Action<Component>)awakeCaller.CreateDelegate(typeof(Action<Component>));
+#else
+			return (c) =>
+			{
+				method.Invoke(c, null);
+			};
+#endif
 		}
 	}
 

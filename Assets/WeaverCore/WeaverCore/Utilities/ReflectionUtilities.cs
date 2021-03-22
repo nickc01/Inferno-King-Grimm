@@ -92,6 +92,7 @@ namespace WeaverCore.Utilities
 
 		public static Func<SourceType, FieldType> CreateFieldGetter<SourceType, FieldType>(FieldInfo field)
 		{
+#if USE_EMIT
 			string methodName = field.ReflectedType.FullName + ".get_" + field.Name;
 			DynamicMethod setterMethod = new DynamicMethod(methodName, typeof(FieldType), new Type[1] { typeof(SourceType) }, true);
 			ILGenerator gen = setterMethod.GetILGenerator();
@@ -106,6 +107,12 @@ namespace WeaverCore.Utilities
 			}
 			gen.Emit(OpCodes.Ret);
 			return (Func<SourceType, FieldType>)setterMethod.CreateDelegate(typeof(Func<SourceType, FieldType>));
+#else
+			return (source) =>
+			{
+				return (FieldType)field.GetValue(source);
+			};
+#endif
 		}
 
 		public static Func<SourceType, FieldType> CreateFieldGetter<SourceType, FieldType>(string fieldName, BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
@@ -115,6 +122,7 @@ namespace WeaverCore.Utilities
 
 		public static Action<SourceType, FieldType> CreateFieldSetter<SourceType, FieldType>(FieldInfo field)
 		{
+#if USE_EMIT
 			string methodName = field.ReflectedType.FullName + ".set_" + field.Name;
 			DynamicMethod setterMethod = new DynamicMethod(methodName, null, new Type[2] { typeof(SourceType), typeof(FieldType) }, true);
 			ILGenerator gen = setterMethod.GetILGenerator();
@@ -131,6 +139,13 @@ namespace WeaverCore.Utilities
 			}
 			gen.Emit(OpCodes.Ret);
 			return (Action<SourceType, FieldType>)setterMethod.CreateDelegate(typeof(Action<SourceType, FieldType>));
+#else
+			return (source, value) =>
+			{
+				field.SetValue(source, value);
+				//return (FieldType)field.GetValue(source);
+			};
+#endif
 		}
 
 		public static Action<SourceType, FieldType> CreateFieldSetter<SourceType, FieldType>(string fieldName, BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
@@ -346,6 +361,52 @@ namespace WeaverCore.Utilities
 
 			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 			{
+				//WeaverLog.Log("Doing " + typeof(T).FullName + " on assembly = " + assembly.GetName().Name);
+				methods.AddRange(GetMethodsWithAttribute<T>(assembly, flags));
+			}
+
+			if (methods.Count == 0)
+			{
+				return;
+			}
+
+			bool sortable = false;
+
+			if (methods[0].Item2 is PriorityAttribute)
+			{
+				sortable = true;
+				methods.Sort(new PriorityAttribute.PairSorter<T>());
+			}
+
+			while (methods.Count > 0)
+			{
+				var method = methods[0];
+				methods.RemoveAt(0);
+				try
+				{
+					if (ExecuteIf == null || ExecuteIf(method.Item1, method.Item2))
+					{
+						//WeaverLog.Log("Executing Method = " + method.Item1.DeclaringType.FullName + ":" + method.Item1.Name);
+						method.Item1.Invoke(null, null);
+					}
+				}
+				catch (Exception e)
+				{
+					if (throwOnError)
+					{
+						throw;
+					}
+					else
+					{
+						WeaverLog.LogError("Error running function [" + method.Item1.DeclaringType.FullName + ":" + method.Item1.Name + "\n" + e);
+					}
+				}
+			}
+
+			/*List<ValueTuple<MethodInfo, T>> methods = new List<ValueTuple<MethodInfo, T>>();
+
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+			{
 				methods.AddRange(GetMethodsWithAttribute<T>(assembly, flags));
 			}
 
@@ -401,7 +462,7 @@ namespace WeaverCore.Utilities
 			finally
 			{
 				AppDomain.CurrentDomain.AssemblyLoad -= NewAssemblyLoad;
-			}
+			}*/
 		}
 
 		/// <summary>
@@ -415,14 +476,14 @@ namespace WeaverCore.Utilities
 		/// </summary>
 		/// <param name="domain"></param>
 		/// <returns></returns>
-		public static IEnumerable<Assembly> AllAssemblies(this AppDomain domain)
+		/*public static IEnumerable<Assembly> AllAssemblies(this AppDomain domain)
 		{
 			return new AssemblyEnumerable(domain);
-		}
+		}*/
 	}
 
 
-	sealed class AssemblyEnumerable : IEnumerable<Assembly>
+	/*sealed class AssemblyEnumerable : IEnumerable<Assembly>
 	{
 		AppDomain Domain;
 
@@ -518,5 +579,5 @@ namespace WeaverCore.Utilities
 		}
 
 
-	}
+	}*/
 }

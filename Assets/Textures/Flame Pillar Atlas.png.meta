@@ -1,20 +1,42 @@
 fileFormatVersion: 2
 guid: 51f4ef8d06b502b4e8ae0d7d23668673
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Grimm_nightmare_flame_pillar0010
-    21300002: Grimm_nightmare_flame_pillar0005
-    21300004: Grimm_nightmare_flame_pillar0004
-    21300006: Grimm_nightmare_flame_pillar0008
-    21300008: Grimm_nightmare_flame_pillar0006
-    21300010: Grimm_nightmare_flame_pillar0002
-    21300012: Grimm_nightmare_flame_pillar0003
-    21300014: Grimm_nightmare_flame_pillar0000
-    21300016: Grimm_nightmare_flame_pillar0001
-    21300018: Grimm_nightmare_flame_pillar0009
-    21300020: Grimm_nightmare_flame_pillar0007
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Grimm_nightmare_flame_pillar0010
+  - first:
+      213: 21300002
+    second: Grimm_nightmare_flame_pillar0005
+  - first:
+      213: 21300004
+    second: Grimm_nightmare_flame_pillar0004
+  - first:
+      213: 21300006
+    second: Grimm_nightmare_flame_pillar0008
+  - first:
+      213: 21300008
+    second: Grimm_nightmare_flame_pillar0006
+  - first:
+      213: 21300010
+    second: Grimm_nightmare_flame_pillar0002
+  - first:
+      213: 21300012
+    second: Grimm_nightmare_flame_pillar0003
+  - first:
+      213: 21300014
+    second: Grimm_nightmare_flame_pillar0000
+  - first:
+      213: 21300016
+    second: Grimm_nightmare_flame_pillar0001
+  - first:
+      213: 21300018
+    second: Grimm_nightmare_flame_pillar0009
+  - first:
+      213: 21300020
+    second: Grimm_nightmare_flame_pillar0007
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -32,6 +54,9 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -62,11 +87,17 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -76,7 +107,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -86,7 +119,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: iPhone
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -96,7 +131,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Android
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -106,7 +143,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Windows Store Apps
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -116,7 +155,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: WebGL
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,6 +167,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -197,6 +239,13 @@ TextureImporter:
         - {x: 15.26705, y: 33.5}
         - {x: 12.26705, y: 34.5}
       tessellationDetail: 0
+      bones: []
+      spriteID: 02305410000000000800000000000000
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0005
       rect:
@@ -244,6 +293,13 @@ TextureImporter:
         - {x: 12.76705, y: -110.5124}
         - {x: 15.76705, y: -106.5124}
       tessellationDetail: 0
+      bones: []
+      spriteID: 22305410000000000800000000000000
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0004
       rect:
@@ -296,6 +352,13 @@ TextureImporter:
         - {x: 10.26705, y: -96.5}
         - {x: 16.26705, y: -85.5}
       tessellationDetail: 0
+      bones: []
+      spriteID: 42305410000000000800000000000000
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0008
       rect:
@@ -363,6 +426,13 @@ TextureImporter:
         - {x: 10.74236, y: 65.49309}
         - {x: 8.742365, y: 66.49309}
       tessellationDetail: 0
+      bones: []
+      spriteID: 62305410000000000800000000000000
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0006
       rect:
@@ -426,6 +496,13 @@ TextureImporter:
         - {x: 9.26705, y: -41.0166}
         - {x: 10.26705, y: -19.0166}
       tessellationDetail: 0
+      bones: []
+      spriteID: 82305410000000000800000000000000
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0002
       rect:
@@ -462,6 +539,13 @@ TextureImporter:
         - {x: 12.25045, y: -9}
         - {x: 10.25045, y: -7}
       tessellationDetail: 0
+      bones: []
+      spriteID: a2305410000000000800000000000000
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0003
       rect:
@@ -510,6 +594,13 @@ TextureImporter:
         - {x: 14.76705, y: -93.96194}
         - {x: 14.76705, y: -71.96194}
       tessellationDetail: 0
+      bones: []
+      spriteID: c2305410000000000800000000000000
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0000
       rect:
@@ -540,6 +631,13 @@ TextureImporter:
         - {x: 14.26705, y: -19.98339}
         - {x: 14.26705, y: -7.983391}
       tessellationDetail: 0
+      bones: []
+      spriteID: e2305410000000000800000000000000
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0001
       rect:
@@ -582,6 +680,13 @@ TextureImporter:
         - {x: -14.77101, y: -7.485001}
         - {x: -15.77101, y: -7.485001}
       tessellationDetail: 0
+      bones: []
+      spriteID: 03305410000000000800000000000000
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0009
       rect:
@@ -634,6 +739,13 @@ TextureImporter:
         - {x: 10.75284, y: 54.47532}
         - {x: 9.752844, y: 55.47532}
       tessellationDetail: 0
+      bones: []
+      spriteID: 23305410000000000800000000000000
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0007
       rect:
@@ -692,9 +804,26 @@ TextureImporter:
         - {x: -5.213034, y: 2.508636}
         - {x: -8.213034, y: 10.50864}
       tessellationDetail: 0
+      bones: []
+      spriteID: 43305410000000000800000000000000
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

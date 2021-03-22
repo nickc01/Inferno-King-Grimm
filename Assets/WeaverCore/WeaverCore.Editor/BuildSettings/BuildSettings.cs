@@ -42,11 +42,11 @@ namespace WeaverCore.Editor
 			}
 			if (LinuxSupport)
 			{
-				if (!PlatformUtilities.IsPlatformSupportLoaded(BuildTarget.StandaloneLinuxUniversal))
+				if (!PlatformUtilities.IsPlatformSupportLoaded(BuildTarget.StandaloneLinux64))
 				{
 					throw new Exception("Attempting to build for the linux platform, but Unity currently has no support for building linux builds");
 				}
-				yield return BuildTarget.StandaloneLinuxUniversal;
+				yield return BuildTarget.StandaloneLinux64;
 			}
 		}
 	}

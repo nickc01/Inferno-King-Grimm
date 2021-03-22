@@ -9,36 +9,34 @@ namespace WeaverCore
 {
     public static class WeaverLog
     {
-        static WeaverLog_I impl = ImplFinder.GetImplementation<WeaverLog_I>();
-
         public static void Log(object obj)
         {
-            impl.Log(obj);
+            Modding.Logger.Log(obj);
         }
 
         public static void Log(string str)
         {
-            impl.Log(str);
+            Modding.Logger.Log(str);
         }
 
         public static void LogError(object obj)
         {
-            impl.LogError(obj);
+            Modding.Logger.LogError(obj);
         }
 
         public static void LogError(string str)
         {
-            impl.LogError(str);
+            Modding.Logger.LogError(str);
         }
 
         public static void LogWarning(object obj)
         {
-            impl.LogWarning(obj);
+            Modding.Logger.LogWarn(obj);
         }
 
         public static void LogWarning(string str)
         {
-            impl.LogWarning(str);
+            Modding.Logger.LogWarn(str);
         }
     }
 }

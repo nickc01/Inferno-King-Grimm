@@ -35,6 +35,7 @@ namespace WeaverCore.Game.Implementations
 
 		static void LoadWeaverAssetBundle()
 		{
+			WeaverLog.Log("LOADING WEAVERCORE BUNDLE FOR WEAVER ASSETS");
 			foreach (var loadedBundle in AssetBundle.GetAllLoadedAssetBundles())
 			{
 				if (loadedBundle.name == "weavercore_bundle")

@@ -67,6 +67,16 @@ namespace WeaverCore.Utilities
 			return path;
 		}
 
+		/// <summary>
+		/// Replaces all backslashes (\) with forward slashes (/) to make the path work with some unity functions
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public static string ReplaceSlashes(string path)
+		{
+			return path.Replace('\\', '/');
+		}
+
 		public static string AddSlash(this DirectoryInfo directory)
 		{
 			return AddSlash(directory.FullName);

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Tizen;
 using WeaverCore.DataTypes;
 
 namespace WeaverCore.Editor

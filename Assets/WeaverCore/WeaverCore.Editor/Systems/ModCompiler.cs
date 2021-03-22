@@ -15,6 +15,13 @@ using WeaverCore.Utilities;
 
 namespace WeaverCore.Editor.Systems
 {
+	public static class ModCompilerV2
+	{
+
+	}
+
+
+
 	public static class ModCompiler
 	{
 		static string AsmLocationRelative = "Assets\\WeaverCore\\WeaverCore.Editor";
@@ -86,6 +93,9 @@ namespace WeaverCore.Editor.Systems
 				mainModBuilder.ExcludedReferences.Add("Library/ScriptAssemblies/Assembly-CSharp-Editor.dll");
 				mainModBuilder.ExcludedReferences.Add("Editor");
 				mainModBuilder.ExcludedReferences.Add("Library/ScriptAssemblies/HollowKnight.dll");
+
+				LibraryCompiler.RemoveEditorReferences(mainModBuilder);
+				LibraryCompiler.AddUnityReferences(mainModBuilder);
 
 				yield return mainModBuilder.Build();
 				if (!mainModBuilder.BuildSuccessful)

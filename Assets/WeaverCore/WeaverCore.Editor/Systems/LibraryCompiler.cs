@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +7,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using UnityEditor;
+using UnityEditor.Build.Content;
+using UnityEditor.Build.Pipeline;
+using UnityEditor.Build.Pipeline.WriteTypes;
+using UnityEditor.Build.Player;
 using UnityEngine;
 using WeaverBuildTools.Commands;
 using WeaverBuildTools.Enums;
@@ -42,9 +45,10 @@ namespace WeaverCore.Editor.Systems
 					yield return BuildTarget.StandaloneOSX;
 				}
 
-				if (PlatformUtilities.IsPlatformSupportLoaded(BuildTarget.StandaloneLinuxUniversal))
+				if (PlatformUtilities.IsPlatformSupportLoaded(BuildTarget.StandaloneLinux64))
 				{
-					yield return BuildTarget.StandaloneLinuxUniversal;
+					yield return BuildTarget.StandaloneLinux64;
+					//yield return BuildTarget.StandaloneLinuxUniversal;
 				}
 			}
 		}
@@ -99,9 +103,13 @@ namespace WeaverCore.Editor.Systems
 
 			var weaverGameLocation = new FileInfo("Assets\\WeaverCore\\Other Projects~\\WeaverCore.Game\\WeaverCore.Game\\bin\\WeaverCore.Game.dll");
 			var harmonyLocation = new FileInfo("Assets\\WeaverCore\\Libraries\\0Harmony.dll");
+			var iLGenLocation = new FileInfo("Assets\\WeaverCore\\Libraries\\System.Reflection.Emit.ILGeneration.dll");
+			var emitLocation = new FileInfo("Assets\\WeaverCore\\Libraries\\System.Reflection.Emit.dll");
 
 			EmbedResourceCMD.EmbedResource(buildLocation, weaverGameLocation.FullName, "WeaverCore.Game", compression: CompressionMethod.NoCompression);
 			EmbedResourceCMD.EmbedResource(buildLocation, harmonyLocation.FullName, "0Harmony", compression: CompressionMethod.NoCompression);
+			EmbedResourceCMD.EmbedResource(buildLocation, iLGenLocation.FullName, "ILGeneration", compression: CompressionMethod.NoCompression);
+			EmbedResourceCMD.EmbedResource(buildLocation, emitLocation.FullName, "ReflectionEmit", compression: CompressionMethod.NoCompression);
 		}
 
 		/// <summary>
@@ -142,7 +150,7 @@ namespace WeaverCore.Editor.Systems
 				BuildingAssemblies = true;
 				BuildingBundles = true;
 				WeaverLog.Log("Beginning Bundling");
-				yield return PrepareForBundling(modName);
+				PrepareForBundling(modName);
 				var temp = Path.GetTempPath();
 				var bundleBuilds = new DirectoryInfo(temp + "BundleBuilds\\");
 
@@ -153,12 +161,15 @@ namespace WeaverCore.Editor.Systems
 
 				bundleBuilds.Create();
 
+				//CustomAssetBundler.Test(BuildTarget.StandaloneWindows,BuildTargetGroup.Standalone,bundleBuilds.CreateSubdirectory(BuildTarget.StandaloneWindows.ToString() + "_NEW").FullName);
+
 				foreach (var target in buildTargets)
 				{
 					var targetFolder = bundleBuilds.CreateSubdirectory(target.ToString());
 
 					targetFolder.Create();
-					BuildPipeline.BuildAssetBundles(targetFolder.FullName, BuildAssetBundleOptions.None, target);
+					//CompatibilityBuildPipeline.BuildAssetBundles(targetFolder.FullName, BuildAssetBundleOptions.None, target);
+					var results = CustomAssetBundler.Test(target, BuildTargetGroup.Standalone, targetFolder.FullName);
 					foreach (var bundleFile in targetFolder.GetFiles())
 					{
 						if (bundleFile.Extension == "" && !bundleFile.Name.Contains("BundleBuilds"))
@@ -177,37 +188,39 @@ namespace WeaverCore.Editor.Systems
 			}
 		}
 
-		static IEnumerator PrepareForBundling(string modName = null)
+		static void PrepareForBundling(string modName = null)
 		{
-			AssemblyReplacer.AssemblyReplacements.Add("HollowKnight.dll", "Assembly-CSharp.dll");
+			//AssemblyReplacer.AssemblyReplacements.Add("HollowKnight.dll", "Assembly-CSharp.dll");
+			//AssemblyReplacer.AssemblyRemovals.Add("WeaverCore.Editor.dll");
 			if (modName != null)
 			{
-				AssemblyReplacer.AssemblyReplacements.Add("Assembly-CSharp.dll", modName + ".dll");
-				MonoScriptUtilities.ChangeAssemblyName("Assembly-CSharp", modName);
+				//AssemblyReplacer.AssemblyReplacements.Add("Assembly-CSharp.dll", modName + ".dll");
+				//MonoScriptUtilities.ChangeAssemblyName("Assembly-CSharp", modName);
 				foreach (var registry in RegistryChecker.LoadAllRegistries())
 				{
 					registry.ReplaceAssemblyName("Assembly-CSharp", modName);
 					registry.ApplyChanges();
 				}
 			}
-			MonoScriptUtilities.ChangeAssemblyName("HollowKnight", "Assembly-CSharp");
-			yield return SwitchToCompileMode();
+			//MonoScriptUtilities.ChangeAssemblyName("HollowKnight", "Assembly-CSharp");
+			//yield return SwitchToCompileMode();
 		}
 
 		static void AfterBundling(string modName = null)
 		{
-			AssemblyReplacer.AssemblyReplacements.Clear();
-			MonoScriptUtilities.ChangeAssemblyName("Assembly-CSharp", "HollowKnight");
+			//AssemblyReplacer.AssemblyReplacements.Clear();
+			//AssemblyReplacer.AssemblyRemovals.Clear();
+			//MonoScriptUtilities.ChangeAssemblyName("Assembly-CSharp", "HollowKnight");
 			if (modName != null)
 			{
-				MonoScriptUtilities.ChangeAssemblyName(modName, "Assembly-CSharp");
+				//MonoScriptUtilities.ChangeAssemblyName(modName, "Assembly-CSharp");
 				foreach (var registry in RegistryChecker.LoadAllRegistries())
 				{
 					registry.ReplaceAssemblyName(modName, "Assembly-CSharp");
 					registry.ApplyChanges();
 				}
 			}
-			SwitchToEditorMode();
+			//SwitchToEditorMode();
 		}
 
 		static IEnumerator SwitchToCompileMode()
@@ -240,13 +253,138 @@ namespace WeaverCore.Editor.Systems
 			scripts.RemoveAll(f => f.FullName.Contains("Editor\\"));
 			assemblyCSharpBuilder.Scripts = scripts;
 			assemblyCSharpBuilder.Defines.Add("GAME_BUILD");
+
+			AddUnityReferences(assemblyCSharpBuilder);
+			//RemoveEditorReferences(assemblyCSharpBuilder);
+
+
+			//var settings = GameBuildSettings.GetSettings();
+
+			//var managedLocation = new DirectoryInfo(settings.HollowKnightLocation + "\\hollow_knight_Data\\Managed");
+			//assemblyCSharpBuilder.ExcludedReferences.Add("UnityEngine.dll");
+
+			//assemblyCSharpBuilder.ExcludedReferences.Add("Managed\\UnityEngine.dll");
+			//assemblyCSharpBuilder.ExcludedReferences.Add("Managed/UnityEngine.dll");
+			//assemblyCSharpBuilder.ExcludedReferences.Add(@"C:\Program Files\Unity\Hub\Editor\2020.2.2f1\Unity\Editor\Data\Managed\UnityEngine.dll");
+
+
+			//var defaultReferences = 
+
+			//assemblyCSharpBuilder.ExcludedReferences.Add("C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/Managed/UnityEngine.dll");
+			//assemblyCSharpBuilder.ExcludedReferences.Add("C:\\Program Files\\Unity\\Hub\\Editor\\2020.2.2f1\\Unity\\Editor\\Data\\Managed\\UnityEngine.dll");
+
+
+			//Debug.Log("Location = " + typeof(MonoBehaviour).Assembly.Location);
+
+			//var unityDLLDirectory = new DirectoryInfo(@"C:\Program Files\Unity\Hub\Editor\2020.2.2f1\Unity\Editor\Data\Managed\UnityEngine");
+
+			//if (unityDLLDirectory.Parent.Exists && unityDLLDirectory.Parent.Name == "Managed")
+			//{
+			//Debug.Log("Removing UnityENGINE REFERENCE");
+			//Debug.Log("Directory Path = " + unityDLLDirectory.Parent.FullName);
+			//assemblyCSharpBuilder.ExcludedReferences.Add(PathUtilities.ReplaceSlashes(unityDLLDirectory.Parent.FullName + "\\UnityEngine.dll"));
+			//assemblyCSharpBuilder.ExcludedReferences.Add(unityDLLDirectory.Parent.FullName + "\\UnityEngine.dll");
+			//Debug.Log("ENGINE PATH = " + PathUtilities.ReplaceSlashes(unityDLLDirectory.Parent.FullName + "\\UnityEngine.dll"));
+			//Debug.Log("ACTUAL PATH = " + "C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/Managed/UnityEngine.dll");
+
+			//assemblyCSharpBuilder.ExcludedReferences.Add("UnityEngine.dll");
+
+			//assemblyCSharpBuilder.ExcludedReferences.Add("C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/Managed/UnityEngine.dll");
+			//}
+
+
+			/*foreach (var hkFile in unityDLLDirectory.EnumerateFiles("*.dll", SearchOption.TopDirectoryOnly))
+			{
+				if (hkFile.Name.Contains("UnityEngine"))
+				{
+					//Debug.Log("Adding File = " + hkFile.FullName);
+					assemblyCSharpBuilder.ReferencePaths.Add(hkFile.FullName);
+				}
+			}*/
+
+
+			//var defaultReferences = assemblyCSharpBuilder.GetDefaultReferences().ToArray();
+
+
+			/*foreach (var hkFile in managedLocation.EnumerateFiles("*.dll", SearchOption.TopDirectoryOnly))
+			{
+				//if (hkFile.Name != "UnityEngine.dll" && !hkFile.Name.Contains("Editor"))
+				if (!hkFile.Name.Contains("Assembly-CSharp") && !hkFile.Name.Contains("MMHOOK") && hkFile.Name != "UnityEngine.dll")
+				{
+					if (!defaultReferences.Any(dRef => dRef.Name == hkFile.Name))
+					{
+						Debug.Log("Adding File = " + hkFile.FullName);
+						//assemblyCSharpBuilder.ReferencePaths.Add(hkFile.FullName);
+						//assemblyCSharpBuilder.ReferencePaths.Add(PathUtilities.ReplaceSlashes(hkFile.FullName));
+					}
+				}
+			}*/
+
+			//assemblyCSharpBuilder.ReferencePaths.Add("C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll");
+
+
+
+
+			/*foreach (var hkFile in managedLocation.EnumerateFiles("*.dll", SearchOption.TopDirectoryOnly))
+			{
+				if (hkFile.Name == "UnityEngine.CoreModule.dll")
+				{
+					Debug.Log("Adding File = " + hkFile.FullName);
+					assemblyCSharpBuilder.ReferencePaths.Add(hkFile.FullName);
+				}
+			}*/
+
+			/*if (hkFile.Name != "UnityEngine.dll" && (hkFile.Name.Contains("Unity") || hkFile.Name.Contains("ConditionalExpression") || hkFile.Name == "PlayMaker.dll"))
+{
+	Debug.Log("Adding File = " + hkFile.FullName);
+	assemblyCSharpBuilder.ReferencePaths.Add(hkFile.FullName);
+}*/
+
+			//Debug.Log("Hollow Knight Location = " + settings.HollowKnightLocation);
+
+			//assemblyCSharpBuilder.ReferencePaths.Add("UnityEngine.CoreModule");
 			assemblyCSharpBuilder.ExcludedReferences.Add("Library/ScriptAssemblies/HollowKnight.dll");
+			//assemblyCSharpBuilder.ExcludedReferences.Add("Library/ScriptAssemblies/WeaverCore.dll");
 			if (File.Exists(buildLocation))
 			{
 				File.Delete(buildLocation);
 			}
 
 			yield return assemblyCSharpBuilder.Build();
+		}
+
+		public static void RemoveEditorReferences(Builder builder)
+		{
+			var defaultReferences = builder.GetDefaultReferences();
+
+			foreach (var dRef in defaultReferences)
+			{
+				var file = new FileInfo(dRef);
+				if (file.Name.Contains("Editor"))
+				{
+					builder.ExcludedReferences.Add(dRef);
+				}
+			}
+		}
+
+		public static void AddUnityReferences(Builder builder)
+		{
+			var coreModuleLocation = new FileInfo(typeof(MonoBehaviour).Assembly.Location);
+			var unityAssemblyFolder = coreModuleLocation.Directory;
+			var managedFolder = unityAssemblyFolder.Parent;
+
+
+			builder.ExcludedReferences.Add(managedFolder.FullName + @"\UnityEngine.dll");
+			builder.ExcludedReferences.Add(PathUtilities.ReplaceSlashes(managedFolder.FullName + @"\UnityEngine.dll"));
+
+			foreach (var hkFile in unityAssemblyFolder.EnumerateFiles("*.dll", SearchOption.TopDirectoryOnly))
+			{
+				if (hkFile.Name.Contains("UnityEngine"))
+				{
+					//Debug.Log("Adding File = " + hkFile.FullName);
+					builder.ReferencePaths.Add(PathUtilities.ReplaceSlashes(hkFile.FullName));
+				}
+			}
 		}
 
 		/// <summary>
@@ -276,6 +414,18 @@ namespace WeaverCore.Editor.Systems
 
 				weaverCoreBuilder.ReferencePaths.Add(DefaultAssemblyCSharpLocation.FullName);
 
+				//var unityDLLDirectory = new DirectoryInfo(@"C:\Program Files\Unity\Hub\Editor\2020.2.2f1\Unity\Editor\Data\Managed\UnityEngine");
+
+				AddUnityReferences(weaverCoreBuilder);
+
+				/*foreach (var hkFile in unityDLLDirectory.EnumerateFiles("*.dll", SearchOption.TopDirectoryOnly))
+				{
+					if (hkFile.Name.Contains("UnityEngine"))
+					{
+						//Debug.Log("Adding File = " + hkFile.FullName);
+						weaverCoreBuilder.ReferencePaths.Add(hkFile.FullName);
+					}
+				}*/
 
 				if (File.Exists(buildLocation))
 				{
@@ -293,12 +443,21 @@ namespace WeaverCore.Editor.Systems
 	static class AssemblyReplacer// : ClassWidePatcher
 	{
 		public static Dictionary<string, string> AssemblyReplacements = new Dictionary<string, string>();
+		public static List<string> AssemblyRemovals = new List<string>();
 
 		static bool EnableReplacements
 		{
 			get
 			{
 				return AssemblyReplacements.Count > 0;
+			}
+		}
+
+		static bool EnableRemovals
+		{
+			get
+			{
+				return AssemblyRemovals.Count > 0;
 			}
 		}
 
@@ -310,24 +469,479 @@ namespace WeaverCore.Editor.Systems
 		[OnInit]
 		static void Init()
 		{
+			//Debug.Log("APPLYING PATCHES");
 			var type = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface");
+			var compType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilation");
 			var patcher = HarmonyPatcher.Create("com.AssemblyReplacer.patch");
-			patcher.Patch(type.GetMethod("GetTargetAssemblies",BindingFlags.Public | BindingFlags.Static),null, typeof(AssemblyReplacer).GetMethod("PostfixGetTargetAssemblies"));
-			patcher.Patch(type.GetMethod("GetTargetAssembly",BindingFlags.Public | BindingFlags.Static),null, typeof(AssemblyReplacer).GetMethod("PostfixGetTargetAssembly"));
+			//patcher.Patch(type.GetMethod("GetTargetAssemblyInfos", BindingFlags.Public | BindingFlags.Static),null, typeof(AssemblyReplacer).GetMethod("PostfixGetTargetAssemblies"));
+			//patcher.Patch(type.GetMethod("GetAllCompiledAndResolvedTargetAssemblies", BindingFlags.Public | BindingFlags.Static), null, typeof(AssemblyReplacer).GetMethod("PostfixGetTargetAssemblies"));
+			//patcher.Patch(type.GetMethod("GetTargetAssembly",BindingFlags.Public | BindingFlags.Static),null, typeof(AssemblyReplacer).GetMethod("PostfixGetTargetAssembly"));
+
+			//patcher.Patch(compType.GetMethod("CreateScriptAssembly"),null,typeof(AssemblyReplacer).GetMethod("CreateScriptAssembly_Postfix"));
+
+			//patcher.Patch(typeof(LibraryCompiler).GetMethod("BuildHollowKnightASM", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance), typeof(AssemblyReplacer).GetMethod("PREFIX", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static),null);
+
+			var testMethod = typeof(AssemblyReplacer).GetMethod("TESTER_PREFIX", BindingFlags.Static | BindingFlags.NonPublic);
+
+			/*foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
+			{
+				if (method.Name != "get_Instance")
+				{
+					patcher.Patch(method, testMethod, null);
+				}
+			}*/
+
+
+			//var M_AddAssemblyInfo = typeof(TypeDB).GetMethod("AddAssemblyInfo", BindingFlags.NonPublic | BindingFlags.Instance);
+
+			//patcher.Patch(M_AddAssemblyInfo, typeof(AssemblyReplacer).GetMethod(nameof(AddAssemblyInfoPrefix), BindingFlags.NonPublic | BindingFlags.Static), null);
+
+			//var M_WriteSerializedFile_Internal = typeof(ContentBuildInterface).GetMethod("WriteSerializedFile_Internal", BindingFlags.NonPublic | BindingFlags.Static);
+			//patcher.Patch(M_WriteSerializedFile_Internal, typeof(AssemblyReplacer).GetMethod(nameof(WriteSerializedFile_Internal_Prefix), BindingFlags.NonPublic | BindingFlags.Static), null);
+
+			var M_CreateWorkItems = typeof(UnityEditor.Build.Pipeline.Tasks.ArchiveAndCompressBundles).GetMethod("CreateWorkItems",BindingFlags.NonPublic | BindingFlags.Static);
+			patcher.Patch(M_CreateWorkItems, null, typeof(AssemblyReplacer).GetMethod(nameof(CreateWorkItems_Postfix), BindingFlags.NonPublic | BindingFlags.Static));
+			Debug.Log("APPLIED PATCH");
+
+			var M_Write = typeof(AssetBundleWriteOperation).GetMethod("Write");
+			patcher.Patch(M_Write, typeof(AssemblyReplacer).GetMethod(nameof(Write_Prefix), BindingFlags.NonPublic | BindingFlags.Static), null);
+
+
+			var M_ArchiveAndCompress = typeof(ContentBuildInterface).GetMethod("ArchiveAndCompress", new Type[] { typeof(ResourceFile[]), typeof(string), typeof(UnityEngine.BuildCompression) });
+			patcher.Patch(M_ArchiveAndCompress, typeof(AssemblyReplacer).GetMethod("ArchiveAndCompress_Prefix"), null);
+			//Assembly test;
+
+			//test.ful
+			//test.name
+
+			Assembly test;
+
+			//test.GetName()
+
+			//Debug.Log("A");
+			//var M_ASMFULLNAME = typeof(Assembly).GetProperty("FullName").GetGetMethod();
+			var M_ASMFULLNAME = typeof(Assembly).GetMethod("GetName", new Type[] { });
+			patcher.Patch(M_ASMFULLNAME, typeof(AssemblyReplacer).GetMethod(nameof(ASM_FULLNAME_PREFIX), BindingFlags.Static | BindingFlags.NonPublic), null);
+			//Debug.Log("B");
+			M_ASMFULLNAME = typeof(Assembly).GetMethod("GetName", new Type[] { typeof(bool) });
+			patcher.Patch(M_ASMFULLNAME, typeof(AssemblyReplacer).GetMethod(nameof(ASM_FULLNAME_PREFIX), BindingFlags.Static | BindingFlags.NonPublic), null);
+			//Debug.Log("C");
+
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+			{
+				foreach (var t in assembly.GetTypes())
+				{
+					if (typeof(Type).IsAssignableFrom(t) && !t.IsAbstract)
+					{
+						var typePatch = t.GetProperty(nameof(Type.AssemblyQualifiedName)).GetGetMethod();
+						patcher.Patch(typePatch, typeof(AssemblyReplacer).GetMethod(nameof(QualifiedName_Prefix), BindingFlags.Static | BindingFlags.NonPublic), null);
+						//Debug.Log("D");
+						//Debug.Log(t.FullName + " is assignable to type");
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Finds how many of the <paramref name="sourceString"/> is inside of the <paramref name="stream"/>
+		/// </summary>
+		/// <param name="stream">The stream to search in</param>
+		/// <param name="sourceString">The string to look for</param>
+		/// <returns>Returns a list of where the occurances of <paramref name="sourceString"/> are positioned</returns>
+		static List<long> SearchForStringInFile(FileStream stream, string sourceString)
+		{
+			long oldPosition = stream.Position;
+			stream.Position = 0;
+			try
+			{
+				//try
+				//{
+				List<long> replacementIndexes = new List<long>();
+
+				var sourceChars = sourceString.ToCharArray();
+				//var replacementChars = replacement.ToCharArray();
+
+
+				//using (var stream = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite))
+				//{
+				//using (var reader = new BinaryReader(stream,Encoding.UTF8))
+				//{
+				while (stream.Position != stream.Length)
+				{
+					long currentTestIndex = stream.Position;
+
+					int currentValue = stream.ReadByte();
+
+					if (currentValue == sourceChars[0])
+					{
+						//Debug.Log("Found a = " + sourceChars[0]);
+						bool match = true;
+						for (int i = 1; i < sourceChars.GetLength(0); i++)
+						{
+							if (stream.Position >= stream.Length)
+							{
+								match = false;
+								break;
+							}
+							//else if ( != sourceChars[i])
+							var nextChar = stream.ReadByte();
+							//Debug.Log("Character After = " + nextChar);
+							if (nextChar != sourceChars[i])
+							{
+								match = false;
+								break;
+							}
+							//Debug.Log("Also Found a = " + sourceChars[i]);
+						}
+						if (match)
+						{
+							//Debug.Log("Match Found!!!");
+							replacementIndexes.Add(currentTestIndex);
+						}
+						stream.Position = currentTestIndex + 1;
+					}
+				}
+				//}
+				//stream.Close();
+				//}
+				return replacementIndexes;
+			}
+			finally
+			{
+				stream.Position = oldPosition;
+			}
+		}
+
+		/// <summary>
+		/// Finds how many of the <paramref name="sourceString"/> is inside of the file at the <paramref name="filePath"/>
+		/// </summary>
+		/// <param name="filePath">The location of the file to search</param>
+		/// <param name="sourceString">The string to look for</param>
+		/// <returns>Returns a list of where the occurances of <paramref name="sourceString"/> are positioned</returns>
+		static List<long> SearchForStringInFile(string filePath, string sourceString)
+		{
+			//try
+			//{
+			//List<long> replacementIndexes = new List<long>();
+
+			//var sourceChars = sourceString.ToCharArray();
+			//var replacementChars = replacement.ToCharArray();
+
+
+			using (var stream = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite))
+			{
+				return SearchForStringInFile(stream, sourceString);
+				//using (var reader = new BinaryReader(stream,Encoding.UTF8))
+				//{
+				/*while (stream.Position != stream.Length)
+				{
+					long currentTestIndex = stream.Position;
+
+					int currentValue = stream.ReadByte();
+
+					if (currentValue == sourceChars[0])
+					{
+						//Debug.Log("Found a = " + sourceChars[0]);
+						bool match = true;
+						for (int i = 1; i < sourceChars.GetLength(0); i++)
+						{
+							if (stream.Position >= stream.Length)
+							{
+								match = false;
+								break;
+							}
+							//else if ( != sourceChars[i])
+							var nextChar = stream.ReadByte();
+							//Debug.Log("Character After = " + nextChar);
+							if (nextChar != sourceChars[i])
+							{
+								match = false;
+								break;
+							}
+							//Debug.Log("Also Found a = " + sourceChars[i]);
+						}
+						if (match)
+						{
+							//Debug.Log("Match Found!!!");
+							replacementIndexes.Add(currentTestIndex);
+						}
+						stream.Position = currentTestIndex + 1;
+					}
+				}
+				//}
+				stream.Close();*/
+			}
+			//return replacementIndexes;
+		}
+
+		static int SearchAndReplaceInFile(string filePath, string sourceString, string replacement)
+		{
+			using (var stream = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite))
+			{
+				return SearchAndReplaceInStream(stream,sourceString,replacement);
+			}
+		}
+
+		static int SearchAndReplaceInStream(FileStream stream, string sourceString, string replacement)
+		{
+			var replacementArray = replacement.ToArray();
+
+			long oldPosition = stream.Position;
+			stream.Position = 0;
+			try
+			{
+				var occurances = SearchForStringInFile(stream, sourceString);
+
+				if (occurances.Count > 0)
+				{
+					using (var tempStream = new MemoryStream())
+					{
+						var nextOccurance = occurances[0];
+						var occuranceIndex = 0;
+
+						while (stream.Position != stream.Length)
+						{
+							if (stream.Position == nextOccurance)
+							{
+								for (int i = 0; i < replacement.Length; i++)
+								{
+									tempStream.WriteByte((byte)replacementArray[i]);
+								}
+
+								stream.Position += sourceString.Length;
+								occuranceIndex++;
+								if (occuranceIndex < occurances.Count)
+								{
+									nextOccurance = occurances[occuranceIndex];
+								}
+								else
+								{
+									nextOccurance = long.MaxValue;
+								}
+
+							}
+							else
+							{
+								tempStream.WriteByte((byte)stream.ReadByte());
+							}
+						}
+
+						stream.Position = 0;
+						tempStream.Position = 0;
+
+						while (tempStream.Position != tempStream.Length)
+						{
+							stream.WriteByte((byte)tempStream.ReadByte());
+						}
+						return occurances.Count;
+					}
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			finally
+			{
+				stream.Position = oldPosition;
+			}
+		}
+
+		static void CreateWorkItems_Postfix(object __result)
+		{
+			Debug.Log("Create Work Items Postfix!!!");
+			var results = (IList)__result;
+
+			foreach (var result in results)
+			{
+				var bundleName = result.GetType().GetField("BundleName").GetValue(result);
+				Debug.Log("Bundle Name = " + bundleName);
+
+				var outputFilePath = result.GetType().GetField("OutputFilePath").GetValue(result);
+				Debug.Log("Output File Path = " + outputFilePath);
+
+				var resourceFiles = (List<ResourceFile>)result.GetType().GetField("ResourceFiles").GetValue(result);
+				foreach (var resource in resourceFiles)
+				{
+					Debug.Log("Resource File Name = " + resource.fileName);
+					Debug.Log("Resource File Alias = " + resource.fileAlias);
+					Debug.Log("Resource File is serialized = " + resource.serializedFile);
+
+					//SearchAndReplaceInFile(resource.fileName, "HollowKnight.dll", "Assembly-CSharp.dll");
+					//SearchAndReplaceInFile(resource.fileName, "HollowKnight.dll", "Assembly-CSharp.dll");
+
+					SearchAndReplaceInFile(resource.fileName, "Assembly-CSharp.dll", "InfernoKingGrimm.dll");
+					SearchAndReplaceInFile(resource.fileName, "Assembly-CSharp, ", "InfernoKingGrimm, ");
+					SearchAndReplaceInFile(resource.fileName, "HollowKnight.dll", "Assembly-CSharp.dll");
+					SearchAndReplaceInFile(resource.fileName, "HollowKnight, ", "Assembly-CSharp, ");
+
+					/*var occurances = SearchForStringInFile(resource.fileName, "HollowKnight.dll").Count;
+
+					if (occurances > 0)
+					{
+
+					}*/
+				}
+			}
+		}
+
+
+
+		static bool ArchiveAndCompress_Prefix(ResourceFile[] resourceFiles, string outputBundlePath, UnityEngine.BuildCompression compression)
+		{
+			Debug.Log("ARCHIVING BUNDLES");
+
+			foreach (var resource in resourceFiles)
+			{
+				Debug.Log("Resource File Name = " + resource.fileName);
+				Debug.Log("Resource File Alias = " + resource.fileAlias);
+				Debug.Log("Resource Is Serialized File = " + resource.serializedFile);
+			}
+
+			Debug.Log("Output Bundle Path = " + outputBundlePath);
+			//Debug.Log("Compression = " + compression);
+
+			return true;
+		}
+
+		static bool QualifiedName_Prefix(Type __instance)
+		{
+			//Debug.Log("Getting Qualified Name of Type = " + __instance.FullName);
+
+			//Debug.Log("Qualified Assembly = " + __instance.Assembly.FullName);
+
+			return true;
+		}
+
+		static bool ASM_FULLNAME_PREFIX(Assembly __instance)
+		{
+			//Debug.Log("Getting name of assembly = " + __instance.FullName);
+			//Debug.Log("Getting FullName for Assembly = " + __instance.GetName().Name);
+			return true;
+		}
+
+		static int counter = 0;
+
+		static bool Write_Prefix(string outputFolder, UnityEditor.Build.Content.BuildSettings settings, BuildUsageTagGlobal globalUsage, AssetBundleWriteOperation __instance)
+		{
+			//Debug.Log("_-_-_DOING WRITING");
+			//Debug.Log("_-_-_DOING WRITING");
+			//Debug.Log("Output Folder = " + outputFolder);
+			//Debug.Log("Write Command File Name = " + __instance.Command.fileName);
+			//Debug.Log("Write Command Internal Name = " + __instance.Command.internalName);
+			foreach (var sObject in __instance.Command.serializeObjects)
+			{
+				//Debug.Log("Serialization Index = " + sObject.serializationIndex);
+				//Debug.Log("Serialization Object = " + sObject.serializationObject.ToString());
+			}
+
+			//Debug.Log("Build Settings Target = " + settings.target);
+			//Debug.Log("Build Settings Group = " + settings.group);
+			//Debug.Log("Build Settings Flags = " + settings.buildFlags);
+
+			PrintJsonData(__instance.UsageSet, "USAGE SET STUFF " + counter + ".json");
+			PrintJsonData(__instance.ReferenceMap, "REFERENCE MAP STUFF " + counter + ".json");
+
+			/*foreach (var preload in preloadInfo.preloadObjects)
+			{
+				Debug.Log("Preload Object = " + preload);
+			}*/
+
+			//Debug.Log("Asset Bundle Name = " + __instance.Info.bundleName);
+
+			counter++;
+			return true;
+			//return true;
+		}
+
+		/*static bool WriteSerializedFile_Internal_Prefix(string outputFolder,UnityEditor.Build.Content.BuildSettings settings,BuildUsageTagGlobal globalUsage, AssetBundleWriteOperation __instance)
+		{
+			
+		}*/
+
+		static void PrintJsonData(object obj, string fileName)
+		{
+			var type = obj.GetType();
+
+			var M_SerializeToJson = type.GetMethod("SerializeToJson", BindingFlags.NonPublic | BindingFlags.Instance);
+
+			File.WriteAllText(fileName, (string)M_SerializeToJson.Invoke(obj, null));
+		}
+
+		static bool AddAssemblyInfoPrefix(ref object assemblyInfos, ref string assembliesPath)
+		{
+			try
+			{
+				var asmInfoArray = (Array)assemblyInfos;
+
+				foreach (var info in asmInfoArray)
+				{
+					Debug.Log("Info Name = " + info.GetType().GetField("name").GetValue(info));
+					Debug.Log("Info Path = " + info.GetType().GetField("path").GetValue(info));
+				}
+
+				Debug.Log("Assemblies Path = " + assembliesPath);
+
+				return true;
+			}
+			catch (Exception e)
+			{
+				Debug.LogError("Exception in Assembly Info Patch");
+				Debug.LogException(e);
+				return true;
+			}
+		}
+
+		static bool TESTER_PREFIX(MethodBase __originalMethod)
+		{
+			Debug.Log("_+_+_+_RUNNING EDITOR METHOD = " + __originalMethod.Name);
+			return true;
+		}
+
+		static bool PREFIX()
+		{
+
+			//Debug.Log("PREFIX WORKED!!!");
+			return true;
+		}
+
+
+		public static void CreateScriptAssembly_Postfix(ref object __result)
+		{
+
+			Debug.Log("Create Script Assembly Postfix!!!");
+
+			if (__result != null)
+			{
+				var type = __result.GetType();
+				//Debug.Log("Result Type = " + type.FullName);
+
+				var refProperty = type.GetProperty("References");
+
+				string[] references = (string[])refProperty.GetValue(__result);
+
+				foreach (var asmRef in references)
+				{
+					//Debug.Log("ACTUAL ASM REF = " + asmRef);
+				}
+			}
 		}
 
 		public static void PostfixGetTargetAssemblies(ref Array __result)
 		{
-			//Debug.Log("Target Assemblies Test A");
+			Debug.Log("Target Assemblies Test A");
 			try
 			{
 				if (EnableReplacements)
 				{
+					//Debug.Log("DOING REPLACEMENTS");
 					for (int i = 0; i < __result.GetLength(0); i++)
 					{
 						var asmInfo = __result.GetValue(i);
 
-						var nameField = asmInfo.GetType().GetField("Name");
+						var asmInfoType = asmInfo.GetType();
+
+						var nameField = asmInfoType.GetField("Name");
 
 						var name = (string)nameField.GetValue(asmInfo);
 
@@ -338,10 +952,70 @@ namespace WeaverCore.Editor.Systems
 						}
 					}
 				}
+
+				if (EnableRemovals)
+				{
+					//Debug.Log("DOING REMOVALS");
+					//var oldList = __result;
+					List<object> tempList = new List<object>();
+					for (int i = 0; i < __result.GetLength(0); i++)
+					{
+						tempList.Add(__result.GetValue(i));
+					}
+
+					for (int i = tempList.Count - 1; i >= 0; i--)
+					{
+						//var asmInfo = __result.GetValue(i);
+						var asmInfo = tempList[i];
+						var asmInfoType = asmInfo.GetType();
+
+						var nameField = asmInfoType.GetField("Name");
+						var flagsField = asmInfoType.GetField("Flags");
+
+						var name = (string)nameField.GetValue(asmInfo);
+
+						//Debug.Log("BUNDLE SCRIPT = " + name);
+
+						if (AssemblyRemovals.Contains(name))
+						{
+							//Debug.Log("REMOVING = " + name);
+
+							tempList.RemoveAt(i);
+							continue;
+
+							/*var flag = flagsField.GetValue(asmInfo);
+							var flagType = flag.GetType();
+
+							Debug.Log("Value = " + flag.ToString());
+
+							int flagNumber = (int)flag;
+
+							Debug.Log("Test = " + flagNumber);
+
+							//Turn on editor only for this dll
+							flagNumber |= 1;
+
+							flagsField.SetValue(asmInfo, Enum.ToObject(flagType,flagNumber));*/
+
+						}
+					}
+
+					var elementType = __result.GetValue(0).GetType();
+					__result = Array.CreateInstance(elementType, tempList.Count);
+					for (int i = 0; i < tempList.Count; i++)
+					{
+						__result.SetValue(tempList[i], i);
+					}
+
+					for (int i = 0; i < __result.GetLength(0); i++)
+					{
+						//Debug.Log("FINAL RESULT = " + __result.GetValue(i));
+					}
+				}
 			}
 			catch (Exception e)
 			{
-				Debug.LogError("Error in GetTargetAssemblies: " + e);
+				Debug.LogError("Error in GetTargetAssemblyInfos: " + e);
 			}
 		}
 

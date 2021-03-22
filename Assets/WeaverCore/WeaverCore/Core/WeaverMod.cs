@@ -14,10 +14,11 @@ namespace WeaverCore
     public abstract class WeaverMod : Mod
     {
         //As soon as any WeaverCore mod loads, the init functions will be called
-        static WeaverMod()
-        {
-            Initializers.Initializers.OnGameInitialize();
-        }
+        //static WeaverMod()
+        //{
+           //WeaverLog.Log("RUNNING INIT");
+           //Initializers.Initializers.OnGameInitialize();
+        //}
 
 
         bool firstLoad = true;
@@ -46,6 +47,7 @@ namespace WeaverCore
             if (firstLoad)
             {
                 firstLoad = false;
+                Initializers.Initializers.OnGameInitialize();
 
                 var modType = GetType();
 
@@ -87,7 +89,7 @@ namespace WeaverCore
                 registry.RegistryEnabled = false;
             }
         }
-    }
+	}
 
     public abstract class TogglableWeaverMod : WeaverMod, ITogglableMod
     {

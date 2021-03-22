@@ -47,8 +47,9 @@ namespace WeaverCore.Utilities
                 return;
             }
             Initialized = true;
+
            //Debug.LogError("D");
-            //Debug.Log("Running ImplFinder");
+            //WeaverLog.Log("Running ImplFinder");
             if (FoundImplementations == null)
             {
                 FoundImplementations = new List<Type>();
@@ -66,6 +67,11 @@ namespace WeaverCore.Utilities
                             FoundImplementations.Add(type);
                         }
                     }
+					if (CoreInfo.LoadState == RunningState.Game)
+					{
+                        ReflectionUtilities.ExecuteMethodsWithAttribute<OnInitAttribute>(ImplAssembly);
+                    }
+
                 }
                 catch (ReflectionTypeLoadException e)
                 {
@@ -87,6 +93,7 @@ namespace WeaverCore.Utilities
                     {
                         Debug.LogWarning("Loader Exception = " + exception);
                     }
+
                 }
             }
         }

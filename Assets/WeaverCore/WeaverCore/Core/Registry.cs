@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
+using WeaverCore.Attributes;
 using WeaverCore.Interfaces;
 using WeaverCore.Utilities;
 
@@ -155,6 +156,7 @@ namespace WeaverCore
             }
         }
 
+        //NOTE: SINCE THIS IS NOW BEING RUN ON A SEPERATE THREAD, A LOCK IS NOW NEEDED
         private static void NewAssemblyLoaded(object sender, AssemblyLoadEventArgs args)
         {
             if (!assemblyNames.ContainsKey(args.LoadedAssembly.GetName().Name))
@@ -169,33 +171,70 @@ namespace WeaverCore
         public void Initialize()
         {
             if (!initialized)
-            {
-                WeaverLog.Log("Loading Registry = " + RegistryName + " for mod = " + ModName);
-                //initialized = true;
-                AllRegistries.Add(this);
-                if (RegistryEnabled)
-                {
-                    ActiveRegistries.Add(this);
-                }
-                foreach (var feature in featuresRaw)
-                {
-                    if (feature is IFeature && feature is IOnFeatureLoad)
-                    {
-                        try
-                        {
-                            ((IOnFeatureLoad)feature).OnFeatureLoad(this);
-                        }
-                        catch (Exception e)
-                        {
-                            WeaverLog.LogError("Registry Load Error: " + e);
-                        }
-                    }
-                }
+			{
+				WeaverLog.Log("Loading Registry = " + RegistryName + " for mod = " + ModName);
+				Debug.Log("REG LOAD = " + ModName);
+				//initialized = true;
+				AllRegistries.Add(this);
+				if (RegistryEnabled)
+				{
+					ActiveRegistries.Add(this);
+				}
+				foreach (var feature in featuresRaw)
+				{
+					if (feature != null)
+					{
+						WeaverLog.Log("Feature = " + feature);
+						WeaverLog.Log("Feature Type = " + feature.GetType());
+					}
+					else
+					{
+						WeaverLog.Log("Feature = null");
+					}
 
-            }
-        }
+					if (feature is IFeature && feature is IOnFeatureLoad)
+					{
+						try
+						{
+							((IOnFeatureLoad)feature).OnFeatureLoad(this);
+						}
+						catch (Exception e)
+						{
+							WeaverLog.LogError("Registry Load Error: " + e);
+						}
+					}
+				}
 
-        public override bool Equals(object other)
+				RunRegistryLoadFunctions(this);
+
+			}
+		}
+
+		private static void RunRegistryLoadFunctions(Registry registry)
+		{
+            var registryMethods = ReflectionUtilities.GetMethodsWithAttribute<OnRegistryLoadAttribute>().ToList();
+
+            registryMethods.Sort(new PriorityAttribute.PairSorter<OnRegistryLoadAttribute>());
+
+            var param = new object[] { registry };
+
+
+            foreach (var method in registryMethods)
+			{
+                try
+				{
+                    WeaverLog.Log("Executing Registry Method = " + method.Item1.DeclaringType.FullName + ":" + method.Item1.Name);
+                    method.Item1.Invoke(null, param);
+				}
+                catch (Exception e)
+				{
+                    WeaverLog.LogError("Error Running Function: " + method.Item1.DeclaringType.FullName + ":" + method.Item1.Name);
+                    WeaverLog.LogError(e);
+				}
+			}
+		}
+
+		public override bool Equals(object other)
         {
             if (other is Registry)
             {
@@ -208,10 +247,10 @@ namespace WeaverCore
         public override int GetHashCode()
         {
             int hash = 0;
-            HashUtilities.AdditiveHash(ref hash, modName);
-            HashUtilities.AdditiveHash(ref hash, modAssemblyName);
-            HashUtilities.AdditiveHash(ref hash, modTypeName);
-            HashUtilities.AdditiveHash(ref hash, registryName);
+            WeaverCore.Utilities.HashUtilities.AdditiveHash(ref hash, modName);
+            WeaverCore.Utilities.HashUtilities.AdditiveHash(ref hash, modAssemblyName);
+            WeaverCore.Utilities.HashUtilities.AdditiveHash(ref hash, modTypeName);
+            WeaverCore.Utilities.HashUtilities.AdditiveHash(ref hash, registryName);
             return hash;
         }
 

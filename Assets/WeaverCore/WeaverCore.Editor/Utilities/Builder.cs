@@ -124,6 +124,35 @@ namespace WeaverCore.Editor
 
 		public delegate void buildCompleteAction(string buildDestination, CompilerMessage[] compilerMessages);
 
+		/// <summary>
+		/// Gets the assembly references that the builder will reference by default
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<string> GetDefaultReferences()
+		{
+			AssemblyBuilder builder = new AssemblyBuilder(BuildPath, ScriptPaths.ToArray());
+			builder.additionalDefines = Defines.ToArray();
+			builder.additionalReferences = ReferencePaths.ToArray();
+			builder.buildTarget = Target;
+			builder.buildTargetGroup = TargetGroup;
+			builder.excludeReferences = ExcludedReferences.ToArray();
+			builder.flags = Flags;
+
+			var defaultRefMethod = typeof(UnityEditor.AI.NavMeshBuilder).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilation").GetMethod("GetAssemblyBuilderDefaultReferences", new Type[] { typeof(UnityEditor.Compilation.AssemblyBuilder) });
+
+			var instance = typeof(UnityEditor.AI.NavMeshBuilder).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface").GetProperty("Instance").GetValue(null);
+
+			var defaultReferences = (string[])defaultRefMethod.Invoke(instance, new object[] { builder });
+
+			for (int i = 0; i < defaultReferences.GetLength(0); i++)
+			{
+				//yield return new FileInfo(defaultReferences[i]);
+				yield return defaultReferences[i];
+			}
+
+			//return defaultReferences;
+		}
+
 		public void Build(buildCompleteAction onComplete)
 		{
 			BuildSuccessful = false;
@@ -142,6 +171,7 @@ namespace WeaverCore.Editor
 				Building = false;
 				if (messages.Any(cm => cm.type == CompilerMessageType.Error))
 				{
+					Debug.LogError("There were errors building library { " + builder.assemblyPath + "}");
 					BuildSuccessful = false;
 					foreach (var message in messages)
 					{
@@ -166,6 +196,21 @@ namespace WeaverCore.Editor
 				}
 			};
 			Building = true;
+
+
+			/*var defaultRefMethod = typeof(UnityEditor.AI.NavMeshBuilder).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilation").GetMethod("GetAssemblyBuilderDefaultReferences", new Type[] { typeof(UnityEditor.Compilation.AssemblyBuilder) });
+
+			var instance = typeof(UnityEditor.AI.NavMeshBuilder).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface").GetProperty("Instance").GetValue(null);
+
+			var defaultReferences = (string[])defaultRefMethod.Invoke(instance,new object[] { builder });
+
+			foreach (var dRef in defaultReferences)
+			{
+				Debug.Log("Default Reference = " + dRef);
+
+			}*/
+
+
 			try
 			{
 				builder.buildFinished += buildCompleteAction;

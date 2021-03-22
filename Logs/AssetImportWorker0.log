@@ -1,0 +1,146 @@
+Using pre-set license
+Built from '2020.2/release' branch; Version is '2020.2.2f1 (068178b99f32) revision 426360'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Education; OS build 18363.1440; Version 1909; 64bit' Language: 'en' Physical Memory: 16300 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.2.2f1\Unity\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Unity Projects/InfernoKingGrimm - Beta Update
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+25551
+Successfully changed project path to: C:/Unity Projects/InfernoKingGrimm - Beta Update
+C:/Unity Projects/InfernoKingGrimm - Beta Update
+Using Asset Import Pipeline V2.
+Default GameObject Tag: MainCamera already registered
+
+Default GameObject Tag: Player already registered
+
+Refreshing native plugins compatible for Editor in 55.94 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.2f1 (068178b99f32)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Unity Projects/InfernoKingGrimm - Beta Update/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1660 SUPER (ID=0x21c4)
+    Vendor:   
+    VRAM:     5991 MB
+    Driver:   27.21.14.5671
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56424
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Unity/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
+Registered in 0.003726 seconds.
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 46.95 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.336 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.010201 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.50 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+APPLIED PATCH
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+WeaverCore.Editor.Systems.AssemblyReplacer:Init () (at Assets/WeaverCore/WeaverCore.Editor/Systems/LibraryCompiler.cs:504)
+System.Reflection.MonoMethod:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+WeaverCore.Utilities.ReflectionUtilities:ExecuteMethodsWithAttribute<WeaverCore.Attributes.OnInitAttribute> (System.Func`3<System.Reflection.MethodInfo, WeaverCore.Attributes.OnInitAttribute, bool>,System.Reflection.BindingFlags,bool) (at Assets/WeaverCore/WeaverCore/Utilities/ReflectionUtilities.cs:390)
+WeaverCore.Initializers.OnInitRunner:RunInitFunctions () (at Assets/WeaverCore/WeaverCore/Initializers/Initializers.cs:61)
+WeaverCore.Initializers.Initializers:OnEditorInitialize () (at Assets/WeaverCore/WeaverCore/Initializers/Initializers.cs:26)
+
+(Filename: Assets/WeaverCore/WeaverCore.Editor/Systems/LibraryCompiler.cs Line: 504)
+
+Next Method To Run = 
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+WeaverCore.Editor.Compilation.BuildData:BuildInit () (at Assets/WeaverCore/WeaverCore.Editor/Compilation/BuildData.cs:63)
+System.Reflection.MonoMethod:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+WeaverCore.Utilities.ReflectionUtilities:ExecuteMethodsWithAttribute<WeaverCore.Attributes.OnInitAttribute> (System.Func`3<System.Reflection.MethodInfo, WeaverCore.Attributes.OnInitAttribute, bool>,System.Reflection.BindingFlags,bool) (at Assets/WeaverCore/WeaverCore/Utilities/ReflectionUtilities.cs:390)
+WeaverCore.Initializers.OnInitRunner:RunInitFunctions () (at Assets/WeaverCore/WeaverCore/Initializers/Initializers.cs:61)
+WeaverCore.Initializers.Initializers:OnEditorInitialize () (at Assets/WeaverCore/WeaverCore/Initializers/Initializers.cs:26)
+
+(Filename: Assets/WeaverCore/WeaverCore.Editor/Compilation/BuildData.cs Line: 63)
+
+Hollow Knight Location = C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+WeaverCore.Editor.Compilation.BuildData:BuildInit () (at Assets/WeaverCore/WeaverCore.Editor/Compilation/BuildData.cs:84)
+System.Reflection.MonoMethod:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+WeaverCore.Utilities.ReflectionUtilities:ExecuteMethodsWithAttribute<WeaverCore.Attributes.OnInitAttribute> (System.Func`3<System.Reflection.MethodInfo, WeaverCore.Attributes.OnInitAttribute, bool>,System.Reflection.BindingFlags,bool) (at Assets/WeaverCore/WeaverCore/Utilities/ReflectionUtilities.cs:390)
+WeaverCore.Initializers.OnInitRunner:RunInitFunctions () (at Assets/WeaverCore/WeaverCore/Initializers/Initializers.cs:61)
+WeaverCore.Initializers.Initializers:OnEditorInitialize () (at Assets/WeaverCore/WeaverCore/Initializers/Initializers.cs:26)
+
+(Filename: Assets/WeaverCore/WeaverCore.Editor/Compilation/BuildData.cs Line: 84)
+
+Mono: successfully reloaded assembly
+- Completed reload, in  2.064 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Default GameObject Tag: MainCamera already registered
+
+Default GameObject Tag: Player already registered
+
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 0.48 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1812 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 78.3 MB.
+
+Unloading 52 unused Assets to reduce memory usage. Loaded Objects now: 2223.
+Total: 4.684800 ms (FindLiveObjects: 0.177400 ms CreateObjectMapping: 0.045600 ms MarkObjects: 4.381300 ms  DeleteObjects: 0.079500 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/WeaverCore/Hollow Knight/Modding/Mod.cs
+  artifactKey: Guid(15f2affc716df0d4ba6b643cd050db24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/WeaverCore/Hollow Knight/Modding/Mod.cs using Guid(15f2affc716df0d4ba6b643cd050db24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b01fc895a7215bf497015d04e3bd24f3') in 0.049396 seconds
+  Import took 0.052601 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.559288 seconds.
+  path: Assets/WeaverCore/Hollow Knight/Modding/ModSettings.cs
+  artifactKey: Guid(fbdc0e56cb87a814a90d3d2385f3181f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/WeaverCore/Hollow Knight/Modding/ModSettings.cs using Guid(fbdc0e56cb87a814a90d3d2385f3181f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '910f3268c68429ed158eb02d9c06993d') in 0.002614 seconds
+  Import took 0.007269 seconds .
+

@@ -13,25 +13,44 @@ namespace WeaverCore
 {
 	public class WeaverCam : MonoBehaviour
 	{
-		[OnRuntimeInit]
-		static void Init()
+		//[OnRuntimeInit]
+		[OnRegistryLoad]
+		static void Init(Registry registry)
 		{
-			_instance = staticImpl.Create();
 			if (_instance == null)
 			{
-				UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+				WeaverLog.Log("STARTING UP CAMERA");
+				_instance = staticImpl.Create();
+				if (_instance == null)
+				{
+					WeaverLog.Log("Camera not set up yet");
+					//UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+				}
+				else
+				{
+					WeaverLog.Log("Initializing Camera");
+					_instance.Initialize();
+					foreach (var feature in Registry.GetAllFeatures<CameraExtension>())
+					{
+						Instantiate(feature, _instance.transform);
+					}
+				}
 			}
 			else
 			{
-				_instance.Initialize();
+				//registry.featu
+				foreach (var feature in registry.GetFeatures<CameraExtension>())
+				{
+					Instantiate(feature, _instance.transform);
+				}
 			}
 		}
 
-		static void SceneManager_sceneLoaded(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
+		/*static void SceneManager_sceneLoaded(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
 		{
 			UnityEngine.SceneManagement.SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
 			Init();
-		}
+		}*/
 
 		private static WeaverCam _instance = null;
 		bool initialized = false;
@@ -45,10 +64,10 @@ namespace WeaverCore
 		{
 			get
 			{
-				if (_instance == null)
+				/*if (_instance == null)
 				{
 					Init();
-				}
+				}*/
 				return _instance;
 
 			}
@@ -80,11 +99,6 @@ namespace WeaverCore
 			}
 
 			impl.Initialize();
-
-			foreach (var feature in Registry.GetAllFeatures<CameraExtension>())
-			{
-				Instantiate(feature, transform);
-			}
 
 			initialized = true;
 		}

@@ -12,12 +12,38 @@ using WeaverCore.Utilities;
 
 public class WeaverCanvas : MonoBehaviour 
 {
-	[OnRuntimeInit]
-	static void OnGameStart()
+	//[OnRuntimeInit]
+	[OnRegistryLoad(10)]
+	static void OnRegistryLoad(Registry registry)
 	{
-		if (GameObject.FindObjectOfType<WeaverCanvas>() == null)
+		if (Instance == null && registry.ModType == typeof(WeaverCore.Internal.WeaverCore))
 		{
-			GameObject.Instantiate(WeaverAssets.LoadWeaverAsset<GameObject>("Weaver Canvas"), null);
+			WeaverLog.Log("LOADING WEAVER CANVAS");
+			if (GameObject.FindObjectOfType<WeaverCanvas>() == null)
+			{
+				GameObject.Instantiate(WeaverAssets.LoadWeaverAsset<GameObject>("Weaver Canvas"), null);
+			}
+		}
+
+		if (Instance != null)
+		{
+			var content = Instance.transform.GetChild(0);
+
+			foreach (var extension in registry.GetFeatures<CanvasExtension>())
+			{
+				if (extension.AddedOnStartup)
+				{
+#if UNITY_EDITOR
+					if (!ContainedInObject(content.gameObject, extension.gameObject))
+					{
+						//GameObject.Instantiate(extension.gameObject, content);
+						extension.AddToWeaverCanvas();
+					}
+#else
+				extension.AddToWeaverCanvas();
+#endif
+				}
+			}
 		}
 	}
 
@@ -46,10 +72,10 @@ public class WeaverCanvas : MonoBehaviour
 			eventObject.AddComponent<EventSystem>();
 			eventObject.AddComponent<StandaloneInputModule>();
 		}
-		StartCoroutine(Initializer());
+		//StartCoroutine(Initializer());
 	}
 
-	IEnumerator Initializer()
+	/*IEnumerator Initializer()
 	{
 		yield return null;
 
@@ -70,7 +96,7 @@ public class WeaverCanvas : MonoBehaviour
 #endif
 			}
 		}
-	}
+	}*/
 #if UNITY_EDITOR
 	static bool ContainedInObject(GameObject searchIn, GameObject childToSearchFor)
 	{

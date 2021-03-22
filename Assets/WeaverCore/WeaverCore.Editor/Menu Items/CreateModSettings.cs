@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Tizen;
 using WeaverCore.Configuration;
 using WeaverCore.Editor.Utilities;
 

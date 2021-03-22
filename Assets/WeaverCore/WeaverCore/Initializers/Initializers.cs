@@ -34,6 +34,7 @@ namespace WeaverCore.Initializers
 #endif
 		static void OnGamePlay() //This is called either when you go into play mode in the editor, or start up the game when in Hollow Knight
 		{
+			WeaverLog.Log("BEGINNING OF RUNTIME INITS");
 			RuntimeInitRunner.RuntimeInit();
 		}
 	}
@@ -50,6 +51,7 @@ namespace WeaverCore.Initializers
 			if (!run)
 			{
 				run = true;
+				//WeaverLog.Log("RUNNING INITS");
 
 				foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 				{
@@ -58,43 +60,51 @@ namespace WeaverCore.Initializers
 
 				ReflectionUtilities.ExecuteMethodsWithAttribute<OnInitAttribute>();
 
-				AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+				//ReflectionUtilities.ExecuteMethodsWithAttribute<OnInitAttribute>(typeof(WeaverCore.Internal.WeaverCore).Assembly);
+				//WeaverLog.Log("DONE RUNNING INITS");
+				//AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
 			}
 		}
 
-		private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+		/*private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
 		{
 			if (!InitializedAssemblies.Contains(args.LoadedAssembly))
 			{
 				InitializedAssemblies.Add(args.LoadedAssembly);
 				ReflectionUtilities.ExecuteMethodsWithAttribute<OnInitAttribute>(args.LoadedAssembly);
 			}
-		}
+		}*/
 	}
 
 	static class OnHarmonyPatchRunner
 	{
-		[OnInit(int.MaxValue)]
+		[OnInit(int.MaxValue / 2)]
 		static void OnInit()
 		{
-			foreach (var assembly in AppDomain.CurrentDomain.AllAssemblies())
+			//WeaverLog.Log("RUNNING PATCHES");
+			//WeaverLog.Log("AA");
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 			{
+				//WeaverLog.Log("AB");
 				PatchAssembly(assembly);
 			}
-			AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+
+			//WeaverLog.Log("DONE RUNNING PATCHES");
+			//AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
 		}
 
-		private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+		/*private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
 		{
 			PatchAssembly(args.LoadedAssembly);
-		}
+		}*/
 
 		static void PatchAssembly(Assembly assembly)
 		{
-
+			//WeaverLog.Log("AC");
 			var patcherInstance = HarmonyPatcher.Create("com." + assembly.GetName().Name + ".patch");
-
+			//WeaverLog.Log("AD");
 			var patchParameters = new Type[] { typeof(HarmonyPatcher) };
+			//WeaverLog.Log("AE");
 			var patchArguments = new object[] { patcherInstance };
 
 			var inits = ReflectionUtilities.GetMethodsWithAttribute<OnHarmonyPatchAttribute>(assembly, patchParameters).ToList();
@@ -125,7 +135,7 @@ namespace WeaverCore.Initializers
 			if (!run)
 			{
 				run = true;
-
+				//WeaverLog.Log("RUNNING RUNTIME INITS");
 				foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 				{
 					InitializedAssemblies.Add(assembly);
@@ -133,17 +143,19 @@ namespace WeaverCore.Initializers
 
 				ReflectionUtilities.ExecuteMethodsWithAttribute<OnRuntimeInitAttribute>();
 
-				AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+				//WeaverLog.Log("DONE RUNNING RUNTIME INITS");
+
+				//AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
 			}
 		}
 
-		private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+		/*private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
 		{
 			if (!InitializedAssemblies.Contains(args.LoadedAssembly))
 			{
 				InitializedAssemblies.Add(args.LoadedAssembly);
 				ReflectionUtilities.ExecuteMethodsWithAttribute<OnRuntimeInitAttribute>(args.LoadedAssembly);
 			}
-		}
+		}*/
 	}
 }

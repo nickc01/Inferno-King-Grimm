@@ -16,13 +16,19 @@ namespace WeaverCore
 	/// </summary>
 	public static class WeaverAudio
 	{
-		[OnRuntimeInit]
-		static void OnRuntimeStart()
+		//[OnRuntimeInit]
+		//static void OnRuntimeStart()
+		[OnRegistryLoad]
+		static void OnWeaverCoreLoad(Registry registry)
 		{
-			if (AudioPlayerPool == null)
+			if (registry.ModType == typeof(WeaverCore.Internal.WeaverCore))
 			{
-				AudioPlayerPool = new ObjectPool(WeaverAssets.LoadWeaverAsset<GameObject>("Weaver Audio Player Prefab"), PoolLoadType.Local);
-				AudioPlayerPool.FillPool(1);
+				WeaverLog.Log("LOADING WEAVER AUDIO POOL");
+				if (AudioPlayerPool == null)
+				{
+					AudioPlayerPool = new ObjectPool(WeaverAssets.LoadWeaverAsset<GameObject>("Weaver Audio Player Prefab"), PoolLoadType.Local);
+					AudioPlayerPool.FillPool(1);
+				}
 			}
 		}
 

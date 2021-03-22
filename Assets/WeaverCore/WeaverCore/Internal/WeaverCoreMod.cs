@@ -19,5 +19,11 @@ namespace WeaverCore.Internal
         {
             return "0.2.1.1 Beta";
         }
-    }
+
+		public override int LoadPriority()
+		{
+            //return int.MinValue;
+            return -100;
+		}
+	}
 }

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements.StyleEnums;
 using WeaverCore;
 using WeaverCore.Enums;
 using WeaverCore.Features;
@@ -485,6 +484,7 @@ public class GroundSlashMove : GrimmMove
 		fireBall.RigidBody.velocity = new Vector2(36f, 1f);
 		fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
 		fireBall.RigidBody.velocity = new Vector2(-36f, 1f);
+		//Debug.Log("Fireball Enabled = " + fireBall.gameObject.activeSelf);
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Uppercut End");
 

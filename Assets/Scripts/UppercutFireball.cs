@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +16,7 @@ public class UppercutFireball : MonoBehaviour, IOnPool
 	[SerializeField]
 	float lifeTime = 1.5f;
 
+	[NonSerialized]
 	float counter = 0f;
 
 	ColliderDisabler disabler;

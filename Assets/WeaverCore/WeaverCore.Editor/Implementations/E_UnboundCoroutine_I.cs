@@ -20,18 +20,29 @@ namespace WeaverCore.Editor.Implementations
 		static double previousTime = 0;
 		static double currentTime = 0;
 
+		static bool firstRun = true;
+
 		[OnInit]
 		static void Init()
 		{
-			previousTime = EditorApplication.timeSinceStartup;
-			currentTime = EditorApplication.timeSinceStartup;
+			//previousTime = EditorApplication.timeSinceStartup;
+			//currentTime = EditorApplication.timeSinceStartup;
 			EditorApplication.update += OnUpdate;
 		}
 
 		static void OnUpdate()
 		{
-			previousTime = currentTime;
-			currentTime = EditorApplication.timeSinceStartup;
+			if (firstRun)
+			{
+				firstRun = false;
+				previousTime = EditorApplication.timeSinceStartup;
+				currentTime = EditorApplication.timeSinceStartup;
+			}
+			else
+			{
+				previousTime = currentTime;
+				currentTime = EditorApplication.timeSinceStartup;
+			}
 
 			for (int i = coroutines.Count - 1; i >= 0; i--)
 			{
@@ -164,6 +175,7 @@ namespace WeaverCore.Editor.Implementations
 			{
 				MainRoutine = RoutineUser(routine);
 			}
+
 		}
 	}
 }
