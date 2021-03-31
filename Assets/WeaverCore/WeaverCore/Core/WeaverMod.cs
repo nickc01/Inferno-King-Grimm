@@ -43,19 +43,20 @@ namespace WeaverCore
 
         public override void Initialize()
         {
+            var modType = GetType();
+            WeaverLog.Log("Initializing Mod = " + modType.FullName);
             base.Initialize();
             if (firstLoad)
             {
+                //WeaverLog.Log("FIRST LOAD");
                 firstLoad = false;
                 Initializers.Initializers.OnGameInitialize();
 
-                var modType = GetType();
-
                 RegistryLoader.LoadAllRegistries(modType);
 
-                //WeaverLog.Log(modType.FullName + "___LOADED!!!");
+                ReflectionUtilities.ExecuteMethodsWithAttribute<AfterModLoadAttribute>((_, a) => a.ModType.IsAssignableFrom(modType));
 
-                ReflectionUtilities.ExecuteMethodsWithAttribute<AfterModLoadAttribute>((_,a) => a.ModType.IsAssignableFrom(modType));
+                //WeaverLog.Log(modType.FullName + "___LOADED!!!");
 
                 //Load all global mod settings pertaining to this mod
                 /*foreach (var registry in Registry.FindModRegistries(modType))

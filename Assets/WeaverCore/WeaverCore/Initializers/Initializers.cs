@@ -34,7 +34,7 @@ namespace WeaverCore.Initializers
 #endif
 		static void OnGamePlay() //This is called either when you go into play mode in the editor, or start up the game when in Hollow Knight
 		{
-			WeaverLog.Log("BEGINNING OF RUNTIME INITS");
+			//WeaverLog.Log("BEGINNING OF RUNTIME INITS");
 			RuntimeInitRunner.RuntimeInit();
 		}
 	}

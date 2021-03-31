@@ -28,7 +28,7 @@ namespace WeaverCore.Editor.Internal
 		[OnRuntimeInit(int.MaxValue)]
 		static void RuntimeInit()
 		{
-			WeaverLog.Log("Runtime INIT!!!");
+			//WeaverLog.Log("Runtime INIT!!!");
 			List<WeaverMod> mods = new List<WeaverMod>();
 			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 			{

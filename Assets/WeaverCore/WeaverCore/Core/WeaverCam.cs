@@ -19,16 +19,16 @@ namespace WeaverCore
 		{
 			if (_instance == null)
 			{
-				WeaverLog.Log("STARTING UP CAMERA");
+				//WeaverLog.Log("STARTING UP CAMERA");
 				_instance = staticImpl.Create();
 				if (_instance == null)
 				{
-					WeaverLog.Log("Camera not set up yet");
+					//WeaverLog.Log("Camera not set up yet");
 					//UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 				}
 				else
 				{
-					WeaverLog.Log("Initializing Camera");
+					//WeaverLog.Log("Initializing Camera");
 					_instance.Initialize();
 					foreach (var feature in Registry.GetAllFeatures<CameraExtension>())
 					{

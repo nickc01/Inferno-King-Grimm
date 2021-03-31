@@ -73,6 +73,7 @@ namespace WeaverCore.Assets.Components
 		[AfterModLoad(typeof(WeaverCore.Internal.WeaverCore))]
 		static void OnGameStart()
 		{
+			//WeaverLog.Log("Config Screen Game Start");
 			if (CoreInfo.LoadState == RunningState.Editor)
 			{
 				if (WeaverCanvas.Content.GetComponentInChildren<WeaverConfigScreen>() == null)
@@ -98,7 +99,15 @@ namespace WeaverCore.Assets.Components
 		private static WeaverConfigScreen SpawnConfigScreen()
 		{
 			var prefab = Registry.GetAllFeatures<WeaverConfigScreen>().FirstOrDefault();
-			return GameObject.Instantiate(prefab, WeaverCanvas.Content);
+			//WeaverLog.Log("Found Config Prefab = " + prefab?.name);
+			var instance = GameObject.Instantiate(prefab, WeaverCanvas.Content);
+			//WeaverLog.Log("Config Screen Local Pos = " + instance.transform.localPosition);
+			var rTransform = instance.GetComponent<RectTransform>();
+			//WeaverLog.Log("Anchored Position = " + rTransform.anchoredPosition);
+			//WeaverLog.Log("Parent Local Position = " + WeaverCanvas.Content.localPosition);
+			//WeaverLog.Log("Parent Anchored Position = " + WeaverCanvas.Content.GetComponent<RectTransform>().anchoredPosition);
+			//WeaverCanvas.Content.localPosition = Vector3.zero;
+			return instance;
 		}
 
 		void Awake()

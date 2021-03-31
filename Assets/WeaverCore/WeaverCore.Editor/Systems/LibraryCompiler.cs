@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AssetsTools.NET;
+using AssetsTools.NET.Extra;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -168,13 +170,14 @@ namespace WeaverCore.Editor.Systems
 					var targetFolder = bundleBuilds.CreateSubdirectory(target.ToString());
 
 					targetFolder.Create();
-					//CompatibilityBuildPipeline.BuildAssetBundles(targetFolder.FullName, BuildAssetBundleOptions.None, target);
-					var results = CustomAssetBundler.Test(target, BuildTargetGroup.Standalone, targetFolder.FullName);
+					CompatibilityBuildPipeline.BuildAssetBundles(targetFolder.FullName, BuildAssetBundleOptions.ChunkBasedCompression, target);
+					//var results = CustomAssetBundler.Test(target, BuildTargetGroup.Standalone, targetFolder.FullName);
 					foreach (var bundleFile in targetFolder.GetFiles())
 					{
 						if (bundleFile.Extension == "" && !bundleFile.Name.Contains("BundleBuilds"))
 						{
-							bundles.Add(new BundleBuild() { File = bundleFile, Target = target});
+							var newBundleFile = AssemblyReplacer.ReplaceAssembliesIn(bundleFile.FullName);
+							bundles.Add(new BundleBuild() { File = new FileInfo(newBundleFile), Target = target});
 						}
 					}
 				}
@@ -190,11 +193,11 @@ namespace WeaverCore.Editor.Systems
 
 		static void PrepareForBundling(string modName = null)
 		{
-			//AssemblyReplacer.AssemblyReplacements.Add("HollowKnight.dll", "Assembly-CSharp.dll");
+			AssemblyReplacer.AssemblyReplacements.Add("HollowKnight.dll", "Assembly-CSharp.dll");
 			//AssemblyReplacer.AssemblyRemovals.Add("WeaverCore.Editor.dll");
 			if (modName != null)
 			{
-				//AssemblyReplacer.AssemblyReplacements.Add("Assembly-CSharp.dll", modName + ".dll");
+				AssemblyReplacer.AssemblyReplacements.Add("Assembly-CSharp.dll", modName + ".dll");
 				//MonoScriptUtilities.ChangeAssemblyName("Assembly-CSharp", modName);
 				foreach (var registry in RegistryChecker.LoadAllRegistries())
 				{
@@ -208,7 +211,7 @@ namespace WeaverCore.Editor.Systems
 
 		static void AfterBundling(string modName = null)
 		{
-			//AssemblyReplacer.AssemblyReplacements.Clear();
+			AssemblyReplacer.AssemblyReplacements.Clear();
 			//AssemblyReplacer.AssemblyRemovals.Clear();
 			//MonoScriptUtilities.ChangeAssemblyName("Assembly-CSharp", "HollowKnight");
 			if (modName != null)
@@ -440,12 +443,164 @@ namespace WeaverCore.Editor.Systems
 		}
 	}
 
-	static class AssemblyReplacer// : ClassWidePatcher
+	public static class AssemblyReplacer// : ClassWidePatcher
 	{
 		public static Dictionary<string, string> AssemblyReplacements = new Dictionary<string, string>();
-		public static List<string> AssemblyRemovals = new List<string>();
+		//public static List<string> AssemblyRemovals = new List<string>();
 
-		static bool EnableReplacements
+		/// <summary>
+		/// Replaces the assembly names in a bundle and returns the new bundle file location
+		/// </summary>
+		/// <param name="bundleFileLocation">The input bundle</param>
+		/// <returns>The output bundle</returns>
+		public static string ReplaceAssembliesIn(string bundleFileLocation)
+		{
+			var am = new AssetsManager();
+			am.LoadClassPackage("Assets\\WeaverCore\\Libraries\\classdata.tpk");
+
+			var bun = am.LoadBundleFile(bundleFileLocation);
+			//load the first entry in the bundle (hopefully the one we want)
+			var assetsFileData = BundleHelper.LoadAssetDataFromBundle(bun.file, 0);
+			var assetsFileName = bun.file.bundleInf6.dirInf[0].name; //name of the first entry in the bundle
+
+			//I have a new update coming, but in the current release, assetsmanager
+			//will only load from file, not from the AssetsFile class. so we just
+			//put it into memory and load from that...
+			var assetsFileInst = am.LoadAssetsFile(new MemoryStream(assetsFileData), "dummypath", false);
+			var assetsFileTable = assetsFileInst.table;
+
+			//load cldb from classdata.tpk
+			am.LoadClassDatabaseFromPackage(assetsFileInst.file.typeTree.unityVersion);
+
+			List<BundleReplacer> bundleReplacers = new List<BundleReplacer>();
+			List<AssetsReplacer> assetReplacers = new List<AssetsReplacer>();
+
+			foreach (var monoScriptInfo in assetsFileTable.GetAssetsOfType(0x73)) //loop over all monoscript assets
+			{
+				//get basefield
+				var monoScriptInst = am.GetTypeInstance(assetsFileInst.file, monoScriptInfo).GetBaseField();
+				var m_AssemblyNameValue = monoScriptInst.Get("m_AssemblyName").GetValue();
+				foreach (var testAsm in AssemblyReplacements)
+				{
+					//"Assembly-CSharp.dll"
+					if (m_AssemblyNameValue.AsString().Replace(".dll","") == testAsm.Key.Replace(".dll",""))
+					{
+						var newAsmName = testAsm.Value;
+
+						if (!newAsmName.Contains(".dll"))
+						{
+							newAsmName += ".dll";
+						}
+						//change m_AssemblyName field
+						m_AssemblyNameValue.Set(newAsmName);
+						//rewrite the asset and add it to the pending list of changes
+						assetReplacers.Add(new AssetsReplacerFromMemory(0, monoScriptInfo.index, (int)monoScriptInfo.curFileType, 0xffff, monoScriptInst.WriteToByteArray()));
+						break;
+					}
+				}
+			}
+
+			//rewrite the assets file back to memory
+			byte[] modifiedAssetsFileBytes;
+			using (MemoryStream ms = new MemoryStream())
+			using (AssetsFileWriter aw = new AssetsFileWriter(ms))
+			{
+				aw.bigEndian = false;
+				assetsFileInst.file.Write(aw, 0, assetReplacers, 0);
+				modifiedAssetsFileBytes = ms.ToArray();
+			}
+
+			//adding the assets file to the pending list of changes for the bundle
+			bundleReplacers.Add(new BundleReplacerFromMemory(assetsFileName, assetsFileName, true, modifiedAssetsFileBytes, modifiedAssetsFileBytes.Length));
+
+			byte[] modifiedBundleBytes;
+			using (MemoryStream ms = new MemoryStream())
+			using (AssetsFileWriter aw = new AssetsFileWriter(ms))
+			{
+				bun.file.Write(aw, bundleReplacers);
+				modifiedBundleBytes = ms.ToArray();
+			}
+
+			using (MemoryStream mbms = new MemoryStream(modifiedBundleBytes))
+			using (AssetsFileReader ar = new AssetsFileReader(mbms))
+			{
+				AssetBundleFile modifiedBundle = new AssetBundleFile();
+				modifiedBundle.Read(ar);
+
+				//recompress the bundle and write it (this is optional of course)
+				using (FileStream ms = File.OpenWrite(bundleFileLocation + ".edit"))
+				using (AssetsFileWriter aw = new AssetsFileWriter(ms))
+				{
+					bun.file.Pack(modifiedBundle.reader, aw, AssetBundleCompressionType.LZ4);
+				}
+			}
+
+			return bundleFileLocation + ".edit";
+			/*var assetManager = new AssetsManager();
+
+			//var test = assetManager.LoadAssetsFile();
+
+			//test.
+
+			var bundleFile = assetManager.LoadBundleFile(bundleFileLocation, true);
+			//bundleFile.
+
+			//bundleFile.file
+
+			var assets = BundleHelper.LoadAllAssetsFromBundle(bundleFile.file);
+
+			assets[0].
+			//bundleFile.assetsFiles[0].table.Get
+
+			//assets[0].
+
+			Debug.Log("Loaded Bundle = " + bundleFile.name);
+
+			foreach (var file in bundleFile.assetsFiles)
+			{
+				if (file != null)
+				{
+					Debug.Log("Found Asset = " + file.name);
+					//file.table.
+				}
+				else
+				{
+					Debug.Log("Found Asset = null");
+				}
+			}*/
+
+			//foreach (var asset in assets)
+			//{
+
+			//asset.
+			/*foreach (var assetInfo in asset.)
+			{
+
+			}*/
+			//assetManager.GetTypeInstance(asset,)
+			//}
+
+			/*foreach (var asset in assets)
+			{
+				//asset.table.
+				if (asset == null)
+				{
+					Debug.Log("Asset = Null");
+				}
+				else
+				{
+					//Debug.Log("Asset = " + asset.header.)
+					//Debug.Log("Asset = " + asset.typeTree);
+					//Debug.Log("Bundle = " + asset.parentBundle.name);
+				}
+				//asset.table.Get
+				//Debug.Log("Asset" + asset.table.)
+			}*/
+
+			//assetManager
+		}
+
+		/*static bool EnableReplacements
 		{
 			get
 			{
@@ -459,7 +614,7 @@ namespace WeaverCore.Editor.Systems
 			{
 				return AssemblyRemovals.Count > 0;
 			}
-		}
+		}*/
 
 		/*protected override Type GetClassToPatch()
 		{
@@ -470,9 +625,9 @@ namespace WeaverCore.Editor.Systems
 		static void Init()
 		{
 			//Debug.Log("APPLYING PATCHES");
-			var type = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface");
-			var compType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilation");
-			var patcher = HarmonyPatcher.Create("com.AssemblyReplacer.patch");
+			//var type = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface");
+			//var compType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilation");
+			//var patcher = HarmonyPatcher.Create("com.AssemblyReplacer.patch");
 			//patcher.Patch(type.GetMethod("GetTargetAssemblyInfos", BindingFlags.Public | BindingFlags.Static),null, typeof(AssemblyReplacer).GetMethod("PostfixGetTargetAssemblies"));
 			//patcher.Patch(type.GetMethod("GetAllCompiledAndResolvedTargetAssemblies", BindingFlags.Public | BindingFlags.Static), null, typeof(AssemblyReplacer).GetMethod("PostfixGetTargetAssemblies"));
 			//patcher.Patch(type.GetMethod("GetTargetAssembly",BindingFlags.Public | BindingFlags.Static),null, typeof(AssemblyReplacer).GetMethod("PostfixGetTargetAssembly"));
@@ -481,7 +636,7 @@ namespace WeaverCore.Editor.Systems
 
 			//patcher.Patch(typeof(LibraryCompiler).GetMethod("BuildHollowKnightASM", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance), typeof(AssemblyReplacer).GetMethod("PREFIX", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static),null);
 
-			var testMethod = typeof(AssemblyReplacer).GetMethod("TESTER_PREFIX", BindingFlags.Static | BindingFlags.NonPublic);
+			//var testMethod = typeof(AssemblyReplacer).GetMethod("TESTER_PREFIX", BindingFlags.Static | BindingFlags.NonPublic);
 
 			/*foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
 			{
@@ -499,35 +654,35 @@ namespace WeaverCore.Editor.Systems
 			//var M_WriteSerializedFile_Internal = typeof(ContentBuildInterface).GetMethod("WriteSerializedFile_Internal", BindingFlags.NonPublic | BindingFlags.Static);
 			//patcher.Patch(M_WriteSerializedFile_Internal, typeof(AssemblyReplacer).GetMethod(nameof(WriteSerializedFile_Internal_Prefix), BindingFlags.NonPublic | BindingFlags.Static), null);
 
-			var M_CreateWorkItems = typeof(UnityEditor.Build.Pipeline.Tasks.ArchiveAndCompressBundles).GetMethod("CreateWorkItems",BindingFlags.NonPublic | BindingFlags.Static);
-			patcher.Patch(M_CreateWorkItems, null, typeof(AssemblyReplacer).GetMethod(nameof(CreateWorkItems_Postfix), BindingFlags.NonPublic | BindingFlags.Static));
-			Debug.Log("APPLIED PATCH");
+			//var M_CreateWorkItems = typeof(UnityEditor.Build.Pipeline.Tasks.ArchiveAndCompressBundles).GetMethod("CreateWorkItems",BindingFlags.NonPublic | BindingFlags.Static);
+			//patcher.Patch(M_CreateWorkItems, null, typeof(AssemblyReplacer).GetMethod(nameof(CreateWorkItems_Postfix), BindingFlags.NonPublic | BindingFlags.Static));
+			//Debug.Log("APPLIED PATCH");
 
-			var M_Write = typeof(AssetBundleWriteOperation).GetMethod("Write");
-			patcher.Patch(M_Write, typeof(AssemblyReplacer).GetMethod(nameof(Write_Prefix), BindingFlags.NonPublic | BindingFlags.Static), null);
+			//var M_Write = typeof(AssetBundleWriteOperation).GetMethod("Write");
+			//patcher.Patch(M_Write, typeof(AssemblyReplacer).GetMethod(nameof(Write_Prefix), BindingFlags.NonPublic | BindingFlags.Static), null);
 
 
-			var M_ArchiveAndCompress = typeof(ContentBuildInterface).GetMethod("ArchiveAndCompress", new Type[] { typeof(ResourceFile[]), typeof(string), typeof(UnityEngine.BuildCompression) });
-			patcher.Patch(M_ArchiveAndCompress, typeof(AssemblyReplacer).GetMethod("ArchiveAndCompress_Prefix"), null);
+			//var M_ArchiveAndCompress = typeof(ContentBuildInterface).GetMethod("ArchiveAndCompress", new Type[] { typeof(ResourceFile[]), typeof(string), typeof(UnityEngine.BuildCompression) });
+			//patcher.Patch(M_ArchiveAndCompress, typeof(AssemblyReplacer).GetMethod("ArchiveAndCompress_Prefix"), null);
 			//Assembly test;
 
 			//test.ful
 			//test.name
 
-			Assembly test;
+			//Assembly test;
 
 			//test.GetName()
 
 			//Debug.Log("A");
 			//var M_ASMFULLNAME = typeof(Assembly).GetProperty("FullName").GetGetMethod();
-			var M_ASMFULLNAME = typeof(Assembly).GetMethod("GetName", new Type[] { });
-			patcher.Patch(M_ASMFULLNAME, typeof(AssemblyReplacer).GetMethod(nameof(ASM_FULLNAME_PREFIX), BindingFlags.Static | BindingFlags.NonPublic), null);
+			//var M_ASMFULLNAME = typeof(Assembly).GetMethod("GetName", new Type[] { });
+			//patcher.Patch(M_ASMFULLNAME, typeof(AssemblyReplacer).GetMethod(nameof(ASM_FULLNAME_PREFIX), BindingFlags.Static | BindingFlags.NonPublic), null);
 			//Debug.Log("B");
-			M_ASMFULLNAME = typeof(Assembly).GetMethod("GetName", new Type[] { typeof(bool) });
-			patcher.Patch(M_ASMFULLNAME, typeof(AssemblyReplacer).GetMethod(nameof(ASM_FULLNAME_PREFIX), BindingFlags.Static | BindingFlags.NonPublic), null);
+			//M_ASMFULLNAME = typeof(Assembly).GetMethod("GetName", new Type[] { typeof(bool) });
+			//patcher.Patch(M_ASMFULLNAME, typeof(AssemblyReplacer).GetMethod(nameof(ASM_FULLNAME_PREFIX), BindingFlags.Static | BindingFlags.NonPublic), null);
 			//Debug.Log("C");
 
-			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+			/*foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 			{
 				foreach (var t in assembly.GetTypes())
 				{
@@ -539,7 +694,7 @@ namespace WeaverCore.Editor.Systems
 						//Debug.Log(t.FullName + " is assignable to type");
 					}
 				}
-			}
+			}*/
 		}
 
 		/// <summary>
@@ -775,6 +930,7 @@ namespace WeaverCore.Editor.Systems
 					SearchAndReplaceInFile(resource.fileName, "HollowKnight.dll", "Assembly-CSharp.dll");
 					SearchAndReplaceInFile(resource.fileName, "HollowKnight, ", "Assembly-CSharp, ");
 
+					//AssetsTools.NET.Extra.AssetsManager
 					/*var occurances = SearchForStringInFile(resource.fileName, "HollowKnight.dll").Count;
 
 					if (occurances > 0)
@@ -839,8 +995,8 @@ namespace WeaverCore.Editor.Systems
 			//Debug.Log("Build Settings Group = " + settings.group);
 			//Debug.Log("Build Settings Flags = " + settings.buildFlags);
 
-			PrintJsonData(__instance.UsageSet, "USAGE SET STUFF " + counter + ".json");
-			PrintJsonData(__instance.ReferenceMap, "REFERENCE MAP STUFF " + counter + ".json");
+			//PrintJsonData(__instance.UsageSet, "USAGE SET STUFF " + counter + ".json");
+			//PrintJsonData(__instance.ReferenceMap, "REFERENCE MAP STUFF " + counter + ".json");
 
 			/*foreach (var preload in preloadInfo.preloadObjects)
 			{
@@ -859,7 +1015,7 @@ namespace WeaverCore.Editor.Systems
 			
 		}*/
 
-		static void PrintJsonData(object obj, string fileName)
+		/*static void PrintJsonData(object obj, string fileName)
 		{
 			var type = obj.GetType();
 
@@ -983,20 +1139,6 @@ namespace WeaverCore.Editor.Systems
 							tempList.RemoveAt(i);
 							continue;
 
-							/*var flag = flagsField.GetValue(asmInfo);
-							var flagType = flag.GetType();
-
-							Debug.Log("Value = " + flag.ToString());
-
-							int flagNumber = (int)flag;
-
-							Debug.Log("Test = " + flagNumber);
-
-							//Turn on editor only for this dll
-							flagNumber |= 1;
-
-							flagsField.SetValue(asmInfo, Enum.ToObject(flagType,flagNumber));*/
-
 						}
 					}
 
@@ -1037,6 +1179,6 @@ namespace WeaverCore.Editor.Systems
 			{
 				Debug.LogError("Error in GetTargetAssembly: " + e);
 			}
-		}
+		}*/
 	}
 }

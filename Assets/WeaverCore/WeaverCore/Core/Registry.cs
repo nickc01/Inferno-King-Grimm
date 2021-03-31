@@ -173,7 +173,7 @@ namespace WeaverCore
             if (!initialized)
 			{
 				WeaverLog.Log("Loading Registry = " + RegistryName + " for mod = " + ModName);
-				Debug.Log("REG LOAD = " + ModName);
+				//Debug.Log("REG LOAD = " + ModName);
 				//initialized = true;
 				AllRegistries.Add(this);
 				if (RegistryEnabled)
@@ -182,7 +182,7 @@ namespace WeaverCore
 				}
 				foreach (var feature in featuresRaw)
 				{
-					if (feature != null)
+					/*if (feature != null)
 					{
 						WeaverLog.Log("Feature = " + feature);
 						WeaverLog.Log("Feature Type = " + feature.GetType());
@@ -190,7 +190,7 @@ namespace WeaverCore
 					else
 					{
 						WeaverLog.Log("Feature = null");
-					}
+					}*/
 
 					if (feature is IFeature && feature is IOnFeatureLoad)
 					{
@@ -223,7 +223,7 @@ namespace WeaverCore
 			{
                 try
 				{
-                    WeaverLog.Log("Executing Registry Method = " + method.Item1.DeclaringType.FullName + ":" + method.Item1.Name);
+                    //WeaverLog.Log("Executing Registry Method = " + method.Item1.DeclaringType.FullName + ":" + method.Item1.Name);
                     method.Item1.Invoke(null, param);
 				}
                 catch (Exception e)

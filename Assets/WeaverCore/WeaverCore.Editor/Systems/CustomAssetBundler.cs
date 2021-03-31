@@ -111,13 +111,9 @@ namespace WeaverCore.Editor
 
 			//result.typeDB
 
-			ContentPipeline.BuildCallbacks.PostScriptsCallbacks = (parameters, results) =>
+			/*ContentPipeline.BuildCallbacks.PostScriptsCallbacks = (parameters, results) =>
 			{
 				//Debug.Log("POST SCRIPT CALLBACK");
-				/*foreach (var assembly in results.ScriptResults.assemblies)
-				{
-					Debug.Log("Assembly = " + assembly);
-				}*/
 
 				//Debug.Log("Assemblies Type = " + results.ScriptResults.assemblies.GetType());
 				//Debug.Log("TYpeDB Type = " + results.ScriptResults.typeDB.GetType());
@@ -146,9 +142,9 @@ namespace WeaverCore.Editor
 					}
 				}
 				return ReturnCode.Success;
-			};
+			};*/
 
-			ContentPipeline.BuildCallbacks.PostPackingCallback = (parameters,dependencies,writeData) =>
+			/*ContentPipeline.BuildCallbacks.PostPackingCallback = (parameters,dependencies,writeData) =>
 			{
 				Debug.Log("POST PACKING CALLBACK");
 				var helperType = typeof(AspectRatio).Assembly.GetType("UnityEditor.AssemblyHelper");
@@ -171,9 +167,9 @@ namespace WeaverCore.Editor
 				//dependencies.AssetInfo;
 
 				return ReturnCode.Success;
-			};
+			};*/
 
-			ContentPipeline.BuildCallbacks.PostDependencyCallback = (parameters,dependencies) =>
+			/*ContentPipeline.BuildCallbacks.PostDependencyCallback = (parameters,dependencies) =>
 			{
 				foreach (var info in dependencies.AssetInfo)
 				{
@@ -198,9 +194,9 @@ namespace WeaverCore.Editor
 					}
 				}
 				return ReturnCode.Success;
-			};
+			};*/
 
-			ContentPipeline.BuildCallbacks.PostWritingCallback = (parameters, dependencies, writes,results) =>
+			/*ContentPipeline.BuildCallbacks.PostWritingCallback = (parameters, dependencies, writes,results) =>
 			{
 				foreach (var operation in writes.WriteOperations)
 				{
@@ -213,7 +209,7 @@ namespace WeaverCore.Editor
 					//Debug.Log("Reference Map = " + referenceMap);
 				}
 				return ReturnCode.Success;
-			};
+			};*/
 
 			try
 			{

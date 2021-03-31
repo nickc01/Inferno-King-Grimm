@@ -23,7 +23,7 @@ namespace WeaverCore
 		{
 			if (registry.ModType == typeof(WeaverCore.Internal.WeaverCore))
 			{
-				WeaverLog.Log("LOADING WEAVER AUDIO POOL");
+				//WeaverLog.Log("LOADING WEAVER AUDIO POOL");
 				if (AudioPlayerPool == null)
 				{
 					AudioPlayerPool = new ObjectPool(WeaverAssets.LoadWeaverAsset<GameObject>("Weaver Audio Player Prefab"), PoolLoadType.Local);

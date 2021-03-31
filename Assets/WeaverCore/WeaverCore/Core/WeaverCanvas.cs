@@ -18,7 +18,7 @@ public class WeaverCanvas : MonoBehaviour
 	{
 		if (Instance == null && registry.ModType == typeof(WeaverCore.Internal.WeaverCore))
 		{
-			WeaverLog.Log("LOADING WEAVER CANVAS");
+			//WeaverLog.Log("LOADING WEAVER CANVAS");
 			if (GameObject.FindObjectOfType<WeaverCanvas>() == null)
 			{
 				GameObject.Instantiate(WeaverAssets.LoadWeaverAsset<GameObject>("Weaver Canvas"), null);
@@ -31,8 +31,10 @@ public class WeaverCanvas : MonoBehaviour
 
 			foreach (var extension in registry.GetFeatures<CanvasExtension>())
 			{
+				//WeaverLog.Log("Found Extension = " + extension.gameObject.name);
 				if (extension.AddedOnStartup)
 				{
+					//WeaverLog.Log("Adding Extension = " + extension.gameObject.name);
 #if UNITY_EDITOR
 					if (!ContainedInObject(content.gameObject, extension.gameObject))
 					{
@@ -61,7 +63,7 @@ public class WeaverCanvas : MonoBehaviour
 	{
 		Instance = this;
 		GameObject.DontDestroyOnLoad(gameObject);
-		//Debug.Log("Init canvas");
+		//WeaverLog.Log("Init canvas");
 		if (GameObject.FindObjectOfType<EventSystem>() == null)
 		{
 			var eventObject = new GameObject("Event System");

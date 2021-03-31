@@ -22,7 +22,33 @@ namespace WeaverCore.Game.Implementations
 
 		public override T LoadAsset<T>(string assetName)
 		{
-			return weaverAssetBundle.LoadAsset<T>(assetName);
+			var finalAsset = weaverAssetBundle.LoadAsset<T>(assetName);
+			if (finalAsset == null)
+			{
+				var assetNames = weaverAssetBundle.GetAllAssetNames();
+				foreach (var name in assetNames)
+				{
+					if (name.Contains(assetName))
+					{
+						finalAsset = weaverAssetBundle.LoadAsset<T>(name);
+						if (finalAsset != null)
+						{
+							return finalAsset;
+						}
+					}
+					//WeaverLog.Log("Valid Asset = " + name);
+				}
+			}
+			return null;
+			/*WeaverLog.Log("Loading Asset = " + assetName);
+			var assetNames = weaverAssetBundle.GetAllAssetNames();
+			foreach (var name in assetNames)
+			{
+				WeaverLog.Log("Valid Asset = " + name);
+			}
+			var finalAsset = weaverAssetBundle.LoadAsset<T>(assetName);
+			WeaverLog.Log("Final Asset = " + finalAsset?.name);
+			return finalAsset;*/
 		}
 
 		static void LoadRegistries(AssetBundle bundle)

@@ -18,26 +18,26 @@ namespace WeaverCore.Game.Implementations
 			public override WeaverCam Create()
 			{
 				var cameraParent = GameObject.Find("CameraParent");
-				WeaverLog.Log("Creating Camera In Game");
+				//WeaverLog.Log("Creating Camera In Game");
 				if (cameraParent == null)
 				{
 					//throw new Exception("There is no Hollow Knight Camera in the scene");
-					WeaverLog.Log("A");
+					//WeaverLog.Log("A");
 					return null;
 				}
 				else
 				{
-					WeaverLog.Log("B");
+					//WeaverLog.Log("B");
 					tk2dCamera camera = cameraParent.GetComponentInChildren<tk2dCamera>();
 					if (camera == null)
 					{
-						WeaverLog.Log("C");
+						//WeaverLog.Log("C");
 						//throw new Exception("There is no Hollow Knight Camera in the scene");
 						return null;
 					}
 					else
 					{
-						WeaverLog.Log("D");
+						//WeaverLog.Log("D");
 						return camera.gameObject.AddComponent<WeaverCam>();
 					}
 				}

@@ -357,6 +357,7 @@ namespace WeaverCore.Utilities
 
 		public static void ExecuteMethodsWithAttribute<T>(Func<MethodInfo, T, bool> ExecuteIf = null, BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static, bool throwOnError = false) where T : Attribute
 		{
+			//WeaverLog.Log("EXECUTING ATTRIBUTES = " + typeof(T).FullName);
 			List<ValueTuple<MethodInfo, T>> methods = new List<ValueTuple<MethodInfo, T>>();
 
 			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())

@@ -113,13 +113,13 @@ namespace WeaverCore.Editor.Systems
 				{
 					if (bundle.File.Name.Contains(WeaverAssets.WeaverAssetBundleName))
 					{
-						EmbedResourceCMD.EmbedResource(compileLocation + "\\WeaverCore.dll", bundle.File.FullName, bundle.File.Name + PlatformUtilities.GetBuildTargetExtension(bundle.Target), compression: WeaverBuildTools.Enums.CompressionMethod.NoCompression);
+						EmbedResourceCMD.EmbedResource(compileLocation + "\\WeaverCore.dll", bundle.File.FullName, bundle.File.Name.Replace(".edit", "") + PlatformUtilities.GetBuildTargetExtension(bundle.Target), compression: WeaverBuildTools.Enums.CompressionMethod.NoCompression);
 						progress.GoToNextStep();
 					}
 					else
 					{
 						//TODO - If the bundle is a part of weavercore, then embed it into weavercore instead
-						EmbedResourceCMD.EmbedResource(mainModBuilder.BuildPath, bundle.File.FullName, bundle.File.Name + PlatformUtilities.GetBuildTargetExtension(bundle.Target), compression: WeaverBuildTools.Enums.CompressionMethod.NoCompression);
+						EmbedResourceCMD.EmbedResource(mainModBuilder.BuildPath, bundle.File.FullName, bundle.File.Name.Replace(".edit", "") + PlatformUtilities.GetBuildTargetExtension(bundle.Target), compression: WeaverBuildTools.Enums.CompressionMethod.NoCompression);
 						progress.GoToNextStep();
 					}
 				}
@@ -199,7 +199,7 @@ namespace WeaverCore.Editor.Systems
 				yield return LibraryCompiler.BuildWeaverCoreBundles(bundles, settings.GetBuildModes());
 				foreach (var bundle in bundles)
 				{
-					EmbedResourceCMD.EmbedResource(compileLocation + "\\WeaverCore.dll", bundle.File.FullName, bundle.File.Name + PlatformUtilities.GetBuildTargetExtension(bundle.Target), compression: WeaverBuildTools.Enums.CompressionMethod.NoCompression);
+					EmbedResourceCMD.EmbedResource(compileLocation + "\\WeaverCore.dll", bundle.File.FullName, bundle.File.Name.Replace(".edit", "") + PlatformUtilities.GetBuildTargetExtension(bundle.Target), compression: WeaverBuildTools.Enums.CompressionMethod.NoCompression);
 					progress.GoToNextStep();
 				}
 				StartHollowKnight(settings);
