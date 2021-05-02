@@ -44,7 +44,7 @@ public class HomingBall : MonoBehaviour, IOnPool
 
 	public static Vector2 GlowScale = Vector2.one;
 	public static Vector2 FirePillarOffset = Vector2.zero;
-	static ObjectPool HomingBallPool;
+	//static ObjectPool HomingBallPool;
 
 	public static HashSet<HomingBall> ActiveHomingBalls = new HashSet<HomingBall>();
 
@@ -72,11 +72,14 @@ public class HomingBall : MonoBehaviour, IOnPool
 		}
 	}*/
 
+	static Vector3 originalScale;
+
 	[OnIKGAwake]
 	static void OnGrimmAwake()
 	{
-		HomingBallPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.HomingBallPrefab);
-		HomingBallPool.FillPoolAsync(20);
+		originalScale = InfernoKingGrimm.MainGrimm.Prefabs.HomingBallPrefab.transform.localScale;
+		//HomingBallPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.HomingBallPrefab);
+		//HomingBallPool.FillPoolAsync(20);
 	}
 
 	void Awake()
@@ -146,11 +149,24 @@ public class HomingBall : MonoBehaviour, IOnPool
 		}
 		if (EnablePhase2)
 		{
+			Vector3 oldOffset = Phase2TargetOffset;
+			if (InfernoKingGrimm.GodMode)
+			{
+				Phase2Velocity *= 2f;
+				Phase2RotationSpeed /= 2f;
+				Phase2TargetOffset = Vector3.zero;
+			}
 			while (_lifeTime < LifeTime)
 			{
 				transform.position += (Vector3)Phase2TravelDirection * Time.deltaTime;
 				Phase2TravelDirection = Vector3.RotateTowards(Phase2TravelDirection, ((Player.Player1.transform.position + (Vector3)Phase2TargetOffset) - transform.position) * 100f, Phase2RotationSpeed * Mathf.Deg2Rad * Time.deltaTime, Phase2Velocity * Time.deltaTime);
 				yield return null;
+			}
+			if (InfernoKingGrimm.GodMode)
+			{
+				Phase2Velocity /= 2f;
+				Phase2RotationSpeed *= 2f;
+				Phase2TargetOffset = oldOffset;
 			}
 		}
 
@@ -182,7 +198,8 @@ public class HomingBall : MonoBehaviour, IOnPool
 		} while (clock < end);
 
 		//Destroy(gameObject);
-		HomingBallPool.ReturnToPool(this);
+		Pooling.Destroy(this);
+		//HomingBallPool.ReturnToPool(this);
 	}
 
 	void OnTriggerEnter2D(Collider2D collision)
@@ -198,10 +215,11 @@ public class HomingBall : MonoBehaviour, IOnPool
 		return Fire(grimm, Position, VectorUtilities.DegreesToVector(spawnAngle, spawnVelocity), rotationSpeed, playEffects, audioPitch);
 	}
 
+
 	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, Vector2 spawnVector, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)
 	{
 		//var newBall = Instantiate(MainPrefabs.Instance.HomingBallPrefab,Position,Quaternion.identity);
-		var newBall = HomingBallPool.Instantiate<HomingBall>(Position, Quaternion.identity);
+		var newBall = Pooling.Instantiate<HomingBall>(InfernoKingGrimm.MainGrimm.Prefabs.HomingBallPrefab, Position, Quaternion.identity);
 		//Debug.Log("Starting Lifetime = " + newBall._lifeTime);
 
 		if (grimm.FaceDirection == GrimmDirection.Left)
@@ -237,7 +255,7 @@ public class HomingBall : MonoBehaviour, IOnPool
 		rigidbody.Sleep();
 		//Debug.Log("ON POOL!!!");
 		ActiveHomingBalls.Remove(this);
-		transform.localScale = InfernoKingGrimm.Instance.Prefabs.HomingBallPrefab.transform.localScale;
+		transform.localScale = originalScale;
 		//_lifeTime = 0f;
 		/*if (MainCoroutine != null)
 		{

@@ -11,7 +11,7 @@ using WeaverCore.Utilities;
 
 public class Pillar : MonoBehaviour, IOnPool
 {
-	static ObjectPool PillarPool;
+	//static ObjectPool PillarPool;
 	/*class Hook : GrimmHooks
 	{
 		public override void OnGrimmAwake(InfernoKingGrimm grimm)
@@ -22,12 +22,12 @@ public class Pillar : MonoBehaviour, IOnPool
 		}
 	}*/
 
-	[OnIKGAwake]
+	/*[OnIKGAwake]
 	static void OnGrimmAwake()
 	{
 		PillarPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.FlamePillarPrefab, PoolLoadType.Local);
 		PillarPool.FillPoolAsync(4);
-	}
+	}*/
 
 	[SerializeField]
 	float PillarSpawnY = 5.1f;
@@ -79,7 +79,7 @@ public class Pillar : MonoBehaviour, IOnPool
 
 		yield return new WaitForSeconds(0.5f);
 
-		WeaverCam.Instance.Shaker.Shake(ShakeType.EnemyKillShake);
+		CameraShaker.Instance.Shake(ShakeType.EnemyKillShake);
 
 		if (PlaySound)
 		{
@@ -111,7 +111,8 @@ public class Pillar : MonoBehaviour, IOnPool
 		yield return new WaitForSeconds(0.22f);
 
 		//Destroy(gameObject);
-		PillarPool.ReturnToPool(this);
+		Pooling.Destroy(this);
+		//PillarPool.ReturnToPool(this);
 
 		//yield break;
 	}
@@ -124,6 +125,6 @@ public class Pillar : MonoBehaviour, IOnPool
 
 	public static Pillar Create(Vector3 position)
 	{
-		return PillarPool.Instantiate<Pillar>(position, Quaternion.identity);
+		return Pooling.Instantiate<Pillar>(InfernoKingGrimm.MainGrimm.Prefabs.FlamePillarPrefab, position, Quaternion.identity);
 	}
 }

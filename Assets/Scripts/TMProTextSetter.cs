@@ -6,6 +6,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Settings;
 
 namespace Assets.Scripts
 {
@@ -29,14 +30,18 @@ namespace Assets.Scripts
 
 		void SetText()
 		{
-
+			var settings = Panel.GetSettings<IKGSettings>();
 			if (text.text.Contains("Nightmare"))
 			{
 				var replacement = "Inferno";
-				if (InfernoKingGrimm.Instance != null && InfernoKingGrimm.Instance.Settings.hardMode)
+				if (settings.hardMode)
 				{
 					replacement = "Absolute " + replacement;
 				}
+				/*if (InfernoKingGrimm.MainGrimm != null && InfernoKingGrimm.MainGrimm.Settings.hardMode)
+				{
+					replacement = "Absolute " + replacement;
+				}*/
 				//WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Nightmare", "Inferno"));
 				text.text = text.text.Replace("Nightmare", replacement);
 				//WeaverLog.Log("Text Color =" + text.color);
@@ -45,7 +50,7 @@ namespace Assets.Scripts
 			if (text.text.Contains("Infinite"))
 			{
 				var replacement = "Inferno King";
-				if (InfernoKingGrimm.Instance != null && InfernoKingGrimm.Instance.Settings.hardMode)
+				if (settings.hardMode)
 				{
 					replacement = "Absolute " + replacement;
 				}
@@ -54,7 +59,7 @@ namespace Assets.Scripts
 				//WeaverLog.Log("Text Color =" + text.color);
 				//WeaverLog.Log("Change 2");
 			}
-			if (InfernoKingGrimm.Instance != null && InfernoKingGrimm.Instance.Settings.hardMode)
+			if (settings.hardMode)
 			{
 				if (text.color.r > 0.7f && text.color.g < 0.2f && text.color.b < 0.2f)
 				{

@@ -10,7 +10,7 @@ using WeaverCore.Utilities;
 
 public class UppercutFireball : MonoBehaviour, IOnPool
 {
-	static ObjectPool UppercutFBPool;
+	//static ObjectPool UppercutFBPool;
 
 	[SerializeField]
 	float lifeTime = 1.5f;
@@ -57,7 +57,8 @@ public class UppercutFireball : MonoBehaviour, IOnPool
 		counter += Time.deltaTime;
 		if (counter >= lifeTime)
 		{
-			UppercutFBPool.ReturnToPool(this);
+			Pooling.Destroy(this);
+			//UppercutFBPool.ReturnToPool(this);
 		}
 	}
 
@@ -67,7 +68,7 @@ public class UppercutFireball : MonoBehaviour, IOnPool
 		{
 			rotation = Quaternion.identity;
 		}
-		return UppercutFBPool.Instantiate<UppercutFireball>(position, rotation);
+		return Pooling.Instantiate<UppercutFireball>(InfernoKingGrimm.MainGrimm.Prefabs.UppercutFireball, position, rotation);
 	}
 
 	/*class UppercutBallHook : GrimmHooks
@@ -80,10 +81,10 @@ public class UppercutFireball : MonoBehaviour, IOnPool
 		}
 	}*/
 
-	[OnIKGAwake]
+	/*[OnIKGAwake]
 	static void OnGrimmAwake()
 	{
 		UppercutFBPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.UppercutFireball, WeaverCore.Enums.PoolLoadType.Local);
 		UppercutFBPool.FillPoolAsync(8);
-	}
+	}*/
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Utilities;
 using Random = UnityEngine.Random;
 
 public class GrimmSpike : MonoBehaviour {
@@ -84,21 +85,29 @@ public class GrimmSpike : MonoBehaviour {
 
 	}
 
-	IEnumerator LowerSpikesRoutine()
+	IEnumerator LowerSpikesRoutine(bool resetLocalX, float originalLocalX)
 	{
 		collider.enabled = false;
 		yield return PlayAnimationTillDone("Spike Down");
 		renderer.enabled = false;
+		if (resetLocalX)
+		{
+			transform.SetXLocalPosition(originalLocalX);
+		}
 	}
 
-	IEnumerator SpikesCancelRoutine()
+	IEnumerator SpikesCancelRoutine(bool resetLocalX, float originalLocalX)
 	{
 		collider.enabled = false;
 		yield return PlayAnimationTillDone("Spike Cancel");
 		renderer.enabled = false;
+		if (resetLocalX)
+		{
+			transform.SetXLocalPosition(originalLocalX);
+		}
 	}
 
-	public void LowerSpikes()
+	public void LowerSpikes(bool resetLocalX, float originalLocalX)
 	{
 		if (!inRange)
 		{
@@ -107,11 +116,11 @@ public class GrimmSpike : MonoBehaviour {
 		if (spikesRising)
 		{
 			StopAllCoroutines();
-			StartCoroutine(SpikesCancelRoutine());
+			StartCoroutine(SpikesCancelRoutine(resetLocalX, originalLocalX));
 		}
 		else
 		{
-			StartCoroutine(LowerSpikesRoutine());
+			StartCoroutine(LowerSpikesRoutine(resetLocalX, originalLocalX));
 		}
 	}
 

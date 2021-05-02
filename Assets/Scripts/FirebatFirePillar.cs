@@ -3,6 +3,7 @@ using Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WeaverCore;
 using WeaverCore.DataTypes;
 using WeaverCore.Enums;
 using WeaverCore.Interfaces;
@@ -10,7 +11,7 @@ using WeaverCore.Utilities;
 
 public class FirebatFirePillar : MonoBehaviour
 {
-	static ObjectPool PillarPool;
+	//static ObjectPool PillarPool;
 
 	ParticleSystem[] particleSystems;
 	float time = 0f;
@@ -25,18 +26,18 @@ public class FirebatFirePillar : MonoBehaviour
 		}
 	}*/
 
-	[OnIKGAwake]
+	/*[OnIKGAwake]
 	static void OnGrimmAwake()
 	{
 		PillarPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.FirebatPillarPrefab, PoolLoadType.Local);
 		PillarPool.FillPoolAsync(3);
-	}
+	}*/
 
 	public static FirebatFirePillar Spawn(InfernoKingGrimm grimm, bool autoPlay = true)
 	{
 		//var fireBatPillar = GameObject.Instantiate(grimm.Prefabs.FirebatPillarPrefab,grimm.transform,false).GetComponent<FirebatFirePillar>();
 		//var fireBatPillar = Pool.RetrieveFromPool();
-		var fireBatPillar = PillarPool.Instantiate<FirebatFirePillar>();
+		var fireBatPillar = Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.FirebatPillarPrefab);
 		fireBatPillar.transform.parent = grimm.transform;
 		fireBatPillar.transform.localPosition = grimm.Prefabs.FirebatPillarPrefab.transform.position;
 
@@ -74,8 +75,9 @@ public class FirebatFirePillar : MonoBehaviour
 		{
 			particles.Play();
 		}
+		Pooling.Destroy(this);
 		//Destroy(gameObject, 10.0f);
-		PillarPool.ReturnToPool(this, 0.71f);
+		//PillarPool.ReturnToPool(this, 0.71f);
 	}
 
 	public void Stop()

@@ -6,12 +6,12 @@ using System.Text;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Attributes;
-using WeaverCore.Configuration;
 using WeaverCore.GodsOfGlory;
 using WeaverCore.Interfaces;
+using WeaverCore.Settings;
 using WeaverCore.Utilities;
 
-namespace Assets.Scripts
+/*namespace Assets.Scripts
 {
 #if !UNITY_EDITOR
 	class OnSceneLoad
@@ -26,7 +26,7 @@ namespace Assets.Scripts
 		{
 			if (arg0.name.Contains("GG_Workshop"))
 			{
-				var settings = GlobalWeaverSettings.GetSettings<IKGSettings>();
+				var settings = Panel.GetSettings<IKGSettings>();
 				if (settings.hardMode)
 				{
 					GGWorkshop.ChangeStatue("GG_Statue_Grimm", "Absolute Inferno King Grimm");
@@ -39,4 +39,4 @@ namespace Assets.Scripts
 		}
 	}
 #endif
-}
+}*/

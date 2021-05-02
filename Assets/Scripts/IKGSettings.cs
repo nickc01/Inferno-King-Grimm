@@ -3,21 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using WeaverCore.Configuration;
+using WeaverCore.Settings;
 
 namespace Assets.Scripts
 {
-	public class IKGSettings : GlobalWeaverSettings
+	public class IKGSettings : Panel
 	{
 		[Tooltip(@"Checking this will make the boss fight considerably harder
 
 For those who want a bigger challenge")]
+		[SettingField(Visibility.MenuOnly)]
 		public bool hardMode = false;
 
 		[Tooltip(@"Checking this will allow you to customize the health to be whatever you want.
 
 The value can be set below")]
-		public bool enableCustomHealth = false;
+		[SerializeField]
+		[SettingField(Visibility.Never)]
+		bool enableCustomHealth = false;
+
+		[SettingField(Visibility.MenuOnly)]
+		public bool EnableCustomHealth
+		{
+			get
+			{
+				return enableCustomHealth;
+			}
+			set
+			{
+				if (enableCustomHealth != value)
+				{
+					enableCustomHealth = value;
+					if (!InPauseMenu)
+					{
+						GetElement("CustomHealthValue").Visible = enableCustomHealth;
+					}
+				}
+			}
+		}
 
 		[Tooltip(@"The custom health the boss will use.
 
@@ -50,6 +73,28 @@ Hard Mode Radiant		: 2050")]
 -Off:      Turns the attack off completely
 ")]
 		public PufferFishDifficulty PufferFishDifficulty;
+
+		public override string TabName
+		{
+			get
+			{
+				return "Inferno King Grimm";
+			}
+		}
+
+		protected override void OnPanelOpen()
+		{
+			var healthElement = GetElement("CustomHealthValue");
+			if (!InPauseMenu)
+			{
+				healthElement.Visible = enableCustomHealth;
+				healthElement.Order = GetElement("EnableCustomHealth").Order + 1;
+			}
+			else
+			{
+				healthElement.Visible = false;
+			}
+		}
 
 	}
 }

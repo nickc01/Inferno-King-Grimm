@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Enums;
+using WeaverCore.Utilities;
 using Random = UnityEngine.Random;
 
 public class SpikesController : MonoBehaviour 
@@ -70,8 +71,19 @@ public class SpikesController : MonoBehaviour
 		StartCoroutine(PlayAsync());
 	}
 
-	IEnumerator DoSpikesAsync(IEnumerable<GrimmSpike> spikes, float prepareTime = 0.55f, float raiseTime = 0.15f, float lowerTime = 0.45f)
+	IEnumerator DoSpikesAsync(IEnumerable<GrimmSpike> spikes, float prepareTime = 0.55f, float raiseTime = 0.15f, float lowerTime = 0.45f, float positionalRandomness = 0f)
 	{
+		List<float> originalLocalXValues = null;
+		if (positionalRandomness > 0f)
+		{
+			originalLocalXValues = new List<float>();
+			foreach (var spike in spikes)
+			{
+				originalLocalXValues.Add(spike.transform.localPosition.x);
+				spike.transform.SetXLocalPosition(spike.transform.localPosition.x + Random.Range(-positionalRandomness,positionalRandomness));
+			}
+		}
+
 		foreach (var spike in spikes)
 		{
 			spike.PrepareForAttack();
@@ -89,15 +101,24 @@ public class SpikesController : MonoBehaviour
 		yield return new WaitForSeconds(raiseTime);
 
 		//TODO - Shake Camera
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
+		CameraShaker.Instance.Shake(ShakeType.AverageShake);
 
 		WeaverAudio.PlayAtPoint(SpikesUp, Player.Player1.transform.position);
 
 		yield return new WaitForSeconds(lowerTime);
 
+		int index = 0;
 		foreach (var spike in spikes)
 		{
-			spike.LowerSpikes();
+			if (positionalRandomness > 0f)
+			{
+				spike.LowerSpikes(true,originalLocalXValues[index]);
+			}
+			else
+			{
+				spike.LowerSpikes(false, 0f);
+			}
+			index++;
 		}
 
 		WeaverAudio.PlayAtPoint(SpikesDown, Player.Player1.transform.position);
@@ -135,6 +156,14 @@ public class SpikesController : MonoBehaviour
 		yield return new WaitForSeconds(0.85f);
 
 		yield return DoSpikesAsync(second, 0.75f);
+	}
+
+	public IEnumerator DoRegularAsync()
+	{
+		float positionFloat = Random.Range(65f, 68.125f);
+
+		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
+		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 0), 0.70f,positionalRandomness: 1.1f);
 	}
 
 	public IEnumerator PlayAlternatingAsync()

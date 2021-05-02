@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 95841808961649706}
   - component: {fileID: 82822492651746618}
   - component: {fileID: 114538633288845706}
-  - component: {fileID: 114172473313567532}
+  - component: {fileID: 114713814836333398}
   m_Layer: 0
   m_Name: Stun Effect
   m_TagString: Untagged
@@ -141,18 +141,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114172473313567532
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1254688935959326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9a4d3a1013522e4ebb2de6ee0c912a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChannelToUse: 3
 --- !u!114 &114538633288845706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,6 +150,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59d8b42d611ac1d499d321ebfb68299e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DestroyBehaviour: 3
+  destroyAfterTime: 0
+  lifeTime: 0
+--- !u!114 &114713814836333398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1254688935959326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a6abec551ce95408d93cbfa3708833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212070457990104162

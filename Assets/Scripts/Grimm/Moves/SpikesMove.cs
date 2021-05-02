@@ -17,56 +17,79 @@ public class SpikesMove : GrimmMove
 		spikeController = Instantiate(Prefabs.spikeControllerPrefab, Prefabs.spikeControllerPrefab.transform.position, Quaternion.identity);
 	}
 
-	public override IEnumerator DoMove()
+	bool doingSpikes = false;
+
+	IEnumerator SpikeRoutine()
 	{
-		if (Grimm.Settings.hardMode)
+		if (InfernoKingGrimm.GodMode)
 		{
-			if (Grimm.BossStage == 1)
-			{
-				yield return spikeController.PlayAlternatingTripleAsync();
-				yield return new WaitForSeconds(0.6f);
-			}
-			else if (Grimm.BossStage == 2)
-			{
-				yield return spikeController.PlayDashSpikes(maxDashDistance, 3);
-				yield return new WaitForSeconds(0.45f);
-			}
-			else if (Grimm.BossStage == 3)
-			{
-				yield return spikeController.PlayDashSpikes(maxDashDistance + 1, 2);
-				yield return new WaitForSeconds(0.45f);
-			}
+			yield return spikeController.DoRegularAsync();
+			yield return new WaitForSeconds(1f);
 		}
 		else
 		{
-			if (Grimm.BossStage == 1)
+			if (Grimm.Settings.hardMode)
 			{
-				//spikeController.Play();
-				yield return spikeController.PlayAlternatingAsync();
-			}
-			else if (Grimm.BossStage == 2)
-			{
-				yield return spikeController.PlayMiddleSideAsync();
-			}
-			else
-			{
-				yield return spikeController.PlayAlternatingTripleAsync();
-			}
-
-			yield return new WaitForSeconds(0.2f);
-			//yield return null;
-
-			//yield return new WaitForSeconds(spikeController.CurrentWaitTime);
-
-			if (Grimm.BossStage >= 3)
-			{
-				yield return new WaitForSeconds(0.3f);
+				if (Grimm.BossStage == 1)
+				{
+					yield return spikeController.PlayAlternatingTripleAsync();
+					yield return new WaitForSeconds(0.6f);
+				}
+				else if (Grimm.BossStage == 2)
+				{
+					yield return spikeController.PlayDashSpikes(maxDashDistance, 3);
+					yield return new WaitForSeconds(0.45f);
+				}
+				else if (Grimm.BossStage == 3)
+				{
+					yield return spikeController.PlayDashSpikes(maxDashDistance + 1, 2);
+					yield return new WaitForSeconds(0.45f);
+				}
 			}
 			else
 			{
-				yield return new WaitForSeconds(0.6f);
+				if (Grimm.BossStage == 1)
+				{
+					//spikeController.Play();
+					yield return spikeController.PlayAlternatingAsync();
+				}
+				else if (Grimm.BossStage == 2)
+				{
+					yield return spikeController.PlayMiddleSideAsync();
+				}
+				else
+				{
+					yield return spikeController.PlayAlternatingTripleAsync();
+				}
+
+				yield return new WaitForSeconds(0.2f);
+				//yield return null;
+
+				//yield return new WaitForSeconds(spikeController.CurrentWaitTime);
+
+				if (Grimm.BossStage >= 3)
+				{
+					yield return new WaitForSeconds(0.3f);
+				}
+				else
+				{
+					yield return new WaitForSeconds(0.6f);
+				}
 			}
 		}
+		doingSpikes = false;
+	}
 
+	public override IEnumerator DoMove()
+	{
+		doingSpikes = true;
+		StartCoroutine(SpikeRoutine());
+		yield return new WaitUntil(() => !doingSpikes);
+	}
+
+	public override void OnStun()
+	{
+		doingSpikes = false;
+		base.OnStun();
 	}
 }

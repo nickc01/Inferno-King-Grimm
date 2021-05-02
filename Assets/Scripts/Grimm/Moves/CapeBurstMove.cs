@@ -12,7 +12,7 @@ using WeaverCore.Utilities;
 
 public class CapeBurstMove : GrimmMove
 {
-	static ObjectPool RedBurstPool;
+	//static ObjectPool RedBurstPool;
 
 	[SerializeField]
 	Vector2 spawnPosition = new Vector2(85.77f, 13.5f);
@@ -90,11 +90,11 @@ public class CapeBurstMove : GrimmMove
 
 	Coroutine jitterRoutine = null;
 
-	[OnIKGAwake]
+	/*[OnIKGAwake]
 	static void OnGrimmAwake()
 	{
 		RedBurstPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.RedBurst, PoolLoadType.Local);
-	}
+	}*/
 
 	/*void Awake()
 	{
@@ -276,7 +276,7 @@ public class CapeBurstMove : GrimmMove
 
 	public void PlayBurst()
 	{
-		var instance = RedBurstPool.Instantiate(transform.position + BurstOffset, Quaternion.identity);
+		var instance = Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.RedBurst, transform.position + BurstOffset, Quaternion.identity);
 		instance.transform.localScale = new Vector3(burstScale, burstScale, 1f);
 	}
 

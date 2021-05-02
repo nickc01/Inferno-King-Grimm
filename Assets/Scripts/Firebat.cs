@@ -11,7 +11,7 @@ using WeaverCore.Utilities;
 
 public class Firebat : MonoBehaviour, IOnPool 
 {
-	static ObjectPool FirebatPool;
+	//static ObjectPool FirebatPool;
 
 	/*class Hook : GrimmHooks
 	{
@@ -22,12 +22,12 @@ public class Firebat : MonoBehaviour, IOnPool
 		}
 	}*/
 
-	[OnIKGAwake]
+	/*[OnIKGAwake]
 	static void OnGrimmStart()
 	{
 		FirebatPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.FirebatPrefab, PoolLoadType.Local);
 		FirebatPool.FillPoolAsync(6);
-	}
+	}*/
 
 	public float Angle { get; private set; }
 	public GrimmDirection GeneralDirection { get; private set; }
@@ -37,7 +37,7 @@ public class Firebat : MonoBehaviour, IOnPool
 
 	new Rigidbody2D rigidbody;
 	new SpriteRenderer renderer;
-	static Transform _fbSpawnPoint;
+	/*static Transform _fbSpawnPoint;
 	static Transform FirebatSpawnPoint
 	{
 		get
@@ -48,7 +48,7 @@ public class Firebat : MonoBehaviour, IOnPool
 			}
 			return _fbSpawnPoint;
 		}
-	}
+	}*/
 
 	// Use this for initialization
 	void Start () 
@@ -60,7 +60,8 @@ public class Firebat : MonoBehaviour, IOnPool
 	IEnumerator Waiter(float time)
 	{
 		yield return new WaitForSeconds(time);
-		FirebatPool.ReturnToPool(this);
+		Pooling.Destroy(this);
+		//FirebatPool.ReturnToPool(this);
 	}
 	
 	// Update is called once per frame
@@ -74,7 +75,7 @@ public class Firebat : MonoBehaviour, IOnPool
 	{
 		//Debugger.Log("Fire bat F");
 		//var fireBat = FirebatPool.RetrieveFromPool(position, Quaternion.identity);
-		var fireBat = FirebatPool.Instantiate<Firebat>(position, Quaternion.identity);
+		var fireBat = Pooling.Instantiate<Firebat>(InfernoKingGrimm.MainGrimm.Prefabs.FirebatPrefab, position, Quaternion.identity);
 
 		if (fireBat.rigidbody == null)
 		{
@@ -115,7 +116,7 @@ public class Firebat : MonoBehaviour, IOnPool
 		//Debugger.Log("Fire bat D");
 		if (position == null)
 		{
-			position = FirebatSpawnPoint.position;
+			position = grimm.transform.Find("Firebat SpawnPoint").position;//FirebatSpawnPoint.position;
 		}
 		//Debugger.Log("Fire bat E");
 		return Spawn(angle, velocity, grimm.FaceDirection,position.Value);
@@ -134,7 +135,7 @@ public class Firebat : MonoBehaviour, IOnPool
 			fireAudio.AudioSource.pitch = audioPitch;
 		}
 
-		GrimmGlow.Create(FirebatSpawnPoint.position + new Vector3(0f, 0f, -0.1f));
+		GrimmGlow.Create(grimm.transform.Find("Firebat SpawnPoint").position + new Vector3(0f, 0f, -0.1f));
 
 		yield return new WaitForSeconds(0.3f);
 

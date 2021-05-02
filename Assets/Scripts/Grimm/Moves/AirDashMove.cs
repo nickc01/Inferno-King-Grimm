@@ -12,11 +12,11 @@ using Random = UnityEngine.Random;
 
 public class AirDashMove : GrimmMove
 {
-	static ObjectPool AirDashEffectPool;
+	/*static ObjectPool AirDashEffectPool;
 	static ObjectPool FlameTrailEffectsPool;
 	static ObjectPool SlamEffectPool;
 	static ObjectPool GroundDashEffectPool;
-	static ObjectPool DustGroundEffectPool;
+	static ObjectPool DustGroundEffectPool;*/
 
 	[Header("Air Dash Settings")]
 	[SerializeField]
@@ -79,7 +79,7 @@ public class AirDashMove : GrimmMove
 		}
 	}*/
 
-	[OnIKGAwake]
+	/*[OnIKGAwake]
 	static void OnGrimmAwake()
 	{
 		AirDashEffectPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.AirDashEffect, PoolLoadType.Local);
@@ -87,7 +87,7 @@ public class AirDashMove : GrimmMove
 		SlamEffectPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.SlamEffect, PoolLoadType.Local);
 		GroundDashEffectPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.GroundDashEffect, PoolLoadType.Local);
 		DustGroundEffectPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.DustGroundEffect, PoolLoadType.Local);
-	}
+	}*/
 
 	void Awake()
 	{
@@ -168,7 +168,7 @@ public class AirDashMove : GrimmMove
 
 
 
-		var effect = AirDashEffectPool.Instantiate(transform,false);
+		var effect = Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.AirDashEffect, transform, false);
 		effect.transform.parent = null;
 
 
@@ -183,7 +183,7 @@ public class AirDashMove : GrimmMove
 			if (fireTimer >= flameSpawnRate)
 			{
 				fireTimer -= flameSpawnRate;
-				FlameTrailEffectsPool.Instantiate(transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
+				Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.FlameTrailEffects, transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
 			}
 			if (!vertical && (transform.position.x <= Grimm.LeftEdge || transform.position.x >= Grimm.RightEdge))
 			{
@@ -207,18 +207,18 @@ public class AirDashMove : GrimmMove
 		landPlayer.AudioSource.pitch = 0.9f;
 
 		//TODO : Make Camera Shake
-		WeaverCam.Instance.Shaker.Shake(ShakeType.EnemyKillShake);
+		CameraShaker.Instance.Shake(ShakeType.EnemyKillShake);
 
 		Grimm.FacePlayer();
 		transform.rotation = Quaternion.identity;
 
-		SlamEffectPool.Instantiate(transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
+		Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.SlamEffect, transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
 
 		yield return new WaitForSeconds(0.37f);
 
 		WeaverAudio.PlayAtPoint(Sounds.GroundDash, transform.position);
 
-		var groundEffect = GroundDashEffectPool.Instantiate(transform.position + Prefabs.GroundDashEffect.transform.position, Quaternion.identity);
+		var groundEffect = Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.GroundDashEffect, transform.position + Prefabs.GroundDashEffect.transform.position, Quaternion.identity);
 		var dashSpeed = transform.localScale.x * groundDashSpeed;
 
 		if (FaceDirection == GrimmDirection.Left)
@@ -232,7 +232,7 @@ public class AirDashMove : GrimmMove
 
 		GrimmAnimator.PlayAnimation("G Dash");
 
-		var dustEffect = DustGroundEffectPool.Instantiate<ParticleSystem>(transform.position + Prefabs.DustGroundEffect.transform.position, Prefabs.DustGroundEffect.transform.rotation);
+		var dustEffect = Pooling.Instantiate<ParticleSystem>(InfernoKingGrimm.MainGrimm.Prefabs.DustGroundEffect, transform.position + Prefabs.DustGroundEffect.transform.position, Prefabs.DustGroundEffect.transform.rotation);
 		var mainParticles = dustEffect.main;
 
 		mainParticles.startLifetime = groundDashTime;
@@ -254,7 +254,7 @@ public class AirDashMove : GrimmMove
 			if (fireTimer >= flameSpawnRate)
 			{
 				fireTimer -= flameSpawnRate;
-				FlameTrailEffectsPool.Instantiate(transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
+				Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.FlameTrailEffects, transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
 			}
 			if (horizontal && (transform.position.x <= Grimm.LeftEdge || transform.position.x >= Grimm.RightEdge))
 			{
@@ -299,8 +299,11 @@ public class AirDashMove : GrimmMove
 		yield return GroundPoundAlt(disableDamager);
 		if (Grimm.BossStage >= 3 || (Grimm.BossStage == 2 && Grimm.Settings.hardMode))
 		{
-			yield return GroundPoundAlt(disableDamager);
-			yield return GroundPoundAlt(disableDamager);
+			if (!InfernoKingGrimm.GodMode)
+			{
+				yield return GroundPoundAlt(disableDamager);
+				yield return GroundPoundAlt(disableDamager);
+			}
 		}
 
 		yield return Grimm.TeleportOut();
@@ -328,7 +331,7 @@ public class AirDashMove : GrimmMove
 
 		WeaverAudio.PlayAtPoint(Sounds.AirDash, transform.position);
 
-		var effect = AirDashEffectPool.Instantiate(transform, false);
+		var effect = Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.AirDashEffect, transform, false);
 		effect.transform.parent = null;
 
 		//float timer = 0f;
@@ -340,7 +343,7 @@ public class AirDashMove : GrimmMove
 			if (fireTimer >= flameSpawnRate)
 			{
 				fireTimer -= flameSpawnRate;
-				FlameTrailEffectsPool.Instantiate(transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
+				Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.FlameTrailEffects, transform.position + flameSpawnOffset, Prefabs.FlameTrailEffects.transform.rotation);
 			}
 		} while (transform.position.y > Grimm.GroundY);
 
@@ -395,11 +398,11 @@ public class AirDashMove : GrimmMove
 
 	IEnumerator GroundPoundEffectsHarder(int amountOfFireballs, float angleBetweenFireballs, float velocity)
 	{
-		WeaverCam.Instance.Shaker.Shake(ShakeType.BigShake);
+		CameraShaker.Instance.Shake(ShakeType.BigShake);
 
 		Grimm.FacePlayer();
 
-		SlamEffectPool.Instantiate(transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
+		Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.SlamEffect, transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
 
 		UppercutExplosion.Play();
 
@@ -421,10 +424,20 @@ public class AirDashMove : GrimmMove
 
 			var selectedFireball = Fireballs[Fireballs.Count - 1];
 
+			if (InfernoKingGrimm.GodMode)
+			{
+				selectedFireball.transform.SetYPosition(selectedFireball.transform.GetYPosition() - (loweringOffset / 2f));
+			}
+
 			var fireBall = UppercutFireball.Create(transform.position.With(y: transform.position.y - loweringOffset));
 			fireBall.RigidBody.velocity = selectedFireball.velocity;
 
 			selectedFireball = Fireballs[Fireballs.Count - 2];
+
+			if (InfernoKingGrimm.GodMode)
+			{
+				selectedFireball.transform.SetYPosition(selectedFireball.transform.GetYPosition() - (loweringOffset / 2f));
+			}
 
 			fireBall = UppercutFireball.Create(transform.position.With(y: transform.position.y - loweringOffset), Quaternion.identity);
 			fireBall.RigidBody.velocity = selectedFireball.velocity;
@@ -455,11 +468,11 @@ public class AirDashMove : GrimmMove
 
 	IEnumerator GroundPoundSlamEffects(int fireballs, float maxHorizontalSpan, float height)
 	{
-		WeaverCam.Instance.Shaker.Shake(ShakeType.BigShake);
+		CameraShaker.Instance.Shake(ShakeType.BigShake);
 
 		Grimm.FacePlayer();
 
-		SlamEffectPool.Instantiate(transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
+		Pooling.Instantiate(InfernoKingGrimm.MainGrimm.Prefabs.SlamEffect, transform.position + Prefabs.SlamEffect.transform.position, Quaternion.identity);
 
 		UppercutExplosion.Play();
 		foreach (var value in VectorUtilities.CalculateSpacedValues(fireballs, 7f))

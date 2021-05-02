@@ -16,7 +16,7 @@ public class MainPrefabs : ScriptableObject
 	public GameObject FlameTrailEffects;
 	public GameObject SlamEffect;
 	public GameObject GroundDashEffect;
-	public GameObject DustGroundEffect;
+	public ParticleSystem DustGroundEffect;
 	public SpikesController spikeControllerPrefab;
 	public Pillar FlamePillarPrefab;
 	public UppercutFireball UppercutFireball;

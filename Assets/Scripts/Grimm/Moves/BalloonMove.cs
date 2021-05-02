@@ -78,6 +78,15 @@ public class BalloonMove : GrimmMove
 	EntityHealth healthManager;
 	ParticleSystem BalloonParticles;
 
+	//public Vector2 BalloonPosition { get; private set; }
+	public bool DoingBalloonMove { get; private set; }
+	public int BalloonMoveTimes { get; private set; }
+
+	[Header("God Mode")]
+	[Space]
+	[SerializeField]
+	float godModeSpacing = 5f;
+
 	void Awake()
 	{
 		healthManager = GetComponent<EntityHealth>();
@@ -94,10 +103,36 @@ public class BalloonMove : GrimmMove
 			yield break;
 		}
 
+		DoingBalloonMove = true;
 		healthManager.Invincible = true;
 
+		//Debug.Log("Doing Balloon Move for grimm " + InfernoKingGrimm.GrimmsFighting.IndexOf(Grimm));
 
 		transform.position = transform.position.With(x: balloonPosition.x, y: balloonPosition.y);
+		if (InfernoKingGrimm.GodMode)
+		{
+			if (InfernoKingGrimm.MainGrimm == Grimm)
+			{
+				transform.SetXPosition(balloonPosition.x - godModeSpacing);
+				foreach (var grimm in InfernoKingGrimm.GrimmsFighting)
+				{
+					//Debug.Log("Grimm Number = " + InfernoKingGrimm.GrimmsFighting.IndexOf(grimm));
+					if (grimm != Grimm)
+					{
+						//Debug.Log("Starting Balloon Move for it");
+						grimm.StartCoroutine(grimm.GetComponent<BalloonMove>().DoMove());
+					}
+					//else
+					//{
+						//Debug.Log("Skipping over it");
+					//}
+				}
+			}
+			else
+			{
+				transform.SetXPosition(balloonPosition.x + godModeSpacing);
+			}
+		}
 
 		while (Vector3.Distance(transform.position, Player.Player1.transform.position) < 6f)
 		{
@@ -138,8 +173,8 @@ public class BalloonMove : GrimmMove
 
 		BalloonCollider.SetActive(true);
 
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
-		WeaverCam.Instance.Shaker.SetRumble(RumbleType.RumblingSmall);
+		CameraShaker.Instance.Shake(ShakeType.AverageShake);
+		CameraShaker.Instance.SetRumble(RumbleType.RumblingSmall);
 
 		BalloonParticles.Play();
 
@@ -147,7 +182,21 @@ public class BalloonMove : GrimmMove
 		//var spawnRate = ballSpawnRate - (homingSpawnRateIncrement * (Grimm.BossStage - 1));
 		float spawnRate = 0f;
 
-		switch (Grimm.Settings.PufferFishDifficulty)
+		var difficulty = Grimm.Settings.PufferFishDifficulty;
+
+		if (InfernoKingGrimm.GodMode)
+		{
+			if (Grimm.Settings.hardMode)
+			{
+				difficulty = PufferFishDifficulty.Intermediate;
+			}
+			else
+			{
+				difficulty = PufferFishDifficulty.Easy;
+			}
+		}
+
+		switch (difficulty)
 		{
 			case PufferFishDifficulty.Easy:
 				switch (Grimm.BossStage)
@@ -265,7 +314,7 @@ public class BalloonMove : GrimmMove
 			GrimmBall.Spawn(ballSpawn, Random.value > 0.5f ? 3f : 5f, -10f, -4.5f);
 		}*/
 
-		WeaverCam.Instance.Shaker.SetRumble(RumbleType.None);
+		CameraShaker.Instance.SetRumble(RumbleType.None);
 
 		yield return new WaitForSeconds(1.75f);
 
@@ -303,11 +352,15 @@ public class BalloonMove : GrimmMove
 		{
 			yield return new WaitForSeconds(0.3f);
 		}
+
+		DoingBalloonMove = false;
+		BalloonMoveTimes++;
 	}
 
 	public override void OnStun()
 	{
-		WeaverCam.Instance.Shaker.SetRumble(RumbleType.None);
+		DoingBalloonMove = false;
+		CameraShaker.Instance.SetRumble(RumbleType.None);
 		BalloonFireballShootSound.SetActive(false);
 		BalloonParticles.Stop();
 	}

@@ -26,7 +26,7 @@ public abstract class GrimmMove : MonoBehaviour, IBossMove
 			return Grimm.GrimmAnimator;
 		}
 	}
-	public WeaverAudioPlayer VoicePlayer
+	public AudioPlayer VoicePlayer
 	{
 		get
 		{

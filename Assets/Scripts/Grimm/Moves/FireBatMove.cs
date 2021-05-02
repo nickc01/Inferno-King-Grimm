@@ -110,13 +110,34 @@ public class FireBatMove : GrimmMove
 			}
 			else
 			{
-				Firebat.SendFirebat(Grimm, lowAngle, 1f);
-				yield return new WaitForSeconds(0.1f);
-				Firebat.SendFirebat(Grimm, lowAngle / 2f, 1.1f);
-				yield return new WaitForSeconds(0.1f);
-				Firebat.SendFirebat(Grimm, highAngle / 2f, 1.2f);
-				yield return new WaitForSeconds(0.1f);
-				yield return Firebat.SendFirebatAsync(Grimm, highAngle, 1.3f);
+				if (InfernoKingGrimm.GodMode)
+				{
+					Firebat.SendFirebat(Grimm, highAngle / 1.5f, 1f, playSound: false);
+					yield return Firebat.SendFirebatAsync(Grimm, highAngle, 1f);
+
+					yield return new WaitForSeconds(0.3f);
+
+					Firebat.SendFirebat(Grimm, lowAngle / 1.5f, 1.2f, playSound: false);
+					yield return Firebat.SendFirebatAsync(Grimm, lowAngle, 1.2f);
+
+					/*Firebat.SendFirebat(Grimm, lowAngle, 1f, playSound: false);
+					yield return Firebat.SendFirebatAsync(Grimm, highAngle, 1f);
+
+					yield return new WaitForSeconds(0.3f);
+
+					Firebat.SendFirebat(Grimm, lowAngle / 2f, 1.2f, playSound: false);
+					yield return Firebat.SendFirebatAsync(Grimm, highAngle / 2f, 1.2f);*/
+				}
+				else
+				{
+					Firebat.SendFirebat(Grimm, lowAngle, 1f);
+					yield return new WaitForSeconds(0.1f);
+					Firebat.SendFirebat(Grimm, lowAngle / 2f, 1.1f);
+					yield return new WaitForSeconds(0.1f);
+					Firebat.SendFirebat(Grimm, highAngle / 2f, 1.2f);
+					yield return new WaitForSeconds(0.1f);
+					yield return Firebat.SendFirebatAsync(Grimm, highAngle, 1.3f);
+				}
 			}
 
 		}
@@ -152,7 +173,7 @@ public class FireBatMove : GrimmMove
 			}
 			else
 			{
-				if (Random.value > 0.5f)
+				if (Random.value > 0.5f || InfernoKingGrimm.GodMode)
 				{
 					Firebat.SendFirebat(Grimm, lowAngle, 1f, playSound: false);
 					yield return Firebat.SendFirebatAsync(Grimm, highAngle, 1f);
@@ -251,6 +272,10 @@ public class FireBatMove : GrimmMove
 		if (!Grimm.Settings.hardMode && Grimm.BossStage >= 3)
 		{
 			spawnRate *= 0.75f;
+		}
+		if (InfernoKingGrimm.GodMode)
+		{
+			spawnRate *= 2.2f;
 		}
 		float spawnTimer = spawnRate;
 		bool top = false;

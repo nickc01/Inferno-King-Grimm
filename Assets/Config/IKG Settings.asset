@@ -11,7 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20ef2f069a251a4fb8f4729a137ca98, type: 3}
   m_Name: IKG Settings
   m_EditorClassIdentifier: 
-  TabName: Inferno King Grimm
   hardMode: 0
   enableCustomHealth: 0
   CustomHealthValue: 1300

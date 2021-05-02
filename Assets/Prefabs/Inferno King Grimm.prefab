@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 4849648978874542}
   - component: {fileID: 60025982912163722}
   - component: {fileID: 114466956665670494}
+  - component: {fileID: 114122573297472606}
   m_Layer: 22
   m_Name: Slash1
   m_TagString: Untagged
@@ -440,6 +441,7 @@ GameObject:
   - component: {fileID: 4939700711879796}
   - component: {fileID: 60832864190152364}
   - component: {fileID: 114872809052209714}
+  - component: {fileID: 114230416150949814}
   m_Layer: 22
   m_Name: Slash2
   m_TagString: Untagged
@@ -457,6 +459,7 @@ GameObject:
   - component: {fileID: 4401478127223024}
   - component: {fileID: 60332467285692930}
   - component: {fileID: 114086795583852034}
+  - component: {fileID: 114796687474090888}
   m_Layer: 22
   m_Name: Slash3
   m_TagString: Untagged
@@ -490,7 +493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4023218805753568}
   - component: {fileID: 114879189269301354}
-  - component: {fileID: 114893949498375372}
+  - component: {fileID: 114100603001751492}
   - component: {fileID: 95939501209690446}
   - component: {fileID: 114291875212994178}
   - component: {fileID: 61823431700803404}
@@ -1533,6 +1536,43 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  setLayerToEnemies: 1
+--- !u!114 &114100603001751492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950747459824650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e9f19c37c7c81488a713b87671295e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 1300
+  DecreaseHealth: 1
+  Invincible: 0
+  DeflectBlows: 0
+  EvasionTime: 0.2
+  GainSoul: 1
+  EffectsOffset: {x: 0, y: 0, z: 0}
+  receiveExtraDamage: 1
+  SmallGeo: 0
+  MediumGeo: 0
+  LargeGeo: 0
+--- !u!114 &114122573297472606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421005393093360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1835ede34c230e04f9e2e93596a8fbf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TinkSound: {fileID: 8300000, guid: 6ea0bc4d1290b9b41a440beb77f01158, type: 3}
+  TinkEffectPrefab: {fileID: 1703609789249098, guid: 4ebacf92ab00f1a4eb078c1a9fe2a1cf,
+    type: 2}
 --- !u!114 &114138670569514264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1541,12 +1581,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1687735285231940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2e6d87344e60e34daba3cb1aa5b0ac4, type: 3}
+  m_Script: {fileID: 11500000, guid: 52f6fe75ae6d58c48a58f385553c989f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   channel: 2
   poolComponent: {fileID: 0}
-  audioSource: {fileID: 82406191262537632}
+  audioSource: {fileID: 0}
 --- !u!114 &114172869002225528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1579,6 +1619,21 @@ MonoBehaviour:
   hardSpawnRateStage1: 0.2
   hardSpawnRateStage2: 0.16
   hardSpawnRateStage3: 0.12
+  godModeSpacing: 5
+--- !u!114 &114230416150949814
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1794418403235406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1835ede34c230e04f9e2e93596a8fbf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TinkSound: {fileID: 8300000, guid: 6ea0bc4d1290b9b41a440beb77f01158, type: 3}
+  TinkEffectPrefab: {fileID: 1703609789249098, guid: 4ebacf92ab00f1a4eb078c1a9fe2a1cf,
+    type: 2}
 --- !u!114 &114231667555609428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1587,12 +1642,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1950747459824650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2e6d87344e60e34daba3cb1aa5b0ac4, type: 3}
+  m_Script: {fileID: 11500000, guid: 52f6fe75ae6d58c48a58f385553c989f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   channel: 2
   poolComponent: {fileID: 0}
-  audioSource: {fileID: 82596791531415770}
+  audioSource: {fileID: 0}
 --- !u!114 &114240577250203990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1657,6 +1712,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  setLayerToEnemies: 1
 --- !u!114 &114383724075831622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1703,12 +1759,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1552678413288054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2e6d87344e60e34daba3cb1aa5b0ac4, type: 3}
+  m_Script: {fileID: 11500000, guid: 52f6fe75ae6d58c48a58f385553c989f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   channel: 2
   poolComponent: {fileID: 0}
-  audioSource: {fileID: 82133888540661686}
+  audioSource: {fileID: 0}
 --- !u!114 &114466956665670494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1723,6 +1779,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  setLayerToEnemies: 1
 --- !u!114 &114489183100290032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1754,6 +1811,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  setLayerToEnemies: 1
 --- !u!114 &114513221751152872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1823,12 +1881,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1794280378623970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2e6d87344e60e34daba3cb1aa5b0ac4, type: 3}
+  m_Script: {fileID: 11500000, guid: 52f6fe75ae6d58c48a58f385553c989f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   channel: 2
   poolComponent: {fileID: 0}
-  audioSource: {fileID: 82201887784726670}
+  audioSource: {fileID: 0}
 --- !u!114 &114702153927181204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1880,6 +1938,20 @@ MonoBehaviour:
   startColor: {r: 1, g: 0.24313727, b: 0.24313727, a: 1}
   fadeOutColor: {r: 0, g: 0, b: 0, a: 0}
   fadeDuration: 1
+--- !u!114 &114796687474090888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1811042915894992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1835ede34c230e04f9e2e93596a8fbf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TinkSound: {fileID: 8300000, guid: 6ea0bc4d1290b9b41a440beb77f01158, type: 3}
+  TinkEffectPrefab: {fileID: 1703609789249098, guid: 4ebacf92ab00f1a4eb078c1a9fe2a1cf,
+    type: 2}
 --- !u!114 &114815275830715274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1912,6 +1984,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  setLayerToEnemies: 1
 --- !u!114 &114879189269301354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2011,6 +2084,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  forceGodGrimmMode: 0
 --- !u!114 &114880484353509956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2025,7 +2099,7 @@ MonoBehaviour:
   moveEnabled: 1
   airDashSpeed: 55
   flameSpawnRate: 0.025
-  flameSpawnOffset: {x: 0, y: -1, z: 0.001}
+  flameSpawnOffset: {x: 0, y: -1, z: 1}
   groundDashSpeed: 58
   groundDashTime: 0.25
   aheadOfTimeMovement: 0.6
@@ -2038,27 +2112,6 @@ MonoBehaviour:
   hardModeAngleBetweenFireballs: 37
   hardModeFireballVelocity: 28
   hardModeFireballGapAngle: -26
---- !u!114 &114893949498375372
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1950747459824650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 042bb1662729b5441bc0eda3f9bb3240, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 1300
-  DecreaseHealth: 1
-  Invincible: 0
-  DeflectBlows: 0
-  EvasionTime: 0.2
-  GainSoul: 1
-  EffectsOffset: {x: 0, y: 0, z: 0}
-  SmallGeo: 0
-  MediumGeo: 0
-  LargeGeo: 0
 --- !u!114 &114920697822161758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2154,7 +2207,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1780237650
+  randomSeed: -1178043179
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4057,7 +4110,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 558222803
+  randomSeed: 1054678824
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5990,7 +6043,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 290758174
+  randomSeed: 2099605241
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7887,7 +7940,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1443153045
+  randomSeed: -1005978200
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -11699,7 +11752,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -657956372
+  randomSeed: -490020174
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -13596,7 +13649,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1324643947
+  randomSeed: -243681292
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15493,7 +15546,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -247427332
+  randomSeed: 211994156
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -17390,7 +17443,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -729313175
+  randomSeed: 609496441
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -19299,7 +19352,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1146182308
+  randomSeed: 1520841703
   InitialModule:
     serializedVersion: 3
     enabled: 1

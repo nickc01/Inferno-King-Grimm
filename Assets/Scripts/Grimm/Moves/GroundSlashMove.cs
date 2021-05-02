@@ -110,6 +110,18 @@ public class GroundSlashMove : GrimmMove
 
 		yield return DoSlash();
 
+		//WeaverLog.Log("Grimm Number " + InfernoKingGrimm.GrimmsFighting.IndexOf(Grimm) + " visibility = " + Grimm.GetComponent<SpriteRenderer>().enabled);
+
+		//var sprite = GetComponent<SpriteRenderer>().sprite;
+		/*if (sprite == null)
+		{
+			WeaverLog.Log("Current Sprite = " + sprite.name);
+		}
+		else
+		{
+			WeaverLog.Log("Current Sprite = null");
+		}*/
+
 		if (Grimm.Settings.hardMode && Grimm.BossStage >= 2)
 		{
 			var playerPositionOld = Player.Player1.transform.position.x;
@@ -467,7 +479,7 @@ public class GroundSlashMove : GrimmMove
 
 		Grimm.Velocity = Vector2.zero;
 
-		WeaverCam.Instance.Shaker.Shake(ShakeType.AverageShake);
+		CameraShaker.Instance.Shake(ShakeType.AverageShake);
 
 		UppercutExplosion.Play();
 

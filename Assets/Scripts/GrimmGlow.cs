@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WeaverCore;
 using WeaverCore.DataTypes;
 using WeaverCore.Enums;
 using WeaverCore.Interfaces;
@@ -9,7 +10,7 @@ using WeaverCore.Utilities;
 
 public class GrimmGlow : MonoBehaviour
 {
-	static ObjectPool GlowPool;
+	//static ObjectPool GlowPool;
 
 	//[SerializeField]
 	//string startingStateName;
@@ -38,22 +39,23 @@ public class GrimmGlow : MonoBehaviour
 		}
 	}*/
 
-	[OnIKGAwake]
+	/*[OnIKGAwake]
 	static void OnGrimmAwake()
 	{
 		GlowPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.GlowPrefab, PoolLoadType.Local);
 		GlowPool.FillPoolAsync(1);
-	}
+	}*/
 
 	public void Destroy()
 	{
 		//Pool.ReturnToPool(this);
-		GlowPool.ReturnToPool(this);
+		//GlowPool.ReturnToPool(this);
+		Pooling.Destroy(this);
 	}
 
 	public static GrimmGlow Create(Vector3 position)
 	{
 		//return Pool.RetrieveFromPool(position, Quaternion.identity);
-		return GlowPool.Instantiate<GrimmGlow>(position, Quaternion.identity);
+		return Pooling.Instantiate<GrimmGlow>(InfernoKingGrimm.MainGrimm.Prefabs.GlowPrefab, position, Quaternion.identity);
 	}
 }

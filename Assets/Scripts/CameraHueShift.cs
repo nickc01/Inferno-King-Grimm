@@ -85,18 +85,38 @@ public class CameraHueShift : MonoBehaviour
 
 	public void SetValues(float percentage, float hue, float sat, float value)
 	{
-		shiftPercentage = percentage;
-		hueShift = hue;
-		saturationShift = sat;
-		valueShift = value;
+		bool changed = false;
+		if (shiftPercentage != percentage)
+		{
+			shiftPercentage = percentage;
+			changed = true;
+		}
+		if (hueShift != hue)
+		{
+			hueShift = hue;
+			changed = true;
+		}
+		if (saturationShift != sat)
+		{
+			saturationShift = sat;
+			changed = true;
+		}
+		if (valueShift != value)
+		{
+			valueShift = value;
+			changed = true;
+		}
 		//Debug.Log("SP = " + shiftPercentage);
 		//Debug.Log("HS = " + HueShift);
 		//Debug.Log("SS = " + saturationShift);
 		//Debug.Log("VS = " + valueShift);
-		Refresh();
+		if (changed)
+		{
+			Refresh();
+		}
 	}
 
-	void Refresh()
+	public void Refresh()
 	{
 		cameraMaterial.SetFloat("_ShiftPercentage", shiftPercentage);
 		cameraMaterial.SetFloat("_HueShift", hueShift);
