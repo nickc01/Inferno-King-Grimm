@@ -49,15 +49,22 @@ namespace Assets.Scripts
 			}
 			if (text.text.Contains("Infinite"))
 			{
-				var replacement = "Inferno King";
-				if (settings.hardMode)
+				if (text.text.ToLower().Contains("god"))
 				{
-					replacement = "Absolute " + replacement;
+					text.text = text.text.Replace("Infinite", "");
 				}
-				//WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Infinite", "Inferno King"));
-				text.text = text.text.Replace("Infinite", replacement);
-				//WeaverLog.Log("Text Color =" + text.color);
-				//WeaverLog.Log("Change 2");
+				else
+				{
+					var replacement = "Inferno King";
+					if (settings.hardMode)
+					{
+						replacement = "Absolute " + replacement;
+					}
+					//WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Infinite", "Inferno King"));
+					text.text = text.text.Replace("Infinite", replacement);
+					//WeaverLog.Log("Text Color =" + text.color);
+					//WeaverLog.Log("Change 2");
+				}
 			}
 			if (settings.hardMode)
 			{
