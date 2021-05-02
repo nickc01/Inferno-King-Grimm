@@ -44,7 +44,7 @@ namespace IKG
 
 		public override string GetVersion()
 		{
-			return "2.0.2.1";
+			return "3.0.0.0";
 		}
 	}
 }
