@@ -125,6 +125,7 @@ public class InfernoKingGrimm : BossReplacement
 	public Material CameraMaterial;
 
 	static CameraHueShift cameraHueShifter;
+	static bool sceneChangeHookUsed = false;
 
 	[Space]
 	[Space]
@@ -474,18 +475,18 @@ public class InfernoKingGrimm : BossReplacement
 			AddStunMilestone(GrimmHealth.Health - (thirdHealth * 2));
 		}*/
 
-/*#if !UNITY_EDITOR
-		var snapshots = Resources.FindObjectsOfTypeAll<AudioMixerSnapshot>();
-		foreach (var snapshot in snapshots)
-		{
-			if (snapshot.name == "Silent")
-			{
-				SilentSnapshot = snapshot;
-				break;
-			}
-		}
-#endif*/
-			if (!Settings.DisableColorEffects)
+		/*#if !UNITY_EDITOR
+				var snapshots = Resources.FindObjectsOfTypeAll<AudioMixerSnapshot>();
+				foreach (var snapshot in snapshots)
+				{
+					if (snapshot.name == "Silent")
+					{
+						SilentSnapshot = snapshot;
+						break;
+					}
+				}
+		#endif*/
+		if (!Settings.DisableColorEffects)
 		{
 			if (cameraHueShifter == null)
 			{
@@ -498,8 +499,12 @@ public class InfernoKingGrimm : BossReplacement
 				cameraHueShifter.ShiftPercentage = 0f;
 				cameraHueShifter.Refresh();
 				//WeaverLog.Log("Shift Percentage = " + cameraHueShifter.ShiftPercentage);
-				UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneChange;
 			}
+		}
+		if (!sceneChangeHookUsed)
+		{
+			sceneChangeHookUsed = true;
+			UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneChange;
 		}
 
 		ReflectionUtilities.ExecuteMethodsWithAttribute<OnIKGAwakeAttribute>();
@@ -1085,7 +1090,10 @@ public class InfernoKingGrimm : BossReplacement
 
 	void OnSceneChange(Scene scene, LoadSceneMode loadMode)
 	{
-		UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneChange;
-		cameraHueShifter.ShiftPercentage = 0f;
+		if (cameraHueShifter != null)
+		{
+			cameraHueShifter.ShiftPercentage = 0f;
+			cameraHueShifter.Refresh();
+		}
 	}
 }
