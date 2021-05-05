@@ -6,14 +6,15 @@ using UnityEngine;
 using WeaverCore;
 using WeaverCore.Attributes;
 using WeaverCore.Settings;
+using WeaverCore.Utilities;
 
 namespace Assets.Scripts
 {
 	public class IKGSettings : Panel
 	{
-		[SerializeField]
-		[SettingField(EnabledType.Never)]
-		Material cameraMaterial;
+		//[SerializeField]
+		//[SettingField(EnabledType.Never)]
+		//Material cameraMaterial;
 
 		[Tooltip(@"Checking this will make the boss fight considerably harder
 
@@ -159,8 +160,19 @@ Like him inside and outside
 			UpdateBlueState();
 		}
 
+		static Material cameraMaterial;
+
 		static void UpdateBlueState()
 		{
+			if (cameraMaterial == null)
+			{
+				cameraMaterial = WeaverAssets.LoadAssetFromBundle<Material>("infernogrimmmod", "CameraMaterial");
+				//WeaverLog.Log("Camera Material = " + cameraMaterial);
+				if (cameraMaterial == null)
+				{
+					return;
+				}
+			}
 			var settings = GetSettings<IKGSettings>();
 			if (settings == null)
 			{
@@ -174,7 +186,7 @@ Like him inside and outside
 			if (cameraHueShift == null)
 			{
 				cameraHueShift = WeaverCamera.Instance.gameObject.AddComponent<CameraHueShift>();
-				cameraHueShift.cameraMaterial = settings.cameraMaterial;
+				cameraHueShift.cameraMaterial = cameraMaterial;
 			}
 			if (settings.BlueMode)
 			{
