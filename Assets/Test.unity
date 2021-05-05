@@ -532,7 +532,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 27
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1844,6 +1844,57 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1001 &2096080436
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 91.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1950747459824650, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+      propertyPath: m_Name
+      value: Inferno King Grimm (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
+        type: 2}
+      propertyPath: forceGodGrimmMode
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2125178977
 GameObject:
   m_ObjectHideFlags: 0

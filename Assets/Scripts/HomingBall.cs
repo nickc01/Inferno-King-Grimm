@@ -152,9 +152,9 @@ public class HomingBall : MonoBehaviour, IOnPool
 			Vector3 oldOffset = Phase2TargetOffset;
 			if (InfernoKingGrimm.GodMode)
 			{
-				Phase2Velocity *= 2f;
-				Phase2RotationSpeed /= 2f;
-				Phase2TargetOffset = Vector3.zero;
+				Phase2Velocity *= 1.5f;
+				//Phase2RotationSpeed *= 2f;
+				Phase2TargetOffset /= 1.5f;
 			}
 			while (_lifeTime < LifeTime)
 			{
@@ -164,9 +164,9 @@ public class HomingBall : MonoBehaviour, IOnPool
 			}
 			if (InfernoKingGrimm.GodMode)
 			{
-				Phase2Velocity /= 2f;
-				Phase2RotationSpeed *= 2f;
-				Phase2TargetOffset = oldOffset;
+				Phase2Velocity /= 1.5f;
+				//Phase2RotationSpeed /= 2f;
+				Phase2TargetOffset *= 1.5f;
 			}
 		}
 

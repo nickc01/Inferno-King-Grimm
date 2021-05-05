@@ -18,6 +18,7 @@ using WeaverCore.Utilities;
 using WeaverCore.Assets;
 using UnityEngine.SceneManagement;
 using Modding;
+using WeaverCore.Implementations;
 
 [RequireComponent(typeof(DamageHero))]
 public class InfernoKingGrimm : BossReplacement
@@ -193,6 +194,8 @@ public class InfernoKingGrimm : BossReplacement
 	[Header("God Mode")]
 	[SerializeField]
 	bool forceGodGrimmMode = false;
+	[SerializeField]
+	bool forceBalloonMove = false;
 
 	bool godModeDoSpikes = true;
 
@@ -448,6 +451,11 @@ public class InfernoKingGrimm : BossReplacement
 			GrimmHealth.AddHealthMilestone(quarterHealth / 2, () => godModeDoSpikes = false);
 		}
 
+		if (GodMode)
+		{
+			GeoCounter.Instance.GeoText = "0";
+		}
+
 		/*if (Settings.hardMode)
 		{
 			var fifthHealth = GrimmHealth.Health / 5;
@@ -486,7 +494,7 @@ public class InfernoKingGrimm : BossReplacement
 					}
 				}
 		#endif*/
-		if (!Settings.DisableColorEffects)
+		if (!Settings.DisableColorEffects && !Settings.BlueMode)
 		{
 			if (cameraHueShifter == null)
 			{
@@ -524,7 +532,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	private void Update()
 	{
-		if (!Settings.DisableColorEffects && cameraHueShifter != null)
+		if (!Settings.DisableColorEffects && !Settings.BlueMode && cameraHueShifter != null)
 		{
 			if (GrimmHealth.Health != healthCache)
 			{
@@ -593,6 +601,10 @@ public class InfernoKingGrimm : BossReplacement
 	private IEnumerator MainBossControl()
 	{
 		yield return new WaitForSeconds(0.6f);
+		if (forceBalloonMove)
+		{
+			DoBalloonMove();
+		}
 		if (!GodMode)
 		{
 			foreach (var randomMove in RandomMoveIter())
@@ -1090,7 +1102,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	void OnSceneChange(Scene scene, LoadSceneMode loadMode)
 	{
-		if (cameraHueShifter != null)
+		if (!Settings.BlueMode && cameraHueShifter != null)
 		{
 			cameraHueShifter.ShiftPercentage = 0f;
 			cameraHueShifter.Refresh();

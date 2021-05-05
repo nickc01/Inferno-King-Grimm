@@ -50,7 +50,7 @@ public class FireBatMove : GrimmMove
 	[SerializeField]
 	float hardModeBallRotationSpeed = 2f;
 	[SerializeField]
-	float hardModeBallsPerRound = 4f;
+	int hardModeBallsPerRound = 4;
 
 	GameObject BalloonFireballShootSound;
 
@@ -273,13 +273,20 @@ public class FireBatMove : GrimmMove
 		{
 			spawnRate *= 0.75f;
 		}
-		if (InfernoKingGrimm.GodMode)
+		if (!Grimm.Settings.hardMode && InfernoKingGrimm.GodMode)
 		{
 			spawnRate *= 2.2f;
 		}
 		float spawnTimer = spawnRate;
 		bool top = false;
 		int fireBallsShot = 0;
+
+		int fireballsPerRound = hardModeBallsPerRound;
+
+		if (Grimm.Settings.hardMode && InfernoKingGrimm.GodMode)
+		{
+			fireballsPerRound = 2;
+		}
 
 		for (float t = 0; t < homingBallTimePeriod; t += Time.deltaTime)
 		{
@@ -308,7 +315,7 @@ public class FireBatMove : GrimmMove
 					ball.Phase2RotationSpeed = hardModeBallRotationSpeed;
 					FirebatFirePillar.Spawn(Grimm);
 					GrimmGlow.Create(spawnPoint + new Vector3(0f, 0f, -0.1f));
-					if (fireBallsShot >= hardModeBallsPerRound)
+					if (fireBallsShot >= fireballsPerRound)
 					{
 						fireBallsShot = 0;
 						top = !top;

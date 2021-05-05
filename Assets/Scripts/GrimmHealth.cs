@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WeaverCore.Components;
-
+using WeaverCore.Implementations;
 
 public class GrimmHealth : EntityHealth
 {
+	InfernoKingGrimm grimm;
+
+	protected override void Awake()
+	{
+		grimm = GetComponent<InfernoKingGrimm>();
+		base.Awake();
+	}
+
 	protected override void OnHealthUpdate(int oldHealth, int newHealth)
 	{
 		if (InfernoKingGrimm.GodMode)
@@ -24,6 +32,7 @@ public class GrimmHealth : EntityHealth
 						}
 					}
 				}
+				GeoCounter.Instance.GeoText = (grimm.MaxHealth - newHealth).ToString();
 				/*foreach (var grimm in InfernoKingGrimm.GrimmsFighting)
 				{
 					if (grimm.EntityHealth.Health != newHealth)

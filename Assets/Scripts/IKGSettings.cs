@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using WeaverCore;
+using WeaverCore.Attributes;
 using WeaverCore.Settings;
 
 namespace Assets.Scripts
 {
 	public class IKGSettings : Panel
 	{
+		[SerializeField]
+		[SettingField(EnabledType.Never)]
+		Material cameraMaterial;
+
 		[Tooltip(@"Checking this will make the boss fight considerably harder
 
 For those who want a bigger challenge")]
-		[SettingField(Visibility.MenuOnly)]
+		[SettingField(EnabledType.MenuOnly)]
 		public bool hardMode = false;
 
 		[Tooltip(@"Checking this will allow you to customize the health to be whatever you want.
 
 The value can be set below")]
 		[SerializeField]
-		[SettingField(Visibility.Never)]
+		[SettingField(EnabledType.Never)]
 		bool enableCustomHealth = false;
 
-		[SettingField(Visibility.MenuOnly)]
+		[SettingField(EnabledType.MenuOnly)]
 		public bool EnableCustomHealth
 		{
 			get
@@ -36,7 +42,12 @@ The value can be set below")]
 					enableCustomHealth = value;
 					if (!InPauseMenu)
 					{
-						GetElement("CustomHealthValue").Visible = enableCustomHealth;
+						var healthElement = GetElement("CustomHealthValue");
+						healthElement.Visible = enableCustomHealth;
+						if (enableCustomHealth)
+						{
+							healthElement.Order = GetElement("EnableCustomHealth").Order + 1;
+						}
 					}
 				}
 			}
@@ -74,6 +85,47 @@ Hard Mode Radiant		: 2050")]
 ")]
 		public PufferFishDifficulty PufferFishDifficulty;
 
+		[SerializeField]
+		[SettingField(EnabledType.Never)]
+		bool blueMode = false;
+
+		[SettingField(EnabledType.Both)]
+		[SettingDescription(@"Yo, listen up here's a story
+About a little guy
+That lives in a blue world
+And all day and all night
+And everything he sees is just blue
+Like him inside and outside
+
+
+
+
+
+
+
+
+
+
+
+
+
+(All red colors become blue colors)")]
+		public bool BlueMode
+		{
+			get
+			{
+				return blueMode;
+			}
+			set
+			{
+				if (blueMode != value)
+				{
+					blueMode = value;
+					UpdateBlueState();
+				}
+			}
+		}
+
 		public override string TabName
 		{
 			get
@@ -94,6 +146,45 @@ Hard Mode Radiant		: 2050")]
 			{
 				healthElement.Visible = false;
 			}
+		}
+
+		protected override void OnRegister()
+		{
+			UpdateBlueState();
+		}
+
+		[AfterCameraLoad]
+		static void CameraInit()
+		{
+			UpdateBlueState();
+		}
+
+		static void UpdateBlueState()
+		{
+			var settings = GetSettings<IKGSettings>();
+			if (settings == null)
+			{
+				return;
+			}
+			if (WeaverCamera.Instance == null)
+			{
+				return;
+			}
+			var cameraHueShift = WeaverCamera.Instance.GetComponent<CameraHueShift>();
+			if (cameraHueShift == null)
+			{
+				cameraHueShift = WeaverCamera.Instance.gameObject.AddComponent<CameraHueShift>();
+				cameraHueShift.cameraMaterial = settings.cameraMaterial;
+			}
+			if (settings.BlueMode)
+			{
+				cameraHueShift.SetValues(1f, 0.1f, 0.1f, 0.1f);
+			}
+			else
+			{
+				cameraHueShift.SetValues(0f, 0f, 0f, 0f);
+			}
+			cameraHueShift.Refresh();
 		}
 
 	}

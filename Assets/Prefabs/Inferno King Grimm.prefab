@@ -2085,6 +2085,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   forceGodGrimmMode: 0
+  forceBalloonMove: 0
 --- !u!114 &114880484353509956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2112,6 +2113,7 @@ MonoBehaviour:
   hardModeAngleBetweenFireballs: 37
   hardModeFireballVelocity: 28
   hardModeFireballGapAngle: -26
+  godModeOffset: 3.5
 --- !u!114 &114920697822161758
 MonoBehaviour:
   m_ObjectHideFlags: 1

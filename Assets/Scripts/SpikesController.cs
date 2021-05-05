@@ -158,12 +158,12 @@ public class SpikesController : MonoBehaviour
 		yield return DoSpikesAsync(second, 0.75f);
 	}
 
-	public IEnumerator DoRegularAsync()
+	public IEnumerator DoRegularAsync(float prepareTime = 0.70f)
 	{
 		float positionFloat = Random.Range(65f, 68.125f);
 
 		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
-		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 0), 0.70f,positionalRandomness: 1.1f);
+		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 0), prepareTime, positionalRandomness: 1.1f);
 	}
 
 	public IEnumerator PlayAlternatingAsync()

@@ -62,6 +62,10 @@ public class AirDashMove : GrimmMove
 	public float hardModeFireballGapAngle = 18f;
 	//GroundPoundHardMode groundPoundHardMode;
 
+	[Header("God Mode")]
+	[SerializeField]
+	float godModeOffset = 2.5f;
+
 	//Rigidbody2D body;
 	PolygonCollider2D DashSpike;
 	GroundSlashMove groundSlash;
@@ -504,13 +508,36 @@ public class AirDashMove : GrimmMove
 
 		var newPosition = new Vector3(nextPlayerPos.x, 19f, 0f);
 
-		if (newPosition.x <= Grimm.LeftEdge + 3f)
+		if (InfernoKingGrimm.GodMode)
 		{
-			newPosition.x = Grimm.LeftEdge + 3f;
+			bool doLeftOffset = UnityEngine.Random.value >= 0.5f;
+			if (doLeftOffset)
+			{
+				newPosition.x -= godModeOffset;
+				if (newPosition.x <= Grimm.LeftEdge + 3f)
+				{
+					newPosition.x += godModeOffset * 2f;
+				}
+			}
+			else
+			{
+				newPosition.x += godModeOffset;
+				if (newPosition.x >= Grimm.RightEdge - 3f)
+				{
+					newPosition.x -= godModeOffset * 2f;
+				}
+			}
 		}
-		else if (newPosition.x >= Grimm.RightEdge - 3f)
+		else
 		{
-			newPosition.x = Grimm.RightEdge - 3f;
+			if (newPosition.x <= Grimm.LeftEdge + 3f)
+			{
+				newPosition.x = Grimm.LeftEdge + 3f;
+			}
+			else if (newPosition.x >= Grimm.RightEdge - 3f)
+			{
+				newPosition.x = Grimm.RightEdge - 3f;
+			}
 		}
 
 		if (Invisible)
