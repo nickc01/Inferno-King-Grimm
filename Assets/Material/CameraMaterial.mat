@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: CameraMaterial
   m_Shader: {fileID: 4800000, guid: 15eac2ead05f94a4e80d81dde7492651, type: 3}
   m_ShaderKeywords: 
@@ -69,7 +70,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SatShift: 0
-    - _ShiftPercentage: 0
+    - _ShiftPercentage: 0.085888006
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -81,3 +82,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HueShift: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

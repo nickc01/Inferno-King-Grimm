@@ -13,7 +13,7 @@ namespace IKG
 		public override void Initialize()
 		{
 			base.Initialize();
-			Modding.ModHooks.Instance.LanguageGetHook += Instance_LanguageGetHook;
+			Modding.ModHooks.LanguageGetHook += Instance_LanguageGetHook;
 		}
 
 		private string Instance_LanguageGetHook(string key, string sheetTitle)
@@ -44,7 +44,7 @@ namespace IKG
 
 		public override string GetVersion()
 		{
-			return "3.0.0.0";
+			return "3.1.0.0";
 		}
 	}
 }

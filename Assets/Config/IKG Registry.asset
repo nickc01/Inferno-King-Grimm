@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: Inferno King Grimm Registry
   modName: Inferno Grimm Mod
-  modAssemblyName: Assembly-CSharp
+  modAssemblyName: InfernoKingGrimm
   modTypeName: IKG.InfernoGrimmMod
   modListHashCode: 1684387993
   features:
   - feature: {fileID: 11400000, guid: e236bb9aa60bebf4f84623a415c67534, type: 2}
     TypeName: Assets.Scripts.IKGSettings
-    AssemblyName: Assembly-CSharp
+    AssemblyName: InfernoKingGrimm
   - feature: {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
-      type: 2}
+      type: 3}
     TypeName: InfernoKingGrimm
-    AssemblyName: Assembly-CSharp
+    AssemblyName: InfernoKingGrimm
   featuresRaw:
   - {fileID: 11400000, guid: e236bb9aa60bebf4f84623a415c67534, type: 2}
-  - {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 2}
+  - {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
   selectedFeatureIndex: 0
   registryEnabled: 1

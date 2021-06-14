@@ -1,126 +1,360 @@
 fileFormatVersion: 2
 guid: 4ee52644e96aa894a8840cb52328612c
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Grimm_evade0005
-    21300002: Grimm_evade0001
-    21300004: ground_dash_effect0000
-    21300006: Grimm_evade0003
-    21300008: Grimm_evade0004
-    21300010: Grimm_evade0002
-    21300012: Empty
-    21300014: Empty
-    21300016: Empty
-    21300018: Grimm_air_dash0009
-    21300020: Grimm_air_dash0011
-    21300022: Grimm_air_dash0005
-    21300024: Grimm_air_dash0010
-    21300026: Grimm_air_dash0002
-    21300028: Grimm_air_dash0008
-    21300030: Grimm_air_dash0003
-    21300032: Grimm_air_dash0004
-    21300034: Grimm_air_dash0007
-    21300036: Grimm_air_dash0001
-    21300038: Grimm_air_dash0006
-    21300040: Grimm_air_dash0000
-    21300042: Grimm_boss_balloon_attack0003
-    21300044: Grimm_boss_balloon_attack0000
-    21300046: Grimm_boss_balloon_attack0004
-    21300048: Grimm_boss_balloon_attack0002
-    21300050: Grimm_boss_balloon_attack0001
-    21300052: temp0004
-    21300054: temp0003
-    21300056: temp0005
-    21300058: temp0006
-    21300060: temp0007
-    21300062: Flame_bat0003
-    21300064: Flame_bat0002
-    21300066: Flame_bat0004
-    21300068: Flame_bat0001
-    21300070: Flame_bat0000
-    21300072: Grimm_ground_spike0009
-    21300074: Grimm_ground_spike0010
-    21300076: Grimm_ground_spike0001
-    21300078: Grimm_ground_spike0005
-    21300080: Grimm_Boss_ground_spike_attack0004
-    21300082: Grimm_Boss_ground_spike_attack0005
-    21300084: Grimm_ground_spike0003
-    21300086: Grimm_ground_spike0008
-    21300088: Grimm_ground_spike0012
-    21300090: Grimm_ground_spike0004
-    21300092: Grimm_ground_spike0011
-    21300094: ground_dash_effect0004
-    21300096: Grimm_ground_spike0007
-    21300098: air_dash_effects0004
-    21300100: Grimm_Boss_ground_spike_attack0006
-    21300102: Grimm_ground_spike0006
-    21300104: Grimm_ground_spike0000
-    21300106: Grimm_ground_spike0013
-    21300108: Grimm_ground_spike0002
-    21300110: air_dash_effects0000
-    21300112: Grimm_Boss_ground_spike_attack0003
-    21300114: Grimm_slash0003
-    21300116: Grimm_slash0001
-    21300118: Grimm_slash0000
-    21300120: Grimm_slash0002
-    21300122: Grimm_idle0001
-    21300124: Grimm_idle0003
-    21300126: Grimm_idle0000
-    21300128: Grimm_idle0002
-    21300130: Grimm_slash_antic0000
-    21300132: Grimm_slash_antic0003
-    21300134: Grimm_slash_antic0002
-    21300136: Grimm_slash_antic0001
-    21300138: Grimm_stun_bat0000
-    21300140: Grimm_stun_bat0001
-    21300142: Grimm_stun_bat0006
-    21300144: Grimm_stun_bat0004
-    21300146: Grimm_stun_bat0007
-    21300148: Grimm_stun_bat0008
-    21300150: Grimm_stun_bat0005
-    21300152: Grimm_stun_bat0003
-    21300154: Grimm_stun_bat0002
-    21300156: Grimm_stun_explode0001
-    21300158: Grimm_stun_explode0003
-    21300160: Grimm_stun_explode0002
-    21300162: Grimm_stun_explode0004
-    21300164: Grimm_stun_explode0000
-    21300166: Grimm_teleport0000
-    21300168: Grimm_teleport0001
-    21300170: Grimm_teleport0006
-    21300172: Grimm_teleport0004
-    21300174: Grimm_teleport0005
-    21300176: Grimm_teleport0002
-    21300178: Grimm_teleport0003
-    21300180: ground_dash_effect0002
-    21300182: ground_dash_effect0001
-    21300184: ground_dash_effect0003
-    21300186: air_dash_effects0001
-    21300188: ground_dash_effect0005
-    21300190: air_dash_effects0003
-    21300192: air_dash_effects0002
-    21300194: Grimm_stun_extra_frames0002
-    21300196: Grimm_stun_extra_frames0000
-    21300198: Grimm_stun_extra_frames0001
-    21300200: Grimm_nightmare_flame_pillar0005
-    21300202: Grimm_nightmare_flame_pillar0003
-    21300204: Grimm_nightmare_flame_pillar0010
-    21300206: Grimm_nightmare_flame_pillar0002
-    21300208: Grimm_nightmare_flame_pillar0008
-    21300210: Grimm_nightmare_flame_pillar0007
-    21300212: Grimm_nightmare_flame_pillar0006
-    21300214: Grimm_nightmare_flame_pillar0001
-    21300216: Grimm_nightmare_flame_pillar0009
-    21300218: Grimm_nightmare_flame_pillar0004
-    21300220: Grimm_nightmare_flame_pillar0000
-    21300222: Grimm_anims_v050001
-    21300224: Grimm_anims_v050003
-    21300226: Grimm_anims_v050002
-    21300228: Grimm_anims_v050004
-    21300230: Grimm_anims_v050000
-    21300232: Grimm_anims_v050005
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Grimm_evade0005
+  - first:
+      213: 21300002
+    second: Grimm_evade0001
+  - first:
+      213: 21300004
+    second: ground_dash_effect0000
+  - first:
+      213: 21300006
+    second: Grimm_evade0003
+  - first:
+      213: 21300008
+    second: Grimm_evade0004
+  - first:
+      213: 21300010
+    second: Grimm_evade0002
+  - first:
+      213: 21300012
+    second: Empty
+  - first:
+      213: 21300014
+    second: Empty
+  - first:
+      213: 21300016
+    second: Empty
+  - first:
+      213: 21300018
+    second: Grimm_air_dash0009
+  - first:
+      213: 21300020
+    second: Grimm_air_dash0011
+  - first:
+      213: 21300022
+    second: Grimm_air_dash0005
+  - first:
+      213: 21300024
+    second: Grimm_air_dash0010
+  - first:
+      213: 21300026
+    second: Grimm_air_dash0002
+  - first:
+      213: 21300028
+    second: Grimm_air_dash0008
+  - first:
+      213: 21300030
+    second: Grimm_air_dash0003
+  - first:
+      213: 21300032
+    second: Grimm_air_dash0004
+  - first:
+      213: 21300034
+    second: Grimm_air_dash0007
+  - first:
+      213: 21300036
+    second: Grimm_air_dash0001
+  - first:
+      213: 21300038
+    second: Grimm_air_dash0006
+  - first:
+      213: 21300040
+    second: Grimm_air_dash0000
+  - first:
+      213: 21300042
+    second: Grimm_boss_balloon_attack0003
+  - first:
+      213: 21300044
+    second: Grimm_boss_balloon_attack0000
+  - first:
+      213: 21300046
+    second: Grimm_boss_balloon_attack0004
+  - first:
+      213: 21300048
+    second: Grimm_boss_balloon_attack0002
+  - first:
+      213: 21300050
+    second: Grimm_boss_balloon_attack0001
+  - first:
+      213: 21300052
+    second: temp0004
+  - first:
+      213: 21300054
+    second: temp0003
+  - first:
+      213: 21300056
+    second: temp0005
+  - first:
+      213: 21300058
+    second: temp0006
+  - first:
+      213: 21300060
+    second: temp0007
+  - first:
+      213: 21300062
+    second: Flame_bat0003
+  - first:
+      213: 21300064
+    second: Flame_bat0002
+  - first:
+      213: 21300066
+    second: Flame_bat0004
+  - first:
+      213: 21300068
+    second: Flame_bat0001
+  - first:
+      213: 21300070
+    second: Flame_bat0000
+  - first:
+      213: 21300072
+    second: Grimm_ground_spike0009
+  - first:
+      213: 21300074
+    second: Grimm_ground_spike0010
+  - first:
+      213: 21300076
+    second: Grimm_ground_spike0001
+  - first:
+      213: 21300078
+    second: Grimm_ground_spike0005
+  - first:
+      213: 21300080
+    second: Grimm_Boss_ground_spike_attack0004
+  - first:
+      213: 21300082
+    second: Grimm_Boss_ground_spike_attack0005
+  - first:
+      213: 21300084
+    second: Grimm_ground_spike0003
+  - first:
+      213: 21300086
+    second: Grimm_ground_spike0008
+  - first:
+      213: 21300088
+    second: Grimm_ground_spike0012
+  - first:
+      213: 21300090
+    second: Grimm_ground_spike0004
+  - first:
+      213: 21300092
+    second: Grimm_ground_spike0011
+  - first:
+      213: 21300094
+    second: ground_dash_effect0004
+  - first:
+      213: 21300096
+    second: Grimm_ground_spike0007
+  - first:
+      213: 21300098
+    second: air_dash_effects0004
+  - first:
+      213: 21300100
+    second: Grimm_Boss_ground_spike_attack0006
+  - first:
+      213: 21300102
+    second: Grimm_ground_spike0006
+  - first:
+      213: 21300104
+    second: Grimm_ground_spike0000
+  - first:
+      213: 21300106
+    second: Grimm_ground_spike0013
+  - first:
+      213: 21300108
+    second: Grimm_ground_spike0002
+  - first:
+      213: 21300110
+    second: air_dash_effects0000
+  - first:
+      213: 21300112
+    second: Grimm_Boss_ground_spike_attack0003
+  - first:
+      213: 21300114
+    second: Grimm_slash0003
+  - first:
+      213: 21300116
+    second: Grimm_slash0001
+  - first:
+      213: 21300118
+    second: Grimm_slash0000
+  - first:
+      213: 21300120
+    second: Grimm_slash0002
+  - first:
+      213: 21300122
+    second: Grimm_idle0001
+  - first:
+      213: 21300124
+    second: Grimm_idle0003
+  - first:
+      213: 21300126
+    second: Grimm_idle0000
+  - first:
+      213: 21300128
+    second: Grimm_idle0002
+  - first:
+      213: 21300130
+    second: Grimm_slash_antic0000
+  - first:
+      213: 21300132
+    second: Grimm_slash_antic0003
+  - first:
+      213: 21300134
+    second: Grimm_slash_antic0002
+  - first:
+      213: 21300136
+    second: Grimm_slash_antic0001
+  - first:
+      213: 21300138
+    second: Grimm_stun_bat0000
+  - first:
+      213: 21300140
+    second: Grimm_stun_bat0001
+  - first:
+      213: 21300142
+    second: Grimm_stun_bat0006
+  - first:
+      213: 21300144
+    second: Grimm_stun_bat0004
+  - first:
+      213: 21300146
+    second: Grimm_stun_bat0007
+  - first:
+      213: 21300148
+    second: Grimm_stun_bat0008
+  - first:
+      213: 21300150
+    second: Grimm_stun_bat0005
+  - first:
+      213: 21300152
+    second: Grimm_stun_bat0003
+  - first:
+      213: 21300154
+    second: Grimm_stun_bat0002
+  - first:
+      213: 21300156
+    second: Grimm_stun_explode0001
+  - first:
+      213: 21300158
+    second: Grimm_stun_explode0003
+  - first:
+      213: 21300160
+    second: Grimm_stun_explode0002
+  - first:
+      213: 21300162
+    second: Grimm_stun_explode0004
+  - first:
+      213: 21300164
+    second: Grimm_stun_explode0000
+  - first:
+      213: 21300166
+    second: Grimm_teleport0000
+  - first:
+      213: 21300168
+    second: Grimm_teleport0001
+  - first:
+      213: 21300170
+    second: Grimm_teleport0006
+  - first:
+      213: 21300172
+    second: Grimm_teleport0004
+  - first:
+      213: 21300174
+    second: Grimm_teleport0005
+  - first:
+      213: 21300176
+    second: Grimm_teleport0002
+  - first:
+      213: 21300178
+    second: Grimm_teleport0003
+  - first:
+      213: 21300180
+    second: ground_dash_effect0002
+  - first:
+      213: 21300182
+    second: ground_dash_effect0001
+  - first:
+      213: 21300184
+    second: ground_dash_effect0003
+  - first:
+      213: 21300186
+    second: air_dash_effects0001
+  - first:
+      213: 21300188
+    second: ground_dash_effect0005
+  - first:
+      213: 21300190
+    second: air_dash_effects0003
+  - first:
+      213: 21300192
+    second: air_dash_effects0002
+  - first:
+      213: 21300194
+    second: Grimm_stun_extra_frames0002
+  - first:
+      213: 21300196
+    second: Grimm_stun_extra_frames0000
+  - first:
+      213: 21300198
+    second: Grimm_stun_extra_frames0001
+  - first:
+      213: 21300200
+    second: Grimm_nightmare_flame_pillar0005
+  - first:
+      213: 21300202
+    second: Grimm_nightmare_flame_pillar0003
+  - first:
+      213: 21300204
+    second: Grimm_nightmare_flame_pillar0010
+  - first:
+      213: 21300206
+    second: Grimm_nightmare_flame_pillar0002
+  - first:
+      213: 21300208
+    second: Grimm_nightmare_flame_pillar0008
+  - first:
+      213: 21300210
+    second: Grimm_nightmare_flame_pillar0007
+  - first:
+      213: 21300212
+    second: Grimm_nightmare_flame_pillar0006
+  - first:
+      213: 21300214
+    second: Grimm_nightmare_flame_pillar0001
+  - first:
+      213: 21300216
+    second: Grimm_nightmare_flame_pillar0009
+  - first:
+      213: 21300218
+    second: Grimm_nightmare_flame_pillar0004
+  - first:
+      213: 21300220
+    second: Grimm_nightmare_flame_pillar0000
+  - first:
+      213: 21300222
+    second: Grimm_anims_v050001
+  - first:
+      213: 21300224
+    second: Grimm_anims_v050003
+  - first:
+      213: 21300226
+    second: Grimm_anims_v050002
+  - first:
+      213: 21300228
+    second: Grimm_anims_v050004
+  - first:
+      213: 21300230
+    second: Grimm_anims_v050000
+  - first:
+      213: 21300232
+    second: Grimm_anims_v050005
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -138,6 +372,9 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -148,7 +385,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: -1
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -168,11 +405,17 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
@@ -182,7 +425,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
@@ -192,7 +437,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: iPhone
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: iPhone
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
@@ -202,7 +449,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Android
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
@@ -212,7 +461,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Windows Store Apps
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
@@ -222,7 +473,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: WebGL
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
@@ -232,6 +485,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -249,6 +503,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 02305410000000000800000000000000
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_evade0001
       rect:
@@ -263,6 +524,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 22305410000000000800000000000000
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: ground_dash_effect0000
       rect:
@@ -277,6 +545,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 42305410000000000800000000000000
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_evade0003
       rect:
@@ -291,6 +566,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 62305410000000000800000000000000
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_evade0004
       rect:
@@ -305,6 +587,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 82305410000000000800000000000000
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_evade0002
       rect:
@@ -319,6 +608,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a2305410000000000800000000000000
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Empty
       rect:
@@ -333,6 +629,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c2305410000000000800000000000000
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Empty
       rect:
@@ -347,6 +650,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c2305410000000000800000000000000
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Empty
       rect:
@@ -361,6 +671,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c2305410000000000800000000000000
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0009
       rect:
@@ -375,6 +692,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 23305410000000000800000000000000
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0011
       rect:
@@ -389,6 +713,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 43305410000000000800000000000000
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0005
       rect:
@@ -403,6 +734,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 63305410000000000800000000000000
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0010
       rect:
@@ -417,6 +755,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 83305410000000000800000000000000
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0002
       rect:
@@ -431,6 +776,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a3305410000000000800000000000000
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0008
       rect:
@@ -445,6 +797,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c3305410000000000800000000000000
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0003
       rect:
@@ -459,6 +818,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e3305410000000000800000000000000
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0004
       rect:
@@ -473,6 +839,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 04305410000000000800000000000000
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0007
       rect:
@@ -487,6 +860,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 24305410000000000800000000000000
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0001
       rect:
@@ -501,6 +881,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 44305410000000000800000000000000
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0006
       rect:
@@ -515,6 +902,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 64305410000000000800000000000000
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_air_dash0000
       rect:
@@ -529,6 +923,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 84305410000000000800000000000000
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_boss_balloon_attack0003
       rect:
@@ -543,6 +944,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a4305410000000000800000000000000
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_boss_balloon_attack0000
       rect:
@@ -557,6 +965,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c4305410000000000800000000000000
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_boss_balloon_attack0004
       rect:
@@ -571,6 +986,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e4305410000000000800000000000000
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_boss_balloon_attack0002
       rect:
@@ -585,6 +1007,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 05305410000000000800000000000000
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_boss_balloon_attack0001
       rect:
@@ -599,6 +1028,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 25305410000000000800000000000000
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: temp0004
       rect:
@@ -613,6 +1049,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 45305410000000000800000000000000
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: temp0003
       rect:
@@ -627,6 +1070,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 65305410000000000800000000000000
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: temp0005
       rect:
@@ -641,6 +1091,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 85305410000000000800000000000000
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: temp0006
       rect:
@@ -655,6 +1112,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a5305410000000000800000000000000
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: temp0007
       rect:
@@ -669,6 +1133,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c5305410000000000800000000000000
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Flame_bat0003
       rect:
@@ -683,6 +1154,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e5305410000000000800000000000000
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Flame_bat0002
       rect:
@@ -697,6 +1175,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 06305410000000000800000000000000
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Flame_bat0004
       rect:
@@ -711,6 +1196,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 26305410000000000800000000000000
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Flame_bat0001
       rect:
@@ -725,6 +1217,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 46305410000000000800000000000000
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Flame_bat0000
       rect:
@@ -739,6 +1238,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 66305410000000000800000000000000
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0009
       rect:
@@ -753,6 +1259,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 86305410000000000800000000000000
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0010
       rect:
@@ -767,6 +1280,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a6305410000000000800000000000000
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0001
       rect:
@@ -781,6 +1301,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c6305410000000000800000000000000
+      internalID: 21300076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0005
       rect:
@@ -795,6 +1322,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e6305410000000000800000000000000
+      internalID: 21300078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_Boss_ground_spike_attack0004
       rect:
@@ -809,6 +1343,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 07305410000000000800000000000000
+      internalID: 21300080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_Boss_ground_spike_attack0005
       rect:
@@ -823,6 +1364,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 27305410000000000800000000000000
+      internalID: 21300082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0003
       rect:
@@ -837,6 +1385,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 47305410000000000800000000000000
+      internalID: 21300084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0008
       rect:
@@ -851,6 +1406,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 67305410000000000800000000000000
+      internalID: 21300086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0012
       rect:
@@ -865,6 +1427,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 87305410000000000800000000000000
+      internalID: 21300088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0004
       rect:
@@ -879,6 +1448,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a7305410000000000800000000000000
+      internalID: 21300090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0011
       rect:
@@ -893,6 +1469,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c7305410000000000800000000000000
+      internalID: 21300092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: ground_dash_effect0004
       rect:
@@ -907,6 +1490,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e7305410000000000800000000000000
+      internalID: 21300094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0007
       rect:
@@ -921,6 +1511,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 08305410000000000800000000000000
+      internalID: 21300096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: air_dash_effects0004
       rect:
@@ -935,6 +1532,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 28305410000000000800000000000000
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_Boss_ground_spike_attack0006
       rect:
@@ -949,6 +1553,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 48305410000000000800000000000000
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0006
       rect:
@@ -963,6 +1574,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 68305410000000000800000000000000
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0000
       rect:
@@ -977,6 +1595,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 88305410000000000800000000000000
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0013
       rect:
@@ -991,6 +1616,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a8305410000000000800000000000000
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_ground_spike0002
       rect:
@@ -1005,6 +1637,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c8305410000000000800000000000000
+      internalID: 21300108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: air_dash_effects0000
       rect:
@@ -1019,6 +1658,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e8305410000000000800000000000000
+      internalID: 21300110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_Boss_ground_spike_attack0003
       rect:
@@ -1033,6 +1679,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 09305410000000000800000000000000
+      internalID: 21300112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_slash0003
       rect:
@@ -1047,6 +1700,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 29305410000000000800000000000000
+      internalID: 21300114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_slash0001
       rect:
@@ -1061,6 +1721,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 49305410000000000800000000000000
+      internalID: 21300116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_slash0000
       rect:
@@ -1075,6 +1742,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 69305410000000000800000000000000
+      internalID: 21300118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_slash0002
       rect:
@@ -1089,6 +1763,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 89305410000000000800000000000000
+      internalID: 21300120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_idle0001
       rect:
@@ -1103,6 +1784,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a9305410000000000800000000000000
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_idle0003
       rect:
@@ -1117,6 +1805,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c9305410000000000800000000000000
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_idle0000
       rect:
@@ -1131,6 +1826,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e9305410000000000800000000000000
+      internalID: 21300126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_idle0002
       rect:
@@ -1145,6 +1847,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0a305410000000000800000000000000
+      internalID: 21300128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_slash_antic0000
       rect:
@@ -1159,6 +1868,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2a305410000000000800000000000000
+      internalID: 21300130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_slash_antic0003
       rect:
@@ -1173,6 +1889,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4a305410000000000800000000000000
+      internalID: 21300132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_slash_antic0002
       rect:
@@ -1187,6 +1910,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6a305410000000000800000000000000
+      internalID: 21300134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_slash_antic0001
       rect:
@@ -1201,6 +1931,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8a305410000000000800000000000000
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0000
       rect:
@@ -1215,6 +1952,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: aa305410000000000800000000000000
+      internalID: 21300138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0001
       rect:
@@ -1229,6 +1973,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ca305410000000000800000000000000
+      internalID: 21300140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0006
       rect:
@@ -1243,6 +1994,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ea305410000000000800000000000000
+      internalID: 21300142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0004
       rect:
@@ -1257,6 +2015,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0b305410000000000800000000000000
+      internalID: 21300144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0007
       rect:
@@ -1271,6 +2036,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2b305410000000000800000000000000
+      internalID: 21300146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0008
       rect:
@@ -1285,6 +2057,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4b305410000000000800000000000000
+      internalID: 21300148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0005
       rect:
@@ -1299,6 +2078,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6b305410000000000800000000000000
+      internalID: 21300150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0003
       rect:
@@ -1313,6 +2099,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8b305410000000000800000000000000
+      internalID: 21300152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_bat0002
       rect:
@@ -1327,6 +2120,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ab305410000000000800000000000000
+      internalID: 21300154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_explode0001
       rect:
@@ -1341,6 +2141,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cb305410000000000800000000000000
+      internalID: 21300156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_explode0003
       rect:
@@ -1355,6 +2162,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eb305410000000000800000000000000
+      internalID: 21300158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_explode0002
       rect:
@@ -1369,6 +2183,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0c305410000000000800000000000000
+      internalID: 21300160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_explode0004
       rect:
@@ -1383,6 +2204,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2c305410000000000800000000000000
+      internalID: 21300162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_explode0000
       rect:
@@ -1397,6 +2225,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4c305410000000000800000000000000
+      internalID: 21300164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_teleport0000
       rect:
@@ -1411,6 +2246,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6c305410000000000800000000000000
+      internalID: 21300166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_teleport0001
       rect:
@@ -1425,6 +2267,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8c305410000000000800000000000000
+      internalID: 21300168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_teleport0006
       rect:
@@ -1439,6 +2288,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ac305410000000000800000000000000
+      internalID: 21300170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_teleport0004
       rect:
@@ -1453,6 +2309,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cc305410000000000800000000000000
+      internalID: 21300172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_teleport0005
       rect:
@@ -1467,6 +2330,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ec305410000000000800000000000000
+      internalID: 21300174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_teleport0002
       rect:
@@ -1481,6 +2351,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0d305410000000000800000000000000
+      internalID: 21300176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_teleport0003
       rect:
@@ -1495,6 +2372,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2d305410000000000800000000000000
+      internalID: 21300178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: ground_dash_effect0002
       rect:
@@ -1509,6 +2393,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4d305410000000000800000000000000
+      internalID: 21300180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: ground_dash_effect0001
       rect:
@@ -1523,6 +2414,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6d305410000000000800000000000000
+      internalID: 21300182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: ground_dash_effect0003
       rect:
@@ -1537,6 +2435,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8d305410000000000800000000000000
+      internalID: 21300184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: air_dash_effects0001
       rect:
@@ -1551,6 +2456,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ad305410000000000800000000000000
+      internalID: 21300186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: ground_dash_effect0005
       rect:
@@ -1565,6 +2477,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cd305410000000000800000000000000
+      internalID: 21300188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: air_dash_effects0003
       rect:
@@ -1579,6 +2498,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ed305410000000000800000000000000
+      internalID: 21300190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: air_dash_effects0002
       rect:
@@ -1593,6 +2519,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e305410000000000800000000000000
+      internalID: 21300192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_extra_frames0002
       rect:
@@ -1607,6 +2540,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2e305410000000000800000000000000
+      internalID: 21300194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_extra_frames0000
       rect:
@@ -1621,6 +2561,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4e305410000000000800000000000000
+      internalID: 21300196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_stun_extra_frames0001
       rect:
@@ -1635,6 +2582,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6e305410000000000800000000000000
+      internalID: 21300198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0005
       rect:
@@ -1649,6 +2603,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8e305410000000000800000000000000
+      internalID: 21300200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0003
       rect:
@@ -1663,6 +2624,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ae305410000000000800000000000000
+      internalID: 21300202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0010
       rect:
@@ -1677,6 +2645,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ce305410000000000800000000000000
+      internalID: 21300204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0002
       rect:
@@ -1691,6 +2666,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ee305410000000000800000000000000
+      internalID: 21300206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0008
       rect:
@@ -1705,6 +2687,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0f305410000000000800000000000000
+      internalID: 21300208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0007
       rect:
@@ -1719,6 +2708,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2f305410000000000800000000000000
+      internalID: 21300210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0006
       rect:
@@ -1733,6 +2729,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4f305410000000000800000000000000
+      internalID: 21300212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0001
       rect:
@@ -1747,6 +2750,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6f305410000000000800000000000000
+      internalID: 21300214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0009
       rect:
@@ -1761,6 +2771,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8f305410000000000800000000000000
+      internalID: 21300216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0004
       rect:
@@ -1775,6 +2792,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: af305410000000000800000000000000
+      internalID: 21300218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_nightmare_flame_pillar0000
       rect:
@@ -1789,6 +2813,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cf305410000000000800000000000000
+      internalID: 21300220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_anims_v050001
       rect:
@@ -1803,6 +2834,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ef305410000000000800000000000000
+      internalID: 21300222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_anims_v050003
       rect:
@@ -1817,6 +2855,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 00405410000000000800000000000000
+      internalID: 21300224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_anims_v050002
       rect:
@@ -1831,6 +2876,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 20405410000000000800000000000000
+      internalID: 21300226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_anims_v050004
       rect:
@@ -1845,6 +2897,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 40405410000000000800000000000000
+      internalID: 21300228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_anims_v050000
       rect:
@@ -1859,6 +2918,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 60405410000000000800000000000000
+      internalID: 21300230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Grimm_anims_v050005
       rect:
@@ -1873,9 +2939,26 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 80405410000000000800000000000000
+      internalID: 21300232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
