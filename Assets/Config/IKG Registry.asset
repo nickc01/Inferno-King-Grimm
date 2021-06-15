@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registryName: Inferno King Grimm Registry
   modName: Inferno Grimm Mod
-  modAssemblyName: InfernoKingGrimm
+  modAssemblyName: Assembly-CSharp
   modTypeName: IKG.InfernoGrimmMod
   modListHashCode: 1684387993
   features:
   - feature: {fileID: 11400000, guid: e236bb9aa60bebf4f84623a415c67534, type: 2}
     TypeName: Assets.Scripts.IKGSettings
-    AssemblyName: InfernoKingGrimm
+    AssemblyName: Assembly-CSharp
   - feature: {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
       type: 3}
     TypeName: InfernoKingGrimm
-    AssemblyName: InfernoKingGrimm
+    AssemblyName: Assembly-CSharp
   featuresRaw:
   - {fileID: 11400000, guid: e236bb9aa60bebf4f84623a415c67534, type: 2}
   - {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
