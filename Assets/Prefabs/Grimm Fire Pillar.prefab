@@ -150,7 +150,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
-  setLayerToEnemies: 1
+  setLayerToEnemies: 0
 --- !u!114 &114807862085838580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8409,7 +8409,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
-  setLayerToEnemies: 1
+  setLayerToEnemies: 0
 --- !u!114 &114725174448388946
 MonoBehaviour:
   m_ObjectHideFlags: 0

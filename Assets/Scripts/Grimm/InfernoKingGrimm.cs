@@ -74,7 +74,8 @@ public class InfernoKingGrimm : BossReplacement
 		}
 	}
 
-	private EventReceiver receiver;
+	//private EventManager receiver;
+	private EventListener listener;
 	private SpriteRenderer spriteRenderer;
 	private DamageHero damager;
 	private ExplosionEffects explosions;
@@ -339,9 +340,9 @@ public class InfernoKingGrimm : BossReplacement
 		balloonMove = GetComponent<BalloonMove>();
 
 
-		if ((receiver = GetComponent<EventReceiver>()) == null)
+		if ((listener = GetComponent<EventListener>()) == null)
 		{
-			receiver = gameObject.AddComponent<EventReceiver>();
+			listener = gameObject.AddComponent<EventListener>();
 		}
 
 		GrimmRigidbody = GetComponent<Rigidbody2D>();
@@ -378,10 +379,12 @@ public class InfernoKingGrimm : BossReplacement
 		else
 		{
 #if UNITY_EDITOR
-			StartCoroutine(Waiter(1, () => Wake("WAKE", gameObject)));
+			StartCoroutine(Waiter(1, () => Wake(gameObject,null)));
 #else
-			receiver.ReceiveAllEventsFromName("WAKE");
-			receiver.OnReceiveEvent += Wake;
+			//receiver.ReceiveAllEventsFromName("WAKE");
+			//receiver.AddReceiverForEvent("WAKE", Wake);
+			listener.ListenForEvent("WAKE", Wake);
+			//receiver.OnReceiveEvent += Wake;
 #endif
 		}
 		GrimmsFighting.Add(this);
@@ -574,9 +577,14 @@ public class InfernoKingGrimm : BossReplacement
 	}
 
 	//Called when the boss starts
-	private void Wake(string eventName, GameObject source)
+	private void Wake(GameObject source, GameObject destination)
 	{
-		if ((BossRoutine == null && eventName == "WAKE" && (source == gameObject || source.name.Contains("Grimm Control"))))
+		/*if ((BossRoutine == null && eventName == "WAKE" && (source == gameObject || source.name.Contains("Grimm Control"))))
+		{
+			StartBossFight();
+		}*/
+
+		if ((BossRoutine == null && (source == gameObject || source.name.Contains("Grimm Control"))))
 		{
 			StartBossFight();
 		}
@@ -714,7 +722,7 @@ public class InfernoKingGrimm : BossReplacement
 
 			Invisible = false;
 
-			//WeaverEvents.BroadcastEvent("EnemyKillShake");
+			//EventManager.BroadcastEvent("EnemyKillShake", gameObject);
 			CameraShaker.Instance.Shake(ShakeType.EnemyKillShake);
 
 			yield return GrimmAnimator.PlayAnimationTillDone(animationName);
@@ -818,7 +826,7 @@ public class InfernoKingGrimm : BossReplacement
 
 		//TODO - Make Camera Shake
 
-		WeaverEvents.BroadcastEvent("EnemyKillShake");
+		EventManager.BroadcastEvent("EnemyKillShake", gameObject);
 
 		WeaverGameManager.FreezeGameTime(freezePreset);
 
@@ -842,7 +850,7 @@ public class InfernoKingGrimm : BossReplacement
 		BatController.SendOut(this);
 
 		//TODO - Broadcast Event - CROWD STILL
-		WeaverEvents.BroadcastEvent("CROWD STILL");
+		EventManager.BroadcastEvent("CROWD STILL", gameObject);
 
 		BatAudioLoop.gameObject.SetActive(true);
 
@@ -912,7 +920,7 @@ public class InfernoKingGrimm : BossReplacement
 		spriteRenderer.color = oldColor;
 
 		//TODO - Broadcast event CROWD CLAP
-		WeaverEvents.BroadcastEvent("CROWD CLAP");
+		EventManager.BroadcastEvent("CROWD CLAP", gameObject);
 
 		//TODO - Make Camera Shake - AverageShake
 
@@ -993,7 +1001,7 @@ public class InfernoKingGrimm : BossReplacement
 		scream.PlayDelayed(0.5f);
 		//scream.AudioSource.PlayDelayed(0.5f);
 
-		WeaverEvents.BroadcastEvent("HEARTBEAT STOP");
+		EventManager.BroadcastEvent("HEARTBEAT STOP", gameObject);
 
 		//TODO : Shake Camera AverageShake
 
@@ -1042,12 +1050,12 @@ public class InfernoKingGrimm : BossReplacement
 
 		Coroutine jitterRoutine = StartCoroutine(TransformUtilities.JitterObject(gameObject, new Vector3(0.2f, 0.2f, 0f)));
 
-		WeaverEvents.BroadcastEvent("HEARTBEAT FAST");
+		EventManager.BroadcastEvent("HEARTBEAT FAST", gameObject);
 
 		WeaverAudio.PlayAtPoint(AudioAssets.BossFinalHit, transform.position);
 		WeaverAudio.PlayAtPoint(AudioAssets.BossGushing, transform.position);
 
-		WeaverEvents.BroadcastEvent("BigShake"); //???
+		EventManager.BroadcastEvent("BigShake", gameObject); //???
 
 		DeathPuff.Play();
 		SteamParticles.Play();
@@ -1057,7 +1065,7 @@ public class InfernoKingGrimm : BossReplacement
 		float emitRate = 50f;
 		float emitSpeed = 5f;
 
-		WeaverEvents.BroadcastEvent("CROWD GASP");
+		EventManager.BroadcastEvent("CROWD GASP", gameObject);
 
 		for (float t = 0; t < 3f; t += Time.deltaTime)
 		{
@@ -1083,9 +1091,9 @@ public class InfernoKingGrimm : BossReplacement
 
 		WeaverAudio.PlayAtPoint(Sounds.UpperCutExplodeEffect, transform.position);
 
-		WeaverEvents.BroadcastEvent("CROWD STILL");
+		EventManager.BroadcastEvent("CROWD STILL", gameObject);
 
-		WeaverEvents.BroadcastEvent("BigShake");
+		EventManager.BroadcastEvent("BigShake", gameObject);
 
 		Invisible = true;
 
@@ -1095,7 +1103,7 @@ public class InfernoKingGrimm : BossReplacement
 
 		WeaverAudio.PlayAtPoint(AudioAssets.BossExplosionUninfected, transform.position);
 
-		WeaverEvents.BroadcastEvent("GRIMM DEFEATED");
+		EventManager.BroadcastEvent("GRIMM DEFEATED", gameObject);
 
 		yield break;
 	}

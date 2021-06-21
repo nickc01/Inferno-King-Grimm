@@ -13,33 +13,31 @@ namespace IKG
 		public override void Initialize()
 		{
 			base.Initialize();
-			Modding.ModHooks.LanguageGetHook += Instance_LanguageGetHook;
+			Modding.ModHooks.LanguageGetHook += ModHooks_LanguageGetHook;
+			//Modding.ModHooks.LanguageGetHook += Instance_LanguageGetHook;
 		}
 
-		private string Instance_LanguageGetHook(string key, string sheetTitle)
+		private bool ModHooks_LanguageGetHook(string key, string sheetTitle, string orig, string current, out string res)
 		{
 			if (key == "NAME_NIGHTMARE_GRIMM")
 			{
 				var settings = Panel.GetSettings<IKGSettings>();
 				if (settings.hardMode)
 				{
-					return "Absolute Inferno King Grimm";
+					res = "Absolute Inferno King Grimm";
+					return true;
 				}
 				else
 				{
-					return "Inferno King Grimm";
+					res = "Inferno King Grimm";
+					return true;
 				}
 			}
 			else
 			{
-				return Language.GetStringInternal(key, sheetTitle);
+				res = "";
+				return false;
 			}
-			/*WeaverLog.Log("Language Key = " + key);
-			WeaverLog.Log("Sheet Title = " + sheetTitle);
-			var value = Language.GetStringInternal(key, sheetTitle);
-			WeaverLog.Log("Value = " + value);
-			return value;*/
-			//throw new NotImplementedException();
 		}
 
 		public override string GetVersion()

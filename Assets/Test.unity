@@ -1789,6 +1789,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1950747459824650, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
+      propertyPath: m_Name
+      value: Inferno King Grimm
+      objectReference: {fileID: 0}
     - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1819,6 +1823,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
       propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

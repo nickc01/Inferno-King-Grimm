@@ -259,22 +259,28 @@ public class GroundSlashMove : GrimmMove
 
 		AlignSlashes();
 
-		Slash1.enabled = true;
+		//Slash1.enabled = true;
+		Slash1.gameObject.SetActive(true);
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Slash 1");
 
-		Slash1.enabled = false;
-		Slash2.enabled = true;
+		//Slash1.enabled = false;
+		//Slash2.enabled = true;
+		Slash1.gameObject.SetActive(false);
+		Slash2.gameObject.SetActive(true);
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Slash 2");
 
-		Slash2.enabled = false;
-		Slash3.enabled = true;
+		//Slash2.enabled = false;
+		//Slash3.enabled = true;
+		Slash2.gameObject.SetActive(false);
+		Slash3.gameObject.SetActive(true);
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Slash 3");
 
 
-		Slash3.enabled = false;
+		//Slash3.enabled = false;
+		Slash3.gameObject.SetActive(false);
 
 		ResetSlashes();
 
@@ -535,9 +541,12 @@ public class GroundSlashMove : GrimmMove
 	{
 		Grimm.Velocity = Vector2.zero;
 		DustGround.Stop();
-		Slash1.enabled = false;
-		Slash2.enabled = false;
-		Slash3.enabled = false;
+		//Slash1.enabled = false;
+		//Slash2.enabled = false;
+		//Slash3.enabled = false;
+		Slash1.gameObject.SetActive(false);
+		Slash2.gameObject.SetActive(false);
+		Slash3.gameObject.SetActive(false);
 		ResetSlashes();
 		DustScuttle.Stop();
 		AudioScuttle.SetActive(false);

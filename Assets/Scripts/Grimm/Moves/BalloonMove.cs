@@ -98,6 +98,7 @@ public class BalloonMove : GrimmMove
 
 	public override IEnumerator DoMove()
 	{
+		gameObject.layer = LayerMask.NameToLayer("Enemy Attack");
 		if (Grimm.Settings.PufferFishDifficulty == PufferFishDifficulty.Off)
 		{
 			yield break;
@@ -144,16 +145,14 @@ public class BalloonMove : GrimmMove
 		yield return Grimm.TeleportIn();
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Balloon Antic");
-
 		//TODO - BROADCAST THE CROWD GASP EVENT
-
-		WeaverEvents.BroadcastEvent("CROWD GASP");
+		EventManager.BroadcastEvent("CROWD GASP", gameObject);
 		//EventReceiver.BroadcastEvent("CROWD GASP");
 
 		//TODO Broadcast HEART HALFWAY EVENT
 		if (Grimm.BossStage == 2)
 		{
-			WeaverEvents.BroadcastEvent("HEART HALFWAY");
+			EventManager.BroadcastEvent("HEART HALFWAY", gameObject);
 		}
 
 		BalloonFireballShootSound.SetActive(true);
@@ -163,7 +162,7 @@ public class BalloonMove : GrimmMove
 
 		//TODO Broadcast CROWD CLAP DELAY EVENT
 
-		WeaverEvents.BroadcastEvent("CROWD CLAP DELAY");
+		EventManager.BroadcastEvent("CROWD CLAP DELAY", gameObject);
 
 		var angle = Random.Range(0f, 360f);
 
@@ -324,7 +323,7 @@ public class BalloonMove : GrimmMove
 
 		//TODO - Broadcast CROWD IDLE EVENT
 
-		WeaverEvents.BroadcastEvent("CROWD IDLE");
+		EventManager.BroadcastEvent("CROWD IDLE", gameObject);
 
 		BalloonFireballShootSound.SetActive(false);
 
@@ -353,12 +352,14 @@ public class BalloonMove : GrimmMove
 			yield return new WaitForSeconds(0.3f);
 		}
 
+		gameObject.layer = LayerMask.NameToLayer("Enemies");
 		DoingBalloonMove = false;
 		BalloonMoveTimes++;
 	}
 
 	public override void OnStun()
 	{
+		gameObject.layer = LayerMask.NameToLayer("Enemies");
 		DoingBalloonMove = false;
 		CameraShaker.Instance.SetRumble(RumbleType.None);
 		BalloonFireballShootSound.SetActive(false);

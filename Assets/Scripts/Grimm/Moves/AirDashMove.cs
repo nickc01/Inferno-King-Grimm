@@ -204,7 +204,7 @@ public class AirDashMove : GrimmMove
 
 		GrimmAnimator.PlayAnimation("Ground Dash Antic");
 
-		DashSpike.enabled = true;
+		DashSpike.gameObject.SetActive(true);
 		GrimmCollider.enabled = false;
 
 		var landPlayer = WeaverAudio.PlayAtPoint(Sounds.LandSound, transform.position);
@@ -282,7 +282,8 @@ public class AirDashMove : GrimmMove
 
 		Grimm.Velocity = Vector2.zero;
 
-		DashSpike.enabled = false;
+		//DashSpike.enabled = false;
+		DashSpike.gameObject.SetActive(false);
 		GrimmCollider.enabled = true;
 
 		yield return Grimm.TeleportOut();
@@ -563,7 +564,8 @@ public class AirDashMove : GrimmMove
 			damager.DamageDealt = previousDamageAmount;
 			previousDamageAmount = 0;
 		}
-		DashSpike.enabled = false;
+		DashSpike.gameObject.SetActive(false);
+		//DashSpike.enabled = false;
 		Grimm.Velocity = Vector2.zero;
 		groundSlash.OnStun();
 		UppercutExplosion.Stop();
