@@ -425,6 +425,10 @@ public class InfernoKingGrimm : BossReplacement
 		if (GodMode)
 		{
 			WeaverLog.Log("IKG : God Mode Enabled. Good luck");
+			if (Settings.IncreasedGodModeHealth)
+			{
+				GrimmHealth.Health = Mathf.RoundToInt(GrimmHealth.Health * 1.75f);
+			}
 		}
 
 		WeaverLog.Log("IKG : Difficulty = " + Diffculty);

@@ -25,8 +25,8 @@ public class SpikesMove : GrimmMove
 		{
 			if (Grimm.Settings.hardMode)
 			{
-				yield return spikeController.DoRegularAsync(0.6f);
-				yield return new WaitForSeconds(0.8f);
+				yield return spikeController.DoRegularAsync(0.55f);
+				yield return new WaitForSeconds(0.65f);
 			}
 			else
 			{

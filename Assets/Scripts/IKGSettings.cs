@@ -91,26 +91,9 @@ Hard Mode Radiant		: 2050")]
 		bool blueMode = false;
 
 		[SettingField(EnabledType.Both)]
-		[SettingDescription(@"Yo, listen up here's a story
-About a little guy
-That lives in a blue world
-And all day and all night
-And everything he sees is just blue
-Like him inside and outside
-
-
-
-
-
-
-
-
-
-
-
-
-
-(All red colors become blue colors)")]
+		[SettingDescription("Yo, listen up here's a story</br>About a little guy</br>" +
+			"That lives in a blue world</br>And all day and all night</br>And everything he sees is just blue</br>" +
+			"Like him inside and outside</br></br:15>(All red colors become blue colors)")]
 		public bool BlueMode
 		{
 			get
@@ -126,6 +109,10 @@ Like him inside and outside
 				}
 			}
 		}
+
+		[Header("God Mode")]
+		[Tooltip("If set to true, Inferno God Grimm will have 1.75x health than Inferno King Grimm")]
+		public bool IncreasedGodModeHealth = true;
 
 		public override string TabName
 		{
@@ -167,6 +154,7 @@ Like him inside and outside
 			if (cameraMaterial == null)
 			{
 				cameraMaterial = WeaverAssets.LoadAssetFromBundle<Material>("infernogrimmmod", "CameraMaterial");
+				//WeaverLog.Log("Camera Material = " + cameraMaterial);
 				//WeaverLog.Log("Camera Material = " + cameraMaterial);
 				if (cameraMaterial == null)
 				{
