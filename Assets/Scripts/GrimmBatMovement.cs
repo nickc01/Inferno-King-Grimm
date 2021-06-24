@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 
 public class GrimmBatMovement : MonoBehaviour 
 {
+	InfernoKingGrimm CurrentGrimm = null;
+
 	public BatState State { get; private set; }
 
 	new SpriteRenderer renderer;
@@ -44,8 +46,9 @@ public class GrimmBatMovement : MonoBehaviour
 	}
 
 
-	public void SendOut()
+	public void SendOut(InfernoKingGrimm grimm)
 	{
+		CurrentGrimm = grimm;
 		if (State != BatState.Dormant)
 		{
 			return;
@@ -81,7 +84,7 @@ public class GrimmBatMovement : MonoBehaviour
 	{
 		State = BatState.SentOut;
 
-		var grimmPosition = GrimmBatController.CurrentGrimm.transform.position;
+		var grimmPosition = CurrentGrimm.transform.position;
 
 		transform.position = grimmPosition.With(z: 0f);
 
@@ -217,13 +220,13 @@ public class GrimmBatMovement : MonoBehaviour
 	{
 		//this.state = FakeBat.States.In;
 		State = BatState.BringingIn;
-		int sign = (GrimmBatController.CurrentGrimm.transform.position.x - rigidbody.velocity.x <= 0f) ? -1 : 1;
+		int sign = (CurrentGrimm.transform.position.x - rigidbody.velocity.x <= 0f) ? -1 : 1;
 		FaceDirection(sign, true);
 		rigidbody.velocity = Vector2.zero;
 		for (; ; )
 		{
 			Vector2 source = this.transform.position;
-			Vector2 destination = GrimmBatController.CurrentGrimm.transform.position;
+			Vector2 destination = CurrentGrimm.transform.position;
 			Vector2 next = Vector2.MoveTowards(source, destination, 25f * Time.deltaTime);
 			transform.position = transform.position.With(next.x,next.y);
 			//this.transform.SetPosition2D(next);

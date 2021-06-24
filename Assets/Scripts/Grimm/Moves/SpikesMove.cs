@@ -26,12 +26,12 @@ public class SpikesMove : GrimmMove
 			if (Grimm.Settings.hardMode)
 			{
 				yield return spikeController.DoRegularAsync(0.55f);
-				yield return new WaitForSeconds(0.65f);
+				yield return new WaitForSeconds(0.65f / InfernoKingGrimm.InfiniteSpeed);
 			}
 			else
 			{
 				yield return spikeController.DoRegularAsync(0.70f);
-				yield return new WaitForSeconds(1f);
+				yield return new WaitForSeconds(1f / InfernoKingGrimm.InfiniteSpeed);
 			}
 		}
 		else
@@ -41,17 +41,17 @@ public class SpikesMove : GrimmMove
 				if (Grimm.BossStage == 1)
 				{
 					yield return spikeController.PlayAlternatingTripleAsync();
-					yield return new WaitForSeconds(0.6f);
+					yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 				}
 				else if (Grimm.BossStage == 2)
 				{
 					yield return spikeController.PlayDashSpikes(maxDashDistance, 3);
-					yield return new WaitForSeconds(0.45f);
+					yield return new WaitForSeconds(0.45f / InfernoKingGrimm.InfiniteSpeed);
 				}
 				else if (Grimm.BossStage == 3)
 				{
 					yield return spikeController.PlayDashSpikes(maxDashDistance + 1, 2);
-					yield return new WaitForSeconds(0.45f);
+					yield return new WaitForSeconds(0.45f / InfernoKingGrimm.InfiniteSpeed);
 				}
 			}
 			else
@@ -63,7 +63,14 @@ public class SpikesMove : GrimmMove
 				}
 				else if (Grimm.BossStage == 2)
 				{
-					yield return spikeController.PlayMiddleSideAsync();
+					if (Grimm.Settings.Infinite)
+					{
+						yield return spikeController.PlayAlternatingAsync();
+					}
+					else
+					{
+						yield return spikeController.PlayMiddleSideAsync();
+					}
 				}
 				else
 				{
@@ -77,11 +84,11 @@ public class SpikesMove : GrimmMove
 
 				if (Grimm.BossStage >= 3)
 				{
-					yield return new WaitForSeconds(0.3f);
+					yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 				}
 				else
 				{
-					yield return new WaitForSeconds(0.6f);
+					yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 				}
 			}
 		}

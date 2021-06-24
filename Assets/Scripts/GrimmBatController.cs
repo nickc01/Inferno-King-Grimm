@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class GrimmBatController : MonoBehaviour 
 {
-	public static InfernoKingGrimm CurrentGrimm { get; private set; }
+	//public static InfernoKingGrimm CurrentGrimm { get; private set; }
 
 
 	GrimmBatMovement[] grimmBats;
+
+	GrimmRealBat _realBat;
+	public GrimmRealBat RealBat
+	{
+		get
+		{
+			if (_realBat == null)
+			{
+				_realBat = GetComponentInChildren<GrimmRealBat>(true);
+			}
+			return _realBat;
+		}
+	}
 
 	void Start()
 	{
@@ -16,10 +29,11 @@ public class GrimmBatController : MonoBehaviour
 
 	public void SendOut(InfernoKingGrimm grimm)
 	{
-		CurrentGrimm = grimm;
+		RealBat.Grimm = grimm;
+		//CurrentGrimm = grimm;
 		foreach (var bat in grimmBats)
 		{
-			bat.SendOut();
+			bat.SendOut(grimm);
 		}
 	}
 

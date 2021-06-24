@@ -19,20 +19,24 @@ public class AirDashMove : GrimmMove
 	static ObjectPool DustGroundEffectPool;*/
 
 	[Header("Air Dash Settings")]
+	[Header("First Phase")]
 	[SerializeField]
+	[Tooltip("The speed Grimm will have when lunging towards the ground in the first phase")]
 	float airDashSpeed = 55f;
 	[SerializeField]
 	float flameSpawnRate = 0.025f;
 	[SerializeField]
 	Vector3 flameSpawnOffset = new Vector3(0f, -1f, 0.001f);
 	[SerializeField]
+	[Tooltip("How fast Grimm will dash on the ground")]
 	float groundDashSpeed = 58f;
 	[SerializeField]
+	[Tooltip("how long will Grimm dash on the ground")]
 	float groundDashTime = 0.25f;
-	[SerializeField]
-	float aheadOfTimeMovement = 0.6f;
-	[SerializeField]
-	float flankTime = 0.4f;
+	/*[SerializeField]
+	float aheadOfTimeMovement = 0.6f;*/
+	/*[SerializeField]
+	float flankTime = 0.4f;*/
 
 	[Header("Wait Times")]
 	[SerializeField]
@@ -158,7 +162,9 @@ public class AirDashMove : GrimmMove
 
 		//VoicePlayer.Play();
 
+		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed;
 		yield return GrimmAnimator.PlayAnimationTillDone("Air Dash Antic");
+		GrimmAnimator.speed = 1f;
 
 		GrimmAnimator.PlayAnimation("Air Dash");
 
@@ -290,11 +296,11 @@ public class AirDashMove : GrimmMove
 
 		if (Grimm.BossStage >= 3)
 		{
-			yield return new WaitForSeconds(0.3f);
+			yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 		}
 	}
 
@@ -315,11 +321,11 @@ public class AirDashMove : GrimmMove
 
 		if (Grimm.Settings.hardMode && Grimm.BossStage >= 3)
 		{
-			yield return new WaitForSeconds(0.35f);
+			yield return new WaitForSeconds(0.35f / InfernoKingGrimm.InfiniteSpeed);
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 		}
 
 	}
@@ -328,7 +334,9 @@ public class AirDashMove : GrimmMove
 	{
 		yield return GroundPoundTeleIn(0f);
 
+		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed;
 		yield return GrimmAnimator.PlayAnimationTillDone("Air Dash Antic");
+		GrimmAnimator.speed = 1f;
 
 		GrimmAnimator.PlayAnimation("Air Dash");
 

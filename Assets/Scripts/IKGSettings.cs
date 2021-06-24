@@ -12,24 +12,18 @@ namespace Assets.Scripts
 {
 	public class IKGSettings : Panel
 	{
-		//[SerializeField]
-		//[SettingField(EnabledType.Never)]
-		//Material cameraMaterial;
-
-		[Tooltip(@"Checking this will make the boss fight considerably harder
-
-For those who want a bigger challenge")]
+		[Tooltip("Checking this will make the boss fight considerably harder</br:2>For those who want a bigger challenge")]
 		[SettingField(EnabledType.MenuOnly)]
+		[SettingOrder(0)]
 		public bool hardMode = false;
 
-		[Tooltip(@"Checking this will allow you to customize the health to be whatever you want.
-
-The value can be set below")]
+		[Tooltip("Checking this will allow you to customize the health to be whatever you want.</br:2>The value can be set below")]
 		[SerializeField]
 		[SettingField(EnabledType.Never)]
 		bool enableCustomHealth = false;
 
 		[SettingField(EnabledType.MenuOnly)]
+		[SettingOrder(1)]
 		public bool EnableCustomHealth
 		{
 			get
@@ -54,37 +48,42 @@ The value can be set below")]
 			}
 		}
 
-		[Tooltip(@"The custom health the boss will use.
-
-NOTE: Setting this value too low may cause issues, so do so with caution
-
-For reference, here are all the normal health values the boss uses:
-
-Normal Mode Attuned		: 1300
-Normal Mode Ascended	: 1450
-Normal Mode Radiant		: 1600
-
-Hard Mode Attunded		: 1950
-Hard Mode Ascended		: 2000
-Hard Mode Radiant		: 2050")]
+		[Tooltip("The custom health the boss will use.</br:2>NOTE: Setting this value too low may cause issues, so do so with caution</br:2>" +
+			"For reference, here are all the normal health values the boss uses:</br:2>Normal Mode Attuned</sp:6>: 1300</br>Normal Mode Ascended</sp:5>: 1450</br>" +
+			"Normal Mode Radiant</sp:6>: 1600</br:2>Hard Mode Attunded</sp:5>: 1950</br>Hard Mode Ascended</sp:5>: 2000</br>Hard Mode Radiant</sp:5>: 2050")]
+		[SettingOrder(2)]
 		public int CustomHealthValue = 1300;
 
-		[Tooltip(@"Checking this will disable color effects that take place throughout the fight")]
+		[Tooltip("Checking this will disable color effects that take place throughout the fight")]
+		[SettingOrder(3)]
 		public bool DisableColorEffects = false;
 
-		[Tooltip(@"This determines how difficult the pufferfish attack of the fight will be
-
--Default:  Leaves everything set to their default values
-
--Easy:     A toned down version of the attack
-
--Medium:   The same difficulty as regular IKG
-
--Hard:     The same difficutly as Absolute IKG
-
--Off:      Turns the attack off completely
-")]
+		[Tooltip("This determines how difficult the pufferfish attack of the fight will be</br:2>-Default:  Leaves everything set to their default values</br>-Easy:     " +
+			"A toned down version of the attack</br>-Medium:   The same difficulty as regular IKG</br>-Hard:     The same difficutly as Absolute IKG</br>-Off:      " +
+			"Turns the attack off completely")]
+		[SettingOrder(4)]
 		public PufferFishDifficulty PufferFishDifficulty;
+
+		[SerializeField]
+		[SettingField(EnabledType.Never)]
+		bool _infinite = false;
+		[SettingField(EnabledType.MenuOnly)]
+		[SettingDescription("If set to true, the boss will be infinite, and will get harder the longer you play.</br:2> When you die, your score will be displayed, and stored to a file in the Mods Directory")]
+		[SettingOrder(5)]
+		public bool Infinite
+		{
+			get => _infinite;
+			set
+			{
+				_infinite = value;
+				UpdateInfiniteState();
+			}
+		}
+
+		[SettingOrder(6)]
+		[SettingField(EnabledType.Both)]
+		[Tooltip("Improves performance of the fight by removing decoration objects")]
+		public bool PerformanceMode = false;
 
 		[SerializeField]
 		[SettingField(EnabledType.Never)]
@@ -94,6 +93,7 @@ Hard Mode Radiant		: 2050")]
 		[SettingDescription("Yo, listen up here's a story</br>About a little guy</br>" +
 			"That lives in a blue world</br>And all day and all night</br>And everything he sees is just blue</br>" +
 			"Like him inside and outside</br></br:15>(All red colors become blue colors)")]
+		[SettingOrder(7)]
 		public bool BlueMode
 		{
 			get
@@ -112,6 +112,8 @@ Hard Mode Radiant		: 2050")]
 
 		[Header("God Mode")]
 		[Tooltip("If set to true, Inferno God Grimm will have 1.75x health than Inferno King Grimm")]
+		[SettingField(EnabledType.MenuOnly)]
+		[SettingOrder(8)]
 		public bool IncreasedGodModeHealth = true;
 
 		public override string TabName
@@ -124,6 +126,7 @@ Hard Mode Radiant		: 2050")]
 
 		protected override void OnPanelOpen()
 		{
+			UpdateInfiniteState();
 			var healthElement = GetElement("CustomHealthValue");
 			if (!InPauseMenu)
 			{
@@ -149,13 +152,37 @@ Hard Mode Radiant		: 2050")]
 
 		static Material cameraMaterial;
 
+		void UpdateInfiniteState()
+		{
+			if (!InPauseMenu)
+			{
+				var increasedHealthElement = GetElement(nameof(IncreasedGodModeHealth));
+				increasedHealthElement.Visible = !Infinite;
+
+				var enableCustomHealthElement = GetElement(nameof(EnableCustomHealth));
+				enableCustomHealthElement.Visible = !Infinite;
+			}
+
+			var pufferFishDifficultyElement = GetElement(nameof(PufferFishDifficulty));
+			pufferFishDifficultyElement.Visible = !Infinite;
+
+			var healthValueElement = GetElement("CustomHealthValue");
+
+			if (Infinite)
+			{
+				healthValueElement.Visible = false;
+			}
+			else
+			{
+				healthValueElement.Visible = EnableCustomHealth;
+			}
+		}
+
 		static void UpdateBlueState()
 		{
 			if (cameraMaterial == null)
 			{
 				cameraMaterial = WeaverAssets.LoadAssetFromBundle<Material>("infernogrimmmod", "CameraMaterial");
-				//WeaverLog.Log("Camera Material = " + cameraMaterial);
-				//WeaverLog.Log("Camera Material = " + cameraMaterial);
 				if (cameraMaterial == null)
 				{
 					return;

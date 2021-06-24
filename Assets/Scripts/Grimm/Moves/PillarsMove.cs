@@ -85,7 +85,7 @@ public class PillarsMove : GrimmMove
 
 		VoicePlayer.Play(Sounds.PillarCastVoice);
 
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.5f / InfernoKingGrimm.InfiniteSpeed);
 
 		for (int i = 0; i < pillarsToSpawn; i++)
 		{
@@ -99,7 +99,13 @@ public class PillarsMove : GrimmMove
 			Vector3 predictivePosition = default(Vector3);
 			float predictiveAmount = 0f;
 
-			switch (Grimm.BossStage)
+			var predictiveStage = Grimm.BossStage;
+			if (Grimm.BossStage == 3 && Grimm.Settings.Infinite)
+			{
+				predictiveStage = 2;
+			}
+
+			switch (predictiveStage)
 			{
 				case 1:
 					predictiveAmount = Grimm.Settings.hardMode ? hardModePredictiveAmountStage1 : predictiveAmountStage1;
@@ -111,8 +117,11 @@ public class PillarsMove : GrimmMove
 					predictiveAmount = Grimm.Settings.hardMode ? hardModePredictiveAmountStage3 : predictiveAmountStage3;
 					break;
 			}
-
-			predictivePosition = (((playerPos2 - playerPos1) / Time.deltaTime) * predictiveAmount) + playerPos2;
+			if (Grimm.Settings.Infinite && Grimm.CurrentCycle >= 1)
+			{
+				predictiveAmount = 0f;
+			}
+			predictivePosition = (((playerPos2 - playerPos1) / (Time.deltaTime * InfernoKingGrimm.InfiniteSpeed)) * predictiveAmount) + playerPos2;
 			pillar = Pillar.Create(predictivePosition + Prefabs.FlamePillarPrefab.transform.position);
 
 			if (i == 2 && Grimm.BossStage >= 3)
@@ -137,20 +146,20 @@ public class PillarsMove : GrimmMove
 
 			SpawnedPillars.Add(pillar);
 
-			yield return new WaitForSeconds(pillarSpawnRate);
+			yield return new WaitForSeconds(pillarSpawnRate / InfernoKingGrimm.InfiniteSpeed);
 		}
 		//}
 
 
-		yield return new WaitForSeconds(0.25f);
+		yield return new WaitForSeconds(0.25f / InfernoKingGrimm.InfiniteSpeed);
 		yield return Grimm.TeleportOut();
 		if (Grimm.BossStage >= 2)
 		{
-			yield return new WaitForSeconds(0.3f);
+			yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 		}
 
 		SpawnedPillars.Clear();

@@ -105,7 +105,7 @@ public class CapeBurstMove : GrimmMove
 	public override IEnumerator DoMove()
 	{
 		startHealth3rdStage = Grimm.MaxHealth - ((Grimm.MaxHealth / 3) * 2);
-		healthPercentage = Mathf.InverseLerp(endHealth3rdStage, startHealth3rdStage, Grimm.GrimmHealth.Health);
+		healthPercentage = Mathf.Clamp01(Mathf.InverseLerp(endHealth3rdStage, startHealth3rdStage, Grimm.GrimmHealth.Health));
 		if (!Grimm.Settings.hardMode || Grimm.BossStage == 1)
 		{
 			yield break;
@@ -124,17 +124,19 @@ public class CapeBurstMove : GrimmMove
 		//yield return GrimmAnimator.PlayAnimation("Cape Prepare");
 		GrimmAnimator.PlayAnimation("Cape Prepare");
 
-		yield return new WaitForSeconds(anticTime);
+		yield return new WaitForSeconds(anticTime / InfernoKingGrimm.InfiniteSpeed);
 
+		//GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed * 2f;
 		yield return GrimmAnimator.PlayAnimationTillDone("Cape Open");
 
 		jitterRoutine = StartCoroutine(TransformUtilities.JitterObject(gameObject, JitterAmount, jitterFPS));
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Cape Open Finish");
 
+		//GrimmAnimator.speed = 1f;
 		GrimmAnimator.PlayAnimation("Cape Open Loop");
 
-		yield return new WaitForSeconds(startDelay);
+		yield return new WaitForSeconds(startDelay / InfernoKingGrimm.InfiniteSpeed);
 
 		if (Grimm.BossStage == 2)
 		{
@@ -145,7 +147,7 @@ public class CapeBurstMove : GrimmMove
 			yield return FireSprayShots(amountOfWaves,shotsPerWave,angleBetweenSprayShots);
 		}
 
-		yield return new WaitForSeconds(endDelay);
+		yield return new WaitForSeconds(endDelay / InfernoKingGrimm.InfiniteSpeed);
 
 		StopCoroutine(jitterRoutine);
 		jitterRoutine = null;
@@ -154,11 +156,11 @@ public class CapeBurstMove : GrimmMove
 
 		if (Grimm.Settings.hardMode && Grimm.BossStage >= 3)
 		{
-			yield return new WaitForSeconds(0.35f);
+			yield return new WaitForSeconds(0.35f / InfernoKingGrimm.InfiniteSpeed);
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 		}
 
 
@@ -170,10 +172,16 @@ public class CapeBurstMove : GrimmMove
 		for (float i = 0; i < amountOfShots; i++)
 		{
 			var pitch = Mathf.Lerp(pitchLow, pitchHigh, i / (amountOfShots - 1));
-			SpawnHomingBall(VectorUtilities.GetAngleBetween(transform.position, Player.Player1.transform.position), homingBallVelocity, homingBallRotationSpeed,true, pitch);
-			yield return new WaitForSeconds(timeBetweenShots);
+			SpawnHomingBall(VectorUtilities.GetAngleBetween(transform.position, Player.Player1.transform.position), homingBallVelocity * InfernoKingGrimm.MultipliedInfiniteSpeed(1f / 2f), homingBallRotationSpeed,true, pitch);
+			//Debug.Log("Time Between Shots = " + timeBetweenShots);
+			//Debug.Log("Speed = " + InfernoKingGrimm.InfiniteSpeed);
+			//Debug.Log("Infinite Speed Divided = " + (InfernoKingGrimm.InfiniteSpeed / 2.5f));
+			//Debug.Log("Wait Time = " + (timeBetweenShots / (InfernoKingGrimm.InfiniteSpeed / 2.5f)));
+			yield return new WaitForSeconds(timeBetweenShots / InfernoKingGrimm.MultipliedInfiniteSpeed(1f / 2.5f));
 		}
 	}
+
+	int positionMatchCount = 0;
 
 	IEnumerator FireSprayShots(int amountOfWaves, int shotsPerWave, float angleBetweenShots)
 	{
@@ -208,21 +216,29 @@ public class CapeBurstMove : GrimmMove
 
 			if (i >= 2 && (Vector3.Distance(currentPlayerPosition, previousPlayerPosition) < 0.02f || currentPlayerPosition.y > transform.position.y + 2f))
 			{
-				float nearestAngleIndex = 0f;
-				float nearestValue = float.PositiveInfinity;
-				for (int j = 0; j < angles.GetLength(0); j++)
+				positionMatchCount++;
+				if (positionMatchCount >= 3)
 				{
-					var difference = currentPlayerAngle - (angles[j] + downAngle);
-					if (Mathf.Abs(difference) <= nearestValue)
+					float nearestAngleIndex = 0f;
+					float nearestValue = float.PositiveInfinity;
+					for (int j = 0; j < angles.GetLength(0); j++)
 					{
-						nearestValue = difference;
-						nearestAngleIndex = j;
+						var difference = currentPlayerAngle - (angles[j] + downAngle);
+						if (Mathf.Abs(difference) <= nearestValue)
+						{
+							nearestValue = difference;
+							nearestAngleIndex = j;
+						}
+					}
+					if (!float.IsInfinity(nearestValue))
+					{
+						angleOffset = nearestValue;
 					}
 				}
-				if (!float.IsInfinity(nearestValue))
-				{
-					angleOffset = nearestValue;
-				}
+			}
+			else
+			{
+				positionMatchCount = 0;
 			}
 			/*if (!(Mathf.Abs(currentPlayerAngle - previousPlayerAngle) > (angleBetweenShots / 4f) || Vector3.Distance(currentPlayerPosition,previousPlayerPosition) > 2f) || currentPlayerPosition.y > transform.position.y + 2f)
 			{
@@ -243,25 +259,27 @@ public class CapeBurstMove : GrimmMove
 				}
 			}*/
 
+			float speed = InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f);//InfernoKingGrimm.InfiniteSpeed / 2.5f;
+
 			for (int j = 0; j < trueAmountOfShots; j++)
 			{
 				//var angle = downAngle + Mathf.Lerp(angleBetweenShots, -angleBetweenShots, j / (trueAmountOfShots - 1));
 				var angle = downAngle + angles[j] + angleOffset;
 				//WeaverLog.Log("Angle = " + angle);
 				//WeaverLog.Log("Lerp Val = " + (j / (trueAmountOfShots - 1)));
-				var homingBall = SpawnHomingBall(angle, sprayShotVelocity, sprayShotRotationSpeed, j == trueAmountOfShots - 1, Mathf.Lerp(pitchLow,pitchHigh,i / (amountOfWaves - 1)));
+				var homingBall = SpawnHomingBall(angle, sprayShotVelocity * speed, sprayShotRotationSpeed, j == trueAmountOfShots - 1, Mathf.Lerp(pitchLow,pitchHigh,i / (amountOfWaves - 1)));
 				//var growth = homingBall.gameObject.AddComponent<Growth>();
 				var growth = homingBall.GetComponent<Growth>();
 				growth.enabled = true;
 				homingBall.transform.localScale = Vector3.one * 1.8f;
-				growth.GrowthSpeed = 0.30f + (Mathf.Clamp(Mathf.Abs(angles[j] / angleBetweenShots), 0f,3f) * 0.20f);
+				growth.GrowthSpeed = 0.30f + (Mathf.Clamp(Mathf.Abs(angles[j] / angleBetweenShots), 0f,3f) * 0.20f * speed);
 			}
 			evenWave = !evenWave;
 
 			var minTime = Mathf.Lerp(timeBetweenWavesMinRange.x, timeBetweenWavesMinRange.y,healthPercentage);
 			var maxTime = Mathf.Lerp(timeBetweenWavesMaxRange.x, timeBetweenWavesMaxRange.y,healthPercentage);
 
-			yield return new WaitForSeconds(Mathf.Lerp(maxTime, minTime, i / (amountOfWaves - 1)));
+			yield return new WaitForSeconds(Mathf.Lerp(maxTime, minTime, i / (amountOfWaves - 1)) / speed);
 		}
 	}
 

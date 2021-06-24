@@ -19,6 +19,8 @@ using WeaverCore.Assets;
 using UnityEngine.SceneManagement;
 using Modding;
 using WeaverCore.Implementations;
+using System.IO;
+using Newtonsoft.Json;
 
 [RequireComponent(typeof(DamageHero))]
 public class InfernoKingGrimm : BossReplacement
@@ -39,6 +41,21 @@ public class InfernoKingGrimm : BossReplacement
 	}
 	public static List<InfernoKingGrimm> GrimmsFighting = new List<InfernoKingGrimm>();
 
+	/// <summary>
+	/// A speed value determining how fast the boss should be. In Infinite mode, this value increases gradually
+	/// </summary>
+	public static float InfiniteSpeed = 1.0f;
+
+	public static float MultipliedInfiniteSpeed(float multiplier)
+	{
+		return ((InfiniteSpeed - 1f) * multiplier) + 1f;
+	}
+
+	/// <summary>
+	/// How much health the boss needs to have before the speed doubles. In the Awake function, this is set to 2 Boss Cycles. Every 2 Boss Cycles (6 phases), the speed will double
+	/// </summary>
+	public static float DoublingRatio;
+
 	private BalloonMove balloonMove;
 
 	//IEnumerable<GrimmHooks> Hooks = ReflectionUtilities.GetObjectsOfType<GrimmHooks>();
@@ -46,6 +63,8 @@ public class InfernoKingGrimm : BossReplacement
 	bool balloonMoveNext = false;
 
 	//public static InfernoKingGrimm Instance { get; private set; }
+	public int CycleAmount { get; private set; }
+	public int CurrentCycle { get; private set; }
 	public Animator GrimmAnimator { get; private set; }
 	public BoxCollider2D GrimmCollider { get; private set; }
 	public GrimmSounds Sounds { get; private set; }
@@ -91,10 +110,12 @@ public class InfernoKingGrimm : BossReplacement
 	private GrimmMove previousMove;
 	private float fireBatSpawnpointX;
 	private bool invisible = true;
-/*#if !UNITY_EDITOR
-	private AudioMixerSnapshot SilentSnapshot;
-#endif*/
+	/*#if !UNITY_EDITOR
+		private AudioMixerSnapshot SilentSnapshot;
+	#endif*/
 
+	[SerializeField]
+	Material performanceModeMaterial;
 	[SerializeField]
 	string titleLarge = "Grimm";
 	[SerializeField]
@@ -329,9 +350,106 @@ public class InfernoKingGrimm : BossReplacement
 #endif
 	}
 
+	///Grabbed from the Infinite Grimm Mod
+	static readonly string[] LAG_OBJECTS_TO_KILL =
+		{
+			"Grimm_nightmare__0017_9 (2)", "grimm_curtain (20)", "default_particles",
+			"grimm_pole_standard (5)", "water_fog", "Grimm_nightmare__0016_10", "Grimm Control.Grimm_heart",
+			"Grimm Control.Crowd", "Grimm Control.Heartbeat Audio", "Grimm_Main_tent_0009_3 (14)", "grimm_rag_main_tent",
+			"grimm_rag_main_tent (25)", "grimm_fader", "grimm_fader", "grimm_rag_main_tent (58)", "Grimm_nightmare__0014_12",
+			"grimm_rag_main_tent (29)", "Grimm_Main_tent_0007_5 (20)", "grimm_fader (1)", "grimm_rag_main_tent (23)",
+			"Grimm_Main_tent_0008_4 (8)", "grimm_wallpaper (12)", "Grimm_Main_tent_0006_6 (7)",
+			"grimm_pole_standard (8)", "grimm_rag_main_tent (59)", "Grimm_Main_tent_0010_2 (16)",
+			"grimm_rag_main_tent (11)", "grimm_rag_main_tent (44)", "Grimm_nightmare__0020_6", "Grimm_nightmare__0018_8",
+			"grimm_curtain (2)", "Grimm_nightmare__0018_8 (5)", "Grimm_Main_tent_0006_6 (11)", "grimm_rag_main_tent (19)",
+			"Grimm_nightmare__0016_10 (8)", "Grimm_nightmare__0016_10 (13)", "break_rag (6)", "grimm_fader (12)",
+			"Grimm_nightmare__0017_9 (1)", "Grimm_nightmare_fabric_lantern (11)", "Grimm Control.Halfway Glow",
+			"Grimm Control.Final Glow", "Grimm Control.Crowd Fader",
+			"main_tent_short_pole (8)", "Grimm_nightmare__0014_12 (14)", "Grimm_nightmare__0022_4 (1)",
+			"Grimm_nightmare__0018_8 (1)", "Grimm_Main_tent_0006_6 (13)", "Spotlight Appear", "grimm_rag_main_tent (54)",
+			"grimm_rag_main_tent (17)", "Grimm_Main_tent_0008_4 (10)", "grimm_pole_bit", "grimm_rag_main_tent (12)",
+			"Grimm_nightmare_fabric_lantern (3)", "grimm_rag_main_tent (18)", "Grimm_nightmare__0014_12 (13)",
+			"Grimm_Main_tent_0009_3 (10)", "Grimm_nightmare__0014_12 (7)", "Grimm_Main_tent_0008_4 (14)",
+			"grimm_rag_main_tent (22)", "Grimm_nightmare__0023_3", "break_rag (5)", "grimm_rag_main_tent (39)",
+			"Grimm_nightmare__0019_7", "grimm_wallpaper (5)", "grimm_rag_main_tent (27)", "Grimm_Main_tent_0010_2 (6)",
+			"grimm_fader (1)", "Grimm_nightmare__0016_10 (7)", "Grimm_nightmare_fabric_lantern (6)",
+			"grimm_rag_main_tent (61)", "Grimm_nightmare__0016_10 (24)", "Grimm_nightmare__0017_9 (10)",
+			"grimm_rag_main_tent (45)", "Grimm_nightmare_fabric_lantern (13)", "Grimm_nightmare__0016_10 (21)",
+			"grimm_wallpaper (6)", "grimm_curtain (19)", "grimm_rag_main_tent (47)", "grimm_rag_main_tent (2)",
+			"grimm_curtain_02 (15)", "Grimm_Main_tent_0006_6 (14)", "dream_particles", "grimm_pole_standard (3)",
+			"Grimm_nightmare_fabric_lantern (1)", "break_rag (4)", "Incense Particle", "Grimm_nightmare_fabric_lantern (7)",
+			"main_tent_short_pole (5)", "Grimm_nightmare_fabric_lantern (8)", "break_rag (1)", "Grimm_nightmare_fabric_lantern (9)",
+			"Grimm_nightmare_fabric_lantern (2)", "Grimm_nightmare_fabric_lantern (5)", "grimm_pole_standard (1)",
+			"Grimm_nightmare_fabric_lantern (4)", "Grimm_nightmare_fabric_lantern", "Grimm_nightmare_fabric_lantern (12)",
+			"break_rag", "break_rag (3)", "break_rag (2)", "Grimm_nightmare_fabric_lantern (10)", "break_rag (7)"
+		};
+
+	void RemoveExtras()
+	{
+		if (Settings.PerformanceMode)
+		{
+			var activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+			if (activeScene.name == "GG_Grimm_Nightmare")
+			{
+				var decor = GameObject.Find("GG_Arena_Prefab");
+				if (decor != null)
+				{
+					GameObject.Destroy(decor);
+				}
+				var godseeker = GameObject.Find("Godseeker Crowd");
+				if (godseeker != null)
+				{
+					GameObject.Destroy(godseeker);
+				}
+
+				var chunk1 = GameObject.Find("Chunk 0 2");
+				if (chunk1 != null)
+				{
+					chunk1.GetComponent<MeshRenderer>().material = performanceModeMaterial;
+				}
+
+				var chunk2 = GameObject.Find("Chunk 0 3");
+				if (chunk2 != null)
+				{
+					chunk2.GetComponent<MeshRenderer>().material = performanceModeMaterial;
+				}
+			}
+			if (activeScene.name == "GG_Grimm_Nightmare" || activeScene.name == "Grimm_Nightmare")
+			{
+				UnboundCoroutine.Start(Routine());
+
+				IEnumerator Routine()
+				{
+					yield return new WaitForSeconds(0.1f);
+					foreach (string s in LAG_OBJECTS_TO_KILL)
+					{
+						string[] gameObjs = s.Split('.');
+						GameObject killMe = GameObject.Find(gameObjs[0]);
+
+						if (killMe == null)
+						{
+							continue;
+						}
+
+						for (int i = 1; i < gameObjs.Length; i++)
+						{
+							//killMe = killMe.FindGameObjectInChildren(gameObjs[i]);
+							killMe = killMe.transform.Find(gameObjs[i])?.gameObject;
+							if (killMe != null) continue;
+						}
+
+						if (killMe != null)
+							GameObject.Destroy(killMe);
+					}
+				}
+			}
+		}
+	}
+
 	// Use this for initialization
 	private void Start()
 	{
+		RemoveExtras();
 		//Recycler = Recycler.CreateRecycler();
 		//BossStage = 2;
 		//GrimmHue.SetAllGrimmHues(0f, 0f, 0f);
@@ -393,23 +511,30 @@ public class InfernoKingGrimm : BossReplacement
 		spriteRenderer.enabled = false;
 		GrimmCollider.enabled = false;
 
-		if (Settings.EnableCustomHealth)
+		if (Settings.EnableCustomHealth && !Settings.Infinite)
 		{
 			GrimmHealth.Health = Settings.CustomHealthValue;
 		}
 		else
 		{
-			switch (Diffculty)
+			if (Settings.Infinite)
 			{
-				case BossDifficulty.Attuned:
-					GrimmHealth.Health = Settings.hardMode ? hardAttunedHealth : easyAttunedHealth;
-					break;
-				case BossDifficulty.Ascended:
-					GrimmHealth.Health = Settings.hardMode ? hardAscendedHealth : easyAscendedHealth;
-					break;
-				case BossDifficulty.Radiant:
-					GrimmHealth.Health = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
-					break;
+				GrimmHealth.Health = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
+			}
+			else
+			{
+				switch (Difficulty)
+				{
+					case BossDifficulty.Attuned:
+						GrimmHealth.Health = Settings.hardMode ? hardAttunedHealth : easyAttunedHealth;
+						break;
+					case BossDifficulty.Ascended:
+						GrimmHealth.Health = Settings.hardMode ? hardAscendedHealth : easyAscendedHealth;
+						break;
+					case BossDifficulty.Radiant:
+						GrimmHealth.Health = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
+						break;
+				}
 			}
 		}
 
@@ -425,40 +550,75 @@ public class InfernoKingGrimm : BossReplacement
 		if (GodMode)
 		{
 			WeaverLog.Log("IKG : God Mode Enabled. Good luck");
-			if (Settings.IncreasedGodModeHealth)
+			if (Settings.IncreasedGodModeHealth || Settings.Infinite)
 			{
 				GrimmHealth.Health = Mathf.RoundToInt(GrimmHealth.Health * 1.75f);
 			}
 		}
 
-		WeaverLog.Log("IKG : Difficulty = " + Diffculty);
-		WeaverLog.Log("IKG : Health = " + GrimmHealth.Health);
+		CycleAmount = GrimmHealth.Health;
+		InfiniteSpeed = 1f;
+		DoublingRatio = CycleAmount * 5f;
+
+		if (Settings.Infinite)
+		{
+			WeaverLog.Log("IKG : Infinite Mode Enabled");
+			GrimmHealth.HealthDirection = HealthDirection.Up;
+			GrimmHealth.Health = 0;
+		}
+		else
+		{
+			WeaverLog.Log("IKG : Health = " + GrimmHealth.Health);
+		}
+
+		WeaverLog.Log("IKG : Difficulty = " + Difficulty);
 		/*GrimmHealth.Health = easyModeHealth;
 		if (Settings.hardMode)
 		{
 			GrimmHealth.Health = hardModeHealth;
 		}*/
-		MaxHealth = GrimmHealth.Health;
+		MaxHealth = CycleAmount;
+		CurrentCycle = -1;
 
-		var quarterHealth = GrimmHealth.Health / 4;
-		var thirdHealth = GrimmHealth.Health / 3;
+
+		var quarterHealth = CycleAmount / 4;
+		var thirdHealth = CycleAmount / 3;
 
 
 		if (!GodMode || (GodMode && MainGrimm == this))
 		{
-			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - quarterHealth, DoBalloonMove);
-			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 2), DoBalloonMove);
-			GrimmHealth.AddHealthMilestone(GrimmHealth.Health - (quarterHealth * 3), DoBalloonMove);
-			AddStunMilestone(GrimmHealth.Health - thirdHealth);
-			AddStunMilestone(GrimmHealth.Health - (thirdHealth * 2));
+			if (!Settings.Infinite)
+			{
+				GrimmHealth.AddHealthMilestone(CycleAmount - quarterHealth, DoBalloonMove);
+				GrimmHealth.AddHealthMilestone(CycleAmount - (quarterHealth * 2), DoBalloonMove);
+				GrimmHealth.AddHealthMilestone(CycleAmount - (quarterHealth * 3), DoBalloonMove);
+				AddStunMilestone(CycleAmount - thirdHealth);
+				AddStunMilestone(CycleAmount - (thirdHealth * 2));
+			}
+			else
+			{
+				Action cycleMilestone = null;
+				cycleMilestone = () =>
+				{
+					CurrentCycle++;
+					GrimmHealth.AddHealthMilestone((CurrentCycle * CycleAmount) + CycleAmount - quarterHealth, DoBalloonMove);
+					GrimmHealth.AddHealthMilestone((CurrentCycle * CycleAmount) + CycleAmount - (quarterHealth * 2), DoBalloonMove);
+					GrimmHealth.AddHealthMilestone((CurrentCycle * CycleAmount) + CycleAmount - (quarterHealth * 3), DoBalloonMove);
+					AddStunMilestone((CurrentCycle * CycleAmount) + CycleAmount - thirdHealth);
+					AddStunMilestone((CurrentCycle * CycleAmount) + CycleAmount - (thirdHealth * 2));
+					AddStunMilestone((CurrentCycle * CycleAmount) + CycleAmount);
+					GrimmHealth.AddHealthMilestone((CurrentCycle * CycleAmount) + CycleAmount, cycleMilestone);
+				};
+				cycleMilestone();
+			}
 		}
 
-		if (GodMode && MainGrimm != this)
+		if (GodMode && MainGrimm != this && !Settings.Infinite)
 		{
 			GrimmHealth.AddHealthMilestone(quarterHealth / 2, () => godModeDoSpikes = false);
 		}
 
-		if (GodMode)
+		if (GodMode || Settings.Infinite)
 		{
 			GeoCounter.Instance.GeoText = "0";
 		}
@@ -501,7 +661,7 @@ public class InfernoKingGrimm : BossReplacement
 					}
 				}
 		#endif*/
-		if (!Settings.DisableColorEffects && !Settings.BlueMode)
+		if ((!Settings.DisableColorEffects && !Settings.PerformanceMode) && !Settings.BlueMode)
 		{
 			if (cameraHueShifter == null)
 			{
@@ -539,12 +699,16 @@ public class InfernoKingGrimm : BossReplacement
 
 	private void Update()
 	{
-		if (!Settings.DisableColorEffects && !Settings.BlueMode && cameraHueShifter != null)
+		if ((!Settings.DisableColorEffects && !Settings.PerformanceMode) && !Settings.BlueMode && cameraHueShifter != null)
 		{
 			if (GrimmHealth.Health != healthCache)
 			{
 				healthCache = GrimmHealth.Health;
-				var t = 1f - (GrimmHealth.Health / MaxHealth);
+				var t = Mathf.Clamp01(1f - (GrimmHealth.Health / MaxHealth));
+				if (Settings.Infinite)
+				{
+					t = 1 - t;
+				}
 				if (!Settings.hardMode)
 				{
 					t *= 0.13f;
@@ -664,7 +828,7 @@ public class InfernoKingGrimm : BossReplacement
 					if (balloonMove.DoingBalloonMove)
 					{
 						yield return new WaitUntil(() => !balloonMove.DoingBalloonMove);
-						yield return new WaitForSeconds(0.6f);
+						yield return new WaitForSeconds(0.6f / InfiniteSpeed);
 					}
 					else
 					{
@@ -729,7 +893,9 @@ public class InfernoKingGrimm : BossReplacement
 			//EventManager.BroadcastEvent("EnemyKillShake", gameObject);
 			CameraShaker.Instance.Shake(ShakeType.EnemyKillShake);
 
+			GrimmAnimator.speed = InfiniteSpeed;
 			yield return GrimmAnimator.PlayAnimationTillDone(animationName);
+			GrimmAnimator.speed = 1f;
 			GrimmCollider.enabled = true;
 			Invisible = false;
 		}
@@ -747,7 +913,9 @@ public class InfernoKingGrimm : BossReplacement
 
 			Invisible = false;
 
+			GrimmAnimator.speed = InfiniteSpeed;
 			yield return GrimmAnimator.PlayAnimationTillDone(animationName);
+			GrimmAnimator.speed = 1f;
 
 			Invisible = true;
 
@@ -793,6 +961,11 @@ public class InfernoKingGrimm : BossReplacement
 	protected override void OnStun()
 	{
 		base.OnStun();
+		GrimmAnimator.speed = 1f;
+		if (Settings.Infinite && BossStage % 4 == 0)
+		{
+			BossStage = 1;
+		}
 		if (!Stunned)
 		{
 			Stunned = true;
@@ -942,6 +1115,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	protected override void OnDeath()
 	{
+		GrimmAnimator.speed = 1f;
 		base.OnDeath();
 		StopAllCoroutines();
 		Stunned = true;
@@ -991,6 +1165,85 @@ public class InfernoKingGrimm : BossReplacement
 	void OnDestroy()
 	{
 		GrimmsFighting.Remove(this);
+		if (Settings.Infinite)
+		{
+			if (GameObject.FindObjectOfType<InfiniteGrimmDisplay>() != null)
+			{
+				return;
+			}
+			var display = GameObject.Instantiate(Prefabs.GrimmDisplayPrefab, WeaverCanvas.SceneContent);
+
+			string bossName = "";
+
+			if (Settings.hardMode)
+			{
+				bossName = "Absolute Inferno ";
+			}
+			else
+			{
+				bossName = "Inferno ";
+			}
+
+			if (GodMode)
+			{
+				bossName += "God ";
+			}
+			else
+			{
+				bossName += "King ";
+			}
+			bossName += "Grimm";
+
+			string title = bossName;
+
+			title += Environment.NewLine + Environment.NewLine;
+
+			title += "Score: " + GrimmHealth.Health;
+
+			var ikgLocation = new FileInfo(typeof(InfernoKingGrimm).Assembly.Location).Directory;
+
+			InfiniteGrimmRecords records = null;
+
+			var recordsPath = PathUtilities.AddSlash(ikgLocation.FullName) + "Infinite Grimm Records.json";
+
+			if (File.Exists(recordsPath))
+			{
+				try
+				{
+					records = JsonConvert.DeserializeObject<InfiniteGrimmRecords>(File.ReadAllText(recordsPath));
+					if (records == null)
+					{
+						records = new InfiniteGrimmRecords();
+					}
+				}
+				catch (Exception e)
+				{
+					records = new InfiniteGrimmRecords();
+				}
+			}
+			else
+			{
+				records = new InfiniteGrimmRecords();
+			}
+
+			if (!records.Records.Any(r => r.Score >= GrimmHealth.Health))
+			{
+				title += Environment.NewLine + Environment.NewLine;
+
+				title += "New Record!";
+			}
+
+			display.Stats = title;
+
+			records.Records.Add(new Record
+			{
+				BossName = bossName,
+				Date = DateTime.Now.ToString(),
+				Score = GrimmHealth.Health
+			});
+
+			File.WriteAllText(recordsPath, JsonConvert.SerializeObject(records,Formatting.Indented));
+		}
 	}
 
 	void OnDisable()

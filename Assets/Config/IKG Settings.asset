@@ -3,18 +3,20 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f20ef2f069a251a4fb8f4729a137ca98, type: 3}
   m_Name: IKG Settings
   m_EditorClassIdentifier: 
-  cameraMaterial: {fileID: 2100000, guid: 5881ccc7b8ffb234d8bc3ead89bf1b7f, type: 2}
   hardMode: 0
   enableCustomHealth: 0
   CustomHealthValue: 1300
   DisableColorEffects: 0
   PufferFishDifficulty: 0
+  _infinite: 0
   blueMode: 0
+  IncreasedGodModeHealth: 1

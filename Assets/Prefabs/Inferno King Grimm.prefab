@@ -30602,6 +30602,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bossStage: 1
   enemyToReplace: Nightmare Grimm Boss
+  performanceModeMaterial: {fileID: 2100000, guid: a3df9852313296747901bf77ddff184c,
+    type: 2}
   titleLarge: Grimm
   titleSmall: Inferno King
   easyAttunedHealth: 1300
@@ -30732,6 +30734,7 @@ MonoBehaviour:
   DeflectBlows: 0
   EvasionTime: 0.2
   GainSoul: 1
+  DoEffectsOnHit: 1
   EffectsOffset: {x: 0, y: 0, z: 0}
   receiveExtraDamage: 1
   SmallGeo: 0
@@ -30943,8 +30946,6 @@ MonoBehaviour:
   flameSpawnOffset: {x: 0, y: -1, z: 1}
   groundDashSpeed: 58
   groundDashTime: 0.25
-  aheadOfTimeMovement: 0.6
-  flankTime: 0
   stageOneWaitTime: 0.6
   stageThreeWaitTime: 0.4
   stageTwoHardModeWaitTime: 0.42

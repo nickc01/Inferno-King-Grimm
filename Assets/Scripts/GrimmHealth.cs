@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WeaverCore.Components;
 using WeaverCore.Implementations;
+using WeaverCore.Settings;
 
 public class GrimmHealth : EntityHealth
 {
@@ -17,6 +19,7 @@ public class GrimmHealth : EntityHealth
 
 	protected override void OnHealthUpdate(int oldHealth, int newHealth)
 	{
+		var infinite = Panel.GetSettings<IKGSettings>().Infinite;
 		if (InfernoKingGrimm.GodMode)
 		{
 			if (newHealth < oldHealth)
@@ -32,15 +35,16 @@ public class GrimmHealth : EntityHealth
 						}
 					}
 				}
-				GeoCounter.Instance.GeoText = (grimm.MaxHealth - newHealth).ToString();
-				/*foreach (var grimm in InfernoKingGrimm.GrimmsFighting)
+				if (!infinite)
 				{
-					if (grimm.EntityHealth.Health != newHealth)
-					{
-						grimm.EntityHealth.Health = newHealth;
-					}
-				}*/
+					GeoCounter.Instance.GeoText = (grimm.MaxHealth - newHealth).ToString();
+				}
 			}
+		}
+		if (infinite)
+		{
+			InfernoKingGrimm.InfiniteSpeed = 1f + (newHealth / InfernoKingGrimm.DoublingRatio);
+			GeoCounter.Instance.GeoText = newHealth.ToString();
 		}
 	}
 }

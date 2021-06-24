@@ -86,7 +86,7 @@ public class SpikesController : MonoBehaviour
 
 		foreach (var spike in spikes)
 		{
-			spike.PrepareForAttack();
+			spike.PrepareForAttack(prepareTime);
 		}
 
 		WeaverAudio.PlayAtPoint(SpikesPrepare, Player.Player1.transform.position);
@@ -95,7 +95,7 @@ public class SpikesController : MonoBehaviour
 
 		foreach (var spike in spikes)
 		{
-			spike.RaiseSpikes();
+			spike.RaiseSpikes(raiseTime);
 		}
 
 		yield return new WaitForSeconds(raiseTime);
@@ -163,7 +163,7 @@ public class SpikesController : MonoBehaviour
 		float positionFloat = Random.Range(65f, 68.125f);
 
 		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
-		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 0), prepareTime, positionalRandomness: 1.1f);
+		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 0), prepareTime / InfernoKingGrimm.InfiniteSpeed, positionalRandomness: 1.1f, lowerTime: 0.45f / InfernoKingGrimm.InfiniteSpeed);
 	}
 
 	public IEnumerator PlayAlternatingAsync()
@@ -171,11 +171,11 @@ public class SpikesController : MonoBehaviour
 		float positionFloat = Random.Range(66f, 67.125f);
 
 		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
-		DoSpikes(AllSpikes.Where((g,i) => i % 2 == 0), 0.70f);
+		DoSpikes(AllSpikes.Where((g,i) => i % 2 == 0), 0.70f / InfernoKingGrimm.InfiniteSpeed, lowerTime: 0.45f / InfernoKingGrimm.InfiniteSpeed);
 
-		yield return new WaitForSeconds(0.85f);
+		yield return new WaitForSeconds(((0.85f - 0.15f) / InfernoKingGrimm.InfiniteSpeed) + 0.15f);
 
-		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 1), 0.75f);
+		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 1), 0.75f / InfernoKingGrimm.InfiniteSpeed, lowerTime: 0.45f / InfernoKingGrimm.InfiniteSpeed);
 	}
 
 
@@ -185,19 +185,21 @@ public class SpikesController : MonoBehaviour
 
 		transform.position = new Vector3(positionFloat, transform.position.y, transform.position.z);
 
-		DoSpikes(AllSpikes.Where((g, i) => i % 2 == 0), 0.65f);
+		DoSpikes(AllSpikes.Where((g, i) => i % 2 == 0), 0.65f / InfernoKingGrimm.InfiniteSpeed, lowerTime: 0.45f / InfernoKingGrimm.InfiniteSpeed);
 
-		yield return new WaitForSeconds(0.80f);
+		yield return new WaitForSeconds(((0.80f - 0.15f) / InfernoKingGrimm.InfiniteSpeed) + 0.15f);
 
-		DoSpikes(AllSpikes.Where((g, i) => i % 2 == 1), 0.65f);
+		DoSpikes(AllSpikes.Where((g, i) => i % 2 == 1), 0.65f / InfernoKingGrimm.InfiniteSpeed,lowerTime: 0.45f / InfernoKingGrimm.InfiniteSpeed);
 
-		yield return new WaitForSeconds(0.80f);
+		yield return new WaitForSeconds(((0.80f - 0.15f) / InfernoKingGrimm.InfiniteSpeed) + 0.15f);
 
-		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 0), 0.65f);
+		yield return DoSpikesAsync(AllSpikes.Where((g, i) => i % 2 == 0), 0.65f / InfernoKingGrimm.InfiniteSpeed,lowerTime: 0.45f / InfernoKingGrimm.InfiniteSpeed);
 	}
 
 	public IEnumerator PlayDashSpikes(float dashDistance, int spikesDown = int.MaxValue)
 	{
+		var speed = Mathf.Clamp(InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f), 1f, 1.5f);
+		dashDistance /= speed;
 		GrimmSpike nearestSpike = null;
 		float distance = float.PositiveInfinity;
 		int spikeIndex = 0;
@@ -247,10 +249,10 @@ public class SpikesController : MonoBehaviour
 			}
 		}
 
-		DoSpikes(AllSpikes.Except(DownSpikes), 0.65f);
+		DoSpikes(AllSpikes.Except(DownSpikes), 0.65f / speed,lowerTime: 0.45f / speed);
 
-		yield return new WaitForSeconds(0.80f);
+		yield return new WaitForSeconds(((0.80f - 0.15f) / speed) + 0.15f);
 
-		yield return DoSpikesAsync(DownSpikes, 0.65f);
+		yield return DoSpikesAsync(DownSpikes, 0.65f / speed, lowerTime: 0.45f / speed);
 	}
 }

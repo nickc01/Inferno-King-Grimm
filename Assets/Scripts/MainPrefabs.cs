@@ -27,5 +27,7 @@ public class MainPrefabs : ScriptableObject
 	public GrimmGlow GlowPrefab;
 	public GameObject GroundPoundAfterburn;
 	public GameObject RedBurst;
+
+	public InfiniteGrimmDisplay GrimmDisplayPrefab;
 }
 

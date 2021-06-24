@@ -4,7 +4,6 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
     Properties{
         _MainTex("Particle Texture", 2D) = "white" {}
         _InvFade("Soft Particles Factor", Range(0.01,3.0)) = 1.0
-        _HueShift("Shift Hue", Color) = (0,0,0,0)
     }
 
         Category{
@@ -65,7 +64,6 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
 
                     UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
                     float _InvFade;
-                    fixed4 _HueShift;
 
 
                     fixed4 frag(v2f i) : SV_Target
@@ -78,7 +76,7 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
                         #endif
 
                         fixed4 col = i.color * tex2D(_MainTex, i.texcoord);
-                        col.rgb = lerp(col.rgb, col.gbr, _HueShift.r); //90 degrees
+                        //col.rgb = lerp(col.rgb, col.gbr, _HueShift.r); //90 degrees
                         //col.rgb = lerp(col.rgb, col.gbr, _HueShift.g); //180 degrees
                         //col.rgb = lerp(col.rgb, col.bgr, _HueShift.b); //270 degrees
                         col.rgb *= col.a;

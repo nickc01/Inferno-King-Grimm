@@ -217,11 +217,12 @@ public class GroundSlashMove : GrimmMove
 
 		var playerPositionOld = Player.Player1.transform.position.x;
 
-		yield return new WaitForSeconds(0.5f);
 
-		if (Grimm.Settings.hardMode && Grimm.BossStage == 2)
+		yield return new WaitForSeconds(0.5f / InfernoKingGrimm.InfiniteSpeed);
+
+		if (Grimm.Settings.hardMode && (Grimm.BossStage == 2 || (Grimm.BossStage == 3 && Grimm.Settings.Infinite)))
 		{
-			yield return new WaitForSeconds(extraWaitTime);
+			yield return new WaitForSeconds(extraWaitTime / InfernoKingGrimm.InfiniteSpeed);
 		}
 
 		if (Grimm.Settings.hardMode)
@@ -290,10 +291,18 @@ public class GroundSlashMove : GrimmMove
 		//This ensures that the current animation is playing
 		yield return null;
 
-		yield return CoroutineUtilities.RunForPeriod(GrimmAnimator.GetCurrentAnimationTime(), () =>
+		/*yield return CoroutineUtilities.RunForPeriod(GrimmAnimator.GetCurrentAnimationTime(), () =>
 		{
 			Grimm.Velocity = VectorUtilities.Decelerate(Grimm.Velocity, new Vector2(0.65f * Time.deltaTime, 0.65f * Time.deltaTime));
-		});
+		});*/
+
+		var animationTime = GrimmAnimator.GetCurrentAnimationTime();
+
+		for (float i = 0; i < animationTime; i += Time.deltaTime)
+		{
+			Grimm.Velocity = VectorUtilities.Decelerate(Grimm.Velocity, new Vector2(0.65f * Time.deltaTime, 0.65f * Time.deltaTime));
+			yield return null;
+		}
 
 		Grimm.Velocity = Vector2.zero;
 		StopCoroutine(lockRoutine);
@@ -370,7 +379,7 @@ public class GroundSlashMove : GrimmMove
 		Grimm.FacePlayer(telePosition);
 		yield return new WaitForSeconds(teleTime / 2f);
 
-		yield return new WaitForSeconds(0.4f);
+		yield return new WaitForSeconds(0.4f - (0.2f - (0.2f / InfernoKingGrimm.InfiniteSpeed)));
 	}
 
 	IEnumerator GroundEvade()
@@ -511,11 +520,11 @@ public class GroundSlashMove : GrimmMove
 		yield return new WaitForSeconds(1f);
 		if (Grimm.BossStage >= 3)
 		{
-			yield return new WaitForSeconds(0.3f);
+			yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 		}
 
 	}

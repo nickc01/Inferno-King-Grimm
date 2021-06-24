@@ -54,7 +54,7 @@ public class Firebat : MonoBehaviour, IOnPool
 	void Start () 
 	{
 		//Destroy(gameObject, 3);
-		StartCoroutine(Waiter(3));
+		StartCoroutine(Waiter(3 / InfernoKingGrimm.InfiniteSpeed));
 	}
 
 	IEnumerator Waiter(float time)
@@ -67,7 +67,7 @@ public class Firebat : MonoBehaviour, IOnPool
 	// Update is called once per frame
 	void Update () 
 	{
-		rigidbody.velocity = Vector3.RotateTowards(rigidbody.velocity, Player.NearestPlayer(this).transform.position - transform.position, 30.0f * Mathf.Deg2Rad * Time.deltaTime, 0.0f);
+		rigidbody.velocity = Vector3.RotateTowards(rigidbody.velocity, Player.NearestPlayer(this).transform.position - transform.position, 30.0f * Mathf.Deg2Rad * Time.deltaTime * InfernoKingGrimm.InfiniteSpeed, 0.0f);
 		//rigidbody.velocity.
 	}
 
@@ -127,7 +127,7 @@ public class Firebat : MonoBehaviour, IOnPool
 		//Debugger.Log("FIre bat C");
 		var fireBatVelocity = grimm.transform.localScale.x * 20f * speedMultiplier;
 
-		Spawn(angle, fireBatVelocity, grimm);
+		Spawn(angle, fireBatVelocity * InfernoKingGrimm.InfiniteSpeed, grimm);
 		FirebatFirePillar.Spawn(grimm);
 		if (playSound)
 		{

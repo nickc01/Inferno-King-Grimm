@@ -82,17 +82,21 @@ public class FireBatMove : GrimmMove
 
 		yield return Grimm.TeleportIn();
 
+		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed;
 		GrimmAnimator.PlayAnimation("Bat Cast Charge");
+		GrimmAnimator.speed = 1f;
 
 
 		VoicePlayer.Play(Sounds.GrimmBeginBatCastVoice);
 		WeaverAudio.PlayAtPoint(Sounds.GrimmCapeOpen, transform.position);
 
-		yield return new WaitForSeconds(0.2f);
+		yield return new WaitForSeconds(0.2f / InfernoKingGrimm.InfiniteSpeed);
 
+		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed;
 		GrimmAnimator.PlayAnimation("Cast");
+		GrimmAnimator.speed = 1f;
 
-		yield return new WaitForSeconds(0.3f);
+		yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 
 		if (Grimm.BossStage == 1)
 		{
@@ -155,7 +159,7 @@ public class FireBatMove : GrimmMove
 				yield return new WaitForSeconds(hardModePhase2WaitTime);
 				yield return Firebat.SendFirebatAsync(Grimm, highAngle / 2, 1.15f);
 
-				yield return new WaitForSeconds(0.3f);
+				yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 
 				yield return TeleportToOtherSide();
 
@@ -201,22 +205,24 @@ public class FireBatMove : GrimmMove
 
 		yield return new WaitForSeconds(0.3f);
 
+		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed;
 		GrimmAnimator.PlayAnimation("Cast Return");
+		GrimmAnimator.speed = 1f;
 
 		if (Grimm.Settings.hardMode || Grimm.BossStage == 2 || Random.value < 0.75f)
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 		}
 
 		yield return Grimm.TeleportOut();
 
 		if (Grimm.BossStage >= 3)
 		{
-			yield return new WaitForSeconds(0.3f);
+			yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.6f / InfernoKingGrimm.InfiniteSpeed);
 		}
 	}
 
@@ -283,7 +289,7 @@ public class FireBatMove : GrimmMove
 
 		int fireballsPerRound = hardModeBallsPerRound;
 
-		if (Grimm.Settings.hardMode && InfernoKingGrimm.GodMode)
+		if (Grimm.Settings.hardMode && (InfernoKingGrimm.GodMode || Grimm.Settings.Infinite))
 		{
 			fireballsPerRound = 2;
 		}
@@ -301,18 +307,24 @@ public class FireBatMove : GrimmMove
 					var ball = HomingBall.Fire(Grimm, spawnPoint, Vector2.zero, 0f, true, Mathf.Lerp(HomingBallPitchRange.x, HomingBallPitchRange.y, t / homingBallTimePeriod));
 					ball.EnablePhase1 = false;
 
-					var angle = Random.Range(hardModeBallAngleRange.x, hardModeBallAngleRange.y);
+					float angleModifier = 0f;
+					if (Grimm.Settings.Infinite)
+					{
+						angleModifier = -5f;
+					}
+
+					var angle = Random.Range(hardModeBallAngleRange.x, hardModeBallAngleRange.y) + angleModifier;
 					if (top)
 					{
 						angle = Random.Range(hardModeBallAngleRangeTop.x, hardModeBallAngleRangeTop.y);
 					}
-					ball.Phase2TravelDirection = VectorUtilities.DegreesToVector(angle, Random.Range(hardModeBallVelocityRange.x, hardModeBallVelocityRange.y));
+					ball.Phase2TravelDirection = VectorUtilities.DegreesToVector(angle, Random.Range(hardModeBallVelocityRange.x, hardModeBallVelocityRange.y) * InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f));
 					if (Grimm.FaceDirection == GrimmDirection.Left)
 					{
 						ball.Phase2TravelDirection = ball.Phase2TravelDirection.With(-ball.Phase2TravelDirection.x);
 					}
-					ball.Phase2Velocity = hardModeBallSpawnVelocity;
-					ball.Phase2RotationSpeed = hardModeBallRotationSpeed;
+					ball.Phase2Velocity = hardModeBallSpawnVelocity * InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f);
+					ball.Phase2RotationSpeed = hardModeBallRotationSpeed * InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f);
 					FirebatFirePillar.Spawn(Grimm);
 					GrimmGlow.Create(spawnPoint + new Vector3(0f, 0f, -0.1f));
 					if (fireBallsShot >= fireballsPerRound)
@@ -323,8 +335,9 @@ public class FireBatMove : GrimmMove
 				}
 				else
 				{
-					var ball = HomingBall.Fire(Grimm, spawnPoint, Random.Range(homingBallAngleRange.x, homingBallAngleRange.y), Random.Range(homingBallSpawnVelocityRange.x, homingBallSpawnVelocityRange.y), homingBallRotationSpeed, false);
-					ball.Phase2Velocity = homingBallVelocity;
+					var ball = HomingBall.Fire(Grimm, spawnPoint, Random.Range(homingBallAngleRange.x, homingBallAngleRange.y), Random.Range(homingBallSpawnVelocityRange.x, homingBallSpawnVelocityRange.y) * InfernoKingGrimm.InfiniteSpeed, homingBallRotationSpeed, false);
+					ball.Phase1Time /= InfernoKingGrimm.InfiniteSpeed;
+					ball.Phase2Velocity = homingBallVelocity * InfernoKingGrimm.InfiniteSpeed;
 					var fireAudio = WeaverAudio.PlayAtPoint(Grimm.Sounds.GrimmBatFire, Grimm.transform.position, HomingBallVolume, AudioChannel.Sound);
 					fireAudio.AudioSource.pitch = Mathf.Lerp(HomingBallPitchRange.x, HomingBallPitchRange.y, t / homingBallTimePeriod);
 					FirebatFirePillar.Spawn(Grimm);
@@ -337,11 +350,11 @@ public class FireBatMove : GrimmMove
 
 		if (Grimm.Settings.hardMode && Grimm.BossStage >= 3)
 		{
-			yield return new WaitForSeconds(0.35f);
+			yield return new WaitForSeconds(0.35f / InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f)/*(InfernoKingGrimm.InfiniteSpeed / 2f)*/);
 		}
 		else
 		{
-			yield return new WaitForSeconds(0.6f);
+			yield return new WaitForSeconds(0.6f / InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f));
 		}
 	}
 }

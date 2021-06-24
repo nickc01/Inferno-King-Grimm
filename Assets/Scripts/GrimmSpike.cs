@@ -49,7 +49,7 @@ public class GrimmSpike : MonoBehaviour {
 		
 	}
 
-	public void PrepareForAttack()
+	public void PrepareForAttack(float preparationTime)
 	{
 		inRange = transform.localPosition.x >= leftEdge && transform.localPosition.x <= rightEdge;
 		renderer.enabled = inRange;
@@ -63,10 +63,19 @@ public class GrimmSpike : MonoBehaviour {
 			transform.localPosition = new Vector3(transform.localPosition.x, belowGroundHeight, 0f);
 		}
 
+		if (preparationTime < 0.25f)
+		{
+			if (preparationTime < 0.01f)
+			{
+				preparationTime = 0.01f;
+			}
+			animator.speed = 0.25f / preparationTime;
+		}
 		PlayAnimation("Spike Ready");
+		animator.speed = 1f;
 	}
 
-	IEnumerator RaiseSpikesRoutine()
+	IEnumerator RaiseSpikesRoutine(float raiseTime)
 	{
 		spikesRising = true;
 		yield return PlayAnimationTillDone("Spike Antic");
@@ -75,13 +84,13 @@ public class GrimmSpike : MonoBehaviour {
 		yield return PlayAnimationTillDone("Spike Up");
 	}
 
-	public void RaiseSpikes()
+	public void RaiseSpikes(float raiseTime)
 	{
 		if (!inRange)
 		{
 			return;
 		}
-		StartCoroutine(RaiseSpikesRoutine());
+		StartCoroutine(RaiseSpikesRoutine(raiseTime));
 
 	}
 

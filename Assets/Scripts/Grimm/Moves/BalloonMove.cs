@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using UnityEngine;
 using WeaverCore;
 using WeaverCore.Components;
 using WeaverCore.Enums;
+using WeaverCore.Settings;
 using WeaverCore.Utilities;
 using Random = UnityEngine.Random;
 
@@ -195,6 +197,11 @@ public class BalloonMove : GrimmMove
 			}
 		}
 
+		if (Grimm.Settings.Infinite)
+		{
+			difficulty = PufferFishDifficulty.Default;
+		}
+
 		switch (difficulty)
 		{
 			case PufferFishDifficulty.Easy:
@@ -257,6 +264,12 @@ public class BalloonMove : GrimmMove
 
 		float rateCounter = 0f;
 
+		spawnRate /= InfernoKingGrimm.InfiniteSpeed;
+		if (spawnRate < 0.05f)
+		{
+			spawnRate = 0.05f;
+		}
+
 		//HashSet<HomingBall> homingBalls = new HashSet<HomingBall>();
 
 		for (float t = 0; t < attackTime; t += Time.deltaTime)
@@ -274,9 +287,21 @@ public class BalloonMove : GrimmMove
 					spawnAngle = -spawnAngle;
 					spawnVelocity = -spawnVelocity;
 				}
+				if (Grimm.Settings.Infinite)
+				{
+					if (spawnAngle > 0 && spawnVelocity < 0)
+					{
+						spawnAngle = 0f;
+					}
+					else if (spawnAngle < 0 && spawnVelocity > 0)
+					{
+						spawnAngle = 0f;
+					}
+				}
 
-				var homingBall = HomingBall.Fire(Grimm, transform.position + HomingBallOffset, spawnAngle, spawnVelocity, homingBallRotationSpeed, false);
-				homingBall.Phase2Velocity = homingBallVelocity;
+				var homingBall = HomingBall.Fire(Grimm, transform.position + HomingBallOffset, spawnAngle, spawnVelocity * InfernoKingGrimm.InfiniteSpeed, homingBallRotationSpeed, false);
+				homingBall.Phase2Velocity = homingBallVelocity * InfernoKingGrimm.InfiniteSpeed;
+				homingBall.Phase1Time /= InfernoKingGrimm.InfiniteSpeed;
 				if (Grimm.BossStage == 1)
 				{
 					homingBall.transform.localScale = new Vector3(1.25f, 1.25f, 1f);
@@ -289,7 +314,14 @@ public class BalloonMove : GrimmMove
 				{
 					homingBall.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
 				}
-				homingBall.Phase2TargetOffset = new Vector2(Random.Range(-4f,4f),Random.Range(-2f,2f));
+				if (!Panel.GetSettings<IKGSettings>().Infinite)
+				{
+					homingBall.Phase2TargetOffset = new Vector2(Random.Range(-4f, 4f), Random.Range(-2f, 2f));
+				}
+				else
+				{
+					homingBall.Phase2TargetOffset = new Vector2(Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f), Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f));
+				}
 				//homingBalls.Add(homingBall);
 			}
 
