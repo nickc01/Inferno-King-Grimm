@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using WeaverCore;
 
 public class InfiniteGrimmDisplay : MonoBehaviour
 {
@@ -28,10 +29,6 @@ public class InfiniteGrimmDisplay : MonoBehaviour
 		statsObject = GetComponentInChildren<TextMeshProUGUI>();
 		UnityEngine.SceneManagement.SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
 		FadeIn();
-		/*GetComponentInChildren<Button>().onClick.AddListener(() =>
-		{
-			FadeOut();
-		});*/
 		StartCoroutine(Waiter());
 		StartCoroutine(WaitForSceneTransition());
 	}
@@ -45,8 +42,8 @@ public class InfiniteGrimmDisplay : MonoBehaviour
 	int transitions = 0;
 	IEnumerator WaitForSceneTransition()
 	{
-		yield return new WaitUntil(() => transitions >= 2);
-		FadeOut();
+		yield return new WaitUntil(() => GameManager.instance.gameState == GlobalEnums.GameState.MAIN_MENU);
+		Destroy(gameObject);
 	}
 
 	Coroutine fadeCoroutine;
@@ -58,11 +55,6 @@ public class InfiniteGrimmDisplay : MonoBehaviour
 			StopCoroutine(fadeCoroutine);
 		}
 		fadeCoroutine = StartCoroutine(FadeRoutine(0f, 0f, 1f, fadeTime));
-		/*foreach (var img in GetComponentsInChildren<Graphic>())
-		{
-			img.color = new Color(img.color.r, img.color.g, img.color.b, 0f);
-			img.CrossFadeAlpha(1f, fadeTime,true);
-		}*/
 	}
 
 	public void FadeOut()
@@ -73,11 +65,6 @@ public class InfiniteGrimmDisplay : MonoBehaviour
 		}
 		fadeCoroutine = StartCoroutine(FadeRoutine(0f, 1f, 0f, fadeTime));
 		Destroy(gameObject, fadeTime);
-		/*foreach (var img in GetComponentsInChildren<Graphic>())
-		{
-			img.CrossFadeAlpha(0f, fadeTime, true);
-		}
-		Destroy(gameObject,fadeTime);*/
 	}
 
 	IEnumerator FadeRoutine(float delay, float from, float to, float time)

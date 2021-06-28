@@ -10,7 +10,7 @@ using WeaverCore.Settings;
 
 namespace Assets.Scripts
 {
-	public class TMProTextSetter : MonoBehaviour
+	/*public class TMProTextSetter : MonoBehaviour
 	{
 		//public InfernoKingGrimm grimm;
 		TMP_Text text;
@@ -31,52 +31,79 @@ namespace Assets.Scripts
 		void SetText()
 		{
 			var settings = Panel.GetSettings<IKGSettings>();
-			if (text.text.Contains("Nightmare"))
+			if (text.text.ToLower().Contains("grimm"))
 			{
-				var replacement = "Inferno";
-				if (settings.hardMode)
+				if (text.text.Contains("Nightmare"))
 				{
-					replacement = "Absolute " + replacement;
-				}
-				/*if (InfernoKingGrimm.MainGrimm != null && InfernoKingGrimm.MainGrimm.Settings.hardMode)
-				{
-					replacement = "Absolute " + replacement;
-				}*/
-				//WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Nightmare", "Inferno"));
-				text.text = text.text.Replace("Nightmare", replacement);
-				//WeaverLog.Log("Text Color =" + text.color);
-				//WeaverLog.Log("Change 1");
-			}
-			if (text.text.Contains("Infinite"))
-			{
-				if (text.text.ToLower().Contains("god"))
-				{
-					text.text = text.text.Replace("Infinite", "");
-				}
-				else
-				{
-					var replacement = "Inferno King";
+					var replacement = "Inferno";
 					if (settings.hardMode)
 					{
 						replacement = "Absolute " + replacement;
 					}
-					//WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Infinite", "Inferno King"));
-					text.text = text.text.Replace("Infinite", replacement);
+					//WeaverLog.Log("Replacing Text = " + text.text + " with " + text.text.Replace("Nightmare", "Inferno"));
+					text.text = text.text.Replace("Nightmare", replacement);
 					//WeaverLog.Log("Text Color =" + text.color);
-					//WeaverLog.Log("Change 2");
+					//WeaverLog.Log("Change 1");
 				}
-			}
-			if (settings.hardMode)
-			{
-				if (text.color.r > 0.7f && text.color.g < 0.2f && text.color.b < 0.2f)
+
+
+
+				if (settings.Infinite)
 				{
-					text.color = new Color(text.color.b, text.color.g, text.color.r, text.color.a);
+					if (!text.text.StartsWith("Infinite"))
+					{
+						if (text.text.Contains("Infinite"))
+						{
+							if (text.text.ToLower().Contains("god"))
+							{
+								text.text = text.text.Replace("Infinite", "");
+							}
+							else
+							{
+								var replacement = "Inferno King";
+								if (settings.hardMode)
+								{
+									replacement = "Absolute " + replacement;
+								}
+								text.text = text.text.Replace("Infinite", replacement);
+							}
+						}
+						text.text = "Infinite " + text.text;
+					}
+				}
+				else
+				{
+					if (text.text.Contains("Infinite"))
+					{
+						if (text.text.ToLower().Contains("god"))
+						{
+							text.text = text.text.Replace("Infinite", "");
+						}
+						else
+						{
+							var replacement = "Inferno King";
+							if (settings.hardMode)
+							{
+								replacement = "Absolute " + replacement;
+							}
+							text.text = text.text.Replace("Infinite", replacement);
+						}
+					}
+				}
+
+				
+				if (settings.Infinite && !text.text.Contains("Infinite"))
+				{
+					text.text = "Infinite " + text.text;
+				}
+				if (settings.hardMode)
+				{
+					if (text.color.r > 0.7f && text.color.g < 0.2f && text.color.b < 0.2f)
+					{
+						text.color = new Color(text.color.b, text.color.g, text.color.r, text.color.a);
+					}
 				}
 			}
-			/*if (text != null && textToSet != null)
-			{
-				text.text = textToSet;
-			}*/
 		}
-	}
+	}*/
 }

@@ -26,12 +26,12 @@ public class SpikesMove : GrimmMove
 			if (Grimm.Settings.hardMode)
 			{
 				yield return spikeController.DoRegularAsync(0.55f);
-				yield return new WaitForSeconds(0.65f / InfernoKingGrimm.InfiniteSpeed);
+				yield return new WaitForSeconds(0.65f / InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f));
 			}
 			else
 			{
 				yield return spikeController.DoRegularAsync(0.70f);
-				yield return new WaitForSeconds(1f / InfernoKingGrimm.InfiniteSpeed);
+				yield return new WaitForSeconds(1f / InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f));
 			}
 		}
 		else

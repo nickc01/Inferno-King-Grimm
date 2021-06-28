@@ -21,6 +21,7 @@ using Modding;
 using WeaverCore.Implementations;
 using System.IO;
 using Newtonsoft.Json;
+using IKG;
 
 [RequireComponent(typeof(DamageHero))]
 public class InfernoKingGrimm : BossReplacement
@@ -149,6 +150,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	static CameraHueShift cameraHueShifter;
 	static bool sceneChangeHookUsed = false;
+	static bool languageHooksAdded = false;
 
 	[Space]
 	[Space]
@@ -304,13 +306,21 @@ public class InfernoKingGrimm : BossReplacement
 		if (mod != null)
 		{
 			var modType = mod.GetType();
+
+			var globalsType = modType.Assembly.GetType("infinitegrimm.infinite_globals");
+
+			var godModeF = globalsType.GetField("godMode");
+
+			return (bool)godModeF.GetValue(null);
+
+			/*var modType = mod.GetType();
 			var globalSettings = modType.GetProperty("GlobalSettings").GetValue(mod, null);
 
 			var gsType = globalSettings.GetType();
 
 			var godMode = gsType.GetProperty("NightmareGodGrimm").GetValue(globalSettings, null);
 
-			return (bool)godMode;
+			return (bool)godMode;*/
 		}
 		return false;
 	}
@@ -319,8 +329,13 @@ public class InfernoKingGrimm : BossReplacement
 	{
 		base.Awake();
 		MainPrefabs.Instance = prefabs;
+		if (!languageHooksAdded)
+		{
+			languageHooksAdded = true;
+			Modding.ModHooks.LanguageGetHook += InfernoGrimmMod.TentBossTitleHook;
+		}
 
-		var allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+		/*var allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
 
 
 		foreach (var obj in allObjects)
@@ -329,10 +344,10 @@ public class InfernoKingGrimm : BossReplacement
 			{
 				ChangeTitles(obj);
 			}
-		}
+		}*/
 	}
 
-	private void ChangeTitles(GameObject titleObject)
+/*	private void ChangeTitles(GameObject titleObject)
 	{
 #if !UNITY_EDITOR
 		if (titleObject != null)
@@ -348,7 +363,7 @@ public class InfernoKingGrimm : BossReplacement
 			}
 		}
 #endif
-	}
+	}*/
 
 	///Grabbed from the Infinite Grimm Mod
 	static readonly string[] LAG_OBJECTS_TO_KILL =
@@ -564,7 +579,7 @@ public class InfernoKingGrimm : BossReplacement
 		{
 			WeaverLog.Log("IKG : Infinite Mode Enabled");
 			GrimmHealth.HealthDirection = HealthDirection.Up;
-			GrimmHealth.Health = 0;
+			GrimmHealth.Health = 1;
 		}
 		else
 		{
@@ -1171,17 +1186,17 @@ public class InfernoKingGrimm : BossReplacement
 			{
 				return;
 			}
-			var display = GameObject.Instantiate(Prefabs.GrimmDisplayPrefab, WeaverCanvas.SceneContent);
+			var display = GameObject.Instantiate(Prefabs.GrimmDisplayPrefab, WeaverCanvas.Content);
 
-			string bossName = "";
+			string bossName = "Infinite ";
 
 			if (Settings.hardMode)
 			{
-				bossName = "Absolute Inferno ";
+				bossName += "Absolute Inferno ";
 			}
 			else
 			{
-				bossName = "Inferno ";
+				bossName += "Inferno ";
 			}
 
 			if (GodMode)
@@ -1196,9 +1211,11 @@ public class InfernoKingGrimm : BossReplacement
 
 			string title = bossName;
 
+			var score = GrimmHealth.Health - 1;
+
 			title += Environment.NewLine + Environment.NewLine;
 
-			title += "Score: " + GrimmHealth.Health;
+			title += "Score: " + score;
 
 			var ikgLocation = new FileInfo(typeof(InfernoKingGrimm).Assembly.Location).Directory;
 
@@ -1226,7 +1243,7 @@ public class InfernoKingGrimm : BossReplacement
 				records = new InfiniteGrimmRecords();
 			}
 
-			if (!records.Records.Any(r => r.Score >= GrimmHealth.Health))
+			if (!records.Records.Any(r => r.Score >= score && r.BossName == bossName))
 			{
 				title += Environment.NewLine + Environment.NewLine;
 
@@ -1239,7 +1256,7 @@ public class InfernoKingGrimm : BossReplacement
 			{
 				BossName = bossName,
 				Date = DateTime.Now.ToString(),
-				Score = GrimmHealth.Health
+				Score = score
 			});
 
 			File.WriteAllText(recordsPath, JsonConvert.SerializeObject(records,Formatting.Indented));

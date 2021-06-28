@@ -44,7 +44,7 @@ public class GrimmHealth : EntityHealth
 		if (infinite)
 		{
 			InfernoKingGrimm.InfiniteSpeed = 1f + (newHealth / InfernoKingGrimm.DoublingRatio);
-			GeoCounter.Instance.GeoText = newHealth.ToString();
+			GeoCounter.Instance.GeoText = (newHealth - 1).ToString();
 		}
 	}
 }

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Enums;
+using WeaverCore.Settings;
 using WeaverCore.Utilities;
 using Random = UnityEngine.Random;
 
@@ -63,6 +65,10 @@ public class SpikesController : MonoBehaviour
 		Spikes = GetComponentsInChildren<GrimmSpike>(true);
 		//GetComponentsInChildren(true, Spikes);
 		AllSpikes = GetComponentsInChildren<GrimmSpike>().ToList();
+		if (!Panel.GetSettings<IKGSettings>().Infinite)
+		{
+			AllSpikes.RemoveAll(s => s.name.Contains("Infinite"));
+		}
 		AllSpikes.Sort(new SpikeSorter());
 	}
 
