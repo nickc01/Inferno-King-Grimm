@@ -10,6 +10,9 @@ namespace IKG
 {
 	public class InfernoGrimmMod : WeaverMod
 	{
+		public InfernoGrimmMod() : base("Inferno King Grimm") { }
+
+
 		public override void Initialize()
 		{
 			base.Initialize();
@@ -27,7 +30,7 @@ namespace IKG
 			HooksAdded = true;
 		}*/
 
-		internal static bool TentBossTitleHook(string key, string sheetTitle, string orig, string current, out string res)
+		internal static string TentBossTitleHook(string key, string sheetTitle, string res)
 		{
 			var settings = Panel.GetSettings<IKGSettings>();
 			if (key == "NIGHTMARE_GRIMM_SUPER")
@@ -50,7 +53,7 @@ namespace IKG
 					}
 					
 				}
-				return true;
+				return res;
 			}
 			else if (key == "NIGHTMARE_GRIMM_MAIN")
 			{
@@ -62,13 +65,12 @@ namespace IKG
 				{
 					res = "Grimm";
 				}
-				return true;
+				return res;
 			}
-			res = "";
-			return false;
+			return res;
 		}
 
-		internal static bool GodhomeLanguageHook(string key, string sheetTitle, string orig, string current, out string res)
+		internal static string GodhomeLanguageHook(string key, string sheetTitle, string res)
 		{
 			if (key == "NAME_NIGHTMARE_GRIMM")
 			{
@@ -81,20 +83,17 @@ namespace IKG
 				if (settings.hardMode)
 				{
 					title += "Absolute Inferno King Grimm";
-					res = title;
-					return true;
+					return title;
 				}
 				else
 				{
 					title += "Inferno King Grimm";
-					res = title;
-					return true;
+					return title;
 				}
 			}
 			else
 			{
-				res = "";
-				return false;
+				return res;
 			}
 		}
 

@@ -59,7 +59,7 @@ public class SpikesController : MonoBehaviour
 		}
 	}
 
-	void Awake()
+	void Start()
 	{
 		//Debugger.Log("Awake");
 		Spikes = GetComponentsInChildren<GrimmSpike>(true);

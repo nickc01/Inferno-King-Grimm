@@ -13,7 +13,7 @@ namespace Assets.Scripts
 	public class IKGSettings : Panel
 	{
 		[Tooltip("Checking this will make the boss fight considerably harder</br:2>For those who want a bigger challenge")]
-		[SettingField(EnabledType.MenuOnly)]
+		[SettingField(EnabledType.Both)]
 		[SettingOrder(0)]
 		public bool hardMode = false;
 
@@ -22,7 +22,7 @@ namespace Assets.Scripts
 		[SettingField(EnabledType.Never)]
 		bool enableCustomHealth = false;
 
-		[SettingField(EnabledType.MenuOnly)]
+		[SettingField(EnabledType.Both)]
 		[SettingOrder(1)]
 		public bool EnableCustomHealth
 		{
@@ -35,15 +35,15 @@ namespace Assets.Scripts
 				if (enableCustomHealth != value)
 				{
 					enableCustomHealth = value;
-					if (!InPauseMenu)
-					{
+					//if (!InFight)
+					//{
 						var healthElement = GetElement("CustomHealthValue");
-						healthElement.Visible = enableCustomHealth;
+						healthElement.Visible = !InFight && enableCustomHealth;
 						if (enableCustomHealth)
 						{
 							healthElement.Order = GetElement("EnableCustomHealth").Order + 1;
 						}
-					}
+					//}
 				}
 			}
 		}
@@ -67,7 +67,7 @@ namespace Assets.Scripts
 		[SerializeField]
 		[SettingField(EnabledType.Never)]
 		bool _infinite = false;
-		[SettingField(EnabledType.MenuOnly)]
+		[SettingField(EnabledType.Both)]
 		[SettingDescription("If set to true, the boss will be infinite, and will get harder the longer you play.</br:2> When you die, your score will be displayed, and stored to a file in the Mods Directory")]
 		[SettingOrder(5)]
 		public bool Infinite
@@ -112,7 +112,7 @@ namespace Assets.Scripts
 
 		[Header("God Mode")]
 		[Tooltip("If set to true, Inferno God Grimm will have 1.75x health than Inferno King Grimm")]
-		[SettingField(EnabledType.MenuOnly)]
+		[SettingField(EnabledType.Both)]
 		[SettingOrder(8)]
 		public bool IncreasedGodModeHealth = true;
 
@@ -124,19 +124,20 @@ namespace Assets.Scripts
 			}
 		}
 
+		static bool InFight => InfernoKingGrimm.GrimmsFighting.Count > 0;
+
 		protected override void OnPanelOpen()
 		{
 			UpdateInfiniteState();
-			var healthElement = GetElement("CustomHealthValue");
-			if (!InPauseMenu)
-			{
-				healthElement.Visible = enableCustomHealth;
-				healthElement.Order = GetElement("EnableCustomHealth").Order + 1;
-			}
-			else
-			{
-				healthElement.Visible = false;
-			}
+			var healthElement = GetElement(nameof(CustomHealthValue));
+			//var enableHealthElement = GetElement(nameof(EnableCustomHealth));
+			//healthElement.Visible = !InFight && enableCustomHealth;
+			healthElement.Order = GetElement(nameof(EnableCustomHealth)).Order + 1;
+
+			GetElement(nameof(hardMode)).Visible = !InFight;
+			//GetElement(nameof(EnableCustomHealth)).Visible = !InFight;
+			GetElement(nameof(Infinite)).Visible = !InFight;
+			//GetElement(nameof(IncreasedGodModeHealth)).Visible = !InFight && !Infinite;
 		}
 
 		protected override void OnRegister()
@@ -154,28 +155,31 @@ namespace Assets.Scripts
 
 		void UpdateInfiniteState()
 		{
-			if (!InPauseMenu)
-			{
-				var increasedHealthElement = GetElement(nameof(IncreasedGodModeHealth));
-				increasedHealthElement.Visible = !Infinite;
+			//if (!InFight)
+			//{
+			var increasedHealthElement = GetElement(nameof(IncreasedGodModeHealth));
+			increasedHealthElement.Visible = !InFight && !Infinite;
 
-				var enableCustomHealthElement = GetElement(nameof(EnableCustomHealth));
-				enableCustomHealthElement.Visible = !Infinite;
-			}
+			var enableCustomHealthElement = GetElement(nameof(EnableCustomHealth));
+			enableCustomHealthElement.Visible = !InFight && !Infinite;
 
 			var pufferFishDifficultyElement = GetElement(nameof(PufferFishDifficulty));
-			pufferFishDifficultyElement.Visible = !Infinite;
+			pufferFishDifficultyElement.Visible = !InFight && !Infinite;
 
-			var healthValueElement = GetElement("CustomHealthValue");
+			//var healthValueElement = GetElement("CustomHealthValue");
+			GetElement(nameof(CustomHealthValue)).Visible = !InFight && !Infinite && EnableCustomHealth;
+			//}
 
-			if (Infinite)
+
+
+			/*if (Infinite)
 			{
 				healthValueElement.Visible = false;
 			}
 			else
 			{
 				healthValueElement.Visible = EnableCustomHealth;
-			}
+			}*/
 		}
 
 		static void UpdateBlueState()
