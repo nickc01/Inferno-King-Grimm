@@ -146,11 +146,11 @@ public class AirDashMove : GrimmMove
 
 		//Debugger.Log("B");
 
-		transform.position = new Vector3(teleX, 15f, 0f);
+		//transform.position = ;
 
-		Grimm.FacePlayer();
+		Grimm.FacePlayer(new Vector3(teleX, 15f, 0f));
 
-		yield return Grimm.TeleportIn();
+		yield return Grimm.TeleportIn(new Vector3(teleX, 15f, 0f));
 
 		//Debugger.Log("Angle To Player = " + transform.position.GetAngleBetween(Player.Player1.transform.position));
 
@@ -162,7 +162,7 @@ public class AirDashMove : GrimmMove
 
 		//VoicePlayer.Play();
 
-		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed;
+		GrimmAnimator.speed = InfernoKingGrimm.GetInfiniteSpeed(1f,1.7f);
 		yield return GrimmAnimator.PlayAnimationTillDone("Air Dash Antic");
 		GrimmAnimator.speed = 1f;
 
@@ -334,7 +334,7 @@ public class AirDashMove : GrimmMove
 	{
 		yield return GroundPoundTeleIn(0f);
 
-		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed;
+		GrimmAnimator.speed = InfernoKingGrimm.GetInfiniteSpeed(1f, 1.5f);
 		yield return GrimmAnimator.PlayAnimationTillDone("Air Dash Antic");
 		GrimmAnimator.speed = 1f;
 
@@ -551,13 +551,14 @@ public class AirDashMove : GrimmMove
 
 		if (Invisible)
 		{
-			transform.position = newPosition;
-			Grimm.FacePlayer();
-			yield return Grimm.TeleportIn();
+			//transform.position = newPosition;
+			Grimm.FacePlayer(newPosition);
+			yield return Grimm.TeleportIn(newPosition);
 		}
 		else
 		{
 			float time = Teleporter.TeleportEntity(gameObject, newPosition, Teleporter.TeleType.Delayed, Color.red);
+			Grimm.GrimmCollider.enabled = true;
 
 			yield return new WaitForSeconds(time / 2f);
 			Grimm.FacePlayer(newPosition);

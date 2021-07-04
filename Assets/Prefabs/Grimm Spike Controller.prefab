@@ -4840,6 +4840,7 @@ MonoBehaviour:
   SpikesPrepare: {fileID: 8300000, guid: e4c254000bd9c924abd85c76cc905e46, type: 3}
   SpikesUp: {fileID: 8300000, guid: b54e8a4bb2560b5428ce704248c7e3aa, type: 3}
   SpikesDown: {fileID: 8300000, guid: 711988b0c612c2f4c859ff2c969c98f8, type: 3}
+  spikeSpeedCap: 2.25
   AllSpikes: []
 --- !u!1 &1831988980878832
 GameObject:

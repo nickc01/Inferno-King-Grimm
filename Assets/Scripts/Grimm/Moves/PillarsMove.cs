@@ -65,19 +65,19 @@ public class PillarsMove : GrimmMove
 			}
 			yield return null;
 		}
-
+		Vector3 newPosition = transform.position;
 		if (Grimm.BossStage >= 2)
 		{
-			transform.position = new Vector3(teleX, 13.6f, 0f);
+			newPosition = new Vector3(teleX, 13.6f, 0f);
 		}
 		else
 		{
-			transform.position = new Vector3(teleX, 13.1f, 0f);
+			newPosition = new Vector3(teleX, 13.1f, 0f);
 		}
 
-		Grimm.FacePlayer();
+		Grimm.FacePlayer(newPosition);
 
-		yield return Grimm.TeleportIn();
+		yield return Grimm.TeleportIn(newPosition);
 
 		GrimmAnimator.PlayAnimation("Pillar Idle");
 
@@ -126,7 +126,7 @@ public class PillarsMove : GrimmMove
 
 			if (i == 2 && Grimm.BossStage >= 3)
 			{
-				var newPosition = new Vector3(Grimm.RightEdge - (transform.position.x - Grimm.LeftEdge), transform.position.y, transform.position.z);
+				newPosition = new Vector3(Grimm.RightEdge - (transform.position.x - Grimm.LeftEdge), transform.position.y, transform.position.z);
 
 				if (Vector3.Distance(newPosition, Player.Player1.transform.position) <= 7f)
 				{
@@ -151,7 +151,7 @@ public class PillarsMove : GrimmMove
 		//}
 
 
-		yield return new WaitForSeconds(0.25f / InfernoKingGrimm.InfiniteSpeed);
+		yield return new WaitForSeconds(0.25f / InfernoKingGrimm.GetInfiniteSpeed(1f,1.75f));
 		yield return Grimm.TeleportOut();
 		if (Grimm.BossStage >= 2)
 		{

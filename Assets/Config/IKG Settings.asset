@@ -18,5 +18,6 @@ MonoBehaviour:
   DisableColorEffects: 0
   PufferFishDifficulty: 0
   _infinite: 0
+  PerformanceMode: 0
   blueMode: 0
   IncreasedGodModeHealth: 1

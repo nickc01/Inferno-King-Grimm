@@ -110,26 +110,29 @@ public class CapeBurstMove : GrimmMove
 		{
 			yield break;
 		}
-		transform.position = transform.position.With(x: spawnPosition.x, y: spawnPosition.y);
+		//transform.position = transform.position.With(x: spawnPosition.x, y: spawnPosition.y);
+		var newPosition = transform.position.With(x: spawnPosition.x, y: spawnPosition.y);
 
-		while (Vector3.Distance(transform.position, Player.Player1.transform.position) < 6f)
+		/*while (Vector3.Distance(newPosition, Player.Player1.transform.position) < 6f)
 		{
 			yield return null;
-		}
+		}*/
 
-		Grimm.FacePlayer();
+		Grimm.FacePlayer(newPosition);
 
-		yield return Grimm.TeleportIn(true,"Cape Teleport In");
+		yield return Grimm.TeleportIn(newPosition, true,"Cape Teleport In");
 
 		//yield return GrimmAnimator.PlayAnimation("Cape Prepare");
 		GrimmAnimator.PlayAnimation("Cape Prepare");
 
 		yield return new WaitForSeconds(anticTime / InfernoKingGrimm.InfiniteSpeed);
 
-		//GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed * 2f;
+		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed / 2f;
 		yield return GrimmAnimator.PlayAnimationTillDone("Cape Open");
 
 		jitterRoutine = StartCoroutine(TransformUtilities.JitterObject(gameObject, JitterAmount, jitterFPS));
+
+		GrimmAnimator.speed = 1f;
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Cape Open Finish");
 
@@ -172,12 +175,12 @@ public class CapeBurstMove : GrimmMove
 		for (float i = 0; i < amountOfShots; i++)
 		{
 			var pitch = Mathf.Lerp(pitchLow, pitchHigh, i / (amountOfShots - 1));
-			SpawnHomingBall(VectorUtilities.GetAngleBetween(transform.position, Player.Player1.transform.position), homingBallVelocity * InfernoKingGrimm.MultipliedInfiniteSpeed(1f / 2f), homingBallRotationSpeed,true, pitch);
+			SpawnHomingBall(VectorUtilities.GetAngleBetween(transform.position, Player.Player1.transform.position), homingBallVelocity * InfernoKingGrimm.GetInfiniteSpeed(1f / 3f,2.0f), homingBallRotationSpeed,true, pitch);
 			//Debug.Log("Time Between Shots = " + timeBetweenShots);
 			//Debug.Log("Speed = " + InfernoKingGrimm.InfiniteSpeed);
 			//Debug.Log("Infinite Speed Divided = " + (InfernoKingGrimm.InfiniteSpeed / 2.5f));
 			//Debug.Log("Wait Time = " + (timeBetweenShots / (InfernoKingGrimm.InfiniteSpeed / 2.5f)));
-			yield return new WaitForSeconds(timeBetweenShots / InfernoKingGrimm.MultipliedInfiniteSpeed(1f / 2.5f));
+			yield return new WaitForSeconds(timeBetweenShots/* / InfernoKingGrimm.GetInfiniteSpeed(1f / 2.5f)*/);
 		}
 	}
 
@@ -259,7 +262,7 @@ public class CapeBurstMove : GrimmMove
 				}
 			}*/
 
-			float speed = InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f);//InfernoKingGrimm.InfiniteSpeed / 2.5f;
+			float speed = InfernoKingGrimm.GetInfiniteSpeed(0.5f,1.35f);//InfernoKingGrimm.InfiniteSpeed / 2.5f;
 
 			for (int j = 0; j < trueAmountOfShots; j++)
 			{

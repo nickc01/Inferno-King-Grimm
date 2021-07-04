@@ -47,9 +47,14 @@ public class InfernoKingGrimm : BossReplacement
 	/// </summary>
 	public static float InfiniteSpeed = 1.0f;
 
-	public static float MultipliedInfiniteSpeed(float multiplier)
+	/*public static float GetInfiniteSpeed(float multiplier)
 	{
 		return ((InfiniteSpeed - 1f) * multiplier) + 1f;
+	}*/
+
+	public static float GetInfiniteSpeed(float multiplier = 1f,float cap = float.PositiveInfinity)
+	{
+		return Mathf.Clamp(((InfiniteSpeed - 1f) * multiplier) + 1f,0f,cap);
 	}
 
 	/// <summary>
@@ -532,7 +537,7 @@ public class InfernoKingGrimm : BossReplacement
 		}
 		else
 		{
-			if (Settings.Infinite)
+			if (Settings.Infinite || GodMode)
 			{
 				GrimmHealth.Health = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
 			}
@@ -892,10 +897,24 @@ public class InfernoKingGrimm : BossReplacement
 		}
 	}
 
-	public IEnumerator TeleportIn(bool playSound = true, string animationName = "Tele In")
+	public IEnumerator TeleportIn(Vector3 position, bool playSound = true, string animationName = "Tele In", bool forceNormal = false)
 	{
+		if (InfiniteSpeed >= 2f && forceNormal == false)
+		{
+
+			Teleporter.TeleportEntity(gameObject, position, Teleporter.TeleType.Delayed, Color.red);
+			yield return new WaitForSeconds(0.05f);
+			if (Invisible)
+			{
+				Invisible = false;
+			}
+			GrimmCollider.enabled = true;
+			yield return new WaitForSeconds(0.1f);
+			yield break;
+		}
 		if (Invisible)
 		{
+			transform.position = position;
 			if (playSound)
 			{
 				WeaverAudio.PlayAtPoint(Sounds.GrimmTeleportIn, transform.position, 1.0f, AudioChannel.Sound);
@@ -914,10 +933,19 @@ public class InfernoKingGrimm : BossReplacement
 			GrimmCollider.enabled = true;
 			Invisible = false;
 		}
+		else
+		{
+			transform.position = position;
+		}
 	}
 
-	public IEnumerator TeleportOut(bool playSound = true, string animationName = "Tele Out")
+	public IEnumerator TeleportOut(bool playSound = true, string animationName = "Tele Out", bool forceNormal = false)
 	{
+		if (InfiniteSpeed >= 2f && forceNormal == false)
+		{
+			GrimmCollider.enabled = false;
+			yield break;
+		}
 		if (!invisible)
 		{
 			if (playSound)
@@ -1180,6 +1208,10 @@ public class InfernoKingGrimm : BossReplacement
 	void OnDestroy()
 	{
 		GrimmsFighting.Remove(this);
+		if (WeaverCore.Initialization.Environment == RunningState.Editor)
+		{
+			return;
+		}
 		if (Settings.Infinite)
 		{
 			if (GameObject.FindObjectOfType<InfiniteGrimmDisplay>() != null)

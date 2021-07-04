@@ -41,6 +41,8 @@ public class GrimmSpike : MonoBehaviour {
 
 		renderer.enabled = false;
 		collider.enabled = false;
+
+		OriginalPosition = transform.localPosition;
 	}
 	
 	// Update is called once per frame
@@ -49,8 +51,40 @@ public class GrimmSpike : MonoBehaviour {
 		
 	}
 
-	public void PrepareForAttack(float preparationTime)
+	/// <summary>
+	/// The original starting location for the spike, in local coordinates
+	/// </summary>
+	public Vector3 OriginalPosition { get; private set; }
+
+	//Vector3? originalPosition = null;
+	Coroutine currentRoutine = null;
+
+	Coroutine DoRoutine(IEnumerator routine)
 	{
+		if (currentRoutine != null)
+		{
+			StopCoroutine(currentRoutine);
+			currentRoutine = null;
+		}
+		currentRoutine = StartCoroutine(routine);
+		return currentRoutine;
+	}
+
+	public void PrepareForAttack(Vector3 targetPosition, float preparationTime)
+	{
+		/*if (originalPosition != null)
+		{
+			transform.localPosition = originalPosition.Value;
+		}*/
+		//originalPosition = transform.localPosition;
+		transform.localPosition = targetPosition;
+		if (currentRoutine != null)
+		{
+			StopCoroutine(currentRoutine);
+			currentRoutine = null;
+		}
+		collider.enabled = false;
+		spikesRising = false;
 		inRange = transform.localPosition.x >= leftEdge && transform.localPosition.x <= rightEdge;
 		renderer.enabled = inRange;
 		if (inRange)
@@ -82,6 +116,7 @@ public class GrimmSpike : MonoBehaviour {
 		spikesRising = false;
 		collider.enabled = true;
 		yield return PlayAnimationTillDone("Spike Up");
+		currentRoutine = null;
 	}
 
 	public void RaiseSpikes(float raiseTime)
@@ -90,7 +125,7 @@ public class GrimmSpike : MonoBehaviour {
 		{
 			return;
 		}
-		StartCoroutine(RaiseSpikesRoutine(raiseTime));
+		DoRoutine(RaiseSpikesRoutine(raiseTime));
 
 	}
 
@@ -103,6 +138,7 @@ public class GrimmSpike : MonoBehaviour {
 		{
 			transform.SetXLocalPosition(originalLocalX);
 		}
+		currentRoutine = null;
 	}
 
 	IEnumerator SpikesCancelRoutine(bool resetLocalX, float originalLocalX)
@@ -114,6 +150,7 @@ public class GrimmSpike : MonoBehaviour {
 		{
 			transform.SetXLocalPosition(originalLocalX);
 		}
+		currentRoutine = null;
 	}
 
 	public void LowerSpikes(bool resetLocalX, float originalLocalX)
@@ -125,11 +162,11 @@ public class GrimmSpike : MonoBehaviour {
 		if (spikesRising)
 		{
 			StopAllCoroutines();
-			StartCoroutine(SpikesCancelRoutine(resetLocalX, originalLocalX));
+			DoRoutine(SpikesCancelRoutine(resetLocalX, originalLocalX));
 		}
 		else
 		{
-			StartCoroutine(LowerSpikesRoutine(resetLocalX, originalLocalX));
+			DoRoutine(LowerSpikesRoutine(resetLocalX, originalLocalX));
 		}
 	}
 

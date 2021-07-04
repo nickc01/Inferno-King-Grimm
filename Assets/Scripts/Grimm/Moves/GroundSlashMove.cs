@@ -75,11 +75,9 @@ public class GroundSlashMove : GrimmMove
 			}
 		}
 
-		transform.position = new Vector3(teleX, Grimm.GroundY, 0f);
+		Grimm.FacePlayer(new Vector3(teleX, Grimm.GroundY, 0f));
 
-		Grimm.FacePlayer();
-
-		yield return Grimm.TeleportIn();
+		yield return Grimm.TeleportIn(new Vector3(teleX, Grimm.GroundY, 0f));
 
 		var raycastDirection = FaceDirection == GrimmDirection.Right ? Vector2.right : Vector2.left;
 
@@ -218,11 +216,11 @@ public class GroundSlashMove : GrimmMove
 		var playerPositionOld = Player.Player1.transform.position.x;
 
 
-		yield return new WaitForSeconds(0.5f / InfernoKingGrimm.InfiniteSpeed);
+		yield return new WaitForSeconds(0.5f / InfernoKingGrimm.GetInfiniteSpeed(1f,1.6f));
 
 		if (Grimm.Settings.hardMode && (Grimm.BossStage == 2 || (Grimm.BossStage == 3 && Grimm.Settings.Infinite)))
 		{
-			yield return new WaitForSeconds(extraWaitTime / InfernoKingGrimm.InfiniteSpeed);
+			yield return new WaitForSeconds(extraWaitTime / InfernoKingGrimm.GetInfiniteSpeed(1f, 2.0f));
 		}
 
 		if (Grimm.Settings.hardMode)
@@ -432,19 +430,21 @@ public class GroundSlashMove : GrimmMove
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Evade End");
 
-		if (Mathf.Abs(transform.position.x - Player.Player1.transform.position.x) > 7f)
+		/*if (Mathf.Abs(transform.position.x - Player.Player1.transform.position.x) > 7f)
 		{
-			continueToSlash = false;
-			yield return GetComponent<FireBatMove>().DoMove();
-		}
+			
+		}*/
+		continueToSlash = false;
+		WeaverLog.Log("DOING BATS");
+		yield return GetComponent<FireBatMove>().DoMove(false);
 	}
 
 	public IEnumerator UpperCut(bool playVoice = true)
 	{
 		if (Invisible)
 		{
-			Grimm.FacePlayer();
-			yield return Grimm.TeleportIn();
+			Grimm.FacePlayer(transform.position);
+			yield return Grimm.TeleportIn(transform.position);
 		}
 		Grimm.Velocity = Vector2.zero;
 

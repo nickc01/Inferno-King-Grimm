@@ -17,6 +17,8 @@ public class BalloonMove : GrimmMove
 	[SerializeField]
 	Vector2 balloonPosition = new Vector2(85.77f,13.5f);
 
+	public Vector2 BalloonPosition => balloonPosition;
+
 	//[SerializeField]
 	//float ballSpawnRate = 0.2f;
 
@@ -111,12 +113,13 @@ public class BalloonMove : GrimmMove
 
 		//Debug.Log("Doing Balloon Move for grimm " + InfernoKingGrimm.GrimmsFighting.IndexOf(Grimm));
 
-		transform.position = transform.position.With(x: balloonPosition.x, y: balloonPosition.y);
+		var newPosition = transform.position.With(x: balloonPosition.x, y: balloonPosition.y);
 		if (InfernoKingGrimm.GodMode)
 		{
 			if (InfernoKingGrimm.MainGrimm == Grimm)
 			{
-				transform.SetXPosition(balloonPosition.x - godModeSpacing);
+				//transform.SetXPosition(balloonPosition.x - godModeSpacing);
+				newPosition.x = (balloonPosition.x - godModeSpacing);
 				foreach (var grimm in InfernoKingGrimm.GrimmsFighting)
 				{
 					//Debug.Log("Grimm Number = " + InfernoKingGrimm.GrimmsFighting.IndexOf(grimm));
@@ -133,18 +136,21 @@ public class BalloonMove : GrimmMove
 			}
 			else
 			{
-				transform.SetXPosition(balloonPosition.x + godModeSpacing);
+				//transform.SetXPosition(balloonPosition.x + godModeSpacing);
+				newPosition.x = (balloonPosition.x + godModeSpacing);
 			}
 		}
-
-		while (Vector3.Distance(transform.position, Player.Player1.transform.position) < 6f)
+		/*if (!Grimm.Settings.Infinite)
 		{
-			yield return null;
-		}
+			while (Vector3.Distance(newPosition, Player.Player1.transform.position) < 6f)
+			{
+				yield return null;
+			}
+		}*/
 
-		Grimm.FacePlayer();
+		Grimm.FacePlayer(newPosition);
 
-		yield return Grimm.TeleportIn();
+		yield return Grimm.TeleportIn(newPosition);
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Balloon Antic");
 		//TODO - BROADCAST THE CROWD GASP EVENT
@@ -180,6 +186,9 @@ public class BalloonMove : GrimmMove
 		BalloonParticles.Play();
 
 		var attackTime = homingAttackTime + (homingAttackTimeIncrement * (Grimm.BossStage - 1));
+
+		attackTime /= InfernoKingGrimm.GetInfiniteSpeed(0.5f,1.5f);
+
 		//var spawnRate = ballSpawnRate - (homingSpawnRateIncrement * (Grimm.BossStage - 1));
 		float spawnRate = 0f;
 
@@ -320,7 +329,7 @@ public class BalloonMove : GrimmMove
 				}
 				else
 				{
-					homingBall.Phase2TargetOffset = new Vector2(Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f), Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.MultipliedInfiniteSpeed(0.5f));
+					homingBall.Phase2TargetOffset = new Vector2(Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.GetInfiniteSpeed(0.5f), Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.GetInfiniteSpeed(0.5f));
 				}
 				//homingBalls.Add(homingBall);
 			}
@@ -361,7 +370,7 @@ public class BalloonMove : GrimmMove
 
 		WeaverAudio.PlayAtPoint(Sounds.DeflateSoundEffect, transform.position);
 
-		yield return Grimm.TeleportOut();
+		yield return Grimm.TeleportOut(forceNormal: true);
 
 		healthManager.Invincible = false;
 
