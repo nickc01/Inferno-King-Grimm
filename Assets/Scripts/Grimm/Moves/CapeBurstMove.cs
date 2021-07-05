@@ -127,7 +127,7 @@ public class CapeBurstMove : GrimmMove
 
 		yield return new WaitForSeconds(anticTime / InfernoKingGrimm.InfiniteSpeed);
 
-		GrimmAnimator.speed = InfernoKingGrimm.InfiniteSpeed / 2f;
+		GrimmAnimator.speed = InfernoKingGrimm.GetInfiniteSpeed(0.5f);//InfernoKingGrimm.InfiniteSpeed / 2f;
 		yield return GrimmAnimator.PlayAnimationTillDone("Cape Open");
 
 		jitterRoutine = StartCoroutine(TransformUtilities.JitterObject(gameObject, JitterAmount, jitterFPS));
