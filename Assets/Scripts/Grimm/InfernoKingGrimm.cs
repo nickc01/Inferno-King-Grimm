@@ -903,7 +903,14 @@ public class InfernoKingGrimm : BossReplacement
 		{
 
 			Teleporter.TeleportEntity(gameObject, position, Teleporter.TeleType.Delayed, Color.red);
-			yield return new WaitForSeconds(0.05f);
+			if (transform.position != position)
+			{
+				yield return new WaitUntil(() => transform.position == position);
+			}
+			else
+			{
+				yield return new WaitForSeconds(0.05f);
+			}
 			if (Invisible)
 			{
 				Invisible = false;
