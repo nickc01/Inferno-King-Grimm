@@ -341,7 +341,7 @@ public class FireBatMove : GrimmMove
 				}
 				else
 				{
-					var ball = HomingBall.Fire(Grimm, spawnPoint, Random.Range(homingBallAngleRange.x, homingBallAngleRange.y), Random.Range(homingBallSpawnVelocityRange.x, homingBallSpawnVelocityRange.y) * InfernoKingGrimm.GetInfiniteSpeed(1f,1.4f), homingBallRotationSpeed, false);
+					var ball = HomingBall.Fire(Grimm, spawnPoint, Random.Range(Grimm.CurrentCycle >= 1 ? 15 : homingBallAngleRange.x, homingBallAngleRange.y), Random.Range(homingBallSpawnVelocityRange.x, homingBallSpawnVelocityRange.y) * InfernoKingGrimm.GetInfiniteSpeed(1f,1.4f), homingBallRotationSpeed, false);
 					ball.Phase1Time /= InfernoKingGrimm.GetInfiniteSpeed(2.0f,1.4f * 2f);
 					ball.Phase2Velocity = homingBallVelocity * InfernoKingGrimm.GetInfiniteSpeed(2.0f,1.4f * 2f);
 					var fireAudio = WeaverAudio.PlayAtPoint(Grimm.Sounds.GrimmBatFire, Grimm.transform.position, HomingBallVolume, AudioChannel.Sound);

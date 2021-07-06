@@ -70,7 +70,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SatShift: 0
-    - _ShiftPercentage: 0.310024
+    - _ShiftPercentage: 0.120769
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
