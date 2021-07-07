@@ -435,7 +435,6 @@ public class GroundSlashMove : GrimmMove
 			
 		}*/
 		continueToSlash = false;
-		WeaverLog.Log("DOING BATS");
 		yield return GetComponent<FireBatMove>().DoMove(false);
 	}
 
