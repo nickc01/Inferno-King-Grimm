@@ -323,7 +323,7 @@ public class BalloonMove : GrimmMove
 				{
 					homingBall.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
 				}
-				if (!Panel.GetSettings<IKGSettings>().Infinite)
+				if (!GlobalSettings.GetSettings<IKGSettings>().Infinite)
 				{
 					homingBall.Phase2TargetOffset = new Vector2(Random.Range(-4f, 4f), Random.Range(-2f, 2f));
 				}

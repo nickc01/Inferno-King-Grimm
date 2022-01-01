@@ -531,28 +531,30 @@ public class InfernoKingGrimm : BossReplacement
 		spriteRenderer.enabled = false;
 		GrimmCollider.enabled = false;
 
+		int grimmHealth = 0;
+
 		if (Settings.EnableCustomHealth && !Settings.Infinite)
 		{
-			GrimmHealth.Health = Settings.CustomHealthValue;
+			grimmHealth = Settings.CustomHealthValue;
 		}
 		else
 		{
 			if (Settings.Infinite || GodMode)
 			{
-				GrimmHealth.Health = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
+				grimmHealth = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
 			}
 			else
 			{
 				switch (Difficulty)
 				{
 					case BossDifficulty.Attuned:
-						GrimmHealth.Health = Settings.hardMode ? hardAttunedHealth : easyAttunedHealth;
+						grimmHealth = Settings.hardMode ? hardAttunedHealth : easyAttunedHealth;
 						break;
 					case BossDifficulty.Ascended:
-						GrimmHealth.Health = Settings.hardMode ? hardAscendedHealth : easyAscendedHealth;
+						grimmHealth = Settings.hardMode ? hardAscendedHealth : easyAscendedHealth;
 						break;
 					case BossDifficulty.Radiant:
-						GrimmHealth.Health = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
+						grimmHealth = Settings.hardMode ? hardRadiantHealth : easyRadiantHealth;
 						break;
 				}
 			}
@@ -572,23 +574,23 @@ public class InfernoKingGrimm : BossReplacement
 			WeaverLog.Log("IKG : God Mode Enabled. Good luck");
 			if (Settings.IncreasedGodModeHealth || Settings.Infinite)
 			{
-				GrimmHealth.Health = Mathf.RoundToInt(GrimmHealth.Health * 1.75f);
+				grimmHealth = Mathf.RoundToInt(grimmHealth * 1.75f);
 			}
 		}
 
-		CycleAmount = GrimmHealth.Health;
+		CycleAmount = grimmHealth;
 		InfiniteSpeed = 1f;
 		DoublingRatio = CycleAmount * 5f;
 
 		if (Settings.Infinite)
 		{
 			WeaverLog.Log("IKG : Infinite Mode Enabled");
-			GrimmHealth.HealthDirection = HealthDirection.Up;
-			GrimmHealth.Health = 1;
+			//GrimmHealth.HealthDirection = HealthDirection.Up;
+			grimmHealth = 1;
 		}
 		else
 		{
-			WeaverLog.Log("IKG : Health = " + GrimmHealth.Health);
+			WeaverLog.Log("IKG : Health = " + grimmHealth);
 		}
 
 		WeaverLog.Log("IKG : Difficulty = " + Difficulty);
@@ -599,7 +601,12 @@ public class InfernoKingGrimm : BossReplacement
 		}*/
 		MaxHealth = CycleAmount;
 		CurrentCycle = -1;
+		GrimmHealth.SetHealthRaw(grimmHealth);
 
+		if (Settings.Infinite)
+		{
+			Health.AddModifier<InfiniteHealthModifier>();
+		}
 
 		var quarterHealth = CycleAmount / 4;
 		var thirdHealth = CycleAmount / 3;
@@ -1049,7 +1056,7 @@ public class InfernoKingGrimm : BossReplacement
 		GrimmRigidbody.velocity = Vector2.zero;
 		GrimmRigidbody.Sleep();
 
-		CurrentMove.OnStun();
+		//CurrentMove.OnStun();
 
 		//TODO - Make Camera Shake
 

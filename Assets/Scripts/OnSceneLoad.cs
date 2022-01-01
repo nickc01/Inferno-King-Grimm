@@ -6,7 +6,6 @@ using System.Text;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Attributes;
-using WeaverCore.GodsOfGlory;
 using WeaverCore.Interfaces;
 using WeaverCore.Settings;
 using WeaverCore.Utilities;

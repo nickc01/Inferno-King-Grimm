@@ -385,8 +385,8 @@ public class AirDashMove : GrimmMove
 
 		if (disableDamager)
 		{
-			previousDamageAmount = damager.DamageDealt;
-			damager.DamageDealt = 0;
+			previousDamageAmount = damager.damageDealt;
+			damager.damageDealt = 0;
 		}
 
 		if (Grimm.Settings.hardMode && Grimm.BossStage >= 2)
@@ -404,7 +404,7 @@ public class AirDashMove : GrimmMove
 
 		if (disableDamager)
 		{
-			damager.DamageDealt = previousDamageAmount;
+			damager.damageDealt = previousDamageAmount;
 			previousDamageAmount = 0;
 		}
 	}
@@ -570,7 +570,7 @@ public class AirDashMove : GrimmMove
 	{
 		if (previousDamageAmount != 0)
 		{
-			damager.DamageDealt = previousDamageAmount;
+			damager.damageDealt = previousDamageAmount;
 			previousDamageAmount = 0;
 		}
 		DashSpike.gameObject.SetActive(false);

@@ -70,7 +70,7 @@ public class SpikesController : MonoBehaviour
 		Spikes = GetComponentsInChildren<GrimmSpike>(true);
 		//GetComponentsInChildren(true, Spikes);
 		AllSpikes = GetComponentsInChildren<GrimmSpike>().ToList();
-		if (!Panel.GetSettings<IKGSettings>().Infinite)
+		if (!GlobalSettings.GetSettings<IKGSettings>().Infinite)
 		{
 			AllSpikes.RemoveAll(s => s.name.Contains("Infinite"));
 		}

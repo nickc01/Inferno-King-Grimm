@@ -32,7 +32,7 @@ namespace IKG
 
 		internal static string TentBossTitleHook(string key, string sheetTitle, string res)
 		{
-			var settings = Panel.GetSettings<IKGSettings>();
+			var settings = GlobalSettings.GetSettings<IKGSettings>();
 			if (key == "NIGHTMARE_GRIMM_SUPER")
 			{
 				if (settings.Infinite)
@@ -74,7 +74,7 @@ namespace IKG
 		{
 			if (key == "NAME_NIGHTMARE_GRIMM")
 			{
-				var settings = Panel.GetSettings<IKGSettings>();
+				var settings = GlobalSettings.GetSettings<IKGSettings>();
 				string title = "";
 				/*if (settings.Infinite)
 				{

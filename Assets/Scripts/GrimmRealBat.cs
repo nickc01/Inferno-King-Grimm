@@ -18,7 +18,7 @@ public class GrimmRealBat : EntityHealth
 		var result = base.Hit(hit);
 		var newHealth = Health;
 
-		switch (Grimm.GrimmHealth.HealthDirection)
+        /*switch (Grimm.Health.HealthDirection)
 		{
 			case HealthDirection.Down:
 				Grimm.GrimmHealth.Health -= (oldHealth - newHealth);
@@ -26,6 +26,14 @@ public class GrimmRealBat : EntityHealth
 			case HealthDirection.Up:
 				Grimm.GrimmHealth.Health += (oldHealth - newHealth);
 				break;
+		}*/
+        if (Grimm.Health.HasModifier<InfiniteHealthModifier>())
+        {
+			Grimm.GrimmHealth.Health += (oldHealth - newHealth);
+		}
+		else
+        {
+			Grimm.GrimmHealth.Health -= (oldHealth - newHealth);
 		}
 
 		return result;

@@ -309,6 +309,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  resetOnEnable: 0
 --- !u!1 &1292637292761594
 GameObject:
   m_ObjectHideFlags: 0
@@ -8641,6 +8642,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  resetOnEnable: 0
 --- !u!114 &114122573297472606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27694,6 +27696,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  resetOnEnable: 0
 --- !u!114 &114230416150949814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27789,6 +27792,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  resetOnEnable: 0
 --- !u!114 &114796687474090888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30729,7 +30733,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 1300
-  DecreaseHealth: 1
   Invincible: 0
   DeflectBlows: 0
   EvasionTime: 0.2
@@ -30774,6 +30777,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
+  resetOnEnable: 0
 --- !u!61 &61823431700803404
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -30828,6 +30832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doFlashEffects: 1
+  damageSound: {fileID: 8300000, guid: 4dd03c7f900f45e4cb9580542d0dff52, type: 3}
 --- !u!114 &114231667555609428
 MonoBehaviour:
   m_ObjectHideFlags: 0

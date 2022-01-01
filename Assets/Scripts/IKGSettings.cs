@@ -10,7 +10,7 @@ using WeaverCore.Utilities;
 
 namespace Assets.Scripts
 {
-	public class IKGSettings : Panel
+	public class IKGSettings : GlobalSettings
 	{
 		[Tooltip("Checking this will make the boss fight considerably harder</br:2>For those who want a bigger challenge")]
 		[SettingField(EnabledType.Both)]
