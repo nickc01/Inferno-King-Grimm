@@ -13,16 +13,16 @@ namespace Assets.Scripts
 	public class IKGSettings : GlobalSettings
 	{
 		[Tooltip("Checking this will make the boss fight considerably harder</br:2>For those who want a bigger challenge")]
-		[SettingField(EnabledType.Both)]
+		[SettingField(EnabledType.AlwaysVisible)]
 		[SettingOrder(0)]
 		public bool hardMode = false;
 
 		[Tooltip("Checking this will allow you to customize the health to be whatever you want.</br:2>The value can be set below")]
 		[SerializeField]
-		[SettingField(EnabledType.Never)]
+		[SettingField(EnabledType.Hidden)]
 		bool enableCustomHealth = false;
 
-		[SettingField(EnabledType.Both)]
+		[SettingField(EnabledType.AlwaysVisible)]
 		[SettingOrder(1)]
 		public bool EnableCustomHealth
 		{
@@ -65,9 +65,9 @@ namespace Assets.Scripts
 		public PufferFishDifficulty PufferFishDifficulty;
 
 		[SerializeField]
-		[SettingField(EnabledType.Never)]
+		[SettingField(EnabledType.Hidden)]
 		bool _infinite = false;
-		[SettingField(EnabledType.Both)]
+		[SettingField(EnabledType.AlwaysVisible)]
 		[SettingDescription("If set to true, the boss will be infinite, and will get harder the longer you play.</br:2> When you die, your score will be displayed, and stored to a file in the Mods Directory")]
 		[SettingOrder(5)]
 		public bool Infinite
@@ -81,15 +81,15 @@ namespace Assets.Scripts
 		}
 
 		[SettingOrder(6)]
-		[SettingField(EnabledType.Both)]
+		[SettingField(EnabledType.AlwaysVisible)]
 		[Tooltip("Improves performance of the fight by removing decoration objects")]
 		public bool PerformanceMode = false;
 
 		[SerializeField]
-		[SettingField(EnabledType.Never)]
+		[SettingField(EnabledType.Hidden)]
 		bool blueMode = false;
 
-		[SettingField(EnabledType.Both)]
+		[SettingField(EnabledType.AlwaysVisible)]
 		[SettingDescription("Yo, listen up here's a story</br>About a little guy</br>" +
 			"That lives in a blue world</br>And all day and all night</br>And everything he sees is just blue</br>" +
 			"Like him inside and outside</br></br:15>(All red colors become blue colors)")]
@@ -112,7 +112,7 @@ namespace Assets.Scripts
 
 		[Header("God Mode")]
 		[Tooltip("If set to true, Inferno God Grimm will have 1.75x health than Inferno King Grimm")]
-		[SettingField(EnabledType.Both)]
+		[SettingField(EnabledType.AlwaysVisible)]
 		[SettingOrder(8)]
 		public bool IncreasedGodModeHealth = true;
 

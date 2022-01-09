@@ -1334,8 +1334,8 @@ public class InfernoKingGrimm : BossReplacement
 		AudioPlayer endingTune = WeaverAudio.Create(Sounds.EndingTune, transform.position);
 		endingTune.PlayDelayed(0.3f);
 
-		TransformUtilities.SpawnRandomObjects(EffectAssets.GhostSlash1Prefab, transform.position, 8, 8, 2f, 35f, 0f, 360f);
-		TransformUtilities.SpawnRandomObjects(EffectAssets.GhostSlash2Prefab, transform.position, 2, 3, 2f, 35f, 0f, 360f);
+		TransformUtilities.SpawnRandomObjects(EffectAssets.SlashGhost1Prefab, transform.position, 8, 8, 2f, 35f, 0f, 360f);
+		TransformUtilities.SpawnRandomObjects(EffectAssets.SlashGhost2Prefab, transform.position, 2, 3, 2f, 35f, 0f, 360f);
 
 		DeathBurst.SetActive(true);
 
