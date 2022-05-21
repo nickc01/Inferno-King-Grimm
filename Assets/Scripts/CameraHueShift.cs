@@ -2,10 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Utilities;
 
 public class CameraHueShift : MonoBehaviour 
 {
-	public Material cameraMaterial;
+	static CameraHueShift _currentHueShifter;
+	public static CameraHueShift CurrentHueShifter
+    {
+		get
+        {
+			if (_currentHueShifter == null)
+			{
+				var prefab = WeaverAssets.LoadAssetFromBundle<GameObject, IKG.InfernoGrimmMod>("Camera Hue Shifter");
+				AddToCamera(prefab.GetComponent<CameraHueShift>());
+			}
+			return _currentHueShifter;
+		}
+    }
+
+	public enum Mode
+    {
+		Off,
+		Performance,
+		Quality
+    }
+
+	[SerializeField]
+	Mode colorMode = Mode.Performance;
+
+	public Mode ColorMode
+    {
+		get => colorMode;
+        set
+        {
+			colorMode = value;
+			Refresh();
+        }
+    }
+
+	//public Material cameraMaterial;
+
+	public Material performanceMaterial;
+	public Material qualityMaterial;
 
 	[SerializeField]
 	float shiftPercentage = 0f;
@@ -83,6 +121,26 @@ public class CameraHueShift : MonoBehaviour
 		}
 	}
 
+	public static CameraHueShift AddToCamera(CameraHueShift prefab)
+    {
+		if (_currentHueShifter == null)
+        {
+			_currentHueShifter = WeaverCamera.Instance.gameObject.AddComponent<CameraHueShift>();
+			_currentHueShifter.performanceMaterial = prefab.performanceMaterial;
+			_currentHueShifter.qualityMaterial = prefab.qualityMaterial;
+			_currentHueShifter.shiftPercentage = prefab.shiftPercentage;
+
+			_currentHueShifter.hueShift = prefab.hueShift;
+			_currentHueShifter.saturationShift = prefab.saturationShift;
+			_currentHueShifter.valueShift = prefab.valueShift;
+
+			_currentHueShifter.colorMode = prefab.colorMode;
+
+			_currentHueShifter.Refresh();
+		}
+		return CurrentHueShifter;
+	}
+
 	public void SetValues(float percentage, float hue, float sat, float value)
 	{
 		bool changed = false;
@@ -118,14 +176,32 @@ public class CameraHueShift : MonoBehaviour
 
 	public void Refresh()
 	{
-		cameraMaterial.SetFloat("_ShiftPercentage", shiftPercentage);
-		cameraMaterial.SetFloat("_HueShift", hueShift);
+        if (colorMode == Mode.Quality)
+        {
+			qualityMaterial.SetFloat("_ShiftPercentage", shiftPercentage);
+			qualityMaterial.SetFloat("_HueShift", hueShift);
+		}
+        else if (colorMode == Mode.Performance)
+        {
+			performanceMaterial.SetFloat("_ShiftPercentage", shiftPercentage);
+		}
+
 		//cameraMaterial.SetFloat("_SatShift", saturationShift);
 		//cameraMaterial.SetFloat("_ValShift", valueShift);
 	}
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
-		Graphics.Blit(source, destination,cameraMaterial);
+        switch (colorMode)
+        {
+            case Mode.Performance:
+				Graphics.Blit(source, destination, performanceMaterial);
+				break;
+            case Mode.Quality:
+				Graphics.Blit(source, destination, qualityMaterial);
+				break;
+            default:
+                break;
+        }
 	}
 }

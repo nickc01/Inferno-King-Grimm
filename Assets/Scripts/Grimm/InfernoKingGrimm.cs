@@ -153,7 +153,7 @@ public class InfernoKingGrimm : BossReplacement
 	//public GrimmColors Colors;
 	public Material CameraMaterial;
 
-	static CameraHueShift cameraHueShifter;
+	//static CameraHueShift cameraHueShifter;
 	static bool sceneChangeHookUsed = false;
 	static bool languageHooksAdded = false;
 
@@ -688,20 +688,22 @@ public class InfernoKingGrimm : BossReplacement
 					}
 				}
 		#endif*/
-		if ((!Settings.DisableColorEffects && !Settings.PerformanceMode) && !Settings.BlueMode)
+		if ((!Settings.PerformanceMode) && !Settings.BlueMode)
 		{
-			if (cameraHueShifter == null)
+			CameraHueShift.CurrentHueShifter.ShiftPercentage = 0f;
+			CameraHueShift.CurrentHueShifter.Refresh();
+			/*if (cameraHueShifter == null)
 			{
 				cameraHueShifter = WeaverCamera.Instance.gameObject.GetComponent<CameraHueShift>();
 				if (cameraHueShifter == null)
 				{
 					cameraHueShifter = WeaverCamera.Instance.gameObject.AddComponent<CameraHueShift>();
 				}
-				cameraHueShifter.cameraMaterial = CameraMaterial;
+				//cameraHueShifter.cameraMaterial = CameraMaterial;
 				cameraHueShifter.ShiftPercentage = 0f;
 				cameraHueShifter.Refresh();
 				//WeaverLog.Log("Shift Percentage = " + cameraHueShifter.ShiftPercentage);
-			}
+			}*/
 		}
 		if (!sceneChangeHookUsed)
 		{
@@ -723,14 +725,16 @@ public class InfernoKingGrimm : BossReplacement
 	}
 
 	int healthCache = -1;
+	CameraHueShift.Mode modeCache = (CameraHueShift.Mode)(-1);
 
 	private void Update()
 	{
-		if ((!Settings.DisableColorEffects && !Settings.PerformanceMode) && !Settings.BlueMode && cameraHueShifter != null)
+		if ((!Settings.PerformanceMode) && !Settings.BlueMode)
 		{
-			if (GrimmHealth.Health != healthCache)
+			if (GrimmHealth.Health != healthCache || modeCache != CameraHueShift.CurrentHueShifter.ColorMode)
 			{
 				healthCache = GrimmHealth.Health;
+				modeCache = CameraHueShift.CurrentHueShifter.ColorMode;
 				var t = Mathf.Clamp01(1f - (GrimmHealth.Health / MaxHealth));
 				if (Settings.Infinite)
 				{
@@ -740,11 +744,19 @@ public class InfernoKingGrimm : BossReplacement
 				{
 					t *= 0.13f;
 				}
+
+                if (modeCache == CameraHueShift.Mode.Performance)
+                {
+					t /= 2f;
+                }
+				//WeaverLog.Log("T = " + t);
 				//UnityEngine.Debug.Log("Health Value = " + t);
 				var shiftPercentage = ShaderPercentageCurve.Evaluate(t);
+
+				//WeaverLog.Log("Shift Percentage = " + shiftPercentage);
 				//if (shiftPercentage != cameraHueShifter.ShiftPercentage)
 				//{
-					cameraHueShifter.SetValues(shiftPercentage,
+				CameraHueShift.CurrentHueShifter.SetValues(shiftPercentage,
 					HueShiftCurve.Evaluate(t),
 					SaturationShiftCurve.Evaluate(t),
 					ValueShiftCurve.Evaluate(t));
@@ -1430,10 +1442,10 @@ public class InfernoKingGrimm : BossReplacement
 
 	void OnSceneChange(Scene scene, LoadSceneMode loadMode)
 	{
-		if (!Settings.BlueMode && cameraHueShifter != null)
+		if (!Settings.BlueMode)
 		{
-			cameraHueShifter.ShiftPercentage = 0f;
-			cameraHueShifter.Refresh();
+			CameraHueShift.CurrentHueShifter.ShiftPercentage = 0f;
+			CameraHueShift.CurrentHueShifter.Refresh();
 		}
 	}
 }

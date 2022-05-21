@@ -16,8 +16,9 @@ MonoBehaviour:
   enableCustomHealth: 0
   CustomHealthValue: 1300
   DisableColorEffects: 0
+  _colorEffects: 2
   PufferFishDifficulty: 0
   _infinite: 0
-  PerformanceMode: 0
+  _performanceMode: 0
   blueMode: 0
   IncreasedGodModeHealth: 1

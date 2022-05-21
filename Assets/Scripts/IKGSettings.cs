@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Serialization;
 using WeaverCore;
 using WeaverCore.Attributes;
 using WeaverCore.Settings;
@@ -54,9 +55,26 @@ namespace Assets.Scripts
 		[SettingOrder(2)]
 		public int CustomHealthValue = 1300;
 
-		[Tooltip("Checking this will disable color effects that take place throughout the fight")]
-		[SettingOrder(3)]
+		//[Tooltip("Checking this will disable color effects that take place throughout the fight")]
+		//[SettingOrder(3)]
+		[HideInInspector]
+		[Obsolete]
+		[SettingField(EnabledType.Hidden)]
 		public bool DisableColorEffects = false;
+
+		[SerializeField]
+		[SettingField(EnabledType.Hidden)]
+		CameraHueShift.Mode _colorEffects = CameraHueShift.Mode.Quality;
+
+		[SettingField(EnabledType.AlwaysVisible)]
+		[SettingDescription("The type of color effects to use during the fight</br:2>Quality : Uses the best quality color effects</br:2>Performance : Uses a color effect that is easier on lower end hardware. Try this option if the boss crashes often</br:2>Off : Turns the color effects completely off")]
+		[SettingOrder(3)]
+		public CameraHueShift.Mode ColorEffects
+        {
+			get => _colorEffects;
+			set => UpdateColorEffects(value);
+
+		}
 
 		[Tooltip("This determines how difficult the pufferfish attack of the fight will be</br:2>-Default:  Leaves everything set to their default values</br>-Easy:     " +
 			"A toned down version of the attack</br>-Medium:   The same difficulty as regular IKG</br>-Hard:     The same difficutly as Absolute IKG</br>-Off:      " +
@@ -67,6 +85,7 @@ namespace Assets.Scripts
 		[SerializeField]
 		[SettingField(EnabledType.Hidden)]
 		bool _infinite = false;
+
 		[SettingField(EnabledType.AlwaysVisible)]
 		[SettingDescription("If set to true, the boss will be infinite, and will get harder the longer you play.</br:2> When you die, your score will be displayed, and stored to a file in the Mods Directory")]
 		[SettingOrder(5)]
@@ -80,10 +99,24 @@ namespace Assets.Scripts
 			}
 		}
 
+		[FormerlySerializedAs("PerformanceMode")]
+		[SerializeField]
+		bool _performanceMode = false;
+
 		[SettingOrder(6)]
 		[SettingField(EnabledType.AlwaysVisible)]
-		[Tooltip("Improves performance of the fight by removing decoration objects")]
-		public bool PerformanceMode = false;
+		[SettingDescription("Improves performance of the fight by removing decoration objects")]
+		public bool PerformanceMode
+        {
+			get => _performanceMode;
+			set
+            {
+				_performanceMode = value;
+				UpdateColorEffects(_colorEffects);
+			}
+        }
+
+
 
 		[SerializeField]
 		[SettingField(EnabledType.Hidden)]
@@ -151,6 +184,21 @@ namespace Assets.Scripts
 			UpdateBlueState();
 		}
 
+		void UpdateColorEffects(CameraHueShift.Mode newMode)
+        {
+			_colorEffects = newMode;
+            if (PerformanceMode)
+            {
+				CameraHueShift.CurrentHueShifter.ColorMode = CameraHueShift.Mode.Off;
+
+			}
+			else
+            {
+				CameraHueShift.CurrentHueShifter.ColorMode = newMode;
+
+			}
+        }
+
 		static Material cameraMaterial;
 
 		void UpdateInfiniteState()
@@ -184,14 +232,14 @@ namespace Assets.Scripts
 
 		static void UpdateBlueState()
 		{
-			if (cameraMaterial == null)
+			/*if (cameraMaterial == null)
 			{
 				cameraMaterial = WeaverAssets.LoadAssetFromBundle<Material>("infernogrimmmod", "CameraMaterial");
 				if (cameraMaterial == null)
 				{
 					return;
 				}
-			}
+			}*/
 			var settings = GetSettings<IKGSettings>();
 			if (settings == null)
 			{
@@ -201,11 +249,27 @@ namespace Assets.Scripts
 			{
 				return;
 			}
-			var cameraHueShift = WeaverCamera.Instance.GetComponent<CameraHueShift>();
+
+			Debug.Log("COLOR MODE =" + settings._colorEffects);
+			//CameraHueShift.CurrentHueShifter.ColorMode = settings._colorEffects;
+			settings.UpdateColorEffects(settings._colorEffects);
+
+			if (settings.BlueMode)
+			{
+				CameraHueShift.CurrentHueShifter.SetValues(1f, 0.1f, 0.1f, 0.1f);
+			}
+			else
+			{
+				CameraHueShift.CurrentHueShifter.SetValues(0f, 0f, 0f, 0f);
+			}
+
+			
+
+			/*var cameraHueShift = WeaverCamera.Instance.GetComponent<CameraHueShift>();
 			if (cameraHueShift == null)
 			{
 				cameraHueShift = WeaverCamera.Instance.gameObject.AddComponent<CameraHueShift>();
-				cameraHueShift.cameraMaterial = cameraMaterial;
+				//cameraHueShift.cameraMaterial = cameraMaterial;
 			}
 			if (settings.BlueMode)
 			{
@@ -215,7 +279,7 @@ namespace Assets.Scripts
 			{
 				cameraHueShift.SetValues(0f, 0f, 0f, 0f);
 			}
-			cameraHueShift.Refresh();
+			cameraHueShift.Refresh();*/
 		}
 
 	}

@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.31163895, g: 0.43906134, b: 0.61745286, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -817,6 +817,11 @@ PrefabInstance:
     - target: {fileID: 4023218805753568, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
+        type: 3}
+      propertyPath: _bossStage
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
