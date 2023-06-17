@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaverCore;
+using WeaverCore.Components;
 using WeaverCore.DataTypes;
 using WeaverCore.Enums;
 using WeaverCore.Interfaces;
@@ -16,17 +17,33 @@ public class GrimmGlow : MonoBehaviour
 	//string startingStateName;
 	Animator animator;
 
+	WeaverAnimationPlayer weaverAnimator;
+
 	void Awake()
 	{
 		if (animator == null)
 		{
 			animator = GetComponent<Animator>();
 		}
+
+		if (weaverAnimator == null)
+		{
+			weaverAnimator = GetComponent<WeaverAnimationPlayer>();
+
+        }
 	}
 
 	void Start()
 	{
-		animator.Play("Default");
+		if (animator != null)
+		{
+            animator.Play("Default");
+        }
+
+		if (weaverAnimator != null)
+		{
+            weaverAnimator = GetComponent<WeaverAnimationPlayer>();
+        }
 	}
 
 	/*class Hooks : GrimmHooks

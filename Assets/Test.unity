@@ -821,7 +821,7 @@ PrefabInstance:
     - target: {fileID: 114879189269301354, guid: b22bb1337dc0e264bb76cd6328b2ddf4,
         type: 3}
       propertyPath: _bossStage
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b22bb1337dc0e264bb76cd6328b2ddf4, type: 3}
@@ -1986,6 +1986,9 @@ MonoBehaviour:
   damage: 32
   attackType: 0
   hitDirection: 0
+  OnHitObject:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1348358562
 BoxCollider2D:
   m_ObjectHideFlags: 0

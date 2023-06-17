@@ -102,13 +102,14 @@ public class BalloonMove : GrimmMove
 
 	public override IEnumerator DoMove()
 	{
-		gameObject.layer = LayerMask.NameToLayer("Enemy Attack");
 		if (Grimm.Settings.PufferFishDifficulty == PufferFishDifficulty.Off)
 		{
 			yield break;
 		}
 
-		DoingBalloonMove = true;
+        gameObject.layer = LayerMask.NameToLayer("Enemy Attack");
+
+        DoingBalloonMove = true;
 		healthManager.Invincible = true;
 
 		//Debug.Log("Doing Balloon Move for grimm " + InfernoKingGrimm.GrimmsFighting.IndexOf(Grimm));

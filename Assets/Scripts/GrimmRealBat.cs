@@ -27,7 +27,7 @@ public class GrimmRealBat : EntityHealth
 				Grimm.GrimmHealth.Health += (oldHealth - newHealth);
 				break;
 		}*/
-        if (Grimm.Health.HasModifier<InfiniteHealthModifier>())
+        if (Grimm.HealthComponent.HasModifier<InfiniteHealthModifier>())
         {
 			Grimm.GrimmHealth.Health += (oldHealth - newHealth);
 		}

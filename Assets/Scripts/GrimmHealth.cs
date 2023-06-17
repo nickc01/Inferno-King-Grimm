@@ -34,9 +34,9 @@ public class GrimmHealth : EntityHealth
 						if (i < InfernoKingGrimm.GrimmsFighting.Count)
 						{
 							var otherGrimm = InfernoKingGrimm.GrimmsFighting[i];
-							if (otherGrimm.Health.Health != newHealth && otherGrimm != grimm)
+							if (otherGrimm.HealthComponent.Health != newHealth && otherGrimm != grimm)
 							{
-								otherGrimm.Health.Health = newHealth;
+								otherGrimm.HealthComponent.Health = newHealth;
 							}
 						}
 					}

@@ -605,7 +605,7 @@ public class InfernoKingGrimm : BossReplacement
 
 		if (Settings.Infinite)
 		{
-			Health.AddModifier<InfiniteHealthModifier>();
+            HealthComponent.AddModifier<InfiniteHealthModifier>();
 		}
 
 		var quarterHealth = CycleAmount / 4;
