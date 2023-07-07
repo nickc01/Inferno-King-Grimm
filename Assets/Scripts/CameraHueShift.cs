@@ -20,6 +20,17 @@ public class CameraHueShift : MonoBehaviour
 		}
     }
 
+	public static bool HueShifterCreated => _currentHueShifter != null;
+
+	public static void Remove()
+	{
+		if (_currentHueShifter != null)
+		{
+			Destroy(_currentHueShifter);
+			_currentHueShifter = null;
+		}
+	}
+
 	public enum Mode
     {
 		Off,

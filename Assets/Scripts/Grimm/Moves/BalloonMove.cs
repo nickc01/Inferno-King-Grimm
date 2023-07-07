@@ -297,7 +297,7 @@ public class BalloonMove : GrimmMove
 					spawnAngle = -spawnAngle;
 					spawnVelocity = -spawnVelocity;
 				}
-				if (Grimm.Settings.Infinite)
+				if (Grimm.Settings.Infinite || Grimm.FightingInPantheon)
 				{
 					if (spawnAngle > 0 && spawnVelocity < 0)
 					{
@@ -324,14 +324,14 @@ public class BalloonMove : GrimmMove
 				{
 					homingBall.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
 				}
-				if (!GlobalSettings.GetSettings<IKGSettings>().Infinite)
+				if (GlobalSettings.GetSettings<IKGSettings>().Infinite || Grimm.FightingInPantheon)
 				{
-					homingBall.Phase2TargetOffset = new Vector2(Random.Range(-4f, 4f), Random.Range(-2f, 2f));
+                    homingBall.Phase2TargetOffset = new Vector2(Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.GetInfiniteSpeed(0.5f), Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.GetInfiniteSpeed(0.5f));
 				}
 				else
 				{
-					homingBall.Phase2TargetOffset = new Vector2(Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.GetInfiniteSpeed(0.5f), Random.Range(-0.25f, 0.25f) * InfernoKingGrimm.GetInfiniteSpeed(0.5f));
-				}
+                    homingBall.Phase2TargetOffset = new Vector2(Random.Range(-4f, 4f), Random.Range(-2f, 2f));
+                }
 				//homingBalls.Add(homingBall);
 			}
 
@@ -385,7 +385,11 @@ public class BalloonMove : GrimmMove
 			}
 		}
 
-		if (Grimm.BossStage >= 3)
+        if (Grimm.FightingInPantheon)
+        {
+            yield return new WaitForSeconds(0.15f / InfernoKingGrimm.InfiniteSpeed);
+        }
+        else if (Grimm.BossStage >= 3 || Grimm.FightingInPantheon)
 		{
 			yield return new WaitForSeconds(0.3f);
 		}

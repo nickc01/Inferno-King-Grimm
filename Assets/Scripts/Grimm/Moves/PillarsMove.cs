@@ -153,7 +153,11 @@ public class PillarsMove : GrimmMove
 
 		yield return new WaitForSeconds(0.25f / InfernoKingGrimm.GetInfiniteSpeed(1f,1.75f));
 		yield return Grimm.TeleportOut();
-		if (Grimm.BossStage >= 2)
+        if (Grimm.FightingInPantheon)
+        {
+            yield return new WaitForSeconds(0.15f / InfernoKingGrimm.InfiniteSpeed);
+        }
+        else if (Grimm.BossStage >= 2 || Grimm.FightingInPantheon)
 		{
 			yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 		}

@@ -228,6 +228,19 @@ public class InfernoKingGrimm : BossReplacement
 
 	bool godModeDoSpikes = true;
 
+	[Space]
+	[Header("Pantheon Fight")]
+	[SerializeField]
+	float phase1Speed = 1.25f;
+
+	[SerializeField]
+	float phase2Speed = 1.35f;
+
+	[SerializeField]
+	float phase3Speed = 1.45f;
+
+	public bool FightingInPantheon => false;
+
 
 	static bool godModeFlag = false;
 	public static bool GodMode
@@ -332,6 +345,10 @@ public class InfernoKingGrimm : BossReplacement
 
 	protected override void Awake()
 	{
+		if ((!Settings.PerformanceMode) && !Settings.BlueMode)
+		{
+            CameraHueShift.Remove();
+        }
 		base.Awake();
 		MainPrefabs.Instance = prefabs;
 		if (!languageHooksAdded)
@@ -650,6 +667,11 @@ public class InfernoKingGrimm : BossReplacement
 			GeoCounter.Instance.GeoText = "0";
 		}
 
+		if (FightingInPantheon)
+		{
+            InfiniteSpeed = phase1Speed;
+        }
+
 		/*if (Settings.hardMode)
 		{
 			var fifthHealth = GrimmHealth.Health / 5;
@@ -688,7 +710,7 @@ public class InfernoKingGrimm : BossReplacement
 					}
 				}
 		#endif*/
-		if ((!Settings.PerformanceMode) && !Settings.BlueMode)
+		if ((!Settings.PerformanceMode) && !Settings.BlueMode && !FightingInPantheon)
 		{
 			CameraHueShift.CurrentHueShifter.ShiftPercentage = 0f;
 			CameraHueShift.CurrentHueShifter.Refresh();
@@ -729,7 +751,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	private void Update()
 	{
-		if ((!Settings.PerformanceMode) && !Settings.BlueMode)
+		if ((!Settings.PerformanceMode) && !Settings.BlueMode && !FightingInPantheon)
 		{
 			if (GrimmHealth.Health != healthCache || modeCache != CameraHueShift.CurrentHueShifter.ColorMode)
 			{
@@ -918,9 +940,8 @@ public class InfernoKingGrimm : BossReplacement
 
 	public IEnumerator TeleportIn(Vector3 position, bool playSound = true, string animationName = "Tele In", bool forceNormal = false)
 	{
-		if (InfiniteSpeed >= 2f && forceNormal == false)
+		if ((InfiniteSpeed >= 2f || FightingInPantheon) && forceNormal == false)
 		{
-
 			Teleporter.TeleportEntity(gameObject, position, Teleporter.TeleType.Delayed, Color.red);
 			if (transform.position != position)
 			{
@@ -967,7 +988,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	public IEnumerator TeleportOut(bool playSound = true, string animationName = "Tele Out", bool forceNormal = false)
 	{
-		if (InfiniteSpeed >= 2f && forceNormal == false)
+		if ((InfiniteSpeed >= 2f || FightingInPantheon) && forceNormal == false)
 		{
 			GrimmCollider.enabled = false;
 			yield break;
@@ -1043,6 +1064,19 @@ public class InfernoKingGrimm : BossReplacement
 		{
 			return;
 		}
+
+		if (FightingInPantheon)
+		{
+			if (BossStage == 2)
+			{
+				InfiniteSpeed = phase2Speed;
+			}
+
+            if (BossStage >= 3)
+            {
+                InfiniteSpeed = phase3Speed;
+            }
+        }
 
 		GrimmCollider.enabled = false;
 
@@ -1442,7 +1476,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	void OnSceneChange(Scene scene, LoadSceneMode loadMode)
 	{
-		if (!Settings.BlueMode)
+		if (!Settings.BlueMode && CameraHueShift.HueShifterCreated)
 		{
 			CameraHueShift.CurrentHueShifter.ShiftPercentage = 0f;
 			CameraHueShift.CurrentHueShifter.Refresh();

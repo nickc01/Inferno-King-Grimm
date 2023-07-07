@@ -157,7 +157,11 @@ public class CapeBurstMove : GrimmMove
 		yield return GrimmAnimator.PlayAnimationTillDone("Cape Close");
 		yield return Grimm.TeleportOut(true, "Cape Teleport Out");
 
-		if (Grimm.Settings.hardMode && Grimm.BossStage >= 3)
+        if (Grimm.FightingInPantheon)
+        {
+            yield return new WaitForSeconds(0.15f / InfernoKingGrimm.InfiniteSpeed);
+        }
+        else if ((Grimm.Settings.hardMode && Grimm.BossStage >= 3) || Grimm.FightingInPantheon)
 		{
 			yield return new WaitForSeconds(0.35f / InfernoKingGrimm.InfiniteSpeed);
 		}

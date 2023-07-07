@@ -218,7 +218,7 @@ public class GroundSlashMove : GrimmMove
 
 		yield return new WaitForSeconds(0.5f / InfernoKingGrimm.GetInfiniteSpeed(1f,1.6f));
 
-		if (Grimm.Settings.hardMode && (Grimm.BossStage == 2 || (Grimm.BossStage == 3 && Grimm.Settings.Infinite)))
+		if (Grimm.Settings.hardMode && (Grimm.BossStage == 2 || (Grimm.BossStage == 3 && (Grimm.Settings.Infinite || Grimm.FightingInPantheon))))
 		{
 			yield return new WaitForSeconds(extraWaitTime / InfernoKingGrimm.GetInfiniteSpeed(1f, 2.0f));
 		}
@@ -517,7 +517,11 @@ public class GroundSlashMove : GrimmMove
 		Invisible = true;
 
 		yield return new WaitForSeconds(1f);
-		if (Grimm.BossStage >= 3)
+        if (Grimm.FightingInPantheon)
+        {
+            yield return new WaitForSeconds(0.15f / InfernoKingGrimm.InfiniteSpeed);
+        }
+        else if (Grimm.BossStage >= 3)
 		{
 			yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 		}

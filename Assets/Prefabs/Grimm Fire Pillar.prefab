@@ -150,7 +150,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
-  setLayerToEnemies: 0
+  resetOnEnable: 0
 --- !u!114 &114807862085838580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +395,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c87f1e5b081bcd14c97a244a07e29801, type: 3}
+  m_Sprite: {fileID: 21300550, guid: 5e26c18c0c910d448b010d40ae6c7022, type: 3}
   m_Color: {r: 1, g: 0.2470588, b: 0.2470588, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -477,7 +477,7 @@ SpriteRenderer:
   m_SortingLayerID: -349214895
   m_SortingLayer: 13
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 71051c8bd87840c4ebb74d17d533512e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ec8b3c1ecce3c9740a06494ef295bb6d, type: 3}
   m_Color: {r: 0.9852941, g: 0.3115268, b: 0.3115268, a: 0.5372549}
   m_FlipX: 0
   m_FlipY: 0
@@ -8409,7 +8409,7 @@ MonoBehaviour:
   damageDealt: 2
   hazardType: 1
   shadowDashHazard: 0
-  setLayerToEnemies: 0
+  resetOnEnable: 0
 --- !u!114 &114725174448388946
 MonoBehaviour:
   m_ObjectHideFlags: 0

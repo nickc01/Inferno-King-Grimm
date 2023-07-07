@@ -99,7 +99,7 @@ namespace IKG
 
 		public override string GetVersion()
 		{
-			return "4.1.0.3";
+			return "4.2.0.0";
 		}
 	}
 }

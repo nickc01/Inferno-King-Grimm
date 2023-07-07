@@ -78,11 +78,15 @@ public class SpikesMove : GrimmMove
 				}
 
 				yield return new WaitForSeconds(0.2f);
-				//yield return null;
+                //yield return null;
 
-				//yield return new WaitForSeconds(spikeController.CurrentWaitTime);
+                //yield return new WaitForSeconds(spikeController.CurrentWaitTime);
 
-				if (Grimm.BossStage >= 3)
+                if (Grimm.FightingInPantheon)
+                {
+                    yield return new WaitForSeconds(0.15f / InfernoKingGrimm.InfiniteSpeed);
+                }
+                else if (Grimm.BossStage >= 3)
 				{
 					yield return new WaitForSeconds(0.3f / InfernoKingGrimm.GetInfiniteSpeed(1f,8f));
 				}
@@ -98,7 +102,7 @@ public class SpikesMove : GrimmMove
 	public override IEnumerator DoMove()
 	{
 		var balloonMove = GetComponent<BalloonMove>();
-		if (InfernoKingGrimm.GetInfiniteSpeed(1f,5f) >= 2f && !Grimm.Invisible)
+		if ((InfernoKingGrimm.GetInfiniteSpeed(1f,5f) >= 2f && !Grimm.Invisible) || Grimm.FightingInPantheon)
 		{
 			yield return Grimm.TeleportIn(balloonMove.BalloonPosition - new Vector2(0f,50f));
 		}

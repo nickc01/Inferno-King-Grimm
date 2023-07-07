@@ -222,7 +222,11 @@ public class FireBatMove : GrimmMove
 
 		yield return Grimm.TeleportOut();
 
-		if (Grimm.BossStage >= 3)
+        if (Grimm.FightingInPantheon)
+        {
+            yield return new WaitForSeconds(0.15f / InfernoKingGrimm.InfiniteSpeed);
+        }
+        else if (Grimm.BossStage >= 3 || Grimm.FightingInPantheon)
 		{
 			yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 		}

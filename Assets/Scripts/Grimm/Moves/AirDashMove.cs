@@ -294,7 +294,11 @@ public class AirDashMove : GrimmMove
 
 		yield return Grimm.TeleportOut();
 
-		if (Grimm.BossStage >= 3)
+		if (Grimm.FightingInPantheon)
+		{
+            yield return new WaitForSeconds(0.15f / InfernoKingGrimm.InfiniteSpeed);
+        }
+		else if (Grimm.BossStage >= 3)
 		{
 			yield return new WaitForSeconds(0.3f / InfernoKingGrimm.InfiniteSpeed);
 		}
@@ -319,7 +323,11 @@ public class AirDashMove : GrimmMove
 
 		yield return Grimm.TeleportOut();
 
-		if (Grimm.Settings.hardMode && Grimm.BossStage >= 3)
+        if (Grimm.FightingInPantheon)
+        {
+            yield return new WaitForSeconds(0.15f / InfernoKingGrimm.InfiniteSpeed);
+        }
+        else if ((Grimm.Settings.hardMode && Grimm.BossStage >= 3 && !Grimm.FightingInPantheon) || (Grimm.FightingInPantheon && Grimm.BossStage == 2))
 		{
 			yield return new WaitForSeconds(0.35f / InfernoKingGrimm.InfiniteSpeed);
 		}
