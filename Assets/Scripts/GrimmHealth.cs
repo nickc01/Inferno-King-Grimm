@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using WeaverCore;
 using WeaverCore.Components;
 using WeaverCore.Implementations;
@@ -24,34 +25,37 @@ public class GrimmHealth : EntityHealth
 
         public int OnHealthChange(int oldHealth, int newHealth)
         {
-			var infinite = GlobalSettings.GetSettings<IKGSettings>().Infinite;
-			if (InfernoKingGrimm.GodMode)
+            var infinite = grimm.Settings.Infinite;
+            if (InfernoKingGrimm.GodMode)
 			{
-				if (newHealth != oldHealth)
+                if (newHealth != oldHealth)
 				{
-					for (int i = InfernoKingGrimm.GrimmsFighting.Count - 1; i >= 0; i--)
+                    for (int i = InfernoKingGrimm.GrimmsFighting.Count - 1; i >= 0; i--)
 					{
-						if (i < InfernoKingGrimm.GrimmsFighting.Count)
+                        if (i < InfernoKingGrimm.GrimmsFighting.Count)
 						{
-							var otherGrimm = InfernoKingGrimm.GrimmsFighting[i];
-							if (otherGrimm.HealthComponent.Health != newHealth && otherGrimm != grimm)
+                            var otherGrimm = InfernoKingGrimm.GrimmsFighting[i];
+                            if (otherGrimm.HealthComponent.Health != newHealth && otherGrimm != grimm)
 							{
-								otherGrimm.HealthComponent.Health = newHealth;
+                                otherGrimm.HealthComponent.Health = newHealth;
 							}
-						}
-					}
-					if (!infinite)
+                        }
+                    }
+                    if (!infinite && GeoCounter.Instance != null && GeoCounter.Instance.GeoText != null)
 					{
-						GeoCounter.Instance.GeoText = (grimm.MaxHealth - newHealth).ToString();
-					}
-				}
-			}
-			if (infinite)
+                        GeoCounter.Instance.GeoText = (grimm.MaxHealth - newHealth).ToString();
+                    }
+                }
+            }
+            if (infinite)
 			{
-				InfernoKingGrimm.InfiniteSpeed = 1f + (newHealth / InfernoKingGrimm.DoublingRatio);
-				GeoCounter.Instance.GeoText = (newHealth - 1).ToString();
-			}
-			return newHealth;
+                InfernoKingGrimm.InfiniteSpeed = 1f + (newHealth / InfernoKingGrimm.DoublingRatio);
+                if (GeoCounter.Instance != null && GeoCounter.Instance.GeoText != null)
+                {
+                    GeoCounter.Instance.GeoText = (newHealth - 1).ToString();
+                }
+            }
+            return newHealth;
 		}
     }
 
