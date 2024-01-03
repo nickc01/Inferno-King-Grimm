@@ -565,7 +565,7 @@ public class AirDashMove : GrimmMove
 		}
 		else
 		{
-			float time = Teleporter.TeleportEntity(gameObject, newPosition, Teleporter.TeleType.Delayed, Color.red);
+			float time = Teleporter.TeleportEntity(gameObject, newPosition, Teleporter.TeleType.Delayed);
 			Grimm.GrimmCollider.enabled = true;
 
 			yield return new WaitForSeconds(time / 2f);

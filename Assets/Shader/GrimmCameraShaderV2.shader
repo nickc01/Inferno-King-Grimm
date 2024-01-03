@@ -94,13 +94,29 @@
             {
                 return range.x + ((range.y - range.x) * value);
             }
+			
+			inline float4 Colorize(in float4 c) {
+				float average = (c.r + c.g + c.b);
+
+                float redness = ((c.r * 3) - average) * _Sat * _ShiftPercentage;
+                //float redness = (c.r - 0.5) * c.g * c.b;
+
+                float2 redblue = c.rb;
+
+                c.r = Lerp(redblue,redness);
+                c.b = Lerp(redblue.yx, redness);
+
+                c.rgb += redness * _Brightness * _ShiftPercentage;
+				
+				return c;
+			}
             
 
             float4 frag(v2f_img i) : COLOR 
             {
                 float4 c = tex2D(_MainTex, i.uv);
 
-                //float redness = c.a * (0.5f - (c.b * c.g)) * _ShiftPercentage * _Sat;
+                /*//float redness = c.a * (0.5f - (c.b * c.g)) * _ShiftPercentage * _Sat;
 
                 float average = (c.r + c.g + c.b);
 
@@ -112,9 +128,9 @@
                 c.r = Lerp(redblue,redness);
                 c.b = Lerp(redblue.yx, redness);
 
-                c.rgb += redness * _Brightness * _ShiftPercentage;
+                c.rgb += redness * _Brightness * _ShiftPercentage;*/
 
-                return c;
+                return Colorize(c);
 
 
 

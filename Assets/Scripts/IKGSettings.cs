@@ -55,14 +55,26 @@ namespace Assets.Scripts
 		[SettingOrder(2)]
 		public int CustomHealthValue = 1300;
 
-		//[Tooltip("Checking this will disable color effects that take place throughout the fight")]
-		//[SettingOrder(3)]
-		[HideInInspector]
-		[Obsolete]
-		[SettingField(EnabledType.Hidden)]
-		public bool DisableColorEffects = false;
 
 		[SerializeField]
+		[SettingField(EnabledType.Hidden)]
+		bool _disableColorEffects = false;
+
+        [SettingOrder(3)]
+        [SettingField(EnabledType.AlwaysVisible)]
+		[SettingDescription("Disables the color effects that occur during the Inferno King Grimm Fight")]
+		public bool DisableColorEffects
+		{
+			get => _disableColorEffects;
+			set
+			{
+				_disableColorEffects = value;
+				UpdateColorEffects(value ? CameraHueShift.Mode.Off : CameraHueShift.Mode.Quality);
+            }
+
+        }
+
+		/*[SerializeField]
 		[SettingField(EnabledType.Hidden)]
 		CameraHueShift.Mode _colorEffects = CameraHueShift.Mode.Quality;
 
@@ -74,7 +86,7 @@ namespace Assets.Scripts
 			get => _colorEffects;
 			set => UpdateColorEffects(value);
 
-		}
+		}*/
 
 		[Tooltip("This determines how difficult the pufferfish attack of the fight will be</br:2>-Default:  Leaves everything set to their default values</br>-Easy:     " +
 			"A toned down version of the attack</br>-Medium:   The same difficulty as regular IKG</br>-Hard:     The same difficutly as Absolute IKG</br>-Off:      " +
@@ -99,26 +111,27 @@ namespace Assets.Scripts
 			}
 		}
 
-		[FormerlySerializedAs("PerformanceMode")]
+		[FormerlySerializedAs("_performanceMode")]
 		[SerializeField]
-		bool _performanceMode = false;
+        [SettingField(EnabledType.Hidden)]
+        bool _removeBackgroundObjects = false;
 
 		[SettingOrder(6)]
 		[SettingField(EnabledType.AlwaysVisible)]
-		[SettingDescription("Improves performance of the fight by removing decoration objects")]
-		public bool PerformanceMode
+		[SettingDescription("Removes background objects from the arena to increase performance")]
+		public bool RemoveBackgroundObjects
         {
-			get => _performanceMode;
+			get => _removeBackgroundObjects;
 			set
             {
-				_performanceMode = value;
-				UpdateColorEffects(_colorEffects);
+				_removeBackgroundObjects = value;
+				UpdateColorEffects(_disableColorEffects ? CameraHueShift.Mode.Off : CameraHueShift.Mode.Quality);
 			}
         }
 
 
 
-		[SerializeField]
+		/*[SerializeField]
 		[SettingField(EnabledType.Hidden)]
 		bool blueMode = false;
 
@@ -138,10 +151,9 @@ namespace Assets.Scripts
 				if (blueMode != value)
 				{
 					blueMode = value;
-					UpdateBlueState();
 				}
 			}
-		}
+		}*/
 
 		[Header("God Mode")]
 		[Tooltip("If set to true, Inferno God Grimm will have 1.75x health than Inferno King Grimm")]
@@ -173,7 +185,7 @@ namespace Assets.Scripts
 			//GetElement(nameof(IncreasedGodModeHealth)).Visible = !InFight && !Infinite;
 		}
 
-		protected override void OnRegister()
+		/*protected override void OnRegister()
 		{
 			UpdateBlueState();
 		}
@@ -182,12 +194,11 @@ namespace Assets.Scripts
 		static void CameraInit()
 		{
 			UpdateBlueState();
-		}
+		}*/
 
 		void UpdateColorEffects(CameraHueShift.Mode newMode)
         {
-			_colorEffects = newMode;
-            if (PerformanceMode)
+            if (RemoveBackgroundObjects)
             {
 				CameraHueShift.CurrentHueShifter.ColorMode = CameraHueShift.Mode.Off;
 
@@ -199,12 +210,8 @@ namespace Assets.Scripts
 			}
         }
 
-		static Material cameraMaterial;
-
 		void UpdateInfiniteState()
 		{
-			//if (!InFight)
-			//{
 			var increasedHealthElement = GetElement(nameof(IncreasedGodModeHealth));
 			increasedHealthElement.Visible = !InFight && !Infinite;
 
@@ -214,32 +221,11 @@ namespace Assets.Scripts
 			var pufferFishDifficultyElement = GetElement(nameof(PufferFishDifficulty));
 			pufferFishDifficultyElement.Visible = !InFight && !Infinite;
 
-			//var healthValueElement = GetElement("CustomHealthValue");
 			GetElement(nameof(CustomHealthValue)).Visible = !InFight && !Infinite && EnableCustomHealth;
-			//}
-
-
-
-			/*if (Infinite)
-			{
-				healthValueElement.Visible = false;
-			}
-			else
-			{
-				healthValueElement.Visible = EnableCustomHealth;
-			}*/
 		}
 
-		static void UpdateBlueState()
+		/*static void UpdateBlueState()
 		{
-			/*if (cameraMaterial == null)
-			{
-				cameraMaterial = WeaverAssets.LoadAssetFromBundle<Material>("infernogrimmmod", "CameraMaterial");
-				if (cameraMaterial == null)
-				{
-					return;
-				}
-			}*/
 			var settings = GetSettings<IKGSettings>();
 			if (settings == null)
 			{
@@ -250,8 +236,6 @@ namespace Assets.Scripts
 				return;
 			}
 
-			Debug.Log("COLOR MODE =" + settings._colorEffects);
-			//CameraHueShift.CurrentHueShifter.ColorMode = settings._colorEffects;
 			settings.UpdateColorEffects(settings._colorEffects);
 
 			if (settings.BlueMode)
@@ -262,25 +246,7 @@ namespace Assets.Scripts
 			{
 				CameraHueShift.CurrentHueShifter.SetValues(0f, 0f, 0f, 0f);
 			}
-
-			
-
-			/*var cameraHueShift = WeaverCamera.Instance.GetComponent<CameraHueShift>();
-			if (cameraHueShift == null)
-			{
-				cameraHueShift = WeaverCamera.Instance.gameObject.AddComponent<CameraHueShift>();
-				//cameraHueShift.cameraMaterial = cameraMaterial;
-			}
-			if (settings.BlueMode)
-			{
-				cameraHueShift.SetValues(1f, 0.1f, 0.1f, 0.1f);
-			}
-			else
-			{
-				cameraHueShift.SetValues(0f, 0f, 0f, 0f);
-			}
-			cameraHueShift.Refresh();*/
-		}
+		}*/
 
 	}
 }

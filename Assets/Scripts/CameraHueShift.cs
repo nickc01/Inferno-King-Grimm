@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using WeaverCore;
 using WeaverCore.Utilities;
@@ -185,9 +186,62 @@ public class CameraHueShift : MonoBehaviour
 		}
 	}
 
+	static int _satID;
+    static int _brightnessID;
+    static int _shiftPercentageID;
+    static int _hueShiftID;
+
+	static List<Material> coloredMaterials;
+	public List<Material> ColoredMaterials
+	{
+		get
+		{
+			return coloredMaterials;
+        }
+		set
+		{
+            _satID = Shader.PropertyToID("_Sat");
+            _brightnessID = Shader.PropertyToID("_Brightness");
+            _shiftPercentageID = Shader.PropertyToID("_ShiftPercentage");
+			_hueShiftID = Shader.PropertyToID("_HueShift");
+
+			if (coloredMaterials == null)
+			{
+                coloredMaterials = value.ToList();
+            }
+			else
+			{
+                foreach (var mat in value)
+                {
+                    if (!coloredMaterials.Contains(mat))
+                    {
+						coloredMaterials.Add(mat);
+                    }
+                }
+            }
+
+			/*foreach (var mat in coloredMaterials)
+			{
+				mat.SetFloat(_satID, 1.4f);
+				mat.SetFloat(_brightnessID, 0.23f);
+            }*/
+
+			Refresh();
+        }
+	}
+
 	public void Refresh()
 	{
-        if (colorMode == Mode.Quality)
+		if (coloredMaterials != null)
+		{
+			foreach (var mat in coloredMaterials)
+			{
+                //mat.SetFloat(_shiftPercentageID, shiftPercentage);
+                mat.SetFloat(_shiftPercentageID, shiftPercentage);
+                mat.SetFloat(_hueShiftID, hueShift);
+            }
+		}
+        /*if (colorMode == Mode.Quality)
         {
 			qualityMaterial.SetFloat("_ShiftPercentage", shiftPercentage);
 			qualityMaterial.SetFloat("_HueShift", hueShift);
@@ -195,13 +249,13 @@ public class CameraHueShift : MonoBehaviour
         else if (colorMode == Mode.Performance)
         {
 			performanceMaterial.SetFloat("_ShiftPercentage", shiftPercentage);
-		}
+		}*/
 
 		//cameraMaterial.SetFloat("_SatShift", saturationShift);
 		//cameraMaterial.SetFloat("_ValShift", valueShift);
 	}
 
-	void OnRenderImage(RenderTexture source, RenderTexture destination)
+	/*void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
         switch (colorMode)
         {
@@ -214,5 +268,5 @@ public class CameraHueShift : MonoBehaviour
             default:
                 break;
         }
-	}
+	}*/
 }

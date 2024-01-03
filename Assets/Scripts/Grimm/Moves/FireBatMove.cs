@@ -273,7 +273,7 @@ public class FireBatMove : GrimmMove
 
 		var telePosition = new Vector3(newPositionX, Grimm.GroundY, transform.position.z);
 
-		float time = Teleporter.TeleportEntity(gameObject, telePosition, Teleporter.TeleType.Delayed, Color.red);
+		float time = Teleporter.TeleportEntity(gameObject, telePosition, Teleporter.TeleType.Delayed);
 
 		yield return new WaitForSeconds(time / 2f);
 		Grimm.FacePlayer(telePosition);

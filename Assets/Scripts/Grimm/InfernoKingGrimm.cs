@@ -212,6 +212,16 @@ public class InfernoKingGrimm : BossReplacement
 	[SerializeField]
 	AnimationCurve ValueShiftCurve;
 
+	[Header("Coloring")]
+	[SerializeField]
+	List<string> oldShaderNames = new List<string>();
+
+	[SerializeField]
+	List<Shader> newShaders = new List<Shader>();
+
+	[SerializeField]
+	List<Material> coloredMaterials = new List<Material>();
+
 	List<GrimmMove> randomMoveStorage;
 	int randomMoveIndex = 0;
 	//public ObjectPoolOLD2<HomingBall> HomingBallPool;
@@ -344,10 +354,10 @@ public class InfernoKingGrimm : BossReplacement
 
 	protected override void Awake()
 	{
-		if ((!Settings.PerformanceMode) && !Settings.BlueMode)
+		/*if ((!Settings.RemoveBackgroundObjects))
 		{
             CameraHueShift.Remove();
-        }
+        }*/
 		base.Awake();
 		MainPrefabs.Instance = prefabs;
 		if (!languageHooksAdded)
@@ -422,7 +432,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	void RemoveExtras()
 	{
-		if (Settings.PerformanceMode)
+		if (Settings.RemoveBackgroundObjects)
 		{
 			var activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 			if (activeScene.name == "GG_Grimm_Nightmare")
@@ -482,9 +492,114 @@ public class InfernoKingGrimm : BossReplacement
 		}
 	}
 
+	void FindMatsAndShaders(Transform parent, HashSet<Material> materials, HashSet<Shader> shaders, List<Material> materialsCache)
+	{
+		if (parent == null)
+		{
+			return;
+		}
+
+		var renderers = parent.GetComponents<Renderer>();
+
+		foreach (var renderer in renderers)
+		{
+			renderer.GetSharedMaterials(materialsCache);
+
+            foreach (var material in materialsCache)
+			{
+				if (material != null)
+				{
+					materials.Add(material);
+					shaders.Add(material.shader);
+				}
+			}
+		}
+
+		for (int i = 0; i < parent.childCount; i++)
+		{
+			FindMatsAndShaders(parent.GetChild(i), materials, shaders, materialsCache);
+		}
+	}
+
+	IEnumerator ReplaceShaders()
+	{
+		//yield return new WaitForSeconds(0.5f);
+		yield return null;
+
+		var replacements = new Dictionary<string, Shader>();
+
+		for (int i = 0; i < oldShaderNames.Count; i++)
+		{
+			replacements.Add(oldShaderNames[i], newShaders[i]);
+		}
+
+        HashSet<Material> foundMaterials = new HashSet<Material>();
+        HashSet<Shader> foundShaders = new HashSet<Shader>();
+
+        var scene = gameObject.scene;
+
+		List<Material> materialsCache = new List<Material>();
+        foreach (var obj in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        {
+            if (obj.scene.path == scene.path && obj.transform.parent == null)
+            {
+                FindMatsAndShaders(obj.transform, foundMaterials, foundShaders, materialsCache);
+            }
+        }
+
+        /*foreach (var renderer in GameObject.FindObjectsOfType<Renderer>())
+		{
+			foreach (var material in renderer.sharedMaterials)
+			{
+				if (material != null)
+				{
+					foundMaterials.Add(material);
+					foundShaders.Add(material.shader);
+				}
+			}
+		}*/
+
+        foreach (var material in foundMaterials)
+        {
+			if (replacements.TryGetValue(material.shader.name,out var newShader))
+			{
+#if UNITY_EDITOR
+				//material.shader = newShader;
+				WeaverLog.Log($"Shader {material.shader.name} would've been replaced by {newShader.name}");
+#else
+				material.shader = newShader;
+				WeaverLog.Log($"Shader {material.shader.name} has been replaced by {newShader.name}");
+				if (!coloredMaterials.Contains(material))
+				{
+                    coloredMaterials.Add(material);
+                }
+#endif
+            }
+            //WeaverLog.Log("FOUND MATERIAL = " + material.name);
+        }
+
+		foreach (var mat in coloredMaterials)
+		{
+			WeaverLog.Log("COLORED MATERIAL = " + mat);
+		}
+
+		CameraHueShift.CurrentHueShifter.ColoredMaterials = coloredMaterials;
+
+        /*foreach (var material in foundMaterials)
+        {
+            WeaverLog.Log("FOUND MATERIAL = " + material.name);
+        }
+
+        foreach (var shader in foundShaders)
+        {
+            WeaverLog.Log("FOUND SHADER = " + shader.name);
+        }*/
+    }
+
 	// Use this for initialization
 	private void Start()
 	{
+		StartCoroutine(ReplaceShaders());
 		RemoveExtras();
 		//Recycler = Recycler.CreateRecycler();
 		//BossStage = 2;
@@ -656,7 +771,7 @@ public class InfernoKingGrimm : BossReplacement
             InfiniteSpeed = phase1Speed;
         }
 
-        if ((!Settings.PerformanceMode) && !Settings.BlueMode && !FightingInPantheon)
+        if ((!Settings.RemoveBackgroundObjects) && !FightingInPantheon)
 		{
             CameraHueShift.CurrentHueShifter.ShiftPercentage = 0f;
             CameraHueShift.CurrentHueShifter.Refresh();
@@ -674,7 +789,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	private void Update()
 	{
-		if ((!Settings.PerformanceMode) && !Settings.BlueMode && !FightingInPantheon)
+		if ((!Settings.RemoveBackgroundObjects) && !FightingInPantheon)
 		{
 			if (GrimmHealth.Health != healthCache || modeCache != CameraHueShift.CurrentHueShifter.ColorMode)
 			{
@@ -865,7 +980,7 @@ public class InfernoKingGrimm : BossReplacement
 	{
 		if ((InfiniteSpeed >= 2f || FightingInPantheon) && forceNormal == false)
 		{
-			Teleporter.TeleportEntity(gameObject, position, Teleporter.TeleType.Delayed, Color.red);
+			Teleporter.TeleportEntity(gameObject, position, Teleporter.TeleType.Delayed);
 			if (transform.position != position)
 			{
 				yield return new WaitUntil(() => transform.position == position);
@@ -1329,9 +1444,9 @@ public class InfernoKingGrimm : BossReplacement
 		}*/
 		/*#if !UNITY_EDITOR
 				SilentSnapshot.TransitionTo(1f);
-		#endif*/
+#endif*/
 
-		Music.ApplyMusicSnapshot(Music.SnapshotType.Silent, 0f, 1f);
+				Music.ApplyMusicSnapshot(Music.SnapshotType.Silent, 0f, 1f);
 
 		yield return new WaitForSeconds(1f);
 
@@ -1399,7 +1514,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	void OnSceneChange(Scene scene, LoadSceneMode loadMode)
 	{
-		if (!Settings.BlueMode && CameraHueShift.HueShifterCreated)
+		if (CameraHueShift.HueShifterCreated)
 		{
 			CameraHueShift.CurrentHueShifter.ShiftPercentage = 0f;
 			CameraHueShift.CurrentHueShifter.Refresh();

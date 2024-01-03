@@ -141,7 +141,7 @@ public class PillarsMove : GrimmMove
 					}
 				}
 
-				Teleporter.TeleportEntity(gameObject, newPosition,Teleporter.TeleType.Delayed,Color.red);
+				Teleporter.TeleportEntity(gameObject, newPosition,Teleporter.TeleType.Delayed);
 			}
 
 			SpawnedPillars.Add(pillar);

@@ -371,7 +371,7 @@ public class GroundSlashMove : GrimmMove
 
 		//transform.position = new Vector3(teleX, Grimm.GroundY, 0f);
 		var telePosition = new Vector3(teleX, Grimm.GroundY, 0f);
-		var teleTime = Teleporter.TeleportEntity(gameObject, telePosition, Teleporter.TeleType.Delayed, Color.red);
+		var teleTime = Teleporter.TeleportEntity(gameObject, telePosition, Teleporter.TeleType.Delayed);
 
 		yield return new WaitForSeconds(teleTime / 2f);
 		Grimm.FacePlayer(telePosition);

@@ -4,6 +4,8 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
     Properties{
         _MainTex("Particle Texture", 2D) = "white" {}
         _InvFade("Soft Particles Factor", Range(0.01,3.0)) = 1.0
+		_ShiftPercentage("Shift Percentage",Range(0,1)) = 0
+		_HueShift("Shift Hue", Range(0,1)) = 0
     }
 
         Category{
@@ -45,6 +47,10 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
                     };
 
                     float4 _MainTex_ST;
+					uniform float _ShiftPercentage;
+					uniform float _HueShift;
+					
+					#include "Replacement Shaders/Coloring.cginc"
 
                     v2f vert(appdata_t v)
                     {
@@ -75,7 +81,7 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
                         i.color.a *= fade;
                         #endif
 
-                        fixed4 col = i.color * tex2D(_MainTex, i.texcoord);
+                        float4 col = Colorize4(i.color * tex2D(_MainTex, i.texcoord));
                         //col.rgb = lerp(col.rgb, col.gbr, _HueShift.r); //90 degrees
                         //col.rgb = lerp(col.rgb, col.gbr, _HueShift.g); //180 degrees
                         //col.rgb = lerp(col.rgb, col.bgr, _HueShift.b); //270 degrees
