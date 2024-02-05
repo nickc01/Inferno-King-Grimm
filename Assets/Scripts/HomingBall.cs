@@ -2,6 +2,7 @@
 using Enums;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 using WeaverCore;
@@ -12,13 +13,14 @@ using WeaverCore.Utilities;
 
 public class HomingBall : MonoBehaviour, IOnPool
 {
+	static HashSet<HomingBall> homingBallPool = new HashSet<HomingBall>();
+
 	new Rigidbody2D rigidbody;
 	new Collider2D collider;
 	ParticleSystem Smoke;
 	ParticleSystem Particles;
 
-	Coroutine MainCoroutine;
-	Coroutine ShrinkCoroutine;
+
 	[Header("Phase 1")]
 	public bool EnablePhase1 = true;
 	[FormerlySerializedAs("SpawnTime")]
@@ -59,10 +61,12 @@ public class HomingBall : MonoBehaviour, IOnPool
 	float LifeTime = 5f;
 
 	bool rigidBodyActive = false;
+    Coroutine MainCoroutine;
+    Coroutine ShrinkCoroutine;
 
-	//Vector3 velocity;
+    //Vector3 velocity;
 
-	/*class HomingBallHook : GrimmHooks
+    /*class HomingBallHook : GrimmHooks
 	{
 		public override void OnGrimmAwake(InfernoKingGrimm grimm)
 		{
@@ -72,7 +76,7 @@ public class HomingBall : MonoBehaviour, IOnPool
 		}
 	}*/
 
-	static Vector3 originalScale;
+    static Vector3 originalScale;
 
 	[OnIKGAwake]
 	static void OnGrimmAwake()
@@ -138,6 +142,11 @@ public class HomingBall : MonoBehaviour, IOnPool
 
 			while (phase1Timer < Phase1Time && _lifeTime < LifeTime)
 			{
+				if (!EnablePhase1)
+				{
+					break;
+				}
+
 				transform.position += (Vector3)Vector2.Lerp(Phase1TravelDirection * Phase1Velocity, Vector2.zero, phase1Timer / Phase1Time) * Time.deltaTime;
 
 				yield return null;
@@ -149,7 +158,7 @@ public class HomingBall : MonoBehaviour, IOnPool
 		}
 		if (EnablePhase2)
 		{
-			Vector3 oldOffset = Phase2TargetOffset;
+			//Vector3 oldOffset = Phase2TargetOffset;
 			if (InfernoKingGrimm.GodMode)
 			{
 				Phase2Velocity *= 1.5f;
@@ -173,10 +182,10 @@ public class HomingBall : MonoBehaviour, IOnPool
 		ShrinkAndStop();
 	}
 
-	Vector2 Difference(Vector2 a, Vector2 b)
+	/*Vector2 Difference(Vector2 a, Vector2 b)
 	{
 		return new Vector2(Mathf.Abs(a.x - b.x), Mathf.Abs(a.y - b.y));
-	}
+	}*/
 
 	IEnumerator ShrinkRoutine()
 	{
@@ -198,9 +207,14 @@ public class HomingBall : MonoBehaviour, IOnPool
 		} while (clock < end);
 
 		//Destroy(gameObject);
-		Pooling.Destroy(this);
+		//Pooling.Destroy(this);
 		//HomingBallPool.ReturnToPool(this);
-	}
+		homingBallPool.Add(this);
+		StopAllCoroutines();
+		gameObject.SetActive(false);
+		(this as IOnPool).OnPool();
+
+    }
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -218,8 +232,27 @@ public class HomingBall : MonoBehaviour, IOnPool
 
 	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, Vector2 spawnVector, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)
 	{
+		bool foundInPool = false;
+		HomingBall newBall = null;
+
+		while (newBall == null && homingBallPool.Count > 0)
+		{
+			newBall = homingBallPool.First();
+			homingBallPool.Remove(newBall);
+		}
+
+		if (newBall != null)
+		{
+			foundInPool = true;
+			newBall.transform.position = Position;
+		}
+		else
+		{
+			newBall = GameObject.Instantiate(MainPrefabs.Instance.HomingBallPrefab, Position, Quaternion.identity);
+		}
+
 		//var newBall = Instantiate(MainPrefabs.Instance.HomingBallPrefab,Position,Quaternion.identity);
-		var newBall = Pooling.Instantiate<HomingBall>(InfernoKingGrimm.MainGrimm.Prefabs.HomingBallPrefab, Position, Quaternion.identity);
+		//var newBall = Pooling.Instantiate<HomingBall>(InfernoKingGrimm.MainGrimm.Prefabs.HomingBallPrefab, Position, Quaternion.identity);
 		//Debug.Log("Starting Lifetime = " + newBall._lifeTime);
 
 		if (grimm.FaceDirection == GrimmDirection.Left)
@@ -247,17 +280,34 @@ public class HomingBall : MonoBehaviour, IOnPool
 		}
 
 		ActiveHomingBalls.Add(newBall);
+
+		if (foundInPool)
+		{
+			newBall.gameObject.SetActive(true);
+			newBall.Awake();
+			newBall.Start();
+		}
+
 		return newBall;
 	}
 
 	void IOnPool.OnPool()
 	{
 		rigidbody.Sleep();
+		rigidbody.velocity = default;
 		//Debug.Log("ON POOL!!!");
 		ActiveHomingBalls.Remove(this);
 		transform.localScale = originalScale;
-		//_lifeTime = 0f;
-		/*if (MainCoroutine != null)
+
+		_lifeTime = 0f;
+		rigidBodyActive = false;
+		collider.enabled = true;
+		Phase2TravelDirection = default;
+		EnablePhase1 = true;
+		EnablePhase2 = true;
+        growthComponent.enabled = false;
+        //_lifeTime = 0f;
+        /*if (MainCoroutine != null)
 		{
 			StopCoroutine(MainCoroutine);
 			MainCoroutine = null;
@@ -267,7 +317,7 @@ public class HomingBall : MonoBehaviour, IOnPool
 			StopCoroutine(ShrinkCoroutine);
 			ShrinkCoroutine = null;
 		}*/
-		MainCoroutine = null;
+        MainCoroutine = null;
 		ShrinkCoroutine = null;
 		//collider.enabled = true;
 		//EnablePhase1 = true;

@@ -8660,6 +8660,7 @@ MonoBehaviour:
   TinkSoundVolume: 1
   TinkSoundPitch: 1
   forceValidHit: 0
+  evasionTime: 0.2
 --- !u!1 &1459075169644730
 GameObject:
   m_ObjectHideFlags: 0
@@ -27717,6 +27718,7 @@ MonoBehaviour:
   TinkSoundVolume: 1
   TinkSoundPitch: 1
   forceValidHit: 0
+  evasionTime: 0.2
 --- !u!1 &1811042915894992
 GameObject:
   m_ObjectHideFlags: 0
@@ -27816,6 +27818,7 @@ MonoBehaviour:
   TinkSoundVolume: 1
   TinkSoundPitch: 1
   forceValidHit: 0
+  evasionTime: 0.2
 --- !u!1 &1948238754803710
 GameObject:
   m_ObjectHideFlags: 0
