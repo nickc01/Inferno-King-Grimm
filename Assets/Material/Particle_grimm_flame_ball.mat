@@ -8,10 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Particle_grimm_flame_ball
-  m_Shader: {fileID: 4800000, guid: f29d212ebe22e6a4babbfdd9ff20f108, type: 3}
+  m_Shader: {fileID: 4800000, guid: 2ee4b8959587c06469b9a61cee0935d2, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -38,7 +38,7 @@ Material:
     - _EnableExternalAlpha: 0
     - _FlashAmount: 0
     - _Glossiness: 0.5
-    - _HueShift: 0.13597462
+    - _HueShift: 0.1449216
     - _InvFade: 1.71
     - _Metallic: 0
     - _Mode: 0

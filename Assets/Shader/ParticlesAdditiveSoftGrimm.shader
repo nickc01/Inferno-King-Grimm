@@ -20,6 +20,7 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
                     CGPROGRAM
                     #pragma vertex vert
                     #pragma fragment frag
+                    #pragma multi_compile_instancing
                     #pragma multi_compile_particles
                     #pragma multi_compile_fog
 
@@ -44,6 +45,7 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
                         float4 projPos : TEXCOORD2;
                         #endif
                         UNITY_VERTEX_OUTPUT_STEREO
+                        UNITY_VERTEX_INPUT_INSTANCE_ID
                     };
 
                     float4 _MainTex_ST;
@@ -56,6 +58,7 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
                     {
                         v2f o;
                         UNITY_SETUP_INSTANCE_ID(v);
+                        UNITY_TRANSFER_INSTANCE_ID(v, o);
                         UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                         o.vertex = UnityObjectToClipPos(v.vertex);
                         #ifdef SOFTPARTICLES_ON
@@ -74,6 +77,7 @@ Shader "Particles/Additive (Soft) (Grimm Version)" {
 
                     fixed4 frag(v2f i) : SV_Target
                     {
+                        UNITY_SETUP_INSTANCE_ID(i);
                         #ifdef SOFTPARTICLES_ON
                         float sceneZ = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.projPos)));
                         float partZ = i.projPos.z;
