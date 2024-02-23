@@ -38,14 +38,14 @@ Material:
     - _EnableExternalAlpha: 0
     - _FlashAmount: 0
     - _Glossiness: 0.5
-    - _HueShift: 0.1449216
+    - _HueShift: 0.3
     - _InvFade: 1.71
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Sat: 0
-    - _ShiftPercentage: 1
+    - _ShiftPercentage: 0.2567164
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1

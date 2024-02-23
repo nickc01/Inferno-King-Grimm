@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using WeaverCore;
 using WeaverCore.Attributes;
+using WeaverCore.Components;
 using WeaverCore.Settings;
 using WeaverCore.Utilities;
 
@@ -224,7 +225,32 @@ namespace Assets.Scripts
 			GetElement(nameof(CustomHealthValue)).Visible = !InFight && !Infinite && EnableCustomHealth;
 		}
 
-		/*static void UpdateBlueState()
+        /*[SettingField(EnabledType.AlwaysVisible, "Stress Test")]
+        [SettingOrder(9)]
+        public void DoStressTest()
+		{
+			var enemies = GameObject.FindObjectsOfType<EntityHealth>();
+			EntityHealth largestEnemy = null;
+			int largestHealth = -1;
+			foreach (var entity in enemies)
+			{
+				if (entity.Health > largestHealth)
+				{
+					largestEnemy = entity;
+					largestHealth = entity.Health;
+				}
+			}
+
+			if (largestEnemy != null)
+			{
+				for (int i = 0; i < 100; i++)
+				{
+					GameObject.Instantiate(largestEnemy.gameObject, largestEnemy.transform.position, largestEnemy.transform.rotation);
+				}
+			}
+		}*/
+
+        /*static void UpdateBlueState()
 		{
 			var settings = GetSettings<IKGSettings>();
 			if (settings == null)
@@ -248,5 +274,5 @@ namespace Assets.Scripts
 			}
 		}*/
 
-	}
+    }
 }
