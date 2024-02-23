@@ -132,7 +132,7 @@ namespace Assets.Scripts
 
 
 
-		/*[SerializeField]
+		[SerializeField]
 		[SettingField(EnabledType.Hidden)]
 		bool blueMode = false;
 
@@ -152,9 +152,10 @@ namespace Assets.Scripts
 				if (blueMode != value)
 				{
 					blueMode = value;
-				}
+                    UpdateBlueState();
+                }
 			}
-		}*/
+		}
 
 		[Header("God Mode")]
 		[Tooltip("If set to true, Inferno God Grimm will have 1.75x health than Inferno King Grimm")]
@@ -186,7 +187,7 @@ namespace Assets.Scripts
 			//GetElement(nameof(IncreasedGodModeHealth)).Visible = !InFight && !Infinite;
 		}
 
-		/*protected override void OnRegister()
+		protected override void OnRegister()
 		{
 			UpdateBlueState();
 		}
@@ -195,7 +196,7 @@ namespace Assets.Scripts
 		static void CameraInit()
 		{
 			UpdateBlueState();
-		}*/
+		}
 
 		void UpdateColorEffects(CameraHueShift.Mode newMode)
         {
@@ -207,7 +208,6 @@ namespace Assets.Scripts
 			else
             {
 				CameraHueShift.CurrentHueShifter.ColorMode = newMode;
-
 			}
         }
 
@@ -250,7 +250,7 @@ namespace Assets.Scripts
 			}
 		}*/
 
-        /*static void UpdateBlueState()
+        static void UpdateBlueState()
 		{
 			var settings = GetSettings<IKGSettings>();
 			if (settings == null)
@@ -262,7 +262,7 @@ namespace Assets.Scripts
 				return;
 			}
 
-			settings.UpdateColorEffects(settings._colorEffects);
+			settings.UpdateColorEffects(CameraHueShift.Mode.Quality);
 
 			if (settings.BlueMode)
 			{
@@ -272,7 +272,7 @@ namespace Assets.Scripts
 			{
 				CameraHueShift.CurrentHueShifter.SetValues(0f, 0f, 0f, 0f);
 			}
-		}*/
+		}
 
     }
 }

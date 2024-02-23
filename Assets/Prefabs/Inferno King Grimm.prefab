@@ -83,7 +83,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ecbbe8d07ee64754d86c09cc28833eec, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -182,7 +182,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ecbbe8d07ee64754d86c09cc28833eec, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -361,7 +361,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ecbbe8d07ee64754d86c09cc28833eec, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -465,7 +465,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ecbbe8d07ee64754d86c09cc28833eec, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3150,7 +3150,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c7bf95cb2e1569d468a945a1e31f3c5f, type: 2}
+  - {fileID: 2100000, guid: dfe75894179b6ea48be3aa90f6401fb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11235,7 +11235,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d478d233ba7bc140a7f323098a6b372, type: 2}
+  - {fileID: 2100000, guid: 0ae6500efb1f7134f8f11defd8a6675f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11363,7 +11363,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ecbbe8d07ee64754d86c09cc28833eec, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14143,7 +14143,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d478d233ba7bc140a7f323098a6b372, type: 2}
+  - {fileID: 2100000, guid: 0ae6500efb1f7134f8f11defd8a6675f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22030,7 +22030,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c7bf95cb2e1569d468a945a1e31f3c5f, type: 2}
+  - {fileID: 2100000, guid: dfe75894179b6ea48be3aa90f6401fb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24793,7 +24793,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d478d233ba7bc140a7f323098a6b372, type: 2}
+  - {fileID: 2100000, guid: 0ae6500efb1f7134f8f11defd8a6675f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30742,26 +30742,8 @@ MonoBehaviour:
   - Sprites/Cherry-Default
   - Sprites/Default-ColorFlash
   - Sprites/Diffuse-Beating
-  newShaders:
-  - {fileID: 4800000, guid: 94e09a9980beb34408cebe616f11576a, type: 3}
-  - {fileID: 4800000, guid: 7715c89a1e9edc14b9d8339e473ece5b, type: 3}
-  - {fileID: 4800000, guid: dcef374241d4dd34b8e311fb034811ac, type: 3}
-  - {fileID: 4800000, guid: 32654b32b6e676b46912775a73a83858, type: 3}
-  - {fileID: 4800000, guid: 4f9825b5657c32942a11f7dd6cf0eec4, type: 3}
-  - {fileID: 4800000, guid: f29d212ebe22e6a4babbfdd9ff20f108, type: 3}
-  - {fileID: 4800000, guid: ad3bb0c2adaa2384ea01d52375f8808a, type: 3}
-  - {fileID: 4800000, guid: b70091f237c2d3b4695a92bc3bea1f3c, type: 3}
-  - {fileID: 4800000, guid: 65e044bed43437848b7f368030a5869f, type: 3}
-  - {fileID: 4800000, guid: b9f1f6764349f464089d8a8462c2305c, type: 3}
-  - {fileID: 4800000, guid: 12ef0ab655daec3488ec4ea1b0d453e3, type: 3}
-  coloredMaterials:
-  - {fileID: 2100000, guid: 5d478d233ba7bc140a7f323098a6b372, type: 2}
-  - {fileID: 2100000, guid: ecbbe8d07ee64754d86c09cc28833eec, type: 2}
-  - {fileID: 2100000, guid: d2878fa3ad6f3b846adf2ac7379ca97d, type: 2}
-  - {fileID: 2100000, guid: 0cf432536ebcd8b49abd5406f75e6979, type: 2}
-  - {fileID: 2100000, guid: c7bf95cb2e1569d468a945a1e31f3c5f, type: 2}
-  - {fileID: 2100000, guid: 910b690571ad4584282a2cdc892cf68f, type: 2}
-  - {fileID: 2100000, guid: 1cfb307421c7d8c439f999cd9aa037f4, type: 2}
+  newShaders: []
+  coloredMaterials: []
   forceGodGrimmMode: 0
   forceBalloonMove: 0
   phase1Speed: 1.15
@@ -31331,7 +31313,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ecbbe8d07ee64754d86c09cc28833eec, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

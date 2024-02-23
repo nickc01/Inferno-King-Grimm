@@ -19,4 +19,5 @@ MonoBehaviour:
   PufferFishDifficulty: 0
   _infinite: 0
   _removeBackgroundObjects: 0
+  blueMode: 0
   IncreasedGodModeHealth: 1

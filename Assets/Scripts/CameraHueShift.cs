@@ -191,8 +191,8 @@ public class CameraHueShift : MonoBehaviour
     static int _shiftPercentageID;
     static int _hueShiftID;
 
-	static List<Material> coloredMaterials;
-	public List<Material> ColoredMaterials
+	//static List<Material> coloredMaterials;
+	/*public List<Material> ColoredMaterials
 	{
 		get
 		{
@@ -220,19 +220,13 @@ public class CameraHueShift : MonoBehaviour
                 }
             }
 
-			/*foreach (var mat in coloredMaterials)
-			{
-				mat.SetFloat(_satID, 1.4f);
-				mat.SetFloat(_brightnessID, 0.23f);
-            }*/
-
 			Refresh();
         }
-	}
+	}*/
 
 	public void Refresh()
 	{
-		if (coloredMaterials != null)
+		/*if (coloredMaterials != null)
 		{
 			foreach (var mat in coloredMaterials)
 			{
@@ -240,8 +234,8 @@ public class CameraHueShift : MonoBehaviour
                 mat.SetFloat(_shiftPercentageID, shiftPercentage);
                 mat.SetFloat(_hueShiftID, hueShift);
             }
-		}
-        /*if (colorMode == Mode.Quality)
+		}*/
+        if (colorMode == Mode.Quality)
         {
 			qualityMaterial.SetFloat("_ShiftPercentage", shiftPercentage);
 			qualityMaterial.SetFloat("_HueShift", hueShift);
@@ -249,13 +243,13 @@ public class CameraHueShift : MonoBehaviour
         else if (colorMode == Mode.Performance)
         {
 			performanceMaterial.SetFloat("_ShiftPercentage", shiftPercentage);
-		}*/
+		}
 
 		//cameraMaterial.SetFloat("_SatShift", saturationShift);
 		//cameraMaterial.SetFloat("_ValShift", valueShift);
 	}
 
-	/*void OnRenderImage(RenderTexture source, RenderTexture destination)
+	void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
         switch (colorMode)
         {
@@ -268,5 +262,5 @@ public class CameraHueShift : MonoBehaviour
             default:
                 break;
         }
-	}*/
+	}
 }

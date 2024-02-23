@@ -492,7 +492,7 @@ public class InfernoKingGrimm : BossReplacement
 		}
 	}
 
-	void FindMatsAndShaders(Transform parent, HashSet<Material> materials, HashSet<Shader> shaders, List<Material> materialsCache)
+	/*void FindMatsAndShaders(Transform parent, HashSet<Material> materials, HashSet<Shader> shaders, List<Material> materialsCache)
 	{
 		if (parent == null)
 		{
@@ -547,18 +547,6 @@ public class InfernoKingGrimm : BossReplacement
             }
         }
 
-        /*foreach (var renderer in GameObject.FindObjectsOfType<Renderer>())
-		{
-			foreach (var material in renderer.sharedMaterials)
-			{
-				if (material != null)
-				{
-					foundMaterials.Add(material);
-					foundShaders.Add(material.shader);
-				}
-			}
-		}*/
-
         foreach (var material in foundMaterials)
         {
 			if (replacements.TryGetValue(material.shader.name,out var newShader))
@@ -575,7 +563,6 @@ public class InfernoKingGrimm : BossReplacement
                 }
 #endif
             }
-            //WeaverLog.Log("FOUND MATERIAL = " + material.name);
         }
 
 		foreach (var mat in coloredMaterials)
@@ -584,22 +571,12 @@ public class InfernoKingGrimm : BossReplacement
 		}
 
 		CameraHueShift.CurrentHueShifter.ColoredMaterials = coloredMaterials;
-
-        /*foreach (var material in foundMaterials)
-        {
-            WeaverLog.Log("FOUND MATERIAL = " + material.name);
-        }
-
-        foreach (var shader in foundShaders)
-        {
-            WeaverLog.Log("FOUND SHADER = " + shader.name);
-        }*/
-    }
+    }*/
 
 	// Use this for initialization
 	private void Start()
 	{
-		StartCoroutine(ReplaceShaders());
+		//StartCoroutine(ReplaceShaders());
 		RemoveExtras();
 		//Recycler = Recycler.CreateRecycler();
 		//BossStage = 2;
@@ -771,7 +748,7 @@ public class InfernoKingGrimm : BossReplacement
             InfiniteSpeed = phase1Speed;
         }
 
-        if ((!Settings.RemoveBackgroundObjects) && !FightingInPantheon)
+        if ((!Settings.RemoveBackgroundObjects) && !FightingInPantheon && !Settings.BlueMode)
 		{
             CameraHueShift.CurrentHueShifter.ShiftPercentage = 0f;
             CameraHueShift.CurrentHueShifter.Refresh();
@@ -789,7 +766,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	private void Update()
 	{
-		if ((!Settings.RemoveBackgroundObjects) && !FightingInPantheon)
+		if ((!Settings.RemoveBackgroundObjects) && !FightingInPantheon && !Settings.BlueMode)
 		{
 			if (GrimmHealth.Health != healthCache || modeCache != CameraHueShift.CurrentHueShifter.ColorMode)
 			{
@@ -1514,7 +1491,7 @@ public class InfernoKingGrimm : BossReplacement
 
 	void OnSceneChange(Scene scene, LoadSceneMode loadMode)
 	{
-		if (CameraHueShift.HueShifterCreated)
+		if (CameraHueShift.HueShifterCreated && !Settings.BlueMode)
 		{
 			CameraHueShift.CurrentHueShifter.ShiftPercentage = 0f;
 			CameraHueShift.CurrentHueShifter.Refresh();
