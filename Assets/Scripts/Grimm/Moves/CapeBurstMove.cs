@@ -218,9 +218,6 @@ public class CapeBurstMove : GrimmMove
 			var angles = VectorUtilities.CalculateSpacedValues(trueAmountOfShots, angleBetweenShots);
 			float angleOffset = 0f;
 
-			//Debug.Log("Player Diff Angle = " + Mathf.Abs(currentPlayerAngle - previousPlayerAngle));
-			//Debug.Log("Angle Between Shots = " + (angleBetweenShots / 5f));
-
 			if (i >= 2 && (Vector3.Distance(currentPlayerPosition, previousPlayerPosition) < 0.02f || currentPlayerPosition.y > transform.position.y + 2f))
 			{
 				positionMatchCount++;
@@ -247,24 +244,6 @@ public class CapeBurstMove : GrimmMove
 			{
 				positionMatchCount = 0;
 			}
-			/*if (!(Mathf.Abs(currentPlayerAngle - previousPlayerAngle) > (angleBetweenShots / 4f) || Vector3.Distance(currentPlayerPosition,previousPlayerPosition) > 2f) || currentPlayerPosition.y > transform.position.y + 2f)
-			{
-				float nearestAngleIndex = 0f;
-				float nearestValue = float.PositiveInfinity;
-				for (int j = 0; j < angles.Count; j++)
-				{
-					var difference = currentPlayerAngle - angles[j];
-					if (Mathf.Abs(difference) <= nearestValue)
-					{
-						nearestValue = difference;
-						nearestAngleIndex = j;
-					}
-				}
-				if (!float.IsInfinity(nearestValue))
-				{
-					angleOffset = nearestValue;
-				}
-			}*/
 
 			float speed = InfernoKingGrimm.GetInfiniteSpeed(0.5f,1.35f);//InfernoKingGrimm.InfiniteSpeed / 2.5f;
 

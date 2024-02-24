@@ -2,7 +2,6 @@
 using Enums;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 using WeaverCore;
@@ -13,56 +12,53 @@ using WeaverCore.Utilities;
 
 public class HomingBall : MonoBehaviour, IOnPool
 {
-	static HashSet<HomingBall> homingBallPool = new HashSet<HomingBall>();
+    new Rigidbody2D rigidbody;
+    new Collider2D collider;
+    ParticleSystem Smoke;
+    ParticleSystem Particles;
 
-	new Rigidbody2D rigidbody;
-	new Collider2D collider;
-	ParticleSystem Smoke;
-	ParticleSystem Particles;
-
-
-	[Header("Phase 1")]
-	public bool EnablePhase1 = true;
-	[FormerlySerializedAs("SpawnTime")]
-	public float Phase1Time = 1f;
-	[FormerlySerializedAs("SpawnVelocity")]
-	public float Phase1Velocity = 20f;
-	public Vector2 Phase1TravelDirection = default(Vector2);
-
-	[Header("Phase 2")]
-	public bool EnablePhase2 = true;
-	[FormerlySerializedAs("RotationSpeed")]
-	public float Phase2RotationSpeed = 25f;
-	[FormerlySerializedAs("Velocity")]
-	public float Phase2Velocity = 5f;
-	[FormerlySerializedAs("TargetOffset")]
-	public Vector2 Phase2TargetOffset = default(Vector2);
-	public Vector2 Phase2TravelDirection = default(Vector2);
-
-	[Header("Death")]
-	[FormerlySerializedAs("shrinkTime")]
-	[Tooltip("How fast the homing ball shrinks when it hits an obstacle")]
-	public float ShrinkTime = 0.7f;
-
-	public static Vector2 GlowScale = Vector2.one;
-	public static Vector2 FirePillarOffset = Vector2.zero;
-	//static ObjectPool HomingBallPool;
-
-	public static HashSet<HomingBall> ActiveHomingBalls = new HashSet<HomingBall>();
-
-	Growth growthComponent;
-
-	//TODO : TODO : TODO : TODO : TODO : TODO : TODO : TODO :TODO : TODO : TODO : TODO :TODO : TODO : TODO : TODO :
-	//public Vector2 travelDirection = Vector2.up;
-
-	float _lifeTime = 0f;
-
-	[SerializeField]
-	float LifeTime = 5f;
-
-	bool rigidBodyActive = false;
     Coroutine MainCoroutine;
     Coroutine ShrinkCoroutine;
+    [Header("Phase 1")]
+    public bool EnablePhase1 = true;
+    [FormerlySerializedAs("SpawnTime")]
+    public float Phase1Time = 1f;
+    [FormerlySerializedAs("SpawnVelocity")]
+    public float Phase1Velocity = 20f;
+    public Vector2 Phase1TravelDirection = default(Vector2);
+
+    [Header("Phase 2")]
+    public bool EnablePhase2 = true;
+    [FormerlySerializedAs("RotationSpeed")]
+    public float Phase2RotationSpeed = 25f;
+    [FormerlySerializedAs("Velocity")]
+    public float Phase2Velocity = 5f;
+    [FormerlySerializedAs("TargetOffset")]
+    public Vector2 Phase2TargetOffset = default(Vector2);
+    public Vector2 Phase2TravelDirection = default(Vector2);
+
+    [Header("Death")]
+    [FormerlySerializedAs("shrinkTime")]
+    [Tooltip("How fast the homing ball shrinks when it hits an obstacle")]
+    public float ShrinkTime = 0.7f;
+
+    public static Vector2 GlowScale = Vector2.one;
+    public static Vector2 FirePillarOffset = Vector2.zero;
+    //static ObjectPool HomingBallPool;
+
+    public static HashSet<HomingBall> ActiveHomingBalls = new HashSet<HomingBall>();
+
+    Growth growthComponent;
+
+    //TODO : TODO : TODO : TODO : TODO : TODO : TODO : TODO :TODO : TODO : TODO : TODO :TODO : TODO : TODO : TODO :
+    //public Vector2 travelDirection = Vector2.up;
+
+    float _lifeTime = 0f;
+
+    [SerializeField]
+    float LifeTime = 5f;
+
+    bool rigidBodyActive = false;
 
     //Vector3 velocity;
 
@@ -78,234 +74,188 @@ public class HomingBall : MonoBehaviour, IOnPool
 
     static Vector3 originalScale;
 
-	[OnIKGAwake]
-	static void OnGrimmAwake()
-	{
-		originalScale = InfernoKingGrimm.MainGrimm.Prefabs.HomingBallPrefab.transform.localScale;
-		//HomingBallPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.HomingBallPrefab);
-		//HomingBallPool.FillPoolAsync(20);
-	}
-
-	void Awake()
-	{
-		//velocity = default(Vector2);
-		//Debug.Log("Homing Ball Awake");
-	}
-
-	void Start()
-	{
-		//Debug.Log("Homing Ball Start");
-		//Debug.Log("Start Called");
-		if (collider == null)
-		{
-			rigidbody = GetComponent<Rigidbody2D>();
-			collider = GetComponent<Collider2D>();
-			Smoke = transform.Find("Smoke").GetComponent<ParticleSystem>();
-			Particles = transform.Find("Particles").GetComponent<ParticleSystem>();
-			growthComponent = GetComponent<Growth>();
-		}
-		Smoke.Play();
-		Particles.Play();
-		//Debug.Log("Starting Main Coroutine");
-		MainCoroutine = StartCoroutine(MainAction());
-	}
-
-	void Update()
-	{
-		_lifeTime += Time.deltaTime;
-		if (!rigidBodyActive && _lifeTime > 0.3f)
-		{
-			rigidBodyActive = true;
-			rigidbody.WakeUp();
-		}
-		//transform.position += velocity;
-	}
-
-	public void ShrinkAndStop()
-	{
-		if (MainCoroutine != null)
-		{
-			StopCoroutine(MainCoroutine);
-			MainCoroutine = null;
-		}
-		if (ShrinkCoroutine == null && gameObject.activeSelf)
-		{
-			ShrinkCoroutine = StartCoroutine(ShrinkRoutine());
-		}
-	}
-
-	IEnumerator MainAction()
-	{
-		if (EnablePhase1)
-		{
-			float phase1Timer = 0f;
-
-			while (phase1Timer < Phase1Time && _lifeTime < LifeTime)
-			{
-				if (!EnablePhase1)
-				{
-					break;
-				}
-
-				transform.position += (Vector3)Vector2.Lerp(Phase1TravelDirection * Phase1Velocity, Vector2.zero, phase1Timer / Phase1Time) * Time.deltaTime;
-
-				yield return null;
-
-				phase1Timer += Time.deltaTime;
-			}
-
-			Phase1TravelDirection = Vector3.zero;
-		}
-		if (EnablePhase2)
-		{
-			//Vector3 oldOffset = Phase2TargetOffset;
-			if (InfernoKingGrimm.GodMode)
-			{
-				Phase2Velocity *= 1.5f;
-				//Phase2RotationSpeed *= 2f;
-				Phase2TargetOffset /= 1.5f;
-			}
-			while (_lifeTime < LifeTime)
-			{
-				transform.position += (Vector3)Phase2TravelDirection * Time.deltaTime;
-				Phase2TravelDirection = Vector3.RotateTowards(Phase2TravelDirection, ((Player.Player1.transform.position + (Vector3)Phase2TargetOffset) - transform.position) * 100f, Phase2RotationSpeed * Mathf.Deg2Rad * Time.deltaTime, Phase2Velocity * Time.deltaTime);
-				yield return null;
-			}
-			if (InfernoKingGrimm.GodMode)
-			{
-				Phase2Velocity /= 1.5f;
-				//Phase2RotationSpeed /= 2f;
-				Phase2TargetOffset *= 1.5f;
-			}
-		}
-
-		ShrinkAndStop();
-	}
-
-	/*Vector2 Difference(Vector2 a, Vector2 b)
-	{
-		return new Vector2(Mathf.Abs(a.x - b.x), Mathf.Abs(a.y - b.y));
-	}*/
-
-	IEnumerator ShrinkRoutine()
-	{
-		Smoke.Stop();
-		Particles.Stop();
-		collider.enabled = false;
-		Vector3 oldScale = transform.localScale;
-
-		float clock = 0f;
-		float end = 0.5f;
-		//velocity = 0f;
-		do
-		{
-			yield return null;
-			clock += Time.deltaTime;
-			transform.localScale = Vector3.Lerp(oldScale, Vector3.zero, clock / ShrinkTime);
-			//velocity *= 0.85f;
-			//rigidbody.velocity *= 0.85f;
-		} while (clock < end);
-
-		//Destroy(gameObject);
-		//Pooling.Destroy(this);
-		//HomingBallPool.ReturnToPool(this);
-		homingBallPool.Add(this);
-		StopAllCoroutines();
-		gameObject.SetActive(false);
-		(this as IOnPool).OnPool();
-
+    [OnIKGAwake]
+    static void OnGrimmAwake()
+    {
+        originalScale = InfernoKingGrimm.MainGrimm.Prefabs.HomingBallPrefab.transform.localScale;
+        //HomingBallPool = new ObjectPool(InfernoKingGrimm.Instance.Prefabs.HomingBallPrefab);
+        //HomingBallPool.FillPoolAsync(20);
     }
 
-	void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (_lifeTime >= 0.3f && collision.gameObject.layer == LayerMask.NameToLayer("Terrain") && ShrinkCoroutine == null)
-		{
-			ShrinkAndStop();
-		}
-	}
+    void Awake()
+    {
+        //velocity = default(Vector2);
+        //Debug.Log("Homing Ball Awake");
+    }
 
-	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, float spawnAngle, float spawnVelocity, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)
-	{
-		return Fire(grimm, Position, VectorUtilities.DegreesToVector(spawnAngle, spawnVelocity), rotationSpeed, playEffects, audioPitch);
-	}
+    void Start()
+    {
+        //Debug.Log("Homing Ball Start");
+        //Debug.Log("Start Called");
+        if (collider == null)
+        {
+            rigidbody = GetComponent<Rigidbody2D>();
+            collider = GetComponent<Collider2D>();
+            Smoke = transform.Find("Smoke").GetComponent<ParticleSystem>();
+            Particles = transform.Find("Particles").GetComponent<ParticleSystem>();
+            growthComponent = GetComponent<Growth>();
+        }
+        Smoke.Play();
+        Particles.Play();
+        //Debug.Log("Starting Main Coroutine");
+        MainCoroutine = StartCoroutine(MainAction());
+    }
+
+    void Update()
+    {
+        _lifeTime += Time.deltaTime;
+        if (!rigidBodyActive && _lifeTime > 0.3f)
+        {
+            rigidBodyActive = true;
+            rigidbody.WakeUp();
+        }
+        //transform.position += velocity;
+    }
+
+    public void ShrinkAndStop()
+    {
+        if (MainCoroutine != null)
+        {
+            StopCoroutine(MainCoroutine);
+            MainCoroutine = null;
+        }
+        if (ShrinkCoroutine == null && gameObject.activeSelf)
+        {
+            ShrinkCoroutine = StartCoroutine(ShrinkRoutine());
+        }
+    }
+
+    IEnumerator MainAction()
+    {
+        if (EnablePhase1)
+        {
+            float phase1Timer = 0f;
+
+            while (phase1Timer < Phase1Time && _lifeTime < LifeTime)
+            {
+                transform.position += (Vector3)Vector2.Lerp(Phase1TravelDirection * Phase1Velocity, Vector2.zero, phase1Timer / Phase1Time) * Time.deltaTime;
+
+                yield return null;
+
+                phase1Timer += Time.deltaTime;
+            }
+
+            Phase1TravelDirection = Vector3.zero;
+        }
+        if (EnablePhase2)
+        {
+            Vector3 oldOffset = Phase2TargetOffset;
+            if (InfernoKingGrimm.GodMode)
+            {
+                Phase2Velocity *= 1.5f;
+                //Phase2RotationSpeed *= 2f;
+                Phase2TargetOffset /= 1.5f;
+            }
+            while (_lifeTime < LifeTime)
+            {
+                transform.position += (Vector3)Phase2TravelDirection * Time.deltaTime;
+                Phase2TravelDirection = Vector3.RotateTowards(Phase2TravelDirection, ((Player.Player1.transform.position + (Vector3)Phase2TargetOffset) - transform.position) * 100f, Phase2RotationSpeed * Mathf.Deg2Rad * Time.deltaTime, Phase2Velocity * Time.deltaTime);
+                yield return null;
+            }
+            if (InfernoKingGrimm.GodMode)
+            {
+                Phase2Velocity /= 1.5f;
+                //Phase2RotationSpeed /= 2f;
+                Phase2TargetOffset *= 1.5f;
+            }
+        }
+
+        ShrinkAndStop();
+    }
+
+    Vector2 Difference(Vector2 a, Vector2 b)
+    {
+        return new Vector2(Mathf.Abs(a.x - b.x), Mathf.Abs(a.y - b.y));
+    }
+
+    IEnumerator ShrinkRoutine()
+    {
+        Smoke.Stop();
+        Particles.Stop();
+        collider.enabled = false;
+        Vector3 oldScale = transform.localScale;
+
+        float clock = 0f;
+        float end = 0.5f;
+        //velocity = 0f;
+        do
+        {
+            yield return null;
+            clock += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(oldScale, Vector3.zero, clock / ShrinkTime);
+            //velocity *= 0.85f;
+            //rigidbody.velocity *= 0.85f;
+        } while (clock < end);
+
+        //Destroy(gameObject);
+        Pooling.Destroy(this);
+        //HomingBallPool.ReturnToPool(this);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (_lifeTime >= 0.3f && collision.gameObject.layer == LayerMask.NameToLayer("Terrain") && ShrinkCoroutine == null)
+        {
+            ShrinkAndStop();
+        }
+    }
+
+    public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, float spawnAngle, float spawnVelocity, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)
+    {
+        return Fire(grimm, Position, VectorUtilities.DegreesToVector(spawnAngle, spawnVelocity), rotationSpeed, playEffects, audioPitch);
+    }
 
 
-	public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, Vector2 spawnVector, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)
-	{
-		bool foundInPool = false;
-		HomingBall newBall = null;
+    public static HomingBall Fire(InfernoKingGrimm grimm, Vector3 Position, Vector2 spawnVector, float rotationSpeed, bool playEffects = true, float audioPitch = 1f)
+    {
+        //var newBall = Instantiate(MainPrefabs.Instance.HomingBallPrefab,Position,Quaternion.identity);
+        var newBall = Pooling.Instantiate<HomingBall>(InfernoKingGrimm.MainGrimm.Prefabs.HomingBallPrefab, Position, Quaternion.identity);
+        //Debug.Log("Starting Lifetime = " + newBall._lifeTime);
 
-		while (newBall == null && homingBallPool.Count > 0)
-		{
-			newBall = homingBallPool.First();
-			homingBallPool.Remove(newBall);
-		}
+        if (grimm.FaceDirection == GrimmDirection.Left)
+        {
+            spawnVector = spawnVector.With(-spawnVector.x);
+        }
+        newBall.Phase1TravelDirection = spawnVector.normalized;
+        newBall.Phase1Velocity = spawnVector.magnitude;
+        newBall.Phase2RotationSpeed = rotationSpeed;
 
-		if (newBall != null)
-		{
-			foundInPool = true;
-			newBall.transform.position = Position;
-		}
-		else
-		{
-			newBall = GameObject.Instantiate(MainPrefabs.Instance.HomingBallPrefab, Position, Quaternion.identity);
-		}
+        if (playEffects)
+        {
+            var pillar = FirebatFirePillar.Spawn(grimm);
+            if (FirePillarOffset != Vector2.zero)
+            {
+                pillar.transform.position = Position + (Vector3)FirePillarOffset;
+            }
 
-		//var newBall = Instantiate(MainPrefabs.Instance.HomingBallPrefab,Position,Quaternion.identity);
-		//var newBall = Pooling.Instantiate<HomingBall>(InfernoKingGrimm.MainGrimm.Prefabs.HomingBallPrefab, Position, Quaternion.identity);
-		//Debug.Log("Starting Lifetime = " + newBall._lifeTime);
+            var fireAudio = WeaverAudio.PlayAtPoint(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
+            fireAudio.AudioSource.pitch = audioPitch;
 
-		if (grimm.FaceDirection == GrimmDirection.Left)
-		{
-			spawnVector = spawnVector.With(-spawnVector.x);
-		}
-		newBall.Phase1TravelDirection = spawnVector.normalized;
-		newBall.Phase1Velocity = spawnVector.magnitude;
-		newBall.Phase2RotationSpeed = rotationSpeed;
+            //var glow = GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, Position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
+            var glow = GrimmGlow.Create(Position + new Vector3(0f, 0f, -0.1f));
+            glow.transform.localScale = GlowScale;
+        }
 
-		if (playEffects)
-		{
-			var pillar = FirebatFirePillar.Spawn(grimm);
-			if (FirePillarOffset != Vector2.zero)
-			{
-				pillar.transform.position = Position + (Vector3)FirePillarOffset;
-			}
+        ActiveHomingBalls.Add(newBall);
+        return newBall;
+    }
 
-			var fireAudio = WeaverAudio.PlayAtPoint(grimm.Sounds.GrimmBatFire, grimm.transform.position, 1.0f, AudioChannel.Sound);
-			fireAudio.AudioSource.pitch = audioPitch;
-
-			//var glow = GameObject.Instantiate(MainPrefabs.Instance.GlowPrefab, Position + new Vector3(0f, 0f, -0.1f), Quaternion.identity);
-			var glow = GrimmGlow.Create(Position + new Vector3(0f, 0f, -0.1f));
-			glow.transform.localScale = GlowScale;
-		}
-
-		ActiveHomingBalls.Add(newBall);
-
-		if (foundInPool)
-		{
-			newBall.gameObject.SetActive(true);
-			newBall.Awake();
-			newBall.Start();
-		}
-
-		return newBall;
-	}
-
-	void IOnPool.OnPool()
-	{
-		rigidbody.Sleep();
-		rigidbody.velocity = default;
-		//Debug.Log("ON POOL!!!");
-		ActiveHomingBalls.Remove(this);
-		transform.localScale = originalScale;
-
-		_lifeTime = 0f;
-		rigidBodyActive = false;
-		collider.enabled = true;
-		Phase2TravelDirection = default;
-		EnablePhase1 = true;
-		EnablePhase2 = true;
-        growthComponent.enabled = false;
+    void IOnPool.OnPool()
+    {
+        rigidbody.Sleep();
+        //Debug.Log("ON POOL!!!");
+        ActiveHomingBalls.Remove(this);
+        transform.localScale = originalScale;
         //_lifeTime = 0f;
         /*if (MainCoroutine != null)
 		{
@@ -318,24 +268,24 @@ public class HomingBall : MonoBehaviour, IOnPool
 			ShrinkCoroutine = null;
 		}*/
         MainCoroutine = null;
-		ShrinkCoroutine = null;
-		//collider.enabled = true;
-		//EnablePhase1 = true;
-		//Phase1Time = 1f;
-		//Phase1Velocity = 20f;
-		//Phase1TravelDirection = default(Vector2);
-		//EnablePhase2 = true;
-		//Phase2RotationSpeed = 25f;
-		//Phase2Velocity = 5f;
-		//Phase2TargetOffset = default(Vector2);
-		//Phase2TravelDirection = default(Vector2);
-		//growthComponent.enabled = false;
-		//growthComponent.lifeTime = 0f;
-		//ShrinkTime = 0.7f;
-	}
+        ShrinkCoroutine = null;
+        //collider.enabled = true;
+        //EnablePhase1 = true;
+        //Phase1Time = 1f;
+        //Phase1Velocity = 20f;
+        //Phase1TravelDirection = default(Vector2);
+        //EnablePhase2 = true;
+        //Phase2RotationSpeed = 25f;
+        //Phase2Velocity = 5f;
+        //Phase2TargetOffset = default(Vector2);
+        //Phase2TravelDirection = default(Vector2);
+        //growthComponent.enabled = false;
+        //growthComponent.lifeTime = 0f;
+        //ShrinkTime = 0.7f;
+    }
 
-	void OnDestroy()
-	{
-		ActiveHomingBalls.Remove(this);
-	}
+    void OnDestroy()
+    {
+        ActiveHomingBalls.Remove(this);
+    }
 }
