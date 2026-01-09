@@ -11,7 +11,7 @@ using WeaverCore.Utilities;
 public class DamageGrimm : MonoBehaviour 
 {
 	public int damage = 2;
-	public AttackType attackType;
+	public AttackTypes attackType;
 	[HideInInspector]
 	public CardinalDirection hitDirection;
 	// Use this for initialization

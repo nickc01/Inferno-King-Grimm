@@ -497,19 +497,19 @@ public class GroundSlashMove : GrimmMove
 		UppercutExplosion.Play();
 
 		var fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
-		fireBall.RigidBody.velocity = new Vector2(0f, 1f);
+		fireBall.RigidBody.linearVelocity = new Vector2(0f, 1f);
 		fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
-		fireBall.RigidBody.velocity = new Vector2(12f, 1f);
+		fireBall.RigidBody.linearVelocity = new Vector2(12f, 1f);
 		fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
-		fireBall.RigidBody.velocity = new Vector2(-12f, 1f);
+		fireBall.RigidBody.linearVelocity = new Vector2(-12f, 1f);
 		fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
-		fireBall.RigidBody.velocity = new Vector2(24f, 1f);
+		fireBall.RigidBody.linearVelocity = new Vector2(24f, 1f);
 		fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
-		fireBall.RigidBody.velocity = new Vector2(-24f, 1f);
+		fireBall.RigidBody.linearVelocity = new Vector2(-24f, 1f);
 		fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
-		fireBall.RigidBody.velocity = new Vector2(36f, 1f);
+		fireBall.RigidBody.linearVelocity = new Vector2(36f, 1f);
 		fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
-		fireBall.RigidBody.velocity = new Vector2(-36f, 1f);
+		fireBall.RigidBody.linearVelocity = new Vector2(-36f, 1f);
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Uppercut End");
 

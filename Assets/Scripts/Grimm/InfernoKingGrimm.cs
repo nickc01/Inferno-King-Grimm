@@ -1,11 +1,11 @@
-﻿using Assets.Scripts;
+using Assets.Scripts;
 using Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using TMPro;
+using TMProOld;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -83,17 +83,17 @@ public class InfernoKingGrimm : BossReplacement
 	{
 		get
 		{
-			return GrimmRigidbody.velocity;
+			return GrimmRigidbody.linearVelocity;
 		}
 		set
 		{
 			if (Stunned)
 			{
-				GrimmRigidbody.velocity = default(Vector2);
+				GrimmRigidbody.linearVelocity = default(Vector2);
 			}
 			else
 			{
-				GrimmRigidbody.velocity = value;
+				GrimmRigidbody.linearVelocity = value;
 			}
 		}
 	}
@@ -1114,7 +1114,7 @@ public class InfernoKingGrimm : BossReplacement
 		transform.rotation = Quaternion.identity;
 		damager.enabled = false;
 		GrimmHealth.Invincible = true;
-		GrimmRigidbody.velocity = Vector2.zero;
+		GrimmRigidbody.linearVelocity = Vector2.zero;
 		GrimmRigidbody.Sleep();
 
 		//CurrentMove.OnStun();
@@ -1131,7 +1131,7 @@ public class InfernoKingGrimm : BossReplacement
 
 		Instantiate(Prefabs.StunEffect, transform.position, Quaternion.identity);
 
-		GrimmRigidbody.velocity = Vector2.zero;
+		GrimmRigidbody.linearVelocity = Vector2.zero;
 
 		yield return GrimmAnimator.PlayAnimationTillDone("Explode Antic");
 
@@ -1262,7 +1262,7 @@ public class InfernoKingGrimm : BossReplacement
 		//DustUppercut.Stop();
 		damager.enabled = false;
 		GrimmHealth.Invincible = true;
-		GrimmRigidbody.velocity = Vector2.zero;
+		GrimmRigidbody.linearVelocity = Vector2.zero;
 		GrimmRigidbody.Sleep();
 
 		CurrentMove.OnDeath();
@@ -1406,7 +1406,7 @@ public class InfernoKingGrimm : BossReplacement
 
 		FacePlayer(false);
 
-		GrimmRigidbody.velocity = Vector2.zero;
+		GrimmRigidbody.linearVelocity = Vector2.zero;
 
 		//TODO Set Audio Snapsho
 		//AudioMixer gameMixer = WeaverAudio.MainMixer;

@@ -44,7 +44,7 @@ public class UppercutFireball : MonoBehaviour, IOnPool
 
 	void IOnPool.OnPool()
 	{
-		RigidBody.velocity = Vector2.zero;
+		RigidBody.linearVelocity = Vector2.zero;
 		if (disabler == null)
 		{
 			disabler = GetComponent<ColliderDisabler>();

@@ -67,7 +67,7 @@ public class Firebat : MonoBehaviour, IOnPool
 	// Update is called once per frame
 	void Update () 
 	{
-		rigidbody.velocity = Vector3.RotateTowards(rigidbody.velocity, Player.NearestPlayer(this).transform.position - transform.position, 30.0f * Mathf.Deg2Rad * Time.deltaTime * InfernoKingGrimm.GetInfiniteSpeed(1f, 1.75f), 0.0f);
+		rigidbody.linearVelocity = Vector3.RotateTowards(rigidbody.linearVelocity, Player.NearestPlayer(this).transform.position - transform.position, 30.0f * Mathf.Deg2Rad * Time.deltaTime * InfernoKingGrimm.GetInfiniteSpeed(1f, 1.75f), 0.0f);
 		//rigidbody.velocity.
 	}
 
@@ -150,13 +150,13 @@ public class Firebat : MonoBehaviour, IOnPool
 
 	void SetVelocity(Vector2 velocity)
 	{
-		rigidbody.velocity = velocity;
+		rigidbody.linearVelocity = velocity;
 	}
 
 	void IOnPool.OnPool()
 	{
 		renderer.flipX = false;
 		renderer.flipY = false;
-		rigidbody.velocity = Vector2.zero;
+		rigidbody.linearVelocity = Vector2.zero;
 	}
 }

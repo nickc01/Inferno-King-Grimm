@@ -34,7 +34,7 @@ public class GrimmBall : MonoBehaviour
 		Particles = transform.Find("Particles").GetComponent<ParticleSystem>();
 		rigidbody = GetComponent<Rigidbody2D>();
 		collider = GetComponent<Collider2D>();
-		rigidbody.velocity = new Vector2(XVelocity,0);
+		rigidbody.linearVelocity = new Vector2(XVelocity,0);
 		MainCoroutine = StartCoroutine(MainAction());
 	}
 
@@ -53,7 +53,7 @@ public class GrimmBall : MonoBehaviour
 			transform.SetYPosition(Mathf.Lerp(startY, startY + TweenY, Curve.Evaluate(clock / time)));
 
 			//rigidbody.AddForce(new Vector2(Force,0f));
-			rigidbody.velocity += new Vector2(Force * Time.deltaTime, 0f);
+			rigidbody.linearVelocity += new Vector2(Force * Time.deltaTime, 0f);
 
 		} while (clock < time);
 		do
@@ -61,7 +61,7 @@ public class GrimmBall : MonoBehaviour
 			yield return null;
 			clock += Time.deltaTime;
 			//rigidbody.AddForce(new Vector2(Force, 0f));
-			rigidbody.velocity += new Vector2(Force * Time.deltaTime, 0f);
+			rigidbody.linearVelocity += new Vector2(Force * Time.deltaTime, 0f);
 		} while (clock < maxLifeTime);
 		ShrinkAndStop();
 	}
@@ -94,7 +94,7 @@ public class GrimmBall : MonoBehaviour
 			yield return null;
 			clock += Time.deltaTime;
 			transform.localScale = Vector3.Lerp(oldScale,Vector3.zero,clock / time);
-			rigidbody.velocity *= 0.85f;
+			rigidbody.linearVelocity *= 0.85f;
 		} while (clock < end);
 
 		Destroy(gameObject);

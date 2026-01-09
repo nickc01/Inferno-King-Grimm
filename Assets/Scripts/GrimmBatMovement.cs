@@ -142,9 +142,9 @@ public class GrimmBatMovement : MonoBehaviour
 			{
 				accel[otherAxis] = -accel[otherAxis];
 			}
-			Vector2 velocity = rigidbody.velocity;
+			Vector2 velocity = rigidbody.linearVelocity;
 			velocity[mainAxis] = velocity[mainAxis] * axisMultiplier;
-			rigidbody.velocity = velocity;
+			rigidbody.linearVelocity = velocity;
 			accel *= 0.5f;
 			Vector2 maxSpeed = accel * 10f;
 			maxSpeed.x = Mathf.Abs(maxSpeed.x);
@@ -152,7 +152,7 @@ public class GrimmBatMovement : MonoBehaviour
 
 			for (float timer = 0.2f; timer > 0f; timer -= Time.deltaTime)
 			{
-				FaceDirection((rigidbody.velocity.x <= 0f) ? -1 : 1, false);
+				FaceDirection((rigidbody.linearVelocity.x <= 0f) ? -1 : 1, false);
 				Accelerate(accel, new Vector2(15f, 10f));
 				yield return null;
 			}
@@ -161,7 +161,7 @@ public class GrimmBatMovement : MonoBehaviour
 			float timer2 = UnityEngine.Random.Range(0.5f, 1.5f);
 			while (direction == null && timer2 > 0f)
 			{
-				FaceDirection((rigidbody.velocity.x <= 0f) ? -1 : 1, false);
+				FaceDirection((rigidbody.linearVelocity.x <= 0f) ? -1 : 1, false);
 				Accelerate(accel, maxSpeed);
 				Vector2 position = transform.position;
 				if (position.x < 73f)
@@ -209,20 +209,20 @@ public class GrimmBatMovement : MonoBehaviour
 	private void Accelerate(Vector2 fixedAcceleration, Vector2 speedLimit)
 	{
 		Vector2 a = fixedAcceleration / Time.fixedDeltaTime;
-		Vector2 vector = rigidbody.velocity;
+		Vector2 vector = rigidbody.linearVelocity;
 		vector += a * Time.deltaTime;
 		vector.x = Mathf.Clamp(vector.x, -speedLimit.x, speedLimit.x);
 		vector.y = Mathf.Clamp(vector.y, -speedLimit.y, speedLimit.y);
-		rigidbody.velocity = vector;
+		rigidbody.linearVelocity = vector;
 	}
 
 	protected IEnumerator BringInRoutine()
 	{
 		//this.state = FakeBat.States.In;
 		State = BatState.BringingIn;
-		int sign = (CurrentGrimm.transform.position.x - rigidbody.velocity.x <= 0f) ? -1 : 1;
+		int sign = (CurrentGrimm.transform.position.x - rigidbody.linearVelocity.x <= 0f) ? -1 : 1;
 		FaceDirection(sign, true);
-		rigidbody.velocity = Vector2.zero;
+		rigidbody.linearVelocity = Vector2.zero;
 		for (; ; )
 		{
 			Vector2 source = this.transform.position;

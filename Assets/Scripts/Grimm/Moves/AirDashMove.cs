@@ -434,7 +434,7 @@ public class AirDashMove : GrimmMove
 		foreach (var value in VectorUtilities.CalculateSpacedValues(amountOfFireballs, angleBetweenFireballs))
 		{
 			var fireBall = UppercutFireball.Create(transform.position);
-			fireBall.RigidBody.velocity = VectorUtilities.DegreesToVector(upAngle + value, velocity);
+			fireBall.RigidBody.linearVelocity = VectorUtilities.DegreesToVector(upAngle + value, velocity);
 			Fireballs.Add(fireBall.RigidBody);
 		}
 
@@ -451,7 +451,7 @@ public class AirDashMove : GrimmMove
 			}
 
 			var fireBall = UppercutFireball.Create(transform.position.With(y: transform.position.y - loweringOffset));
-			fireBall.RigidBody.velocity = selectedFireball.velocity;
+			fireBall.RigidBody.linearVelocity = selectedFireball.linearVelocity;
 
 			selectedFireball = Fireballs[Fireballs.Count - 2];
 
@@ -461,7 +461,7 @@ public class AirDashMove : GrimmMove
 			}
 
 			fireBall = UppercutFireball.Create(transform.position.With(y: transform.position.y - loweringOffset), Quaternion.identity);
-			fireBall.RigidBody.velocity = selectedFireball.velocity;
+			fireBall.RigidBody.linearVelocity = selectedFireball.linearVelocity;
 		}
 
 		var explodeSF = WeaverAudio.PlayAtPoint(Sounds.UpperCutExplodeEffect, transform.position);
@@ -472,8 +472,8 @@ public class AirDashMove : GrimmMove
 
 	void CreateFireballGap(Rigidbody2D fireball, float gapAngle, float upAngle)
 	{
-		float degrees = VectorUtilities.VectorToDegrees(fireball.velocity);
-		float magnitude = fireball.velocity.magnitude;
+		float degrees = VectorUtilities.VectorToDegrees(fireball.linearVelocity);
+		float magnitude = fireball.linearVelocity.magnitude;
 
 		if (degrees - upAngle > 0)
 		{
@@ -484,7 +484,7 @@ public class AirDashMove : GrimmMove
 			degrees += gapAngle;
 		}
 
-		fireball.velocity = VectorUtilities.DegreesToVector(degrees, magnitude);
+		fireball.linearVelocity = VectorUtilities.DegreesToVector(degrees, magnitude);
 	}
 
 	IEnumerator GroundPoundSlamEffects(int fireballs, float maxHorizontalSpan, float height)
@@ -499,7 +499,7 @@ public class AirDashMove : GrimmMove
 		foreach (var value in VectorUtilities.CalculateSpacedValues(fireballs, 7f))
 		{
 			var fireBall = UppercutFireball.Create(transform.position, Quaternion.identity);
-			fireBall.RigidBody.velocity = new Vector2(value, height);
+			fireBall.RigidBody.linearVelocity = new Vector2(value, height);
 		}
 
 		var explodeSF = WeaverAudio.PlayAtPoint(Sounds.UpperCutExplodeEffect, transform.position);
